@@ -24,21 +24,21 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="index"
         options={{
-          drawerLabel: "HOME",
+          drawerLabel: "Home",
           title: "ContraSafe",
         }}
       />
       <Drawer.Screen
         name="know-contraceptive"
         options={{
-          drawerLabel: "KNOW YOUR CONTRACEPTIVE",
+          drawerLabel: "Know Your Contraceptive",
           title: "Know Your Contraceptive",
         }}
       />
       <Drawer.Screen
         name="choose-contraceptive"
         options={{
-          drawerLabel: "CHOOSE YOUR CONTRACEPTIVE",
+          drawerLabel: "Choose Your Contraceptive",
           title: "Choose Your Contraceptive",
         }}
       />
@@ -59,14 +59,14 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="compare-methods"
         options={{
-          drawerLabel: "COMPARE CONTRACEPTIVE METHODS",
+          drawerLabel: "Compare Contraceptive Methods",
           title: "Compare Methods",
         }}
       />
       <Drawer.Screen
         name="about-us"
         options={{
-          drawerLabel: "ABOUT US",
+          drawerLabel: "About Us",
           title: "About Us",
         }}
       />
