@@ -77,14 +77,6 @@ export default function DrawerLayout() {
           title: "Frequently Asked Questions",
         }}
       />
-      <Drawer.Screen
-        name="results"
-        options={{
-          drawerLabel: "Results",
-          title: "Assessment Results",
-          drawerItemStyle: { display: "none" }, // Hide from drawer menu
-        }}
-      />
     </Drawer>
   );
 }
