@@ -100,7 +100,7 @@ export default function FinalRecommendationPage() {
           <IconButton
             icon="arrow-left"
             mode="contained-tonal"
-            onPress={() => router.push("/(drawer)/personalize")}
+            onPress={() => router.back()}
             style={styles.backButton}
           />
         </View>
