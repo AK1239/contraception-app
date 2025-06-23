@@ -912,13 +912,7 @@ export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
     id: "preferredFrequency",
     text: "What is your preferred method frequency?",
     type: "select-one",
-    options: [
-      "I want to use the method every day",
-      "I want to use the method every 3 weeks",
-      "I want to use the method every 3 months",
-      "I want to use the method every 3 years",
-      "I want to use the method every 8 years",
-    ],
+    options: ["Every day", "Every 3 weeks", "Every 3 months", "Every 3 years", "Every 8 years"],
     required: true,
   },
   {
