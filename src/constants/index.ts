@@ -1,5 +1,6 @@
 // Barrel export for all constants
 export * from "./contraceptiveMethods";
+export * from "./questions";
 
 // Additional constants that might be added later
 export const APP_NAME = "ContraSafe";
