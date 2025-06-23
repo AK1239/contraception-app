@@ -65,6 +65,22 @@ export default function PersonalizePage() {
   const isLastQuestion = currentQuestionIndex === visibleQuestions.length - 1;
   const progress = (currentQuestionIndex + 1) / visibleQuestions.length;
 
+  // Set default "No" for yes-no questions when they first appear
+  useEffect(() => {
+    if (currentQuestion && currentQuestion.type === "yes-no") {
+      const currentValue = personalization.answers[currentQuestion.id];
+      if (currentValue === undefined || currentValue === null) {
+        // Set default to "No" (false) for yes-no questions
+        dispatch(
+          setPersonalizationAnswer({
+            questionId: currentQuestion.id,
+            value: false,
+          })
+        );
+      }
+    }
+  }, [currentQuestion, personalization.answers, dispatch]);
+
   const handleAnswerChange = (value: AnswerValue) => {
     let processedValue = value;
 

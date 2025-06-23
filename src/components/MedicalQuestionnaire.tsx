@@ -33,6 +33,17 @@ export const MedicalQuestionnaire: React.FC = () => {
   const progress =
     visibleQuestions.length > 0 ? (currentQuestionIndex + 1) / visibleQuestions.length : 0;
 
+  // Set default "No" for yes-no questions when they first appear
+  useEffect(() => {
+    if (currentQuestion && currentQuestion.type === "yes-no") {
+      const currentValue = answers[currentQuestion.id];
+      if (currentValue === undefined || currentValue === null) {
+        // Set default to "No" (false) for yes-no questions
+        dispatch(setAnswer({ questionId: currentQuestion.id, value: false }));
+      }
+    }
+  }, [currentQuestion, answers, dispatch]);
+
   // Check if user is pregnant (should redirect to home)
   useEffect(() => {
     if (answers["pregnancy-check"] === "pregnant") {
