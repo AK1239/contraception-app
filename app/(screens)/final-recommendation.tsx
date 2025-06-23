@@ -192,24 +192,24 @@ export default function FinalRecommendationPage() {
 
           <View style={styles.buttonContainer}>
             <Button
-              mode="contained"
-              onPress={() => router.push("/know-contraceptive")}
-              style={styles.primaryButton}
+              mode="outlined"
+              onPress={() => router.push("/(drawer)/know-contraceptive")}
+              style={styles.secondaryButton}
             >
               Learn More About Methods
             </Button>
 
             <Button
               mode="outlined"
-              onPress={() => router.push("/compare-methods")}
+              onPress={() => router.push("/(drawer)/compare-methods")}
               style={styles.secondaryButton}
             >
-              Compare Methods
+              Compare All Methods
             </Button>
 
             <Button
               mode="text"
-              onPress={() => router.push("/personalize")}
+              onPress={() => router.push("/(drawer)/personalize")}
               style={styles.tertiaryButton}
             >
               Modify My Preferences

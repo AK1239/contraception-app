@@ -31,10 +31,10 @@ export default function ChooseContraceptivePage() {
     if (selectedType === "natural") {
       if (isBreastfeeding === "yes") {
         // Navigate to LAM method detail page
-        router.push("/contraceptive/lactational-amenorrhea");
+        router.push("/(screens)/contraceptive/lactational-amenorrhea");
       } else if (isBreastfeeding === "no") {
         // Navigate to Calendar method detail page
-        router.push("/contraceptive/calendar-method");
+        router.push("/(screens)/contraceptive/calendar-method");
       }
     } else if (selectedType === "modern") {
       // Navigate to medical safety assessment

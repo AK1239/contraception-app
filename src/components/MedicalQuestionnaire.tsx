@@ -162,7 +162,7 @@ export const MedicalQuestionnaire: React.FC = () => {
 
       // Navigate to results page
       router.push({
-        pathname: "/results",
+        pathname: "/(screens)/results",
         params: { mecScores: JSON.stringify(mecScores) },
       });
     } catch (error) {

@@ -44,7 +44,7 @@ export default function KnowContraceptivePage() {
   const renderMethodCard = (method: any, isNatural: boolean = false) => {
     const handlePress = () => {
       const methodId = isNatural ? method.key : method.key;
-      router.push(`/contraceptive/${methodId}`);
+      router.push(`/(screens)/contraceptive/${methodId}`);
     };
 
     return (

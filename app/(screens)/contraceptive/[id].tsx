@@ -321,14 +321,14 @@ export default function ContraceptiveDetailPage() {
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={() => router.push("/compare-methods")}
+              onPress={() => router.push("/(drawer)/compare-methods")}
               style={styles.primaryButton}
             >
               Compare with Other Methods
             </Button>
             <Button
               mode="outlined"
-              onPress={() => router.push("/choose-contraceptive")}
+              onPress={() => router.push("/(drawer)/choose-contraceptive")}
               style={styles.secondaryButton}
             >
               Get Personalized Recommendation

@@ -19,7 +19,7 @@ export default function ResultsPage() {
     return (
       <View style={styles.container}>
         <Text>No results available. Please complete the questionnaire first.</Text>
-        <Button mode="contained" onPress={() => router.push("/medical-safety")}>
+        <Button mode="contained" onPress={() => router.push("/(drawer)/medical-safety")}>
           Take Questionnaire
         </Button>
       </View>
@@ -140,7 +140,7 @@ export default function ResultsPage() {
               mode="contained"
               onPress={() =>
                 router.push({
-                  pathname: "/personalize",
+                  pathname: "/(drawer)/personalize",
                   params: { eligibleMethods: JSON.stringify(eligibleMethods) },
                 })
               }
@@ -151,7 +151,7 @@ export default function ResultsPage() {
 
             <Button
               mode="outlined"
-              onPress={() => router.push("/compare-methods")}
+              onPress={() => router.push("/(drawer)/compare-methods")}
               style={styles.secondaryButton}
             >
               Compare Methods

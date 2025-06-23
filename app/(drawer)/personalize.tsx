@@ -105,7 +105,7 @@ export default function PersonalizePage() {
       // Get personalization results and navigate to final recommendation
       const results = getPersonalizationResults();
       router.push({
-        pathname: "/final-recommendation",
+        pathname: "/(screens)/final-recommendation",
         params: { recommendationData: JSON.stringify(results) },
       });
     } else {
