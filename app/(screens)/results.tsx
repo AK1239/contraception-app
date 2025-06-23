@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Text, Card, Button, Chip } from "react-native-paper";
+import { Text, Card, Button, Chip, IconButton } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 import { RootState } from "../../src/store";
@@ -29,6 +29,13 @@ export default function ResultsPage() {
   const { safe, acceptable, avoid } = categorizeRecommendations(mecScores);
   const eligibleMethods = getEligibleMethods(mecScores);
 
+  // Sort avoid methods by MEC score (3 first, then 4)
+  const sortedAvoidMethods = avoid.sort((a, b) => {
+    const scoreA = mecScores[a as keyof typeof mecScores] as MECScore;
+    const scoreB = mecScores[b as keyof typeof mecScores] as MECScore;
+    return scoreA - scoreB;
+  });
+
   const getMECChipColor = (score: MECScore) => {
     return MEC_CATEGORIES[score]?.color || "#666";
   };
@@ -43,10 +50,14 @@ export default function ResultsPage() {
       <Card key={methodKey} style={styles.methodCard}>
         <Card.Content>
           <View style={styles.methodHeader}>
-            <Text variant="titleMedium">{method.name}</Text>
+            <View style={styles.methodNameContainer}>
+              <Text variant="titleMedium" style={styles.methodName}>
+                {method.name}
+              </Text>
+            </View>
             <Chip
               style={[styles.mecChip, { backgroundColor: getMECChipColor(score) }]}
-              textStyle={{ color: "white", fontSize: 12 }}
+              textStyle={styles.mecChipText}
             >
               MEC {score}
             </Chip>
@@ -64,16 +75,23 @@ export default function ResultsPage() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
-      <Card style={styles.headerCard}>
-        <Card.Content>
+      {/* Header with back button */}
+      <View style={styles.headerContainer}>
+        <IconButton
+          icon="arrow-left"
+          mode="contained-tonal"
+          onPress={() => router.push("/(drawer)/medical-safety")}
+          style={styles.backButton}
+        />
+        <View style={styles.headerTextContainer}>
           <Text variant="headlineSmall" style={styles.title}>
             Your Contraceptive Safety Assessment
           </Text>
           <Text variant="bodyMedium" style={styles.subtitle}>
             Based on WHO Medical Eligibility Criteria (MEC) 2015
           </Text>
-        </Card.Content>
-      </Card>
+        </View>
+      </View>
 
       {/* Safe Contraceptives (MEC 1) */}
       {safe.length > 0 && (
@@ -105,8 +123,8 @@ export default function ResultsPage() {
         </Card>
       )}
 
-      {/* Avoid Contraceptives (MEC 3 & 4) */}
-      {avoid.length > 0 && (
+      {/* Avoid Contraceptives (MEC 3 & 4) - sorted by MEC score */}
+      {sortedAvoidMethods.length > 0 && (
         <Card style={styles.categoryCard}>
           <Card.Content>
             <Text variant="titleLarge" style={[styles.categoryTitle, { color: "#F44336" }]}>
@@ -115,7 +133,7 @@ export default function ResultsPage() {
             <Text variant="bodyMedium" style={styles.categoryDescription}>
               These methods have risks that outweigh the benefits for your health profile.
             </Text>
-            {avoid.map((methodKey) => {
+            {sortedAvoidMethods.map((methodKey) => {
               const score = mecScores[methodKey as keyof typeof mecScores] as MECScore;
               return renderMethodCard(methodKey, score);
             })}
@@ -180,13 +198,31 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
-  headerCard: {
-    margin: 16,
-    marginBottom: 8,
+  scrollContent: {
+    paddingBottom: 100,
+  },
+  headerContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 20,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    backgroundColor: "#fff",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  backButton: {
+    marginRight: 8,
+  },
+  headerTextContainer: {
+    flex: 1,
   },
   title: {
     textAlign: "center",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   subtitle: {
     textAlign: "center",
@@ -210,9 +246,15 @@ const styles = StyleSheet.create({
   },
   methodHeader: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: 8,
+  },
+  methodNameContainer: {
+    flex: 1,
+    marginRight: 8,
+  },
+  methodName: {
+    flexWrap: "wrap",
   },
   methodDescription: {
     marginBottom: 8,
@@ -223,7 +265,14 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   mecChip: {
+    alignSelf: "flex-start",
     minWidth: 60,
+    maxWidth: 80,
+  },
+  mecChipText: {
+    color: "white",
+    fontSize: 12,
+    fontWeight: "bold",
   },
   actionCard: {
     margin: 16,
@@ -254,8 +303,5 @@ const styles = StyleSheet.create({
   disclaimerText: {
     lineHeight: 18,
     color: "#e65100",
-  },
-  scrollContent: {
-    paddingBottom: 100,
   },
 });
