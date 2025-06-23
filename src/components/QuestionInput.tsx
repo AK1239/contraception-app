@@ -283,6 +283,22 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
   onValueChange,
   error,
 }) => {
+  // Helper function to get the display value from stored value for frequency questions
+  const getDisplayValue = (storedValue: any): string | undefined => {
+    if (question.id === "preferredFrequency" && typeof storedValue === "string") {
+      // Reverse mapping from stored value to display value
+      const reverseMapping: Record<string, string> = {
+        daily: "Every day",
+        "every-3-weeks": "Every 3 weeks",
+        "every-3-months": "Every 3 months",
+        "every-3-years": "Every 3 years",
+        "every-8-years": "Every 8 years",
+      };
+      return reverseMapping[storedValue] || storedValue;
+    }
+    return storedValue;
+  };
+
   const renderInput = () => {
     switch (question.type) {
       case "yes-no":
@@ -308,13 +324,15 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
         );
 
       case "select-one":
+        const displayValue = getDisplayValue(value);
+
         return (
           <View style={styles.radioGroup}>
             {question.options?.map((option, index) => (
               <View key={index} style={styles.radioOption}>
                 <RadioButton
                   value={option}
-                  status={value === option ? "checked" : "unchecked"}
+                  status={displayValue === option ? "checked" : "unchecked"}
                   onPress={() => onValueChange(option)}
                 />
                 <Text style={styles.radioLabel}>{option}</Text>
