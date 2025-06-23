@@ -6,7 +6,11 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { RootState } from "../../src/store";
 import { setPersonalizationAnswer } from "../../src/store/slices/questionnaire";
 import { PersonalizationInput } from "../../src/components/QuestionInput";
-import { PERSONALIZATION_QUESTIONS, getFrequencyValue } from "../../src/constants/questions";
+import {
+  PERSONALIZATION_QUESTIONS,
+  getFrequencyValue,
+  PersonalizationQuestion,
+} from "../../src/constants/questions";
 import { generatePersonalizedRecommendations } from "../../src/services/personalizationEngine";
 import { ContraceptiveMethodKey, AnswerValue } from "../../src/types";
 
@@ -19,6 +23,7 @@ export default function PersonalizePage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [eligibleMethods, setEligibleMethods] = useState<ContraceptiveMethodKey[]>([]);
+  const [visibleQuestions, setVisibleQuestions] = useState<PersonalizationQuestion[]>([]);
 
   // Parse eligible methods from navigation params
   useEffect(() => {
@@ -37,9 +42,28 @@ export default function PersonalizePage() {
     }
   }, [params.eligibleMethods]);
 
-  const currentQuestion = PERSONALIZATION_QUESTIONS[currentQuestionIndex];
-  const isLastQuestion = currentQuestionIndex === PERSONALIZATION_QUESTIONS.length - 1;
-  const progress = (currentQuestionIndex + 1) / PERSONALIZATION_QUESTIONS.length;
+  // Update visible questions based on current answers
+  useEffect(() => {
+    const baseQuestions = PERSONALIZATION_QUESTIONS.filter((q) => q.id !== "currentBMI");
+    let questions = [...baseQuestions];
+
+    // Add BMI question only if user selected "every 3 weeks"
+    const frequencyAnswer = personalization.answers.preferredFrequency;
+    if (frequencyAnswer === "every-3-weeks") {
+      questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "currentBMI")!);
+    }
+
+    setVisibleQuestions(questions);
+
+    // Adjust current question index if it's beyond visible questions
+    if (currentQuestionIndex >= questions.length) {
+      setCurrentQuestionIndex(Math.max(0, questions.length - 1));
+    }
+  }, [personalization.answers.preferredFrequency, currentQuestionIndex]);
+
+  const currentQuestion = visibleQuestions[currentQuestionIndex];
+  const isLastQuestion = currentQuestionIndex === visibleQuestions.length - 1;
+  const progress = (currentQuestionIndex + 1) / visibleQuestions.length;
 
   const handleAnswerChange = (value: AnswerValue) => {
     let processedValue = value;
@@ -152,7 +176,7 @@ export default function PersonalizePage() {
           </Text>
           <ProgressBar progress={progress} style={styles.progressBar} />
           <Text variant="bodySmall" style={styles.progressText}>
-            Question {currentQuestionIndex + 1} of {PERSONALIZATION_QUESTIONS.length}
+            Question {currentQuestionIndex + 1} of {visibleQuestions.length}
           </Text>
         </Card.Content>
       </Card>

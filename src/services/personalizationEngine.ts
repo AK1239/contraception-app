@@ -10,7 +10,12 @@ export interface PersonalizationFilters {
   wantsFuturePregnancy?: boolean;
   okayWithIrregularPeriods?: boolean;
   wantsSurgicalMethod?: boolean;
-  preferredFrequency?: "daily" | "weekly" | "monthly" | "quarterly" | "yearly" | "long-term";
+  preferredFrequency?:
+    | "daily"
+    | "every-3-weeks"
+    | "every-3-months"
+    | "every-3-years"
+    | "every-8-years";
   currentBMI?: number;
 }
 
@@ -91,8 +96,8 @@ export const personalizeRecommendations = (
       case "daily":
         frequencyMethods = METHOD_FREQUENCY.daily; // ['a', 'c']
         break;
-      case "weekly":
-        frequencyMethods = METHOD_FREQUENCY.weekly; // ['i']
+      case "every-3-weeks":
+        frequencyMethods = METHOD_FREQUENCY.weekly; // ['i'] - patch
         // Check BMI for patch (method 'i')
         if (filters.currentBMI && filters.currentBMI > 30) {
           notices.push(
@@ -101,18 +106,14 @@ export const personalizeRecommendations = (
           frequencyMethods = [];
         }
         break;
-      case "monthly":
-        frequencyMethods = METHOD_FREQUENCY.monthly; // ['k']
-        break;
-      case "quarterly":
+      case "every-3-months":
         frequencyMethods = METHOD_FREQUENCY.quarterly; // ['d']
         break;
-      case "long-term":
-        frequencyMethods = METHOD_FREQUENCY["long-term"]; // ['e', 'f', 'g']
+      case "every-3-years":
+        frequencyMethods = ["e"]; // implant
         break;
-      case "yearly":
-        // For 8-year methods
-        frequencyMethods = ["f", "g"];
+      case "every-8-years":
+        frequencyMethods = ["f", "g"]; // IUDs
         break;
     }
 

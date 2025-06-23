@@ -892,33 +892,32 @@ export interface PersonalizationQuestion {
 export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
   {
     id: "wantsFuturePregnancy",
-    text: "Do you want to have children in the future?",
+    text: "Would you like to become pregnant in the future?",
     type: "yes-no",
     required: true,
   },
   {
     id: "okayWithIrregularPeriods",
-    text: "Are you okay with having irregular periods or no periods at all?",
+    text: "Are you okay with having irregular/no periods during the time of your contraceptive use?",
     type: "yes-no",
     required: true,
   },
   {
     id: "wantsSurgicalMethod",
-    text: "Are you interested in a permanent surgical contraceptive method?",
+    text: "Do you want a surgery done that will permanently give you contraception? (Note: fertility isn't reversible)",
     type: "yes-no",
     required: true,
   },
   {
     id: "preferredFrequency",
-    text: "How often would you prefer to think about contraception?",
+    text: "What is your preferred method frequency?",
     type: "select-one",
     options: [
-      "Daily (every day)",
-      "Weekly (every week)",
-      "Monthly (every month)",
-      "Quarterly (every 3 months)",
-      "Yearly (every 8 years)",
-      "Long-term (3-8 years)",
+      "I want to use the method every day",
+      "I want to use the method every 3 weeks",
+      "I want to use the method every 3 months",
+      "I want to use the method every 3 years",
+      "I want to use the method every 8 years",
     ],
     required: true,
   },
@@ -937,12 +936,11 @@ export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
 // Helper to convert option text to value
 export const getFrequencyValue = (optionText: string): string => {
   const mapping: Record<string, string> = {
-    "Daily (every day)": "daily",
-    "Weekly (every week)": "weekly",
-    "Monthly (every month)": "monthly",
-    "Quarterly (every 3 months)": "quarterly",
-    "Yearly (every 8 years)": "yearly",
-    "Long-term (3-8 years)": "long-term",
+    "Every day": "daily",
+    "Every 3 weeks": "every-3-weeks",
+    "Every 3 months": "every-3-months",
+    "Every 3 years": "every-3-years",
+    "Every 8 years": "every-8-years",
   };
   return mapping[optionText] || optionText;
 };
