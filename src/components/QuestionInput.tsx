@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { TextInput, RadioButton, Checkbox, Text, Card } from "react-native-paper";
+import { TextInput, RadioButton, Checkbox, Text, Card, Button } from "react-native-paper";
+import DatePicker from "react-native-date-picker";
 import { Question, AnswerValue } from "../types";
 import { PersonalizationQuestion } from "../constants/questions";
 
@@ -17,6 +18,8 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   onValueChange,
   error,
 }) => {
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
+
   const renderInput = () => {
     switch (question.type) {
       case "yes-no":
@@ -205,25 +208,38 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
         );
 
       case "date":
-        // For now, we'll use a text input. In a production app, you'd want a proper date picker
+        const dateValue = value ? new Date(value as any) : new Date();
+        const maxDate = "maxDate" in question ? question.maxDate : new Date();
+        const minDate = "minDate" in question ? question.minDate : new Date("1900-01-01");
+
         return (
-          <TextInput
-            mode="outlined"
-            label="Date (YYYY-MM-DD)"
-            value={value ? new Date(value as any).toISOString().split("T")[0] : ""}
-            onChangeText={(text) => {
-              try {
-                const date = new Date(text);
-                if (!isNaN(date.getTime())) {
-                  onValueChange(date);
-                }
-              } catch (e) {
-                // Invalid date
-              }
-            }}
-            placeholder="YYYY-MM-DD"
-            error={!!error}
-          />
+          <View style={styles.dateContainer}>
+            <Button
+              mode="outlined"
+              onPress={() => setDatePickerOpen(true)}
+              style={styles.dateButton}
+              contentStyle={styles.dateButtonContent}
+            >
+              {value ? new Date(value as any).toLocaleDateString() : "Select Date"}
+            </Button>
+
+            <DatePicker
+              modal
+              open={datePickerOpen}
+              date={dateValue}
+              mode="date"
+              maximumDate={maxDate}
+              minimumDate={minDate}
+              title="Select Date"
+              confirmText="Confirm"
+              cancelText="Cancel"
+              onConfirm={(selectedDate) => {
+                setDatePickerOpen(false);
+                onValueChange(selectedDate);
+              }}
+              onCancel={() => setDatePickerOpen(false)}
+            />
+          </View>
         );
 
       default:
@@ -398,6 +414,16 @@ const styles = StyleSheet.create({
   },
   lipidInput: {
     marginBottom: 8,
+  },
+  dateContainer: {
+    marginVertical: 8,
+  },
+  dateButton: {
+    marginVertical: 8,
+  },
+  dateButtonContent: {
+    paddingVertical: 12,
+    justifyContent: "flex-start",
   },
   errorText: {
     color: "#d32f2f",
