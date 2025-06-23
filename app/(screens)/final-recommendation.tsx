@@ -89,7 +89,7 @@ export default function FinalRecommendationPage() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Header */}
       <Card style={styles.headerCard}>
         <Card.Content>
@@ -397,5 +397,8 @@ const styles = StyleSheet.create({
   errorText: {
     color: "#c62828",
     marginBottom: 16,
+  },
+  scrollContent: {
+    paddingBottom: 100,
   },
 });

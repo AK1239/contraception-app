@@ -351,6 +351,7 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
 const styles = StyleSheet.create({
   container: {
     margin: 16,
+    marginBottom: 24, // Extra space between questions
   },
   questionText: {
     marginBottom: 8,

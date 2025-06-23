@@ -242,49 +242,59 @@ export const MedicalQuestionnaire: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      {/* Header with Reset */}
-      <View style={styles.headerContainer}>
-        <Text variant="titleMedium" style={styles.headerTitle}>
-          Medical Safety Assessment
-        </Text>
-        <Button mode="text" onPress={handleReset} style={styles.headerResetButton}>
-          Reset
-        </Button>
-      </View>
+      <ScrollView
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={true}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Header with Reset */}
+        <View style={styles.headerContainer}>
+          <Text variant="titleMedium" style={styles.headerTitle}>
+            Medical Safety Assessment
+          </Text>
+          <Button mode="text" onPress={handleReset} style={styles.headerResetButton}>
+            Reset
+          </Button>
+        </View>
 
-      {/* Progress Bar */}
-      <View style={styles.progressContainer}>
-        <Text style={styles.progressText}>
-          Question {currentQuestionIndex + 1} of {visibleQuestions.length}
-        </Text>
-        <ProgressBar progress={progress} style={styles.progressBar} />
-      </View>
+        {/* Progress Bar */}
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressText}>
+            Question {currentQuestionIndex + 1} of {visibleQuestions.length}
+          </Text>
+          <ProgressBar progress={progress} style={styles.progressBar} />
+        </View>
 
-      {/* Question */}
-      <ScrollView style={styles.questionContainer}>
-        <QuestionInput
-          question={currentQuestion}
-          value={getCurrentValue()}
-          onValueChange={handleAnswerChange}
-          error={validationError}
-        />
+        {/* Question */}
+        <View style={styles.questionContainer}>
+          <QuestionInput
+            question={currentQuestion}
+            value={getCurrentValue()}
+            onValueChange={handleAnswerChange}
+            error={validationError}
+          />
+        </View>
+
+        {/* Navigation Buttons */}
+        <View style={styles.navigationContainer}>
+          <Button
+            mode="outlined"
+            onPress={handlePrevious}
+            disabled={currentQuestionIndex === 0}
+            style={styles.navButton}
+          >
+            Previous
+          </Button>
+
+          <Button mode="contained" onPress={handleNext} style={styles.navButton}>
+            {currentQuestionIndex >= visibleQuestions.length - 1 ? "Complete" : "Next"}
+          </Button>
+        </View>
+
+        {/* Extra bottom padding to ensure buttons are accessible */}
+        <View style={styles.bottomPadding} />
       </ScrollView>
-
-      {/* Navigation Buttons */}
-      <View style={styles.navigationContainer}>
-        <Button
-          mode="outlined"
-          onPress={handlePrevious}
-          disabled={currentQuestionIndex === 0}
-          style={styles.navButton}
-        >
-          Previous
-        </Button>
-
-        <Button mode="contained" onPress={handleNext} style={styles.navButton}>
-          {currentQuestionIndex >= visibleQuestions.length - 1 ? "Complete" : "Next"}
-        </Button>
-      </View>
     </View>
   );
 };
@@ -294,6 +304,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
+  scrollContainer: {
+    flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 100, // Extra space for mobile navigation
+  },
   headerContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -302,6 +319,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
   headerTitle: {
     color: "#1976d2",
@@ -314,6 +336,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderBottomWidth: 1,
     borderBottomColor: "#e0e0e0",
+    elevation: 1,
   },
   progressText: {
     textAlign: "center",
@@ -326,17 +349,30 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     flex: 1,
+    minHeight: 300, // Ensure minimum height for questions
+    paddingBottom: 20,
   },
   navigationContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 16,
+    marginTop: 20,
     backgroundColor: "white",
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  bottomPadding: {
+    height: 80, // Extra space at bottom for mobile navigation
   },
   navButton: {
     flex: 0.45,
+    minHeight: 48, // Better touch target for mobile
+    justifyContent: "center",
   },
   noticeCard: {
     margin: 16,

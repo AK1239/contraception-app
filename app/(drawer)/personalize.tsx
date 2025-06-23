@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Button, ProgressBar } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -141,7 +141,7 @@ export default function PersonalizePage() {
   }
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <Card style={styles.headerCard}>
         <Card.Content>
           <Text variant="headlineSmall" style={styles.title}>
@@ -181,7 +181,7 @@ export default function PersonalizePage() {
           {isLastQuestion ? "Get Results" : "Next"}
         </Button>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -189,6 +189,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 100, // Extra space for mobile navigation
   },
   headerCard: {
     margin: 16,

@@ -63,7 +63,7 @@ export default function ResultsPage() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <Card style={styles.headerCard}>
         <Card.Content>
           <Text variant="headlineSmall" style={styles.title}>
@@ -254,5 +254,8 @@ const styles = StyleSheet.create({
   disclaimerText: {
     lineHeight: 18,
     color: "#e65100",
+  },
+  scrollContent: {
+    paddingBottom: 100,
   },
 });
