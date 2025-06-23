@@ -1,11 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { QuestionnaireState, UserAnswers, AnswerValue } from "../../types";
+import { UserAnswers, AnswerValue, PersonalizationState } from "../../types";
+
+interface QuestionnaireState {
+  answers: UserAnswers;
+  currentQuestionIndex: number;
+  currentSection: "medical" | "personalization";
+  isComplete: boolean;
+  validationErrors: Record<string, string>;
+  personalization: PersonalizationState;
+}
 
 const initialState: QuestionnaireState = {
-  currentSection: "pregnancy-check",
+  currentSection: "medical",
   currentQuestionIndex: 0,
   answers: {},
   isComplete: false,
+  validationErrors: {},
+  personalization: {
+    answers: {},
+  },
 };
 
 const questionnaireSlice = createSlice({
@@ -44,7 +57,7 @@ const questionnaireSlice = createSlice({
     },
 
     resetQuestionnaire: (state) => {
-      state.currentSection = "pregnancy-check";
+      state.currentSection = "medical";
       state.currentQuestionIndex = 0;
       state.answers = {};
       state.isComplete = false;
@@ -52,6 +65,34 @@ const questionnaireSlice = createSlice({
 
     setAnswers: (state, action: PayloadAction<UserAnswers>) => {
       state.answers = action.payload;
+    },
+
+    // Personalization actions
+    setPersonalizationAnswer: (
+      state,
+      action: PayloadAction<{ questionId: string; value: AnswerValue }>
+    ) => {
+      const { questionId, value } = action.payload;
+      state.personalization.answers[questionId] = value;
+
+      // Update specific personalization fields
+      if (questionId === "wantsFuturePregnancy") {
+        state.personalization.wantsFuturePregnancy = value as boolean;
+      } else if (questionId === "okayWithIrregularPeriods") {
+        state.personalization.okayWithIrregularPeriods = value as boolean;
+      } else if (questionId === "wantsSurgicalMethod") {
+        state.personalization.wantsSurgicalMethod = value as boolean;
+      } else if (questionId === "preferredFrequency") {
+        state.personalization.preferredFrequency =
+          value as PersonalizationState["preferredFrequency"];
+      } else if (questionId === "currentBMI") {
+        state.personalization.currentBMI = value as number;
+      }
+    },
+    resetPersonalization: (state) => {
+      state.personalization = {
+        answers: {},
+      };
     },
   },
 });
@@ -66,6 +107,8 @@ export const {
   setComplete,
   resetQuestionnaire,
   setAnswers,
+  setPersonalizationAnswer,
+  resetPersonalization,
 } = questionnaireSlice.actions;
 
 export default questionnaireSlice.reducer;

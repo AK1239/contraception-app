@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { TextInput, RadioButton, Checkbox, Text, Card } from "react-native-paper";
 import { Question, AnswerValue } from "../types";
+import { PersonalizationQuestion } from "../constants/questions";
 
 interface QuestionInputProps {
   question: Question;
@@ -252,6 +253,101 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   );
 };
 
+// Personalization Input Component
+interface PersonalizationInputProps {
+  question: PersonalizationQuestion;
+  value?: AnswerValue;
+  onValueChange: (value: AnswerValue) => void;
+  error?: string;
+}
+
+export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
+  question,
+  value,
+  onValueChange,
+  error,
+}) => {
+  const renderInput = () => {
+    switch (question.type) {
+      case "yes-no":
+        return (
+          <View style={styles.radioGroup}>
+            <View style={styles.radioOption}>
+              <RadioButton
+                value="yes"
+                status={value === true ? "checked" : "unchecked"}
+                onPress={() => onValueChange(true)}
+              />
+              <Text style={styles.radioLabel}>Yes</Text>
+            </View>
+            <View style={styles.radioOption}>
+              <RadioButton
+                value="no"
+                status={value === false ? "checked" : "unchecked"}
+                onPress={() => onValueChange(false)}
+              />
+              <Text style={styles.radioLabel}>No</Text>
+            </View>
+          </View>
+        );
+
+      case "select-one":
+        return (
+          <View style={styles.radioGroup}>
+            {question.options?.map((option, index) => (
+              <View key={index} style={styles.radioOption}>
+                <RadioButton
+                  value={option}
+                  status={value === option ? "checked" : "unchecked"}
+                  onPress={() => onValueChange(option)}
+                />
+                <Text style={styles.radioLabel}>{option}</Text>
+              </View>
+            ))}
+          </View>
+        );
+
+      case "numeric":
+        return (
+          <TextInput
+            mode="outlined"
+            value={value?.toString() || ""}
+            onChangeText={(text) => {
+              const numValue = parseFloat(text);
+              if (!isNaN(numValue)) {
+                onValueChange(numValue);
+              } else if (text === "") {
+                onValueChange("");
+              }
+            }}
+            keyboardType="decimal-pad"
+            placeholder={`Enter BMI (${question.validation?.min}-${question.validation?.max})`}
+            style={styles.textInput}
+            error={!!error}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text variant="titleMedium" style={styles.questionText}>
+        {question.text}
+        {question.required && <Text style={styles.required}> *</Text>}
+      </Text>
+      {renderInput()}
+      {error && (
+        <Text variant="bodySmall" style={styles.errorText}>
+          {error}
+        </Text>
+      )}
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     margin: 16,
@@ -306,5 +402,21 @@ const styles = StyleSheet.create({
     color: "#d32f2f",
     fontSize: 12,
     marginTop: 8,
+  },
+  radioOption: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+  },
+  radioLabel: {
+    marginLeft: 8,
+  },
+  textInput: {
+    marginBottom: 16,
+  },
+  required: {
+    fontSize: 12,
+    color: "#666",
+    marginLeft: 8,
   },
 });

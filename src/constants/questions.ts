@@ -875,3 +875,74 @@ export const getPreviousQuestion = (
 
   return visibleQuestions[currentIndex - 1];
 };
+
+// Personalization questions for lifestyle and preference filtering
+export interface PersonalizationQuestion {
+  id: string;
+  text: string;
+  type: "yes-no" | "select-one" | "numeric";
+  options?: string[];
+  required: boolean;
+  validation?: {
+    min?: number;
+    max?: number;
+  };
+}
+
+export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
+  {
+    id: "wantsFuturePregnancy",
+    text: "Do you want to have children in the future?",
+    type: "yes-no",
+    required: true,
+  },
+  {
+    id: "okayWithIrregularPeriods",
+    text: "Are you okay with having irregular periods or no periods at all?",
+    type: "yes-no",
+    required: true,
+  },
+  {
+    id: "wantsSurgicalMethod",
+    text: "Are you interested in a permanent surgical contraceptive method?",
+    type: "yes-no",
+    required: true,
+  },
+  {
+    id: "preferredFrequency",
+    text: "How often would you prefer to think about contraception?",
+    type: "select-one",
+    options: [
+      "Daily (every day)",
+      "Weekly (every week)",
+      "Monthly (every month)",
+      "Quarterly (every 3 months)",
+      "Yearly (every 8 years)",
+      "Long-term (3-8 years)",
+    ],
+    required: true,
+  },
+  {
+    id: "currentBMI",
+    text: "What is your current BMI? (Body Mass Index - kg/m²)",
+    type: "numeric",
+    required: false,
+    validation: {
+      min: 10,
+      max: 60,
+    },
+  },
+];
+
+// Helper to convert option text to value
+export const getFrequencyValue = (optionText: string): string => {
+  const mapping: Record<string, string> = {
+    "Daily (every day)": "daily",
+    "Weekly (every week)": "weekly",
+    "Monthly (every month)": "monthly",
+    "Quarterly (every 3 months)": "quarterly",
+    "Yearly (every 8 years)": "yearly",
+    "Long-term (3-8 years)": "long-term",
+  };
+  return mapping[optionText] || optionText;
+};
