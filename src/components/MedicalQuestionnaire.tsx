@@ -11,6 +11,7 @@ import {
   nextQuestion,
   previousQuestion,
   setComplete,
+  resetQuestionnaire,
 } from "../store/slices/questionnaire";
 import { setCalculating, setMECScores } from "../store/slices/results";
 import { getVisibleQuestions } from "../constants/questions";
@@ -176,6 +177,24 @@ export const MedicalQuestionnaire: React.FC = () => {
     return currentQuestion ? answers[currentQuestion.id] : undefined;
   };
 
+  const handleReset = () => {
+    Alert.alert(
+      "Reset Questionnaire",
+      "Are you sure you want to start over? All your answers will be lost.",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Reset",
+          style: "destructive",
+          onPress: () => {
+            dispatch(resetQuestionnaire());
+            setValidationError("");
+          },
+        },
+      ]
+    );
+  };
+
   if (!currentQuestion) {
     return (
       <View style={styles.container}>
@@ -187,22 +206,52 @@ export const MedicalQuestionnaire: React.FC = () => {
   // Don't show questionnaire if user is pregnant
   if (answers["pregnancy-check"] === "pregnant") {
     return (
-      <View style={styles.container}>
-        <Card style={styles.noticeCard}>
+      <ScrollView style={styles.container}>
+        <Card style={styles.pregnancyCard}>
           <Card.Content>
-            <Text variant="titleMedium">Important Notice</Text>
-            <Text style={styles.noticeText}>
-              You cannot use contraceptives while you are pregnant. Please consult with your
-              healthcare provider for appropriate prenatal care.
+            <Text variant="headlineSmall" style={styles.pregnancyTitle}>
+              ⚠️ Important Notice
             </Text>
+            <Text variant="bodyLarge" style={styles.pregnancyMessage}>
+              You cannot use contraceptives while you are pregnant.
+            </Text>
+            <Text variant="bodyMedium" style={styles.pregnancyAdvice}>
+              Please consult with your healthcare provider for guidance during pregnancy. You can
+              return to use this tool after delivery when you're ready to plan your contraceptive
+              options.
+            </Text>
+
+            <View style={styles.pregnancyActions}>
+              <Button
+                mode="contained"
+                onPress={() => router.push("/(drawer)/")}
+                style={styles.homeButton}
+              >
+                Return to Home
+              </Button>
+
+              <Button mode="outlined" onPress={handleReset} style={styles.resetButton}>
+                Start Over (for testing)
+              </Button>
+            </View>
           </Card.Content>
         </Card>
-      </View>
+      </ScrollView>
     );
   }
 
   return (
     <View style={styles.container}>
+      {/* Header with Reset */}
+      <View style={styles.headerContainer}>
+        <Text variant="titleMedium" style={styles.headerTitle}>
+          Medical Safety Assessment
+        </Text>
+        <Button mode="text" onPress={handleReset} style={styles.headerResetButton}>
+          Reset
+        </Button>
+      </View>
+
       {/* Progress Bar */}
       <View style={styles.progressContainer}>
         <Text style={styles.progressText}>
@@ -245,6 +294,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 16,
+    backgroundColor: "white",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
+  headerTitle: {
+    color: "#1976d2",
+  },
+  headerResetButton: {
+    marginRight: -8,
+  },
   progressContainer: {
     padding: 16,
     backgroundColor: "white",
@@ -281,5 +345,36 @@ const styles = StyleSheet.create({
   noticeText: {
     marginTop: 8,
     lineHeight: 20,
+  },
+  pregnancyCard: {
+    margin: 16,
+    backgroundColor: "#ffebee",
+    elevation: 4,
+  },
+  pregnancyTitle: {
+    textAlign: "center",
+    marginBottom: 16,
+    color: "#c62828",
+  },
+  pregnancyMessage: {
+    textAlign: "center",
+    marginBottom: 16,
+    color: "#c62828",
+    fontWeight: "bold",
+  },
+  pregnancyAdvice: {
+    textAlign: "center",
+    marginBottom: 24,
+    color: "#666",
+    lineHeight: 20,
+  },
+  pregnancyActions: {
+    gap: 12,
+  },
+  homeButton: {
+    backgroundColor: "#1976d2",
+  },
+  resetButton: {
+    borderColor: "#c62828",
   },
 });
