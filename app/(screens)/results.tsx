@@ -77,13 +77,15 @@ export default function ResultsPage() {
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       {/* Header with back button */}
       <View style={styles.headerContainer}>
-        <IconButton
-          icon="arrow-left"
-          mode="contained-tonal"
-          onPress={() => router.push("/(drawer)/medical-safety")}
-          style={styles.backButton}
-        />
-        <View style={styles.headerTextContainer}>
+        <View style={styles.backButtonRow}>
+          <IconButton
+            icon="arrow-left"
+            mode="contained-tonal"
+            onPress={() => router.push("/(drawer)/medical-safety")}
+            style={styles.backButton}
+          />
+        </View>
+        <View style={styles.titleContainer}>
           <Text variant="headlineSmall" style={styles.title}>
             Your Contraceptive Safety Assessment
           </Text>
@@ -202,31 +204,40 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   headerContainer: {
+    backgroundColor: "#fff",
+    paddingTop: 50,
+    paddingBottom: 24,
+    paddingHorizontal: 16,
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderBottomLeftRadius: 16,
+    borderBottomRightRadius: 16,
+  },
+  backButtonRow: {
     flexDirection: "row",
     alignItems: "center",
-    paddingTop: 20,
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-    backgroundColor: "#fff",
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
+    marginBottom: 16,
   },
   backButton: {
-    marginRight: 8,
+    margin: 0,
   },
-  headerTextContainer: {
-    flex: 1,
+  titleContainer: {
+    alignItems: "center",
+    paddingHorizontal: 16,
   },
   title: {
     textAlign: "center",
-    marginBottom: 4,
+    marginBottom: 8,
+    color: "#1a1a1a",
+    fontWeight: "600",
   },
   subtitle: {
     textAlign: "center",
     color: "#666",
+    fontSize: 14,
   },
   categoryCard: {
     margin: 16,
