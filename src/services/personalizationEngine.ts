@@ -91,19 +91,21 @@ export const personalizeRecommendations = (
   // Filter 4: Frequency preference
   if (filters.preferredFrequency) {
     let frequencyMethods: ContraceptiveMethodKey[] = [];
+    let shouldExcludeAllMethods = false;
 
     switch (filters.preferredFrequency) {
       case "daily":
         frequencyMethods = METHOD_FREQUENCY.daily; // ['a', 'c']
         break;
       case "every-3-weeks":
-        frequencyMethods = METHOD_FREQUENCY.weekly; // ['i'] - patch
-        // Check BMI for patch (method 'i')
+        // Check BMI for patch (method 'i') first
         if (filters.currentBMI && filters.currentBMI > 30) {
           notices.push(
             "Unfortunately, there's no safe method that can be used every 3 weeks for BMI >30"
           );
-          frequencyMethods = [];
+          shouldExcludeAllMethods = true;
+        } else {
+          frequencyMethods = METHOD_FREQUENCY.weekly; // ['i'] - patch
         }
         break;
       case "every-3-months":
@@ -117,8 +119,17 @@ export const personalizeRecommendations = (
         break;
     }
 
-    // Filter to only include preferred frequency methods
-    if (frequencyMethods.length > 0) {
+    if (shouldExcludeAllMethods) {
+      // When specific frequency requirement can't be met (like BMI >30 for patch), eliminate all methods
+      filteredMethods.forEach((method) => {
+        eliminated.push({
+          method,
+          reason: "No safe methods available for your preferred frequency with your BMI",
+        });
+      });
+      filteredMethods = [];
+    } else if (frequencyMethods.length > 0) {
+      // Filter to only include preferred frequency methods
       const nonFrequencyMethods = filteredMethods.filter(
         (m) => !frequencyMethods.includes(m) && m !== "j"
       );
@@ -133,8 +144,8 @@ export const personalizeRecommendations = (
     }
   }
 
-  // Always include barrier methods as they provide STI protection
-  if (!filteredMethods.includes("j")) {
+  // Add barrier methods for STI protection, but only if we haven't excluded all methods
+  if (filteredMethods.length > 0 && !filteredMethods.includes("j")) {
     filteredMethods.push("j");
   }
 
