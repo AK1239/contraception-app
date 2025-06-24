@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import { TextInput, RadioButton, Checkbox, Text, Card, Button } from "react-native-paper";
-import DatePicker from "react-native-date-picker";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Question, AnswerValue } from "../types";
 import { PersonalizationQuestion } from "../constants/questions";
 
@@ -223,22 +223,21 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               {value ? new Date(value as any).toLocaleDateString() : "Select Date"}
             </Button>
 
-            <DatePicker
-              modal
-              open={datePickerOpen}
-              date={dateValue}
-              mode="date"
-              maximumDate={maxDate}
-              minimumDate={minDate}
-              title="Select Date"
-              confirmText="Confirm"
-              cancelText="Cancel"
-              onConfirm={(selectedDate) => {
-                setDatePickerOpen(false);
-                onValueChange(selectedDate);
-              }}
-              onCancel={() => setDatePickerOpen(false)}
-            />
+            {datePickerOpen && (
+              <DateTimePicker
+                value={dateValue}
+                mode="date"
+                display={Platform.OS === "ios" ? "spinner" : "default"}
+                maximumDate={maxDate}
+                minimumDate={minDate}
+                onChange={(event, selectedDate) => {
+                  setDatePickerOpen(false);
+                  if (selectedDate) {
+                    onValueChange(selectedDate);
+                  }
+                }}
+              />
+            )}
           </View>
         );
 
