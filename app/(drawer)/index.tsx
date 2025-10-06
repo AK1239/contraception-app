@@ -19,15 +19,11 @@ export default function HomePage() {
           </Text>
 
           <Text variant="bodyLarge" style={styles.heroQuestion}>
-            Are you a healthcare provider or an individual seeking reliable and personalized
-            contraceptive options?
+            Are you a healthcare provider or an individual seeking reliable and personalized contraceptive options?
           </Text>
 
           <Text variant="bodyMedium" style={styles.heroDescription}>
-            ContraSafe is here to simplify and revolutionize the way we approach family planning. In
-            a world where access to accurate, understandable, and tailored contraceptive information
-            is critical—but often hard to find—we offer a smart, digital solution designed with you
-            in mind.
+            ContraSafe is here to simplify and revolutionize the way we approach family planning. In a world where access to accurate, understandable, and tailored contraceptive information is critical—but often hard to find—we offer a smart, digital solution designed with YOU in mind.
           </Text>
         </Card.Content>
       </Card>
@@ -74,19 +70,19 @@ export default function HomePage() {
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>🧠</Text>
               <Text variant="bodyMedium" style={styles.featureText}>
-                Powered by the WHO Medical Eligibility Criteria for Contraceptive Use (2015)
+                Powered by the WHO Medical Eligibility Criteria for Contraceptive Use (2015).
               </Text>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>👩‍⚕️</Text>
               <Text variant="bodyMedium" style={styles.featureText}>
-                Built to help providers make safe, evidence-based recommendations
+                Built to help providers make safe, evidence-based recommendations.
               </Text>
             </View>
             <View style={styles.featureItem}>
               <Text style={styles.featureIcon}>📱</Text>
               <Text variant="bodyMedium" style={styles.featureText}>
-                Easy for anyone to use – whether you're choosing for yourself or supporting others
+                Easy for anyone to use – whether you’re choosing for yourself or supporting others.
               </Text>
             </View>
           </View>
@@ -103,8 +99,7 @@ export default function HomePage() {
             <View style={styles.resultItem}>
               <Text style={styles.resultIcon}>✅</Text>
               <Text variant="bodyMedium" style={styles.resultText}>
-                A personalized list of safe contraceptive options based on your medical and
-                reproductive history
+                A personalized list of safe contraceptive options based on your medical and reproductive history
               </Text>
             </View>
             <View style={styles.resultItem}>
@@ -127,8 +122,7 @@ export default function HomePage() {
       <Card style={styles.ctaCard}>
         <Card.Content>
           <Text variant="titleMedium" style={styles.ctaTitle}>
-            🛡️ With ContraSafe, you're not just choosing a method—you're choosing safety,
-            confidence, and control over your reproductive health.
+            🛡 With ContraSafe, you’re not just choosing a method—you’re choosing safety, confidence, and control over your reproductive health.
           </Text>
 
           <View style={styles.buttonContainer}>
@@ -138,7 +132,7 @@ export default function HomePage() {
               style={styles.primaryButton}
               contentStyle={styles.buttonContent}
             >
-              Get Started
+              Tap to get started
             </Button>
 
             <Button
@@ -195,13 +189,15 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#FAFAFA",
   },
   heroCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#e3f2fd",
-    elevation: 4,
+    backgroundColor: "#E8F0FE",
+    elevation: 6,
+    borderRadius: 16,
+    overflow: "hidden",
   },
   heroTitle: {
     textAlign: "center",
@@ -229,7 +225,10 @@ const styles = StyleSheet.create({
   benefitsCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#f3e5f5",
+    backgroundColor: "#F9F5FF",
+    elevation: 3,
+    borderRadius: 16,
+    overflow: "hidden",
   },
   benefitsList: {
     gap: 12,
@@ -250,7 +249,10 @@ const styles = StyleSheet.create({
   whyCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#e8f5e8",
+    backgroundColor: "#E8F5E9",
+    elevation: 3,
+    borderRadius: 16,
+    overflow: "hidden",
   },
   sectionTitle: {
     fontWeight: "bold",
@@ -276,7 +278,10 @@ const styles = StyleSheet.create({
   resultsCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#fff3e0",
+    backgroundColor: "#FFF8E1",
+    elevation: 3,
+    borderRadius: 16,
+    overflow: "hidden",
   },
   resultsList: {
     gap: 16,
@@ -297,7 +302,10 @@ const styles = StyleSheet.create({
   ctaCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#ffebee",
+    backgroundColor: "#FFEBEE",
+    elevation: 3,
+    borderRadius: 16,
+    overflow: "hidden",
   },
   ctaTitle: {
     textAlign: "center",
@@ -321,6 +329,8 @@ const styles = StyleSheet.create({
   navigationCard: {
     margin: 16,
     marginBottom: 32,
+    borderRadius: 16,
+    overflow: "hidden",
   },
   navigationTitle: {
     fontWeight: "bold",

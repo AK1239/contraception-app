@@ -15,7 +15,7 @@ export default function DrawerLayout() {
         headerStyle: {
           backgroundColor: colorScheme === "dark" ? "#1a1a1a" : "#2196F3",
         },
-        headerTintColor: colorScheme === "dark" ? "#fffgi" : "#fff",
+        headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
         },
