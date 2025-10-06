@@ -7,13 +7,13 @@ export default function DrawerLayout() {
   return (
     <Drawer
       screenOptions={{
-        drawerActiveTintColor: "#2196F3",
+        drawerActiveTintColor: "#0066ff",
         drawerInactiveTintColor: "#666",
         drawerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#1a1a1a" : "#fff",
+          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#fff",
         },
         headerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#1a1a1a" : "#2196F3",
+          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#0066ff",
         },
         headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
         headerTitleStyle: {
