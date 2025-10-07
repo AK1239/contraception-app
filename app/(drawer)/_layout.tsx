@@ -1,5 +1,5 @@
 import { Drawer } from "expo-router/drawer";
-import { useColorScheme } from "react-native";
+import { useColorScheme, View, Image } from "react-native";
 
 export default function DrawerLayout() {
   const colorScheme = useColorScheme();
@@ -7,17 +7,18 @@ export default function DrawerLayout() {
   return (
     <Drawer
       screenOptions={{
-        drawerActiveTintColor: "#0066ff",
+        drawerActiveTintColor: "#6D28D9",
         drawerInactiveTintColor: "#666",
         drawerStyle: {
           backgroundColor: colorScheme === "dark" ? "#0b1220" : "#fff",
         },
         headerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#0066ff",
+          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
         },
         headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
+          fontFamily: "Poppins_600SemiBold",
         },
       }}
     >
@@ -26,6 +27,15 @@ export default function DrawerLayout() {
         options={{
           drawerLabel: "Home",
           title: "ContraSafe",
+          headerRight: () => (
+            <View style={{ marginRight: 16 }}>
+              <Image
+                source={require("../../assets/logo.png")}
+                style={{ width: 40, height: 40, borderRadius: 20 }}
+                resizeMode="cover"
+              />
+            </View>
+          ),
         }}
       />
       <Drawer.Screen

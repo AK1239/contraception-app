@@ -7,7 +7,7 @@ export default function WelcomeCard() {
   return (
     <Card style={styles.card} mode="elevated">
       <LinearGradient
-        colors={["#ffffff", "#f0f7ff", "#dbeafe", "#93c5fd"]}
+        colors={["#ffffff", "#F5F3FF", "#DDD6FE", "#A78BFA"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -23,7 +23,7 @@ export default function WelcomeCard() {
           </View>
 
           <View style={styles.iconContainer}>
-            <Text style={styles.icon}>💙</Text>
+            <Text style={styles.icon}>💜</Text>
           </View>
         </Card.Content>
       </LinearGradient>
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     overflow: "hidden",
     elevation: 4,
-    shadowColor: "#667eea",
+    shadowColor: "#6D28D9",
     shadowOffset: {
       width: 0,
       height: 8,
@@ -58,15 +58,16 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
-    color: "#1E3A8A",
+    color: "#4C1D95",
     fontWeight: "800",
     letterSpacing: -0.5,
-    lineHeight: 32,
+    lineHeight: 30,
+    fontSize: 22,
   },
   description: {
     color: "#1F2937",
-    lineHeight: 22,
-    fontSize: 15,
+    lineHeight: 20,
+    fontSize: 14,
     opacity: 0.9,
   },
   iconContainer: {

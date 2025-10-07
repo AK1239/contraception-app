@@ -29,14 +29,16 @@ export default function HomePage() {
         description="If you're a healthcare professional looking to select the safest contraceptive option for your client, head straight to the Choose Your Contraceptive – Medical Safety section."
         ctaLabel="Go to Medical Safety"
         onPress={() => router.push("/medical-safety")}
+        buttonColor="#EF4444"
       />
 
       <HomeSectionCard
         leadingEmoji="📚"
         title="For Women Seeking Information"
-        description="If you’d like to learn more about different contraceptives, explore the Know Your Contraceptive section."
+        description="If you'd like to learn more about different contraceptives, explore the Know Your Contraceptive section."
         ctaLabel="Know Your Contraceptive"
         onPress={() => router.push("/know-contraceptive")}
+        buttonColor="#3B82F6"
       />
 
       <HomeSectionCard
@@ -45,6 +47,7 @@ export default function HomePage() {
         description="Compare methods side by side with our Contraceptive Comparison Tool to see how they differ and decide what works best for you."
         ctaLabel="Compare Methods"
         onPress={() => router.push("/compare-methods")}
+        buttonColor="#EAB308"
       />
 
       <HomeSectionCard
@@ -53,6 +56,7 @@ export default function HomePage() {
         description="Not sure which method suits your needs? Visit the Personalize Your Contraceptive section for tailored recommendations."
         ctaLabel="Personalize Your Choice"
         onPress={() => router.push("/personalize")}
+        buttonColor="#EC4899"
       />
 
       <HomeSectionCard
@@ -61,6 +65,7 @@ export default function HomePage() {
         description="Prefer non-modern methods? Try our Standard Days Method Calculator to identify your fertile days and avoid unprotected intercourse during those times."
         ctaLabel="Standard Days Calculator"
         onPress={() => router.push("/standard-day-calculator")}
+        buttonColor="#22C55E"
       />
 
       <View style={styles.footerSpacer} />
@@ -71,7 +76,7 @@ export default function HomePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F8FAFC",
+    backgroundColor: "#FFFFFF",
   },
   welcomeContainer: {
     paddingHorizontal: 16,
@@ -86,14 +91,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: "#1E293B",
     fontWeight: "700",
-    fontSize: 18,
+    fontSize: 16,
     letterSpacing: -0.3,
     marginBottom: 12,
   },
   dividerLine: {
     height: 3,
     width: 50,
-    backgroundColor: "#667eea",
+    backgroundColor: "#6D28D9",
     borderRadius: 2,
   },
   footerSpacer: {

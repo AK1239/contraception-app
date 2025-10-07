@@ -8,9 +8,11 @@ type HomeSectionCardProps = {
   ctaLabel: string;
   onPress: () => void;
   leadingEmoji?: string;
+  backgroundColor?: string;
+  buttonColor?: string;
 };
 
-export default function HomeSectionCard({ title, description, ctaLabel, onPress, leadingEmoji }: HomeSectionCardProps) {
+export default function HomeSectionCard({ title, description, ctaLabel, onPress, leadingEmoji, backgroundColor = "#FFFFFF", buttonColor = "#6D28D9" }: HomeSectionCardProps) {
   return (
     <Pressable 
       onPress={onPress}
@@ -19,7 +21,7 @@ export default function HomeSectionCard({ title, description, ctaLabel, onPress,
         pressed && styles.pressed
       ]}
     >
-      <Card style={styles.card} mode="elevated">
+      <Card style={[styles.card, { backgroundColor }]} mode="elevated">
         <Card.Content style={styles.cardContent}>
           {/* Icon Container */}
           {leadingEmoji && (
@@ -43,10 +45,10 @@ export default function HomeSectionCard({ title, description, ctaLabel, onPress,
           <Button 
             mode="contained" 
             onPress={onPress}
-            style={styles.button} 
+            style={[styles.button, { backgroundColor: buttonColor }]} 
             contentStyle={styles.buttonContent}
             labelStyle={styles.buttonLabel}
-            elevation={0}
+            elevation={2}
           >
             {ctaLabel}
           </Button>
@@ -104,25 +106,34 @@ const styles = StyleSheet.create({
     color: "#0F172A",
     fontWeight: "700",
     letterSpacing: -0.5,
-    lineHeight: 28,
+    lineHeight: 26,
+    fontSize: 16,
   },
   description: {
     color: "#64748B",
-    lineHeight: 22,
-    fontSize: 15,
+    lineHeight: 20,
+    fontSize: 14,
   },
   button: {
-    backgroundColor: "#667eea",
     borderRadius: 14,
     marginTop: 4,
-    elevation: 0,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    borderWidth: 1,
+    borderColor: "rgba(255, 255, 255, 0.3)",
   },
   buttonContent: {
     paddingVertical: 6,
     paddingHorizontal: 8,
   },
   buttonLabel: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: "700",
     letterSpacing: 0.3,
   },
