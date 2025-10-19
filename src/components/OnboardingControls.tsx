@@ -25,14 +25,24 @@ export default function OnboardingControls({ isLast, onNext, onDone }: Onboardin
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
-    paddingVertical: 16,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
   },
   primaryButton: {
-    backgroundColor: "#2563EB",
+    backgroundColor: "#3B82F6",
+    borderRadius: 16,
+    shadowColor: "#3B82F6",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
   buttonContent: {
-    paddingVertical: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
   },
 });
 

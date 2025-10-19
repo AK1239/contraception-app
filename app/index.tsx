@@ -1,7 +1,8 @@
 import React from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { View, StyleSheet, useWindowDimensions, StatusBar } from "react-native";
 import { useRouter } from "expo-router";
 import Animated, { useSharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
+import { LinearGradient } from "expo-linear-gradient";
 import OnboardingSlide from "../src/components/OnboardingSlide";
 import OnboardingDots from "../src/components/OnboardingDots";
 import OnboardingControls from "../src/components/OnboardingControls";
@@ -13,20 +14,25 @@ export default function OnboardingScreen() {
 
   const slides = [
     {
-      title: "Welcome to ContraSafe",
+      title: "Welcome to\nContraSafe",
       subtitle: "Your Personalized Guide to Safer Family Planning",
-      body:
-        "Are you a healthcare provider or an individual seeking reliable and personalized contraceptive options?\n\nContraSafe is here to simplify and revolutionize the way we approach family planning. In a world where access to accurate, understandable, and tailored contraceptive information is critical—but often hard to find—we offer a smart, digital solution designed with YOU in mind.\n\n🩺No more guesswork.\n📋No more outdated cards or complex manuals.\n💡Just clear, guided choices based on your unique health profile.",
+      body: "Whether you're a healthcare provider or seeking reliable contraceptive options, ContraSafe simplifies family planning with a smart, digital solution designed with you in mind.",
+      logo: require("../assets/logo.png"),
+      color: "#6366f1",
     },
     {
-      title: "Why ContraSafe?",
-      body:
-        "🌍 Designed to meet the real needs of women and providers\n🧠 Powered by the WHO Medical Eligibility Criteria for Contraceptive Use (2015).\n👩‍⚕ Built to help providers make safe, evidence-based recommendations.\n📱 Easy for anyone to use – whether you’re choosing for yourself or supporting others.",
+      title: "Evidence-Based\nGuidance",
+      subtitle: "Powered by WHO Standards",
+      body: "Built on the WHO Medical Eligibility Criteria for Contraceptive Use (2015), providing safe, evidence-based recommendations you can trust.",
+      icon: "🧠",
+      color: "#8b5cf6",
     },
     {
-      title: "What You’ll Get:",
-      body:
-        "✅ A personalized list of safe contraceptive options based on your medical and reproductive history\n✅ Expert guidance on both modern and natural methods with a comparison feature\n✅ Confidence and clarity in every decision\n\n🛡 With ContraSafe, you’re not just choosing a method—you’re choosing safety, confidence, and control over your reproductive health.",
+      title: "Personalized\nRecommendations",
+      subtitle: "Tailored to Your Health Profile",
+      body: "Get a personalized list of safe options based on your medical history, with expert guidance on modern and natural methods—all in one place.",
+      icon: "💡",
+      color: "#ec4899",
     },
   ];
 
@@ -54,13 +60,26 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      <LinearGradient
+        colors={['#ffffff', '#f8fafc']}
+        style={styles.backgroundGradient}
+      />
+      
       <Animated.FlatList
         ref={flatListRef}
         data={slides}
         keyExtractor={(_, i) => String(i)}
         renderItem={({ item }) => (
           <View style={{ width }}>
-            <OnboardingSlide title={item.title} subtitle={item.subtitle} body={item.body} />
+            <OnboardingSlide 
+              title={item.title} 
+              subtitle={item.subtitle} 
+              body={item.body}
+              icon={item.icon}
+              logo={item.logo}
+              color={item.color}
+            />
           </View>
         )}
         horizontal
@@ -72,11 +91,14 @@ export default function OnboardingScreen() {
           if (newIndex !== index) setIndex(newIndex);
         }}
         scrollEventThrottle={16}
+        style={styles.flatList}
       />
 
       <View style={styles.footer}>
-        <OnboardingDots count={slides.length} activeIndex={index} />
-        <OnboardingControls isLast={index === slides.length - 1} onNext={handleNext} onDone={handleDone} />
+        <View style={styles.footerContent}>
+          <OnboardingDots count={slides.length} activeIndex={index} />
+          <OnboardingControls isLast={index === slides.length - 1} onNext={handleNext} onDone={handleDone} />
+        </View>
       </View>
     </View>
   );
@@ -87,11 +109,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
+  backgroundGradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  flatList: {
+    flex: 1,
+  },
   footer: {
-    paddingTop: 12,
-    paddingBottom: 24,
-    paddingHorizontal: 16,
-    gap: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  footerContent: {
+    paddingTop: 20,
+    paddingBottom: 32,
+    paddingHorizontal: 24,
+    gap: 20,
   },
 });
 
