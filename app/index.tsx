@@ -16,7 +16,7 @@ export default function OnboardingScreen() {
     {
       title: "Welcome to\nContraSafe",
       subtitle: "Your Personalized Guide to Safer Family Planning",
-      body: "Whether you're a healthcare provider or seeking reliable contraceptive options, ContraSafe simplifies family planning with a smart, digital solution designed with you in mind.",
+      body: "Whether you're a healthcare provider or a woman seeking reliable contraceptives, ContraSafe simplifies family planning with a safe digital solution",
       logo: require("../assets/logo.png"),
       color: "#6366f1",
     },
@@ -33,6 +33,13 @@ export default function OnboardingScreen() {
       body: "Get a personalized list of safe options based on your medical history, with expert guidance on modern and natural methods—all in one place.",
       icon: "💡",
       color: "#ec4899",
+    },
+    {
+      title: "Natural Family\nPlanning",
+      subtitle: "Standard Day Method Calculator",
+      body: "Take control of your fertility with our Standard Day Method calculator for those who prefer a natural approach",
+      icon: "🌱",
+      color: "#10b981",
     },
   ];
 
