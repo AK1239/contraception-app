@@ -1,11 +1,13 @@
 import { Drawer } from "expo-router/drawer";
 import { useColorScheme, View, Image } from "react-native";
+import CustomDrawerContent from "../../src/components/CustomDrawerContent";
 
 export default function DrawerLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <Drawer
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         drawerActiveTintColor: "#6D28D9",
         drawerInactiveTintColor: "#666",
@@ -74,17 +76,24 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
-        name="about-us"
+        name="natural-methods"
         options={{
-          drawerLabel: "About Us",
-          title: "About Us",
+          drawerLabel: "Natural Methods",
+          title: "Natural Methods",
         }}
       />
       <Drawer.Screen
-        name="faqs"
+        name="modern-methods"
         options={{
-          drawerLabel: "FAQs",
-          title: "Frequently Asked Questions",
+          drawerLabel: "Modern Methods",
+          title: "Modern Methods",
+        }}
+      />
+      <Drawer.Screen
+        name="standard-day-calculator"
+        options={{
+          drawerLabel: "Natural Standard Day Method Calculator",
+          title: "Standard Day Calculator",
         }}
       />
     </Drawer>
