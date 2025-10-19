@@ -21,37 +21,6 @@ export default function FertilePeriodResults({ fertilePeriod, calendarResult }: 
           Here's your personalized fertility calendar
         </Text>
         
-        {/* Cycle Analysis Card */}
-        <View style={styles.infoCard}>
-          <View style={styles.cardHeader}>
-            <Ionicons name="analytics" size={20} color="#6D28D9" />
-            <Text style={styles.sectionTitle}>Cycle Analysis</Text>
-          </View>
-          
-          <View style={styles.statRow}>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Shortest Cycle</Text>
-              <Text style={styles.statValue}>{fertilePeriod.shortestCycle}</Text>
-              <Text style={styles.statUnit}>days</Text>
-            </View>
-            
-            <View style={styles.statDivider} />
-            
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Longest Cycle</Text>
-              <Text style={styles.statValue}>{fertilePeriod.longestCycle}</Text>
-              <Text style={styles.statUnit}>days</Text>
-            </View>
-            
-            <View style={styles.statDivider} />
-            
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Fertile Days</Text>
-              <Text style={styles.statValue}>{fertilePeriod.fertilePeriodDays}</Text>
-              <Text style={styles.statUnit}>days</Text>
-            </View>
-          </View>
-        </View>
 
         {/* Fertile Period Card */}
         <View style={[styles.infoCard, styles.fertileCard]}>
@@ -143,6 +112,13 @@ export default function FertilePeriodResults({ fertilePeriod, calendarResult }: 
           <View style={styles.reminderItem}>
             <Ionicons name="checkmark-circle-outline" size={18} color="#F59E0B" />
             <Text style={styles.reminderText}>
+              These results apply only to this cycle; update after your next period begins.
+            </Text>
+          </View>
+          
+          <View style={styles.reminderItem}>
+            <Ionicons name="checkmark-circle-outline" size={18} color="#F59E0B" />
+            <Text style={styles.reminderText}>
               Avoid intercourse during your fertile period to prevent pregnancy
             </Text>
           </View>
@@ -158,13 +134,6 @@ export default function FertilePeriodResults({ fertilePeriod, calendarResult }: 
             <Ionicons name="checkmark-circle-outline" size={18} color="#F59E0B" />
             <Text style={styles.reminderText}>
               Track your cycles consistently for better accuracy
-            </Text>
-          </View>
-          
-          <View style={styles.reminderItem}>
-            <Ionicons name="checkmark-circle-outline" size={18} color="#F59E0B" />
-            <Text style={styles.reminderText}>
-              Consider additional protection during fertile days
             </Text>
           </View>
         </View>
@@ -233,40 +202,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_700Bold',
   },
   
-  // Stats Row
-  statRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  statItem: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#6B7280',
-    marginBottom: 8,
-    textAlign: 'center',
-    fontFamily: 'Poppins_500Medium',
-  },
-  statValue: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#6D28D9',
-    fontFamily: 'Poppins_700Bold',
-  },
-  statUnit: {
-    fontSize: 12,
-    color: '#9CA3AF',
-    marginTop: 2,
-    fontFamily: 'Poppins_400Regular',
-  },
-  statDivider: {
-    width: 1,
-    height: 50,
-    backgroundColor: '#E5E7EB',
-  },
   
   // Fertile Card
   fertileCard: {

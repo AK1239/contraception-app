@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Alert, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
-import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import CycleInputForm from "../../src/components/CycleInputForm";
 import FertilePeriodCalendar from "../../src/components/FertilePeriodCalendar";
@@ -60,14 +59,9 @@ export default function StandardDayCalculator() {
 
   const renderWelcomeScreen = () => (
     <View style={styles.welcomeContainer}>
-      <LinearGradient
-        colors={['#8B5CF6', '#6D28D9']}
-        style={styles.welcomeCard}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
+      <View style={styles.welcomeCard}>
         <View style={styles.iconContainer}>
-          <Ionicons name="calendar-outline" size={80} color="#fff" />
+          <Ionicons name="calendar-outline" size={80} color="#059669" />
         </View>
         
         <Text style={styles.welcomeTitle}>Natural Standard Day Method</Text>
@@ -75,7 +69,7 @@ export default function StandardDayCalculator() {
         
         <View style={styles.noteCard}>
           <View style={styles.noteHeader}>
-            <Ionicons name="information-circle" size={24} color="#6D28D9" />
+            <Ionicons name="information-circle" size={24} color="#059669" />
             <Text style={styles.noteHeaderText}>Before You Begin</Text>
           </View>
           
@@ -106,9 +100,9 @@ export default function StandardDayCalculator() {
           onPress={() => setCurrentStep('input')}
         >
           <Text style={styles.nextButtonText}>Get Started</Text>
-          <Ionicons name="arrow-forward" size={20} color="#6D28D9" />
+          <Ionicons name="arrow-forward" size={20} color="#fff" />
         </TouchableOpacity>
-      </LinearGradient>
+      </View>
     </View>
   );
 
@@ -213,45 +207,52 @@ const styles = StyleSheet.create({
     minHeight: 600,
   },
   welcomeCard: {
+    backgroundColor: "#fff",
     borderRadius: 24,
     padding: 32,
     alignItems: "center",
-    shadowColor: "#6D28D9",
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 16,
-    elevation: 10,
+    shadowOpacity: 0.1,
+    shadowRadius: 24,
+    elevation: 8,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   iconContainer: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: "#F0FDF4",
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 24,
+    borderWidth: 2,
+    borderColor: "#D1FAE5",
   },
   welcomeTitle: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#fff",
+    color: "#111827",
     textAlign: "center",
     marginBottom: 8,
     fontFamily: "Poppins_700Bold",
   },
   welcomeSubtitle: {
     fontSize: 18,
-    color: "#E9D5FF",
+    color: "#6B7280",
     textAlign: "center",
     marginBottom: 32,
     fontFamily: "Poppins_400Regular",
   },
   noteCard: {
-    backgroundColor: "#fff",
+    backgroundColor: "#F9FAFB",
     borderRadius: 16,
     padding: 24,
     width: "100%",
     marginBottom: 32,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   noteHeader: {
     flexDirection: "row",
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
   noteHeaderText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#6D28D9",
+    color: "#059669",
     fontFamily: "Poppins_700Bold",
   },
   requirementItem: {
@@ -280,11 +281,11 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
-    color: "#6D28D9",
+    color: "#059669",
     fontFamily: "Poppins_700Bold",
   },
   nextButton: {
-    backgroundColor: "#fff",
+    backgroundColor: "#059669",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -292,16 +293,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 12,
     gap: 8,
-    shadowColor: "#000",
+    shadowColor: "#059669",
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowRadius: 8,
     elevation: 4,
   },
   nextButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#6D28D9",
+    color: "#fff",
     fontFamily: "Poppins_700Bold",
   },
   
@@ -325,7 +326,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: "100%",
-    backgroundColor: "#6D28D9",
+    backgroundColor: "#059669",
     borderRadius: 3,
   },
   stepIndicator: {
@@ -347,7 +348,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   stepCircleActive: {
-    backgroundColor: "#6D28D9",
+    backgroundColor: "#059669",
   },
   stepNumber: {
     fontSize: 16,
@@ -385,8 +386,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: "#6D28D9",
-    shadowColor: "#6D28D9",
+    borderColor: "#059669",
+    shadowColor: "#059669",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
   },
   resetButtonText: {
     fontSize: 16,
-    color: "#6D28D9",
+    color: "#059669",
     fontWeight: "600",
     fontFamily: "Poppins_600SemiBold",
   },

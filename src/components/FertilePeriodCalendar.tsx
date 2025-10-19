@@ -10,16 +10,26 @@ interface FertilePeriodCalendarProps {
 
 export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: FertilePeriodCalendarProps) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [displayMonth, setDisplayMonth] = useState(new Date());
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
     onDateSelect(date);
   };
 
+  const navigateMonth = (direction: 'prev' | 'next') => {
+    const newMonth = new Date(displayMonth);
+    if (direction === 'prev') {
+      newMonth.setMonth(newMonth.getMonth() - 1);
+    } else {
+      newMonth.setMonth(newMonth.getMonth() + 1);
+    }
+    setDisplayMonth(newMonth);
+  };
+
   const getCalendarDays = () => {
-    const today = new Date();
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
+    const currentMonth = displayMonth.getMonth();
+    const currentYear = displayMonth.getFullYear();
     
     const firstDay = new Date(currentYear, currentMonth, 1);
     const startDate = new Date(firstDay);
@@ -46,10 +56,6 @@ export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: 
     const checkDate = new Date(date);
     checkDate.setHours(0, 0, 0, 0);
     
-    if (checkDate < today) {
-      return styles.pastDate;
-    }
-    
     if (calendarResult) {
       if (isDateInRange(checkDate, calendarResult.fertileStartDate, calendarResult.fertileEndDate)) {
         return styles.fertileDate;
@@ -67,10 +73,6 @@ export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: 
     today.setHours(0, 0, 0, 0);
     const checkDate = new Date(date);
     checkDate.setHours(0, 0, 0, 0);
-    
-    if (checkDate < today) {
-      return styles.pastDateText;
-    }
     
     if (calendarResult) {
       if (isDateInRange(checkDate, calendarResult.fertileStartDate, calendarResult.fertileEndDate)) {
@@ -90,8 +92,8 @@ export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: 
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const currentMonth = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
+  const currentMonth = displayMonth.getMonth();
+  const currentYear = displayMonth.getFullYear();
 
   return (
     <View style={styles.container}>
@@ -107,13 +109,19 @@ export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: 
         
         <View style={styles.calendarContainer}>
           <View style={styles.monthHeader}>
-            <TouchableOpacity style={styles.monthNav}>
+            <TouchableOpacity 
+              style={styles.monthNav}
+              onPress={() => navigateMonth('prev')}
+            >
               <Ionicons name="chevron-back" size={24} color="#6D28D9" />
             </TouchableOpacity>
             <Text style={styles.monthTitle}>
               {monthNames[currentMonth]} {currentYear}
             </Text>
-            <TouchableOpacity style={styles.monthNav}>
+            <TouchableOpacity 
+              style={styles.monthNav}
+              onPress={() => navigateMonth('next')}
+            >
               <Ionicons name="chevron-forward" size={24} color="#6D28D9" />
             </TouchableOpacity>
           </View>
@@ -147,7 +155,6 @@ export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: 
                     isToday && !isSelected && styles.todayDate,
                   ]}
                   onPress={() => handleDateSelect(date)}
-                  disabled={!isCurrentMonth}
                 >
                   <Text style={[
                     styles.dateText,
@@ -314,12 +321,6 @@ const styles = StyleSheet.create({
   fertileDateText: {
     color: '#991B1B',
     fontWeight: 'bold',
-  },
-  pastDate: {
-    backgroundColor: 'transparent',
-  },
-  pastDateText: {
-    color: '#D1D5DB',
   },
   otherMonthDate: {
     backgroundColor: 'transparent',
