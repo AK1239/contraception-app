@@ -12,7 +12,7 @@ export default function NaturalMethodsScreen() {
   };
 
   const handleStandardDaysKnowMore = () => {
-    console.log('Standard Days Know More clicked');
+    router.push('/(drawer)/standard-days-method');
   };
 
   return (

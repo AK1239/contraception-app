@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from 'react-native-paper';
 import ExpandableSection from '../../src/components/ExpandableSection';
 
-export default function LactationalAmenorrheaDetails() {
+export default function StandardDaysMethodDetails() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView 
@@ -14,16 +14,16 @@ export default function LactationalAmenorrheaDetails() {
         {/* Header */}
         <View style={styles.headerCard}>
           <View style={styles.iconContainer}>
-            <Text style={styles.icon}>🤱</Text>
+            <Text style={styles.icon}>📅</Text>
           </View>
           <Text variant="headlineMedium" style={styles.title}>
-            Lactational Amenorrhea Method
+            Standard Days Method
           </Text>
           <Text variant="titleSmall" style={styles.subtitle}>
-            LAM
+            Natural Family Planning
           </Text>
           <Text variant="bodyMedium" style={styles.description}>
-            Natural contraception for breastfeeding women
+            A natural contraceptive method based on menstrual cycle tracking
           </Text>
         </View>
 
@@ -31,19 +31,36 @@ export default function LactationalAmenorrheaDetails() {
         <View style={styles.sectionsContainer}>
           <ExpandableSection title="Description" icon="📝">
             <Text variant="bodyMedium" style={styles.sectionText}>
-              The act of breastfeeding changes the body's hormone balance in a way that you cannot get 
-              pregnant. This method only works for breastfeeding women and can be a very good contraceptive 
-              in the first 6 months of breastfeeding.
+              To understand the standard day method, you need to understand the menstrual cycle. The ovaries 
+              in your body are responsible for producing eggs that can be potentially fertilized by sperm. The 
+              egg is released once a month, The method predicts when the egg is out and that you should avoid 
+              sexual intercourse during the days when the egg is potentially out.
+            </Text>
+            <View style={{ height: 20 }} />
+            <Text variant="bodyMedium" style={styles.sectionText}>
+              Once the egg is out, it can survive for up to <Text style={styles.highlight}>24 hours</Text> and the sperms can fertilize the eggs for up 
+              to <Text style={styles.highlight}>3 days</Text>. Since the menstrual cycle is different for every woman, the days when the egg is out 
+              may also vary. Hence why there is a calculator to determine the fertile window (days when the egg 
+              is possibly out and when the sperms can fertilize the egg).
+            </Text>
+            <View style={{ height: 20 }} />
+            <Text variant="bodyMedium" style={styles.sectionText}>
+              The fertile window calculator can be found in the sidebar.
             </Text>
           </ExpandableSection>
 
           <ExpandableSection title="Efficacy" icon="📊">
             <View style={styles.efficacyBadge}>
-              <Text style={styles.efficacyLabel}>Excellent</Text>
+              <Text style={styles.efficacyLabel}>Good</Text>
             </View>
             <Text variant="bodyMedium" style={styles.sectionText}>
-              The perfect use failure rate is <Text style={styles.highlight}>2%</Text>. Meaning that there is a chance that 2 in 100 women 
-              will get pregnant if they use this method perfectly.
+              If perfectly used, the chance of pregnancy is <Text style={styles.highlight}>5%</Text>, meaning that 95 out of 100 women will not 
+              become pregnant if this method is used perfectly.
+            </Text>
+            <View style={{ height: 20 }} />
+            <Text variant="bodyMedium" style={styles.sectionText}>
+              With typical use, the chance of pregnancy is <Text style={styles.highlight}>25%</Text>, meaning that 75 out of 100 women will not 
+              become pregnant if this method is used.
             </Text>
           </ExpandableSection>
 
@@ -52,19 +69,19 @@ export default function LactationalAmenorrheaDetails() {
               <View style={styles.listItemRow}>
                 <View style={styles.bullet} />
                 <Text variant="bodyMedium" style={styles.listItemText}>
-                  It can be used immediately after childbirth
+                  No side/adverse effects
                 </Text>
               </View>
               <View style={styles.listItemRow}>
                 <View style={styles.bullet} />
                 <Text variant="bodyMedium" style={styles.listItemText}>
-                  Periods are absent during the course of breastfeeding
+                  No cost
                 </Text>
               </View>
               <View style={styles.listItemRow}>
                 <View style={styles.bullet} />
                 <Text variant="bodyMedium" style={styles.listItemText}>
-                  The process of returning to the normal stage after pregnancy is quicker
+                  May be the only method acceptable to couples for cultural or religious reasons
                 </Text>
               </View>
             </View>
@@ -75,14 +92,13 @@ export default function LactationalAmenorrheaDetails() {
               <View style={styles.listItemRow}>
                 <View style={[styles.bullet, styles.bulletWarning]} />
                 <Text variant="bodyMedium" style={styles.listItemText}>
-                  May be inconvenient
+                  There is a significant chance of pregnancy
                 </Text>
               </View>
               <View style={styles.listItemRow}>
                 <View style={[styles.bullet, styles.bulletWarning]} />
                 <Text variant="bodyMedium" style={styles.listItemText}>
-                  It is difficult to predict when your fertility will return. Usually after 6 months, 
-                  but can also occur before this time
+                  Will not work if you have irregular menstrual cycles
                 </Text>
               </View>
             </View>
@@ -90,57 +106,57 @@ export default function LactationalAmenorrheaDetails() {
 
           <ExpandableSection title="How to Use" icon="📋">
             <Text variant="bodyMedium" style={styles.sectionText}>
-              A minimum exclusive breastfeeding frequency of every <Text style={styles.highlight}>4 hours during the day</Text> and every <Text style={styles.highlight}>6 hours at night</Text>.
+              Keep track of your menstrual cycle and the days where fertility is likely using a calendar.
             </Text>
           </ExpandableSection>
 
           <ExpandableSection title="Time to Work" icon="⏰">
             <Text variant="bodyMedium" style={styles.sectionText}>
-              Effective immediately after birth.
+              Immediate
             </Text>
           </ExpandableSection>
 
           <ExpandableSection title="Conditions Required" icon="🔒">
             <View style={styles.warningBox}>
               <Text variant="bodyMedium" style={styles.warningTitle}>
-                All of the following must be met:
+                Conditions required to be effective:
               </Text>
             </View>
-            <View style={styles.listContainer}>
-              <View style={styles.listItemRow}>
-                <View style={styles.bulletImportant} />
-                <Text variant="bodyMedium" style={styles.listItemText}>
-                  Breastfeeding every 4 hours during the day and every 6 hours at night
-                </Text>
-              </View>
-              <View style={styles.listItemRow}>
-                <View style={styles.bulletImportant} />
-                <Text variant="bodyMedium" style={styles.listItemText}>
-                  No supplementation of other foods or formula
-                </Text>
-              </View>
-              <View style={styles.listItemRow}>
-                <View style={styles.bulletImportant} />
-                <Text variant="bodyMedium" style={styles.listItemText}>
-                  No return to menses
-                </Text>
-              </View>
-              <View style={styles.listItemRow}>
-                <View style={styles.bulletImportant} />
-                <Text variant="bodyMedium" style={styles.listItemText}>
-                  The baby must be younger than 6 months for perfect use
-                </Text>
-              </View>
+            <Text variant="bodyMedium" style={styles.sectionText}>
+              Requires you to have regular menstrual cycles (cycle variation should not be more than <Text style={styles.highlight}>7 days</Text>). If 
+              your recent cycle took 28 days, the next one should occur not less than 21 days and no more than 35 days.
+            </Text>
+          </ExpandableSection>
+
+          <ExpandableSection title="Additional Methods" icon="🔬">
+            <Text variant="bodyMedium" style={styles.sectionText}>
+              As the fertile window is 100% difficult to predict. You can use the below additional methods to 
+              increases the chances of finding the fertile period:
+            </Text>
+            <View style={{ height: 12 }} />
+            <View style={styles.subsectionContainer}>
+              <Text variant="titleSmall" style={styles.subsectionTitle}>
+                A. The Cervical Mucus Method
+              </Text>
+              <Text variant="bodyMedium" style={styles.sectionText}>
+                The cervix is door of the womb. It normally produces mucus to lubricate the vagina. The mucus 
+                thickness is maximum when the egg is out hence Intercourse is allowed <Text style={styles.highlight}>4 days after the maximal 
+                cervical mucus</Text> until menstruation as within this period the egg is probably dead.
+              </Text>
             </View>
-            <View style={styles.noteBox}>
-              <Text variant="bodySmall" style={styles.noteText}>
-                The efficacy of this method reduces after 6 months of delivery.
+            <View style={{ height: 12 }} />
+
+            <View style={styles.subsectionContainer}>
+              <Text variant="titleSmall" style={styles.subsectionTitle}>
+                B. The Symptothermal Method
+              </Text>
+              <Text variant="bodyMedium" style={styles.sectionText}>
+                When the egg is out, the body temperature also rises. Temperature rise typically ranges between 
+                <Text style={styles.highlight}>0.2 and 0.5°C</Text>. Intercourse may be safe <Text style={styles.highlight}>three days after the temperature elevation begins</Text> until the next period.
               </Text>
             </View>
           </ExpandableSection>
         </View>
-
-
       </ScrollView>
     </SafeAreaView>
   );
@@ -169,7 +185,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#FEF3C7',
+    backgroundColor: '#F0FDF4',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
@@ -238,14 +254,6 @@ const styles = StyleSheet.create({
   bulletWarning: {
     backgroundColor: '#F59E0B',
   },
-  bulletImportant: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#EF4444',
-    marginTop: 8,
-    marginRight: 12,
-  },
   listItemText: {
     flex: 1,
     color: '#4B5563',
@@ -265,17 +273,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
   },
-  noteBox: {
-    backgroundColor: '#FFFBEB',
-    padding: 12,
-    borderRadius: 8,
+  subsectionContainer: {
     marginTop: 16,
-    borderLeftWidth: 3,
-    borderLeftColor: '#F59E0B',
+    paddingLeft: 8,
   },
-  noteText: {
-    color: '#78350F',
-    lineHeight: 20,
-    fontStyle: 'italic',
+  subsectionTitle: {
+    color: '#111827',
+    fontWeight: '600',
+    marginBottom: 8,
+    fontSize: 16,
   },
 });

@@ -103,6 +103,13 @@ export default function DrawerLayout() {
           title: "Lactational Amenorrhea Method",
         }}
       />
+      <Drawer.Screen
+        name="standard-days-method"
+        options={{
+          drawerLabel: "Standard Days Method",
+          title: "Standard Days Method",
+        }}
+      />
     </Drawer>
   );
 }
