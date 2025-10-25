@@ -1,16 +1,44 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import NaturalMethodCard from '../../src/components/NaturalMethodCard';
 
 export default function NaturalMethodsScreen() {
+  const handleLAMKnowMore = () => {
+    // TODO: Implement navigation to LAM details
+    console.log('LAM Know More clicked');
+  };
+
+  const handleStandardDaysKnowMore = () => {
+    console.log('Standard Days Know More clicked');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
-        <Text style={styles.title}>Natural Methods</Text>
-        <Text style={styles.subtitle}>Coming Soon</Text>
-        <Text style={styles.description}>
-          This page will contain information about natural contraceptive methods.
-        </Text>
+      
+        {/* Method Cards */}
+        <View style={styles.methodsContainer}>
+          <NaturalMethodCard
+            title="Lactational Amenorrhea"
+            description="A natural contraceptive method for breastfeeding women. When practiced correctly, exclusive breastfeeding can provide up to 98% protection against pregnancy for the first 6 months postpartum."
+            icon="🤱"
+            onKnowMorePress={handleLAMKnowMore}
+            backgroundColor="#F0F9FF"
+            buttonColor="#0EA5E9"
+          />
+
+          <NaturalMethodCard
+            title="Standard Days Method"
+            description="A natural family planning method that identifies the 12 fertile days in a woman's cycle. Most effective for women with cycles between 26-32 days."
+            icon="📅"
+            onKnowMorePress={handleStandardDaysKnowMore}
+            backgroundColor="#F0FDF4"
+            buttonColor="#10B981"
+          />
+        </View>
+
+    
       </ScrollView>
     </SafeAreaView>
   );
@@ -19,29 +47,50 @@ export default function NaturalMethodsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   content: {
     flex: 1,
-    padding: 20,
+  },
+  headerCard: {
+    margin: 16,
+    marginBottom: 8,
+    backgroundColor: '#E8F5E8',
+    borderRadius: 16,
+    elevation: 2,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#6D28D9',
-    fontFamily: 'Poppins_700Bold',
-    marginBottom: 10,
+    color: '#2E7D32',
+    textAlign: 'center',
+    marginBottom: 8,
   },
   subtitle: {
-    fontSize: 18,
-    color: '#666',
-    fontFamily: 'Poppins_500Medium',
-    marginBottom: 20,
-  },
-  description: {
     fontSize: 16,
-    color: '#333',
-    fontFamily: 'Poppins_400Regular',
-    lineHeight: 24,
+    color: '#388E3C',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  methodsContainer: {
+    paddingHorizontal: 0,
+  },
+  infoCard: {
+    margin: 16,
+    marginTop: 8,
+    backgroundColor: '#FFF3E0',
+    borderRadius: 16,
+    elevation: 2,
+  },
+  infoTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#E65100',
+    marginBottom: 8,
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#BF360C',
+    lineHeight: 20,
   },
 });
