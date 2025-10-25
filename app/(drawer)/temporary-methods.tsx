@@ -43,7 +43,7 @@ export default function TemporaryMethodsScreen() {
           />
 
           <TemporaryMethodCard
-            title="Intrauterine Devices (IUDs) Methods"
+            title="Intrauterine Device Methods"
             description="Intrauterine devices that are inserted into the uterus. Includes hormonal and copper IUDs. Long-lasting, highly effective, and reversible contraceptive options."
             icon="🔧"
             onExplorePress={handleIUDExplore}
