@@ -1,16 +1,42 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ModernMethodCard from '../../src/components/ModernMethodCard';
 
 export default function ModernMethodsScreen() {
+  const handleTemporaryOptions = () => {
+    // TODO: Navigate to temporary methods options
+    console.log('Temporary methods options clicked');
+  };
+
+  const handlePermanentOptions = () => {
+    // TODO: Navigate to permanent methods options
+    console.log('Permanent methods options clicked');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
-        <Text style={styles.title}>Modern Methods</Text>
-        <Text style={styles.subtitle}>Coming Soon</Text>
-        <Text style={styles.description}>
-          This page will contain information about modern contraceptive methods.
-        </Text>
+        {/* Method Cards */}
+        <View style={styles.methodsContainer}>
+          <ModernMethodCard
+            title="Temporary Methods"
+            description="Reversible contraceptive methods that can be stopped when you want to conceive. Includes hormonal and non-hormonal options with varying effectiveness and duration."
+            icon="💊"
+            onSeeOptionsPress={handleTemporaryOptions}
+            backgroundColor="#F0F9FF"
+            buttonColor="#0EA5E9"
+          />
+
+          <ModernMethodCard
+            title="Permanent Methods"
+            description="Long-term contraceptive solutions that provide permanent protection against pregnancy. These methods are typically irreversible and suitable for those who have completed their family planning."
+            icon="🔒"
+            onSeeOptionsPress={handlePermanentOptions}
+            backgroundColor="#F0FDF4"
+            buttonColor="#10B981"
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -19,29 +45,12 @@ export default function ModernMethodsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   content: {
     flex: 1,
-    padding: 20,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#6D28D9',
-    fontFamily: 'Poppins_700Bold',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
-    fontFamily: 'Poppins_500Medium',
-    marginBottom: 20,
-  },
-  description: {
-    fontSize: 16,
-    color: '#333',
-    fontFamily: 'Poppins_400Regular',
-    lineHeight: 24,
+  methodsContainer: {
+    paddingHorizontal: 0,
   },
 });
