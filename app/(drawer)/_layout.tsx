@@ -90,6 +90,13 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
+        name="temporary-methods"
+        options={{
+          drawerLabel: "Temporary Methods",
+          title: "Temporary Methods",
+        }}
+      />
+      <Drawer.Screen
         name="standard-day-calculator"
         options={{
           drawerLabel: "Natural Standard Day Method Calculator",
