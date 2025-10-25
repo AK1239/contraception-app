@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import ModernMethodCard from '../../src/components/ModernMethodCard';
 
 export default function ModernMethodsScreen() {
+  const router = useRouter();
+
   const handleTemporaryOptions = () => {
-    // TODO: Navigate to temporary methods options
-    console.log('Temporary methods options clicked');
+    router.push('/(drawer)/temporary-methods');
   };
 
   const handlePermanentOptions = () => {
