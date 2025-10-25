@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import NaturalMethodCard from '../../src/components/NaturalMethodCard';
 
 export default function NaturalMethodsScreen() {
+  const router = useRouter();
+
   const handleLAMKnowMore = () => {
-    // TODO: Implement navigation to LAM details
-    console.log('LAM Know More clicked');
+    router.push('/(screens)/contraceptive/lactational-amenorrhea');
   };
 
   const handleStandardDaysKnowMore = () => {
