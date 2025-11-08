@@ -21,6 +21,12 @@ export interface PersonalizationFilters {
 
 /**
  * Filter eligible methods based on personalization preferences
+ * New algorithm flow:
+ * 1. Q1: Future pregnancy? Yes → eliminate h, No → ask about surgery
+ *    - If surgery = Yes → return only h
+ *    - If surgery = No → continue
+ * 2. Q2: Irregular periods okay? No → keep only a, i, j, k
+ * 3. Q3: Frequency preference → filter to only available methods for that frequency
  */
 export const personalizeRecommendations = (
   eligibleMethods: ContraceptiveMethodKey[],
@@ -29,10 +35,12 @@ export const personalizeRecommendations = (
   recommended: ContraceptiveMethodKey[];
   notices: string[];
   eliminated: { method: ContraceptiveMethodKey; reason: string }[];
+  shouldShowPermanentMethods?: boolean;
 } => {
   let filteredMethods = [...eligibleMethods];
   const eliminated: { method: ContraceptiveMethodKey; reason: string }[] = [];
   const notices: string[] = [];
+  let shouldShowPermanentMethods = false;
 
   // Add additional methods for personalization (h, i, j, k)
   const additionalMethods: ContraceptiveMethodKey[] = ["h", "i", "j", "k"];
@@ -42,8 +50,9 @@ export const personalizeRecommendations = (
     }
   });
 
-  // Filter 1: Future pregnancy plans
+  // Filter 1: Future pregnancy plans (Question 1)
   if (filters.wantsFuturePregnancy === true) {
+    // Yes - eliminate h and proceed to question 2
     if (filteredMethods.includes("h")) {
       eliminated.push({
         method: "h",
@@ -51,51 +60,63 @@ export const personalizeRecommendations = (
       });
       filteredMethods = filteredMethods.filter((m) => m !== "h");
     }
+  } else if (filters.wantsFuturePregnancy === false) {
+    // No - ask about surgery
+    if (filters.wantsSurgicalMethod === true) {
+      // User wants surgical method - suggest only h
+      if (filteredMethods.includes("h")) {
+        shouldShowPermanentMethods = true;
+        return {
+          recommended: ["h"],
+          notices: ["Sterilization is permanent and fertility is not reversible"],
+          eliminated,
+          shouldShowPermanentMethods: true,
+        };
+      } else {
+        notices.push(
+          "Sterilization may not be medically suitable for you based on your health profile"
+        );
+        return {
+          recommended: [],
+          notices,
+          eliminated,
+        };
+      }
+    } else if (filters.wantsSurgicalMethod === false) {
+      // User doesn't want surgical method - remove h and continue
+      if (filteredMethods.includes("h")) {
+        eliminated.push({ method: "h", reason: "Does not want surgical method" });
+        filteredMethods = filteredMethods.filter((m) => m !== "h");
+      }
+    }
+    // If wantsSurgicalMethod is undefined, continue without filtering h
   }
 
-  // Filter 2: Regular periods preference
+  // Filter 2: Regular periods preference (Question 2)
   if (filters.okayWithIrregularPeriods === false) {
     // Only keep methods that maintain regular periods: a, i, j, k
-    const irregularMethods: ContraceptiveMethodKey[] = ["b", "c", "d", "e", "f", "g", "h"];
+    const regularPeriodMethods: ContraceptiveMethodKey[] = ["a", "i", "j", "k"];
+    const methodsToEliminate = filteredMethods.filter(
+      (m) => !regularPeriodMethods.includes(m)
+    );
 
-    irregularMethods.forEach((method) => {
-      if (filteredMethods.includes(method)) {
-        eliminated.push({ method, reason: "May cause irregular or no periods" });
-        filteredMethods = filteredMethods.filter((m) => m !== method);
-      }
+    methodsToEliminate.forEach((method) => {
+      eliminated.push({ method, reason: "May cause irregular or no periods" });
     });
+
+    filteredMethods = filteredMethods.filter((m) => regularPeriodMethods.includes(m));
   }
 
-  // Filter 3: Surgical method preference
-  if (filters.wantsSurgicalMethod === true) {
-    // Only suggest sterilization if available
-    if (filteredMethods.includes("h")) {
-      return {
-        recommended: ["h"],
-        notices: ["Sterilization is permanent and fertility is not reversible"],
-        eliminated,
-      };
-    } else {
-      notices.push(
-        "Sterilization may not be medically suitable for you based on your health profile"
-      );
-    }
-  } else if (filters.wantsSurgicalMethod === false) {
-    // Remove sterilization
-    if (filteredMethods.includes("h")) {
-      eliminated.push({ method: "h", reason: "Does not want surgical method" });
-      filteredMethods = filteredMethods.filter((m) => m !== "h");
-    }
-  }
-
-  // Filter 4: Frequency preference
+  // Filter 3: Frequency preference (Question 3)
+  // Only suggest methods that are still available after previous filters
   if (filters.preferredFrequency) {
     let frequencyMethods: ContraceptiveMethodKey[] = [];
     let shouldExcludeAllMethods = false;
 
     switch (filters.preferredFrequency) {
       case "daily":
-        frequencyMethods = METHOD_FREQUENCY.daily; // ['a', 'c']
+        // Suggest a, b, k (only if still available)
+        frequencyMethods = ["a", "b", "k"];
         break;
       case "every-3-weeks":
         // Check BMI for patch (method 'i') first
@@ -105,11 +126,11 @@ export const personalizeRecommendations = (
           );
           shouldExcludeAllMethods = true;
         } else {
-          frequencyMethods = METHOD_FREQUENCY.weekly; // ['i'] - patch
+          frequencyMethods = ["i"]; // patch
         }
         break;
       case "every-3-months":
-        frequencyMethods = METHOD_FREQUENCY.quarterly; // ['d']
+        frequencyMethods = ["d"]; // DMPA injection
         break;
       case "every-3-years":
         frequencyMethods = ["e"]; // implant
@@ -120,7 +141,7 @@ export const personalizeRecommendations = (
     }
 
     if (shouldExcludeAllMethods) {
-      // When specific frequency requirement can't be met (like BMI >30 for patch), eliminate all methods
+      // When specific frequency requirement can't be met (like BMI >30 for patch)
       filteredMethods.forEach((method) => {
         eliminated.push({
           method,
@@ -129,9 +150,15 @@ export const personalizeRecommendations = (
       });
       filteredMethods = [];
     } else if (frequencyMethods.length > 0) {
-      // Filter to only include preferred frequency methods
+      // Filter to only include preferred frequency methods that are still available
+      // Only suggest methods that haven't been eliminated in previous questions
+      const availableFrequencyMethods = frequencyMethods.filter((m) =>
+        filteredMethods.includes(m)
+      );
+
+      // Eliminate methods that don't match frequency (but keep barrier method j if available)
       const nonFrequencyMethods = filteredMethods.filter(
-        (m) => !frequencyMethods.includes(m) && m !== "j"
+        (m) => !availableFrequencyMethods.includes(m) && m !== "j"
       );
       nonFrequencyMethods.forEach((method) => {
         eliminated.push({
@@ -140,7 +167,17 @@ export const personalizeRecommendations = (
         });
       });
 
-      filteredMethods = filteredMethods.filter((m) => frequencyMethods.includes(m) || m === "j");
+      // Set filtered methods to only available frequency methods + barrier method if available
+      filteredMethods = filteredMethods.filter(
+        (m) => availableFrequencyMethods.includes(m) || m === "j"
+      );
+
+      // If no frequency methods are available (were filtered out earlier), show notice
+      if (availableFrequencyMethods.length === 0) {
+        notices.push(
+          `None of the methods matching your preferred frequency (${filters.preferredFrequency}) are available based on your previous answers.`
+        );
+      }
     }
   }
 
@@ -153,6 +190,7 @@ export const personalizeRecommendations = (
     recommended: filteredMethods,
     notices,
     eliminated,
+    shouldShowPermanentMethods,
   };
 };
 

@@ -9,6 +9,7 @@ interface RecommendationData {
   recommended: ContraceptiveMethodKey[];
   notices: string[];
   eliminated: { method: ContraceptiveMethodKey; reason: string }[];
+  shouldShowPermanentMethods?: boolean;
 }
 
 export default function FinalRecommendationPage() {
@@ -43,7 +44,8 @@ export default function FinalRecommendationPage() {
     );
   }
 
-  const { recommended, notices, eliminated } = recommendationData;
+  const { recommended, notices, eliminated, shouldShowPermanentMethods } = recommendationData;
+  const showPermanentMethodsLink = params.showPermanentMethods === "true" || shouldShowPermanentMethods;
 
   const renderMethodCard = (methodKey: ContraceptiveMethodKey, isRecommended: boolean = true) => {
     const method = getMethodByKey(methodKey);
@@ -203,6 +205,16 @@ export default function FinalRecommendationPage() {
           </Text>
 
           <View style={styles.buttonContainer}>
+            {showPermanentMethodsLink && (
+              <Button
+                mode="contained"
+                onPress={() => router.push("/(drawer)/permanent-methods")}
+                style={styles.primaryButton}
+              >
+                Learn About Permanent Methods
+              </Button>
+            )}
+            
             <Button
               mode="outlined"
               onPress={() => router.push("/(drawer)/know-contraceptive")}
@@ -419,6 +431,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     gap: 12,
+  },
+  primaryButton: {
+    paddingVertical: 4,
+    marginBottom: 4,
   },
   secondaryButton: {
     paddingVertical: 4,

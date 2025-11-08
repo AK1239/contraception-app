@@ -904,7 +904,7 @@ export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
   },
   {
     id: "wantsSurgicalMethod",
-    text: "Do you want a surgery done that will permanently give you contraception? (Note: fertility isn't reversible)",
+    text: "Are you okay with having a surgery done that will give you permanent contraception? (Fertility is not reversible)",
     type: "yes-no",
     required: true,
   },

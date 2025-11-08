@@ -44,13 +44,39 @@ export default function PersonalizePage() {
 
   // Update visible questions based on current answers
   useEffect(() => {
-    const baseQuestions = PERSONALIZATION_QUESTIONS.filter((q) => q.id !== "currentBMI");
-    let questions = [...baseQuestions];
+    let questions: PersonalizationQuestion[] = [];
 
-    // Add BMI question only if user selected "every 3 weeks"
-    const frequencyAnswer = personalization.answers.preferredFrequency;
-    if (frequencyAnswer === "every-3-weeks") {
-      questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "currentBMI")!);
+    // Question 1: Always show wantsFuturePregnancy
+    questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "wantsFuturePregnancy")!);
+
+    // Question 2: Show surgical method question only if wantsFuturePregnancy = false
+    const wantsFuturePregnancy = personalization.answers.wantsFuturePregnancy;
+    if (wantsFuturePregnancy === false) {
+      questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "wantsSurgicalMethod")!);
+      
+      // If user wants surgical method, we'll handle early exit in handleNext
+      // Don't add more questions if they want surgery
+      if (personalization.answers.wantsSurgicalMethod !== true) {
+        // Continue with remaining questions
+        questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "okayWithIrregularPeriods")!);
+        questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "preferredFrequency")!);
+        
+        // Add BMI question only if user selected "every 3 weeks"
+        const frequencyAnswer = personalization.answers.preferredFrequency;
+        if (frequencyAnswer === "every-3-weeks") {
+          questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "currentBMI")!);
+        }
+      }
+    } else if (wantsFuturePregnancy === true) {
+      // If wantsFuturePregnancy = true, skip surgical question and go to question 2
+      questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "okayWithIrregularPeriods")!);
+      questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "preferredFrequency")!);
+      
+      // Add BMI question only if user selected "every 3 weeks"
+      const frequencyAnswer = personalization.answers.preferredFrequency;
+      if (frequencyAnswer === "every-3-weeks") {
+        questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "currentBMI")!);
+      }
     }
 
     setVisibleQuestions(questions);
@@ -59,7 +85,12 @@ export default function PersonalizePage() {
     if (currentQuestionIndex >= questions.length) {
       setCurrentQuestionIndex(Math.max(0, questions.length - 1));
     }
-  }, [personalization.answers.preferredFrequency, currentQuestionIndex]);
+  }, [
+    personalization.answers.wantsFuturePregnancy,
+    personalization.answers.wantsSurgicalMethod,
+    personalization.answers.preferredFrequency,
+    currentQuestionIndex,
+  ]);
 
   const currentQuestion = visibleQuestions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === visibleQuestions.length - 1;
@@ -131,6 +162,19 @@ export default function PersonalizePage() {
         }));
         return false;
       }
+
+      // Special validation for BMI when frequency is "every-3-weeks"
+      if (currentQuestion.id === "currentBMI") {
+        const frequency = personalization.answers.preferredFrequency;
+        if (frequency === "every-3-weeks" && numValue > 30) {
+          setErrors((prev) => ({
+            ...prev,
+            [currentQuestion.id]:
+              "Unfortunately, there's no safe method that can be used every 3 weeks for BMI >30. Please go back and select a different frequency.",
+          }));
+          return false;
+        }
+      }
     }
 
     return true;
@@ -138,6 +182,29 @@ export default function PersonalizePage() {
 
   const handleNext = () => {
     if (!validateCurrentQuestion()) {
+      return;
+    }
+
+    // Check if user selected surgical method after saying no to future pregnancy
+    // This should trigger early exit to permanent methods
+    const wantsFuturePregnancy = personalization.answers.wantsFuturePregnancy;
+    const wantsSurgicalMethod = personalization.answers.wantsSurgicalMethod;
+    
+    if (
+      wantsFuturePregnancy === false &&
+      wantsSurgicalMethod === true &&
+      currentQuestion.id === "wantsSurgicalMethod"
+    ) {
+      // Early exit: User wants permanent method
+      // Get personalization results and navigate to final recommendation
+      const results = getPersonalizationResults();
+      router.push({
+        pathname: "/(screens)/final-recommendation",
+        params: { 
+          recommendationData: JSON.stringify(results),
+          showPermanentMethods: "true",
+        },
+      });
       return;
     }
 
@@ -193,6 +260,18 @@ export default function PersonalizePage() {
           <ProgressBar progress={progress} style={styles.progressBar} />
           <Text variant="bodySmall" style={styles.progressText}>
             Question {currentQuestionIndex + 1} of {visibleQuestions.length}
+          </Text>
+        </Card.Content>
+      </Card>
+
+      {/* STI Protection Notice */}
+      <Card style={styles.stiNoticeCard}>
+        <Card.Content>
+          <Text variant="titleSmall" style={styles.stiNoticeTitle}>
+            ⚠️ STI Protection Notice
+          </Text>
+          <Text variant="bodySmall" style={styles.stiNoticeText}>
+            None of the below methods provide protection against STIs, so if you think you're at an increased risk of STI, barrier methods should be used either alone acting both as a contraceptive and a protector for STI or you can use barrier methods along with your chosen contraceptive.
           </Text>
         </Card.Content>
       </Card>
@@ -266,5 +345,20 @@ const styles = StyleSheet.create({
   },
   navigationButton: {
     flex: 1,
+  },
+  stiNoticeCard: {
+    margin: 16,
+    marginTop: 8,
+    marginBottom: 8,
+    backgroundColor: "#fff3e0",
+  },
+  stiNoticeTitle: {
+    marginBottom: 8,
+    fontWeight: "bold",
+    color: "#e65100",
+  },
+  stiNoticeText: {
+    color: "#e65100",
+    lineHeight: 18,
   },
 });
