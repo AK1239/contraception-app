@@ -367,23 +367,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 16,
-    marginTop: 20,
-    backgroundColor: "white",
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-    elevation: 3,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
+    gap: 16,
   },
   bottomPadding: {
     height: 80, // Extra space at bottom for mobile navigation
   },
   navButton: {
-    flex: 0.45,
-    minHeight: 48, // Better touch target for mobile
-    justifyContent: "center",
+    flex: 1,
   },
   noticeCard: {
     margin: 16,
