@@ -138,6 +138,55 @@ export default function DrawerLayout() {
           title: "Female Condom",
         }}
       />
+      <Drawer.Screen
+        name="hormonal-methods"
+        options={{
+          drawerLabel: "Hormonal Methods",
+          title: "Hormonal Methods",
+        }}
+      />
+      <Drawer.Screen
+        name="coc"
+        options={{
+          drawerLabel: "Combined Oral Contraceptives (COC)",
+          title: "Combined Oral Contraceptives",
+        }}
+      />
+      <Drawer.Screen
+        name="pop"
+        options={{
+          drawerLabel: "Progestin Only Pills (POP)",
+          title: "Progestin Only Pills",
+        }}
+      />
+      <Drawer.Screen
+        name="contraceptive-injection"
+        options={{
+          drawerLabel: "Contraceptive Injections",
+          title: "Contraceptive Injections",
+        }}
+      />
+      <Drawer.Screen
+        name="implants"
+        options={{
+          drawerLabel: "Implants",
+          title: "Implants",
+        }}
+      />
+      <Drawer.Screen
+        name="combination-patch"
+        options={{
+          drawerLabel: "Combination Patch",
+          title: "Combination Patch Contraceptive",
+        }}
+      />
+      <Drawer.Screen
+        name="contraceptive-vaginal-ring"
+        options={{
+          drawerLabel: "Contraceptive Vaginal Ring",
+          title: "Contraceptive Vaginal Ring",
+        }}
+      />
     </Drawer>
   );
 }

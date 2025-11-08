@@ -12,8 +12,7 @@ export default function TemporaryMethodsScreen() {
   };
 
   const handleHormonalExplore = () => {
-    // TODO: Navigate to hormonal methods details
-    console.log('Hormonal methods explore clicked');
+    router.push('/(drawer)/hormonal-methods');
   };
 
   const handleIUDExplore = () => {
