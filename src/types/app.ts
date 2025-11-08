@@ -8,8 +8,6 @@ export type RootStackParamList = {
   personalize: { eligibleMethods?: ContraceptiveMethodKey[] };
   "compare-methods": { methods?: ContraceptiveMethodKey[] };
   "know-contraceptive": undefined;
-  "about-us": undefined;
-  faqs: undefined;
   results: { mecScores: MECScores };
   "final-recommendation": { recommendation: ContraceptiveRecommendation };
 };
