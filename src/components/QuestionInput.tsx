@@ -255,12 +255,11 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   };
 
   return (
-    <Card style={styles.container}>
+      <Card style={styles.container}>
       <Card.Content>
         <Text variant="titleMedium" style={styles.questionText}>
           {question.text}
         </Text>
-        {question.required && <Text style={styles.requiredText}>* Required</Text>}
         <View style={styles.inputContainer}>{renderInput()}</View>
         {error && <Text style={styles.errorText}>{error}</Text>}
       </Card.Content>
@@ -369,7 +368,6 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
     <View style={styles.container}>
       <Text variant="titleMedium" style={styles.questionText}>
         {question.text}
-        {question.required && <Text style={styles.required}> *</Text>}
       </Text>
       {renderInput()}
       {error && (
