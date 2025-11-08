@@ -1,16 +1,21 @@
 import React from "react";
-import { View, StyleSheet, useWindowDimensions, StatusBar } from "react-native";
+import { View, StyleSheet, useWindowDimensions, StatusBar, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import Animated, { useSharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import OnboardingSlide from "../src/components/OnboardingSlide";
 import OnboardingDots from "../src/components/OnboardingDots";
 import OnboardingControls from "../src/components/OnboardingControls";
+
+const ONBOARDING_COMPLETED_KEY = "@onboarding_completed";
 
 export default function OnboardingScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
   const scrollX = useSharedValue(0);
+  const [isChecking, setIsChecking] = React.useState(true);
+  const [showOnboarding, setShowOnboarding] = React.useState(false);
 
   const slides = [
     {
@@ -45,6 +50,30 @@ export default function OnboardingScreen() {
 
   const [index, setIndex] = React.useState(0);
 
+  // Check if onboarding has been completed on mount
+  React.useEffect(() => {
+    const checkOnboardingStatus = async () => {
+      try {
+        const onboardingCompleted = await AsyncStorage.getItem(ONBOARDING_COMPLETED_KEY);
+        if (onboardingCompleted === "true") {
+          // User has already completed onboarding, redirect to home
+          router.replace("/(drawer)");
+        } else {
+          // First time user, show onboarding
+          setShowOnboarding(true);
+        }
+      } catch (error) {
+        console.error("Error checking onboarding status:", error);
+        // On error, show onboarding to be safe
+        setShowOnboarding(true);
+      } finally {
+        setIsChecking(false);
+      }
+    };
+
+    checkOnboardingStatus();
+  }, [router]);
+
   const onScroll = useAnimatedScrollHandler({
     onScroll: (event) => {
       scrollX.value = event.contentOffset.x;
@@ -61,9 +90,33 @@ export default function OnboardingScreen() {
     }
   };
 
-  const handleDone = () => {
-    router.replace("/(drawer)");
+  const handleDone = async () => {
+    try {
+      // Save onboarding completion status
+      await AsyncStorage.setItem(ONBOARDING_COMPLETED_KEY, "true");
+      // Navigate to home screen
+      router.replace("/(drawer)");
+    } catch (error) {
+      console.error("Error saving onboarding status:", error);
+      // Navigate anyway even if saving fails
+      router.replace("/(drawer)");
+    }
   };
+
+  // Show loading indicator while checking onboarding status
+  if (isChecking) {
+    return (
+      <View style={[styles.container, styles.loadingContainer]}>
+        <ActivityIndicator size="large" color="#6366f1" />
+      </View>
+    );
+  }
+
+  // Don't render onboarding if user has already completed it
+  // (This should not be reached due to redirect, but added as safety)
+  if (!showOnboarding) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -115,6 +168,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
+  },
+  loadingContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   backgroundGradient: {
     position: 'absolute',
