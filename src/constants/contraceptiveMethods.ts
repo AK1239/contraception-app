@@ -101,6 +101,130 @@ export const NATURAL_METHODS = [
   },
 ];
 
+// Extended method interface for comparison (allows string keys for individual methods)
+export interface ExtendedContraceptiveMethod {
+  key: string;
+  name: string;
+  shortName: string;
+  category: "hormonal" | "non-hormonal" | "barrier" | "permanent" | "natural";
+  description?: string;
+}
+
+// All methods available for comparison (includes individual methods with detail pages)
+// This extends the basic methods to include individual entries like male-condom, female-condom, etc.
+export const ALL_COMPARISON_METHODS: ExtendedContraceptiveMethod[] = [
+  // Hormonal methods
+  {
+    key: "coc",
+    name: "Combined Oral Contraceptives (COC)",
+    shortName: "Combined Pill",
+    category: "hormonal",
+    description: "Daily oral contraceptive containing both estrogen and progestin hormones",
+  },
+  {
+    key: "pop",
+    name: "Progestin Only Pills (POP)",
+    shortName: "Mini Pill",
+    category: "hormonal",
+    description: "Daily oral contraceptive containing only progestin hormone",
+  },
+  {
+    key: "contraceptive-injection",
+    name: "Depot Medroxyprogesterone Acetate (DMPA) injection",
+    shortName: "DMPA Injection",
+    category: "hormonal",
+    description: "Quarterly injection of progestin hormone",
+  },
+  {
+    key: "implants",
+    name: "Implant (includes Jadelle and Implanon)",
+    shortName: "Contraceptive Implant",
+    category: "hormonal",
+    description: "Long-acting reversible contraceptive implanted under the skin",
+  },
+  {
+    key: "combination-patch",
+    name: "Combined patch contraceptive",
+    shortName: "Contraceptive Patch",
+    category: "hormonal",
+    description: "Weekly patch containing both estrogen and progestin hormones",
+  },
+  {
+    key: "contraceptive-vaginal-ring",
+    name: "Contraceptive vaginal ring",
+    shortName: "Vaginal Ring",
+    category: "hormonal",
+    description: "Monthly vaginal ring containing both estrogen and progestin hormones",
+  },
+  {
+    key: "lng-ius",
+    name: "Levonorgestrel (LNG) IUD",
+    shortName: "Hormonal IUD",
+    category: "hormonal",
+    description: "Intrauterine device that releases progestin hormone",
+  },
+  {
+    key: "b",
+    name: "Combined injectable contraceptive",
+    shortName: "Combined Injectable",
+    category: "hormonal",
+    description: "Monthly injection containing both estrogen and progestin hormones",
+  },
+  // Non-hormonal methods
+  {
+    key: "copper-iucd",
+    name: "Copper IUD",
+    shortName: "Copper IUD",
+    category: "non-hormonal",
+    description: "Intrauterine device with copper that prevents fertilization",
+  },
+  // Barrier methods
+  {
+    key: "male-condom",
+    name: "Male Condom",
+    shortName: "Male Condom",
+    category: "barrier",
+    description: "A physical barrier method that prevents pregnancy and protects against STDs",
+  },
+  {
+    key: "female-condom",
+    name: "Female Condom",
+    shortName: "Female Condom",
+    category: "barrier",
+    description: "A barrier method worn by the female during each coital act",
+  },
+  // Permanent methods
+  {
+    key: "tubal-ligation",
+    name: "Tubal Ligation",
+    shortName: "Tubal Ligation",
+    category: "permanent",
+    description: "Permanent surgical contraception method for women",
+  },
+  {
+    key: "vasectomy",
+    name: "Vasectomy",
+    shortName: "Vasectomy",
+    category: "permanent",
+    description: "Permanent surgical contraception method for men",
+  },
+  // Natural methods
+  {
+    key: "lactational-amenorrhea",
+    name: "Lactational Amenorrhea Method (LAM)",
+    shortName: "LAM",
+    category: "natural",
+    description: "Natural contraception through exclusive breastfeeding",
+  },
+  {
+    key: "standard-days-method",
+    name: "Standard Days Method",
+    shortName: "Calendar Method",
+    category: "natural",
+    description: "Natural family planning based on menstrual cycle tracking",
+  },
+];
+
 // WHO Medical Eligibility Criteria categories
 export const MEC_CATEGORIES: Record<number, MECCategory> = {
   1: {
