@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
 import { Text, Chip } from 'react-native-paper';
-import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
+import { CONTRACEPTIVE_METHODS_DATA, ContraceptiveMethodData } from '../utils/contraceptiveMethodsData';
 
 interface MethodDropdownProps {
   label: string;
@@ -18,11 +18,11 @@ export default function MethodDropdown({
 }: MethodDropdownProps) {
   const [visible, setVisible] = useState(false);
   
-  const availableMethods = ALL_COMPARISON_METHODS.filter(
-    method => method.key !== excludeMethodKey
+  const availableMethods = CONTRACEPTIVE_METHODS_DATA.filter(
+    method => method.id !== excludeMethodKey
   );
   
-  const selectedMethod = ALL_COMPARISON_METHODS.find(m => m.key === selectedMethodKey);
+  const selectedMethod = CONTRACEPTIVE_METHODS_DATA.find(m => m.id === selectedMethodKey);
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -41,50 +41,37 @@ export default function MethodDropdown({
     }
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'hormonal':
-        return '💊';
-      case 'non-hormonal':
-        return '🔗';
-      case 'permanent':
-        return '✂️';
-      case 'barrier':
-        return '🛡️';
-      case 'natural':
-        return '🌿';
-      default:
-        return '📋';
-    }
-  };
 
   const handleSelect = (methodKey: string) => {
     onSelect(methodKey);
     setVisible(false);
   };
 
-  const renderMethodItem = ({ item }: { item: typeof allMethods[0] }) => (
+  const renderMethodItem = ({ item }: { item: ContraceptiveMethodData }) => (
     <TouchableOpacity
       style={[
         styles.methodItem,
         { backgroundColor: getCategoryColor(item.category) },
-        selectedMethodKey === item.key && styles.selectedMethodItem,
+        selectedMethodKey === item.id && styles.selectedMethodItem,
       ]}
-      onPress={() => handleSelect(item.key)}
+      onPress={() => handleSelect(item.id)}
     >
       <View style={styles.methodItemContent}>
-        <Text style={styles.methodIcon}>{getCategoryIcon(item.category)}</Text>
         <View style={styles.methodItemText}>
           <Text variant="titleMedium" style={styles.methodName}>
             {item.name}
           </Text>
-          <Text variant="bodySmall" style={styles.methodShortName}>
-            {item.shortName}
-          </Text>
+          {item.shortName && (
+            <Text variant="bodySmall" style={styles.methodShortName}>
+              {item.shortName}
+            </Text>
+          )}
+          {item.description && (
+            <Text variant="bodySmall" style={styles.methodDescription} numberOfLines={2}>
+              {item.description}
+            </Text>
+          )}
         </View>
-        {selectedMethodKey === item.key && (
-          <Text style={styles.checkmark}>✓</Text>
-        )}
       </View>
     </TouchableOpacity>
   );
@@ -102,16 +89,15 @@ export default function MethodDropdown({
         <View style={styles.dropdownContent}>
           {selectedMethod ? (
             <View style={styles.selectedContent}>
-              <Text style={styles.selectedIcon}>
-                {getCategoryIcon(selectedMethod.category)}
-              </Text>
               <View style={styles.selectedText}>
                 <Text variant="bodyLarge" style={styles.selectedMethodName}>
                   {selectedMethod.name}
                 </Text>
-                <Text variant="bodySmall" style={styles.selectedMethodShort}>
-                  {selectedMethod.shortName}
-                </Text>
+                {selectedMethod.shortName && (
+                  <Text variant="bodySmall" style={styles.selectedMethodShort}>
+                    {selectedMethod.shortName}
+                  </Text>
+                )}
               </View>
               <Chip
                 style={[
@@ -128,7 +114,6 @@ export default function MethodDropdown({
               Select a method...
             </Text>
           )}
-          <Text style={styles.chevron}>▼</Text>
         </View>
       </TouchableOpacity>
 
@@ -148,12 +133,12 @@ export default function MethodDropdown({
                 onPress={() => setVisible(false)}
                 style={styles.closeButton}
               >
-                <Text style={styles.closeButtonText}>✕</Text>
+                <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
             </View>
             <FlatList
               data={availableMethods}
-              keyExtractor={(item) => item.key}
+              keyExtractor={(item) => item.id}
               renderItem={renderMethodItem}
               style={styles.methodsList}
               contentContainerStyle={styles.methodsListContent}
@@ -193,10 +178,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  selectedIcon: {
-    fontSize: 24,
-    marginRight: 12,
-  },
   selectedText: {
     flex: 1,
   },
@@ -219,11 +200,6 @@ const styles = StyleSheet.create({
   placeholder: {
     color: '#9CA3AF',
     flex: 1,
-  },
-  chevron: {
-    color: '#6B7280',
-    fontSize: 12,
-    marginLeft: 8,
   },
   modalOverlay: {
     flex: 1,
@@ -283,10 +259,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
-  methodIcon: {
-    fontSize: 24,
-    marginRight: 12,
-  },
   methodItemText: {
     flex: 1,
   },
@@ -297,11 +269,13 @@ const styles = StyleSheet.create({
   },
   methodShortName: {
     color: '#6B7280',
+    marginTop: 2,
   },
-  checkmark: {
-    fontSize: 20,
-    color: '#3B82F6',
-    fontWeight: 'bold',
+  methodDescription: {
+    color: '#9CA3AF',
+    fontSize: 12,
+    marginTop: 4,
+    lineHeight: 16,
   },
 });
 
