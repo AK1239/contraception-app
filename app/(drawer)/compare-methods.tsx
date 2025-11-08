@@ -4,12 +4,17 @@ import { Text, Card, Button } from 'react-native-paper';
 import MethodDropdown from '../../src/components/MethodDropdown';
 import ComparisonFieldsCheckbox from '../../src/components/ComparisonFieldsCheckbox';
 import SequentialComparisonView from '../../src/components/SequentialComparisonView';
-import { ComparisonField } from '../../src/services/methodDetailsService';
+import { ComparisonField, COMPARISON_FIELDS } from '../../src/services/methodDetailsService';
+
+// Initialize with all fields selected by default
+const getAllComparisonFields = (): ComparisonField[] => {
+  return COMPARISON_FIELDS.map(field => field.key);
+};
 
 export default function CompareMethodsPage() {
   const [firstMethodKey, setFirstMethodKey] = useState<string | null>(null);
   const [secondMethodKey, setSecondMethodKey] = useState<string | null>(null);
-  const [selectedFields, setSelectedFields] = useState<ComparisonField[]>([]);
+  const [selectedFields, setSelectedFields] = useState<ComparisonField[]>(getAllComparisonFields());
   const [isComparing, setIsComparing] = useState(false);
   const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
 
