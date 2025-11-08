@@ -8,11 +8,11 @@ export default function NaturalMethodsScreen() {
   const router = useRouter();
 
   const handleLAMKnowMore = () => {
-    router.push('/(drawer)/lactational-amenorrhea');
+    router.push('/(drawer)/contraceptive-method/lactational-amenorrhea');
   };
 
   const handleStandardDaysKnowMore = () => {
-    router.push('/(drawer)/standard-days-method');
+    router.push('/(drawer)/contraceptive-method/standard-days-method');
   };
 
   return (

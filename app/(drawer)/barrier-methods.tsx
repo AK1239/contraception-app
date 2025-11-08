@@ -8,11 +8,11 @@ export default function BarrierMethodsScreen() {
   const router = useRouter();
 
   const handleMaleCondomKnowMore = () => {
-    router.push('/(drawer)/male-condom');
+    router.push('/(drawer)/contraceptive-method/male-condom');
   };
 
   const handleFemaleCondomKnowMore = () => {
-    router.push('/(drawer)/female-condom');
+    router.push('/(drawer)/contraceptive-method/female-condom');
   };
 
   return (

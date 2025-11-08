@@ -8,11 +8,11 @@ export default function IUDMethodsScreen() {
   const router = useRouter();
 
   const handleCopperIUCDKnowMore = () => {
-    router.push('/(drawer)/copper-iucd');
+    router.push('/(drawer)/contraceptive-method/copper-iucd');
   };
 
   const handleLNGIUSKnowMore = () => {
-    router.push('/(drawer)/lng-ius');
+    router.push('/(drawer)/contraceptive-method/lng-ius');
   };
 
   return (

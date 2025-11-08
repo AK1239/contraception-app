@@ -8,27 +8,27 @@ export default function HormonalMethodsScreen() {
   const router = useRouter();
 
   const handleCOCKnowMore = () => {
-    router.push('/(drawer)/coc');
+    router.push('/(drawer)/contraceptive-method/coc');
   };
 
   const handlePOPKnowMore = () => {
-    router.push('/(drawer)/pop');
+    router.push('/(drawer)/contraceptive-method/pop');
   };
 
   const handleInjectionKnowMore = () => {
-    router.push('/(drawer)/contraceptive-injection');
+    router.push('/(drawer)/contraceptive-method/contraceptive-injection');
   };
 
   const handleImplantsKnowMore = () => {
-    router.push('/(drawer)/implants');
+    router.push('/(drawer)/contraceptive-method/implants');
   };
 
   const handlePatchKnowMore = () => {
-    router.push('/(drawer)/combination-patch');
+    router.push('/(drawer)/contraceptive-method/combination-patch');
   };
 
   const handleRingKnowMore = () => {
-    router.push('/(drawer)/contraceptive-vaginal-ring');
+    router.push('/(drawer)/contraceptive-method/contraceptive-vaginal-ring');
   };
 
   return (

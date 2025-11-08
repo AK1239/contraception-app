@@ -104,38 +104,10 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
-        name="lactational-amenorrhea"
-        options={{
-          drawerLabel: "Lactational Amenorrhea Method",
-          title: "Lactational Amenorrhea Method",
-        }}
-      />
-      <Drawer.Screen
-        name="standard-days-method"
-        options={{
-          drawerLabel: "Calendar Method",
-          title: "Calendar Method",
-        }}
-      />
-      <Drawer.Screen
         name="barrier-methods"
         options={{
           drawerLabel: "Barrier Methods",
           title: "Barrier Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="male-condom"
-        options={{
-          drawerLabel: "Male Condom",
-          title: "Male Condom",
-        }}
-      />
-      <Drawer.Screen
-        name="female-condom"
-        options={{
-          drawerLabel: "Female Condom",
-          title: "Female Condom",
         }}
       />
       <Drawer.Screen
@@ -146,66 +118,10 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
-        name="coc"
-        options={{
-          drawerLabel: "Combined Oral Contraceptives (COC)",
-          title: "Combined Oral Contraceptives",
-        }}
-      />
-      <Drawer.Screen
-        name="pop"
-        options={{
-          drawerLabel: "Progestin Only Pills (POP)",
-          title: "Progestin Only Pills",
-        }}
-      />
-      <Drawer.Screen
-        name="contraceptive-injection"
-        options={{
-          drawerLabel: "Contraceptive Injections",
-          title: "Contraceptive Injections",
-        }}
-      />
-      <Drawer.Screen
-        name="implants"
-        options={{
-          drawerLabel: "Implants",
-          title: "Implants",
-        }}
-      />
-      <Drawer.Screen
-        name="combination-patch"
-        options={{
-          drawerLabel: "Combination Patch",
-          title: "Combination Patch Contraceptive",
-        }}
-      />
-      <Drawer.Screen
-        name="contraceptive-vaginal-ring"
-        options={{
-          drawerLabel: "Contraceptive Vaginal Ring",
-          title: "Contraceptive Vaginal Ring",
-        }}
-      />
-      <Drawer.Screen
         name="iud-methods"
         options={{
           drawerLabel: "IUD Methods",
           title: "Intrauterine Device Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="copper-iucd"
-        options={{
-          drawerLabel: "Copper IUCD",
-          title: "Copper IUCD",
-        }}
-      />
-      <Drawer.Screen
-        name="lng-ius"
-        options={{
-          drawerLabel: "LNG-IUS",
-          title: "LNG-IUS",
         }}
       />
       <Drawer.Screen
@@ -216,17 +132,11 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
-        name="tubal-ligation"
+        name="contraceptive-method"
         options={{
-          drawerLabel: "Tubal Ligation",
-          title: "Tubal Ligation",
-        }}
-      />
-      <Drawer.Screen
-        name="vasectomy"
-        options={{
-          drawerLabel: "Vasectomy",
-          title: "Vasectomy",
+          drawerLabel: () => null,
+          title: "Contraceptive Method",
+          drawerItemStyle: { height: 0 },
         }}
       />
     </Drawer>

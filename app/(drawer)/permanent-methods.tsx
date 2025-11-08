@@ -8,11 +8,11 @@ export default function PermanentMethodsScreen() {
   const router = useRouter();
 
   const handleTubalLigationKnowMore = () => {
-    router.push('/(drawer)/tubal-ligation');
+    router.push('/(drawer)/contraceptive-method/tubal-ligation');
   };
 
   const handleVasectomyKnowMore = () => {
-    router.push('/(drawer)/vasectomy');
+    router.push('/(drawer)/contraceptive-method/vasectomy');
   };
 
   return (
