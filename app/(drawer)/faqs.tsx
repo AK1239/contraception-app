@@ -338,9 +338,7 @@ export default function FAQsPage() {
       <Surface style={styles.disclaimerSurface}>
         <Text variant="bodySmall" style={styles.disclaimerText}>
           <Text style={{ fontWeight: "bold" }}>Medical Disclaimer: </Text>
-          The information provided in these FAQs is for educational purposes only and should not
-          replace professional medical advice. Always consult with a qualified healthcare provider
-          for personalized medical guidance regarding contraceptive methods and reproductive health.
+          This information is only for learning. It does not replace medical advice. Always talk to a qualified healthcare provider about your contraceptive and reproductive health needs.
         </Text>
       </Surface>
     </ScrollView>

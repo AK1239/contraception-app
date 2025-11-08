@@ -158,9 +158,7 @@ export default function FinalRecommendationPage() {
             🛡️ STI Protection
           </Text>
           <Text variant="bodyMedium" style={styles.stiText}>
-            Most contraceptive methods don't protect against sexually transmitted infections (STIs).
-            If you're at risk for STIs, consider using barrier methods (like condoms) along with
-            your chosen contraceptive method for dual protection.
+          Most contraceptives do not protect against STIs. If you’re at risk, use a condom or other barrier method for protection along with your chosen contraceptive.
           </Text>
         </Card.Content>
       </Card>
@@ -247,10 +245,7 @@ export default function FinalRecommendationPage() {
         <Card.Content>
           <Text variant="bodySmall" style={styles.disclaimerText}>
             <Text style={{ fontWeight: "bold" }}>Medical Disclaimer: </Text>
-            This recommendation is based on WHO Medical Eligibility Criteria and your provided
-            information. It should not replace professional medical advice. Always consult with a
-            healthcare provider before starting any contraceptive method. Your health status may
-            change, and periodic reassessment is recommended.
+            Recommendations are based on WHO guidelines and the details you shared. Please consult a healthcare provider before starting any contraceptive. 
           </Text>
         </Card.Content>
       </Card>

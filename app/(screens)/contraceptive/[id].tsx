@@ -342,9 +342,7 @@ export default function ContraceptiveDetailPage() {
         <Card.Content>
           <Text variant="bodySmall" style={styles.disclaimerText}>
             <Text style={{ fontWeight: "bold" }}>Medical Disclaimer: </Text>
-            This information is for educational purposes only and should not replace professional
-            medical advice. Always consult with a qualified healthcare provider before making
-            decisions about contraceptive methods.
+            This content is for education only. Always consult a healthcare professional when choosing contraceptives.
           </Text>
         </Card.Content>
       </Card>
