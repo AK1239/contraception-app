@@ -713,7 +713,7 @@ export const MEDICAL_SAFETY_QUESTIONS: Question[] = [
   // Question 31: Hepatitis
   {
     id: "hasHepatitis",
-    text: "Have you ever been diagnosed with hepatitis?",
+    text: "Are you currently diagnosed with hepatitis?",
     type: "yes-no",
     required: true,
   },
@@ -737,7 +737,7 @@ export const MEDICAL_SAFETY_QUESTIONS: Question[] = [
   // Question 32: Cirrhosis
   {
     id: "hasCirrhosis",
-    text: "Have you ever been diagnosed with cirrhosis?",
+    text: "Are you currently diagnosed with cirrhosis",
     type: "yes-no",
     required: true,
   },
