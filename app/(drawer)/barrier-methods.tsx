@@ -1,0 +1,58 @@
+import React from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
+import NaturalMethodCard from '../../src/components/NaturalMethodCard';
+
+export default function BarrierMethodsScreen() {
+  const router = useRouter();
+
+  const handleMaleCondomKnowMore = () => {
+    router.push('/(drawer)/male-condom');
+  };
+
+  const handleFemaleCondomKnowMore = () => {
+    router.push('/(drawer)/female-condom');
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.content}>
+        {/* Method Cards */}
+        <View style={styles.methodsContainer}>
+          <NaturalMethodCard
+            title="Male Condom"
+            description="A thin sheath placed over the penis before vaginal insertion. Provides physical barrier protection against pregnancy and STDs. Highly effective when used correctly."
+            icon="🛡️"
+            onKnowMorePress={handleMaleCondomKnowMore}
+            backgroundColor="#FEF3F2"
+            buttonColor="#EF4444"
+          />
+
+          <NaturalMethodCard
+            title="Female Condom"
+            description="A barrier method worn by the female during each coital act. Contains two flexible rings and provides protection against pregnancy. Can be inserted hours before sex."
+            icon="🛡️"
+            onKnowMorePress={handleFemaleCondomKnowMore}
+            backgroundColor="#FEF3F2"
+            buttonColor="#EF4444"
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  content: {
+    flex: 1,
+  },
+  methodsContainer: {
+    paddingHorizontal: 0,
+  },
+});
+

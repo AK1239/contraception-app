@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import TemporaryMethodCard from '../../src/components/TemporaryMethodCard';
 
 export default function TemporaryMethodsScreen() {
+  const router = useRouter();
+
   const handleBarrierExplore = () => {
-    // TODO: Navigate to barrier methods details
-    console.log('Barrier methods explore clicked');
+    router.push('/(drawer)/barrier-methods');
   };
 
   const handleHormonalExplore = () => {

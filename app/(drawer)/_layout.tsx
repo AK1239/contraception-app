@@ -117,6 +117,27 @@ export default function DrawerLayout() {
           title: "Standard Days Method",
         }}
       />
+      <Drawer.Screen
+        name="barrier-methods"
+        options={{
+          drawerLabel: "Barrier Methods",
+          title: "Barrier Methods",
+        }}
+      />
+      <Drawer.Screen
+        name="male-condom"
+        options={{
+          drawerLabel: "Male Condom",
+          title: "Male Condom",
+        }}
+      />
+      <Drawer.Screen
+        name="female-condom"
+        options={{
+          drawerLabel: "Female Condom",
+          title: "Female Condom",
+        }}
+      />
     </Drawer>
   );
 }
