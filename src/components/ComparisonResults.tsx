@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Card, Divider } from 'react-native-paper';
-import { ComparisonField } from '../services/methodDetailsService';
+import { ComparisonField, getFieldLabel } from '../services/methodDetailsService';
 import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
 import { getMethodDetails } from '../services/methodDetailsService';
 
@@ -132,19 +132,6 @@ function getFieldValue(details: any, field: ComparisonField): any {
   }
 }
 
-function getFieldLabel(field: ComparisonField): string {
-  const labels: Record<ComparisonField, string> = {
-    description: 'Description',
-    efficacy: 'Efficacy',
-    advantages: 'Advantages',
-    disadvantages: 'Disadvantages',
-    howToUse: 'How to Use',
-    timeToWork: 'Time to Work',
-    sideNotes: 'Side Notes',
-    commonErrors: 'Common Errors',
-  };
-  return labels[field];
-}
 
 function renderFieldValue(value: any, field: ComparisonField): React.ReactNode {
   if (!value || (typeof value === 'string' && value.trim() === '') || (Array.isArray(value) && value.length === 0)) {
@@ -178,12 +165,12 @@ function renderFieldValue(value: any, field: ComparisonField): React.ReactNode {
   }
 
   if (field === 'efficacy') {
-    if (typeof value === 'object') {
+    if (typeof value === 'object' && value !== null) {
       return (
         <View style={styles.efficacyContainer}>
-          {value.rating && (
+          {value.label && (
             <View style={styles.efficacyBadge}>
-              <Text style={styles.efficacyLabel}>{value.rating}</Text>
+              <Text style={styles.efficacyLabel}>{value.label}</Text>
             </View>
           )}
           {value.typicalUse && (

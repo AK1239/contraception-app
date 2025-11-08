@@ -1,4 +1,5 @@
 import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
+import { getContraceptiveMethodById } from '../utils/contraceptiveMethodsData';
 
 export type ComparisonField = 
   | 'description'
@@ -16,7 +17,7 @@ export interface MethodDetails {
   efficacy?: {
     typicalUse?: string;
     perfectUse?: string;
-    rating?: 'Excellent' | 'Good' | 'Fair' | 'Poor';
+    label?: 'Excellent' | 'Good' | 'Perfect';
   };
   advantages?: string[];
   disadvantages?: string[];
@@ -27,16 +28,36 @@ export interface MethodDetails {
 }
 
 // This service provides method details for comparison
-// In a production app, this would fetch from a database or API
-// For now, we'll create a structure that can be populated from the detail pages
 export const getAllMethods = () => {
   return ALL_COMPARISON_METHODS;
 };
 
-// Get method details by key
-// This is a placeholder - in production, this would fetch actual data
-// For now, we'll return basic info and the comparison can work with what's available
+// Get method details by key from contraceptiveMethodsData
 export const getMethodDetails = (methodKey: string): MethodDetails | null => {
+  // First try to get from contraceptiveMethodsData
+  const methodData = getContraceptiveMethodById(methodKey);
+  
+  if (methodData) {
+    // Map the data structure from contraceptiveMethodsData to MethodDetails
+    const details: MethodDetails = {
+      key: methodData.id,
+      description: methodData.description,
+      efficacy: methodData.efficacy ? {
+        typicalUse: methodData.efficacy.typicalUse,
+        perfectUse: methodData.efficacy.perfectUse,
+        label: methodData.efficacy.label,
+      } : undefined,
+      advantages: methodData.advantages,
+      disadvantages: methodData.disadvantages,
+      howToUse: methodData.howToUse,
+      timeToWork: methodData.timeToWork,
+      sideNotes: methodData.sideNotes,
+      commonErrors: methodData.commonErrors,
+    };
+    return details;
+  }
+
+  // Fallback to ALL_COMPARISON_METHODS if not found in detailed data
   const method = ALL_COMPARISON_METHODS.find(m => m.key === methodKey);
   
   if (!method) {
@@ -44,14 +65,10 @@ export const getMethodDetails = (methodKey: string): MethodDetails | null => {
   }
 
   // Return basic structure with description from constants
-  // Detailed fields (efficacy, advantages, etc.) will be added as we extract from detail pages
   const details: MethodDetails = {
     key: method.key,
     description: method.description || 'No description available',
   };
-
-  // TODO: Add detailed method data here as we extract from individual method pages
-  // For now, returning basic structure that can be extended
   
   return details;
 };
@@ -71,4 +88,10 @@ export const COMPARISON_FIELDS: Array<{
   { key: 'sideNotes', label: 'Side Notes', icon: '📌' },
   { key: 'commonErrors', label: 'Common Errors', icon: '❌' },
 ];
+
+// Get human-readable label for a comparison field
+export function getFieldLabel(field: ComparisonField): string {
+  const fieldConfig = COMPARISON_FIELDS.find(f => f.key === field);
+  return fieldConfig?.label || field;
+}
 

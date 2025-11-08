@@ -3,13 +3,15 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Button } from 'react-native-paper';
 import MethodDropdown from '../../src/components/MethodDropdown';
 import ComparisonFieldsCheckbox from '../../src/components/ComparisonFieldsCheckbox';
-import ComparisonResults from '../../src/components/ComparisonResults';
+import SequentialComparisonView from '../../src/components/SequentialComparisonView';
 import { ComparisonField } from '../../src/services/methodDetailsService';
 
 export default function CompareMethodsPage() {
   const [firstMethodKey, setFirstMethodKey] = useState<string | null>(null);
   const [secondMethodKey, setSecondMethodKey] = useState<string | null>(null);
   const [selectedFields, setSelectedFields] = useState<ComparisonField[]>([]);
+  const [isComparing, setIsComparing] = useState(false);
+  const [currentFieldIndex, setCurrentFieldIndex] = useState(0);
 
   const handleToggleField = (field: ComparisonField) => {
     setSelectedFields(prev =>
@@ -21,6 +23,46 @@ export default function CompareMethodsPage() {
 
   const canCompare = firstMethodKey && secondMethodKey && selectedFields.length > 0;
 
+  const handleCompare = () => {
+    if (canCompare) {
+      setIsComparing(true);
+      setCurrentFieldIndex(0);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentFieldIndex < selectedFields.length - 1) {
+      setCurrentFieldIndex(prev => prev + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentFieldIndex > 0) {
+      setCurrentFieldIndex(prev => prev - 1);
+    }
+  };
+
+  const handleBackToSelection = () => {
+    setIsComparing(false);
+    setCurrentFieldIndex(0);
+  };
+
+  // Show sequential comparison view when comparing
+  if (isComparing && firstMethodKey && secondMethodKey) {
+    return (
+      <SequentialComparisonView
+        firstMethodKey={firstMethodKey}
+        secondMethodKey={secondMethodKey}
+        selectedFields={selectedFields}
+        currentFieldIndex={currentFieldIndex}
+        onPrevious={handlePrevious}
+        onNext={handleNext}
+        onBackToSelection={handleBackToSelection}
+      />
+    );
+  }
+
+  // Show selection UI
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       {/* Header */}
@@ -67,15 +109,6 @@ export default function CompareMethodsPage() {
         </Card.Content>
       </Card>
 
-      {/* Comparison Results */}
-      {canCompare && (
-        <ComparisonResults
-          firstMethodKey={firstMethodKey}
-          secondMethodKey={secondMethodKey}
-          selectedFields={selectedFields}
-        />
-      )}
-
       {/* Compare Button */}
       <Card style={styles.buttonCard}>
         <Card.Content>
@@ -84,6 +117,7 @@ export default function CompareMethodsPage() {
             style={styles.compareButton}
             labelStyle={styles.compareButtonLabel}
             disabled={!canCompare}
+            onPress={handleCompare}
           >
             Compare
           </Button>
