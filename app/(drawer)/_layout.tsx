@@ -99,7 +99,7 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="standard-day-calculator"
         options={{
-          drawerLabel: "Natural Calendar Method Calculator",
+          drawerLabel: "Calendar Method Calculator",
           title: "Calendar Method Calculator",
         }}
       />
