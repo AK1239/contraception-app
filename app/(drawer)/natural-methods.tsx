@@ -31,7 +31,7 @@ export default function NaturalMethodsScreen() {
           />
 
           <NaturalMethodCard
-            title="Standard Days Method"
+            title="Calendar Method"
             description="A natural family planning method that identifies the 12 fertile days in a woman's cycle. Most effective for women with cycles between 26-32 days."
             icon="📅"
             onKnowMorePress={handleStandardDaysKnowMore}

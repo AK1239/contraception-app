@@ -36,8 +36,8 @@ export default function OnboardingScreen() {
     },
     {
       title: "Natural Family\nPlanning",
-      subtitle: "Standard Day Method Calculator",
-      body: "Take control of your fertility with our Standard Day Method calculator for those who prefer a natural approach",
+      subtitle: "Calendar Method Calculator",
+      body: "Take control of your fertility with our Calendar Method calculator for those who prefer a natural approach",
       icon: "🌱",
       color: "#10b981",
     },

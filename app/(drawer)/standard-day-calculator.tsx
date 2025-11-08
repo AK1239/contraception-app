@@ -64,7 +64,7 @@ export default function StandardDayCalculator() {
           <Ionicons name="calendar-outline" size={80} color="#059669" />
         </View>
         
-        <Text style={styles.welcomeTitle}>Natural Standard Day Method</Text>
+        <Text style={styles.welcomeTitle}>Calendar Method</Text>
         <Text style={styles.welcomeSubtitle}>Fertility Calculator</Text>
         
         <View style={styles.noteCard}>

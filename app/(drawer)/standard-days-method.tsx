@@ -17,7 +17,7 @@ export default function StandardDaysMethodDetails() {
             <Text style={styles.icon}>📅</Text>
           </View>
           <Text variant="headlineMedium" style={styles.title}>
-            Standard Days Method
+            Calendar Method
           </Text>
           <Text variant="titleSmall" style={styles.subtitle}>
             Natural Family Planning
@@ -31,7 +31,7 @@ export default function StandardDaysMethodDetails() {
         <View style={styles.sectionsContainer}>
           <ExpandableSection title="Description" icon="📝">
             <Text variant="bodyMedium" style={styles.sectionText}>
-              To understand the standard day method, you need to understand the menstrual cycle. The ovaries 
+              To understand the calendar method, you need to understand the menstrual cycle. The ovaries 
               in your body are responsible for producing eggs that can be potentially fertilized by sperm. The 
               egg is released once a month, The method predicts when the egg is out and that you should avoid 
               sexual intercourse during the days when the egg is potentially out.

@@ -70,7 +70,7 @@ const drawerSections: DrawerSection[] = [
   },
   {
     id: 'standard-day-calculator',
-    title: 'Natural Standard Day Method Calculator',
+    title: 'Natural Calendar Method Calculator',
     icon: 'calculator-outline',
     route: '/standard-day-calculator',
   },

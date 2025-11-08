@@ -99,8 +99,8 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="standard-day-calculator"
         options={{
-          drawerLabel: "Natural Standard Day Method Calculator",
-          title: "Standard Day Calculator",
+          drawerLabel: "Natural Calendar Method Calculator",
+          title: "Calendar Method Calculator",
         }}
       />
       <Drawer.Screen
@@ -113,8 +113,8 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="standard-days-method"
         options={{
-          drawerLabel: "Standard Days Method",
-          title: "Standard Days Method",
+          drawerLabel: "Calendar Method",
+          title: "Calendar Method",
         }}
       />
       <Drawer.Screen
