@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Button, ProgressBar } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,6 +12,7 @@ import {
   PersonalizationQuestion,
 } from "../../src/constants/questions";
 import { generatePersonalizedRecommendations } from "../../src/services/personalizationEngine";
+import { getEligibleMethods } from "../../src/services/eligibilityEngine";
 import { ContraceptiveMethodKey, AnswerValue } from "../../src/types";
 
 export default function PersonalizePage() {
@@ -19,28 +20,84 @@ export default function PersonalizePage() {
   const dispatch = useDispatch();
   const params = useLocalSearchParams();
   const { personalization } = useSelector((state: RootState) => state.questionnaire);
+  const { mecScores } = useSelector((state: RootState) => state.results);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [eligibleMethods, setEligibleMethods] = useState<ContraceptiveMethodKey[]>([]);
   const [visibleQuestions, setVisibleQuestions] = useState<PersonalizationQuestion[]>([]);
+  const [isCheckingEligibility, setIsCheckingEligibility] = useState(true);
+  const hasRedirected = useRef(false);
 
-  // Parse eligible methods from navigation params
+  // Parse eligible methods from navigation params or Redux store
   useEffect(() => {
+    // Prevent redirecting multiple times
+    if (hasRedirected.current) {
+      return;
+    }
+
+    // First, try to get eligible methods from route params
     if (params.eligibleMethods) {
       try {
         const methods = JSON.parse(params.eligibleMethods as string);
-        setEligibleMethods(methods);
+        if (methods && Array.isArray(methods) && methods.length > 0) {
+          setEligibleMethods(methods);
+          setIsCheckingEligibility(false);
+          return;
+        }
       } catch (error) {
-        console.error("Error parsing eligible methods:", error);
-        // Fallback - redirect to medical safety
-        router.push("/medical-safety");
+        console.error("Error parsing eligible methods from params:", error);
       }
-    } else {
-      // No eligible methods - redirect to medical safety
-      router.push("/medical-safety");
     }
-  }, [params.eligibleMethods]);
+    
+    // If no params, try to get from Redux store (if user has completed medical questionnaire)
+    if (mecScores) {
+      try {
+        const methods = getEligibleMethods(mecScores) as ContraceptiveMethodKey[];
+        if (methods && Array.isArray(methods) && methods.length > 0) {
+          setEligibleMethods(methods);
+          setIsCheckingEligibility(false);
+          return;
+        }
+      } catch (error) {
+        console.error("Error extracting eligible methods from MEC scores:", error);
+      }
+    }
+    
+    // If neither params nor Redux store has eligible methods, redirect to medical safety
+    // Only redirect if we've checked both sources and neither has eligible methods
+    // If mecScores is null, it means the user hasn't completed the questionnaire yet
+    if (!params.eligibleMethods) {
+      if (!mecScores) {
+        // No MEC scores - user hasn't completed questionnaire
+        setIsCheckingEligibility(false);
+        hasRedirected.current = true;
+        router.replace("/(drawer)/medical-safety");
+      } else {
+        // MEC scores exist but check if there are any eligible methods
+        // (This handles the case where the first try-catch above might have failed)
+        try {
+          const methods = getEligibleMethods(mecScores) as ContraceptiveMethodKey[];
+          if (methods.length === 0) {
+            // No eligible methods - redirect to medical safety
+            setIsCheckingEligibility(false);
+            hasRedirected.current = true;
+            router.replace("/(drawer)/medical-safety");
+          } else {
+            // Methods found - set them (in case first try-catch failed)
+            setEligibleMethods(methods);
+            setIsCheckingEligibility(false);
+          }
+        } catch (error) {
+          // Error extracting methods - redirect to medical safety
+          console.error("Error extracting eligible methods:", error);
+          setIsCheckingEligibility(false);
+          hasRedirected.current = true;
+          router.replace("/(drawer)/medical-safety");
+        }
+      }
+    }
+  }, [params.eligibleMethods, mecScores, router]);
 
   // Update visible questions based on current answers
   useEffect(() => {
@@ -263,6 +320,15 @@ export default function PersonalizePage() {
 
     return generatePersonalizedRecommendations(eligibleMethods, personalizedAnswers);
   };
+
+  // Show loading state while checking eligibility
+  if (isCheckingEligibility) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading personalization questions...</Text>
+      </View>
+    );
+  }
 
   if (!currentQuestion) {
     return (
