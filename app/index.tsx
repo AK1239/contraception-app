@@ -62,7 +62,7 @@ export default function OnboardingScreen() {
   };
 
   const handleDone = () => {
-    router.replace("/(drawer)/know-contraceptive");
+    router.replace("/(drawer)");
   };
 
   return (

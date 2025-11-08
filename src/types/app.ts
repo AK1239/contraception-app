@@ -1,4 +1,4 @@
-import { ContraceptiveMethodKey, MECScores, ContraceptiveRecommendation } from "./contraceptive";
+import { ContraceptiveMethodKey,  ContraceptiveRecommendation } from "./contraceptive";
 
 // App navigation types for Expo Router
 export type RootStackParamList = {
@@ -8,7 +8,7 @@ export type RootStackParamList = {
   personalize: { eligibleMethods?: ContraceptiveMethodKey[] };
   "compare-methods": { methods?: ContraceptiveMethodKey[] };
   "know-contraceptive": undefined;
-  results: { mecScores: MECScores };
+  "about-us": undefined;
   "final-recommendation": { recommendation: ContraceptiveRecommendation };
 };
 

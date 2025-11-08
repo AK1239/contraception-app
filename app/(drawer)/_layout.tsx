@@ -1,5 +1,5 @@
 import { Drawer } from "expo-router/drawer";
-import { useColorScheme } from "react-native";
+import { useColorScheme, View, Image } from "react-native";
 import CustomDrawerContent from "../../src/components/CustomDrawerContent";
 
 export default function DrawerLayout() {
@@ -24,6 +24,22 @@ export default function DrawerLayout() {
         },
       }}
     >
+      <Drawer.Screen
+        name="index"
+        options={{
+          drawerLabel: "Home",
+          title: "ContraSafe",
+          headerRight: () => (
+            <View style={{ marginRight: 16 }}>
+              <Image
+                source={require("../../assets/logo.png")}
+                style={{ width: 40, height: 40, borderRadius: 20 }}
+                resizeMode="cover"
+              />
+            </View>
+          ),
+        }}
+      />
       <Drawer.Screen
         name="know-contraceptive"
         options={{
