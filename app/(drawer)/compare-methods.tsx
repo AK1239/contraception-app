@@ -76,17 +76,6 @@ export default function CompareMethodsPage() {
         />
       )}
 
-
-      {firstMethodKey && secondMethodKey && selectedFields.length === 0 && (
-        <Card style={styles.helperCard}>
-          <Card.Content>
-            <Text variant="bodySmall" style={styles.helperText}>
-              👆 Select the fields you want to compare above
-            </Text>
-          </Card.Content>
-        </Card>
-      )}
-
       {/* Compare Button */}
       <Card style={styles.buttonCard}>
         <Card.Content>
@@ -204,7 +193,7 @@ const styles = StyleSheet.create({
     borderColor: '#E5E7EB',
   },
   compareButton: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#6D28D9',
     paddingVertical: 8,
   },
   compareButtonLabel: {

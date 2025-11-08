@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Modal, FlatList } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Modal, FlatList, Dimensions } from 'react-native';
 import { Text, Chip } from 'react-native-paper';
 import { CONTRACEPTIVE_METHODS_DATA, ContraceptiveMethodData } from '../utils/contraceptiveMethodsData';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 interface MethodDropdownProps {
   label: string;
@@ -90,21 +92,33 @@ export default function MethodDropdown({
           {selectedMethod ? (
             <View style={styles.selectedContent}>
               <View style={styles.selectedText}>
-                <Text variant="bodyLarge" style={styles.selectedMethodName}>
+                <Text 
+                  variant="bodyLarge" 
+                  style={styles.selectedMethodName}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
                   {selectedMethod.name}
                 </Text>
                 {selectedMethod.shortName && (
-                  <Text variant="bodySmall" style={styles.selectedMethodShort}>
+                  <Text 
+                    variant="bodySmall" 
+                    style={styles.selectedMethodShort}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
                     {selectedMethod.shortName}
                   </Text>
                 )}
               </View>
               <Chip
+                mode="flat"
                 style={[
                   styles.categoryChip,
                   { backgroundColor: getCategoryColor(selectedMethod.category) },
                 ]}
                 textStyle={styles.chipText}
+                compact={false}
               >
                 {selectedMethod.category}
               </Chip>
@@ -142,6 +156,14 @@ export default function MethodDropdown({
               renderItem={renderMethodItem}
               style={styles.methodsList}
               contentContainerStyle={styles.methodsListContent}
+              showsVerticalScrollIndicator={true}
+              ListEmptyComponent={
+                <View style={styles.emptyContainer}>
+                  <Text variant="bodyMedium" style={styles.emptyText}>
+                    No methods available
+                  </Text>
+                </View>
+              }
             />
           </View>
         </View>
@@ -172,14 +194,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    width: '100%',
   },
   selectedContent: {
     flexDirection: 'row',
     alignItems: 'center',
     flex: 1,
+    minWidth: 0,
   },
   selectedText: {
     flex: 1,
+    flexShrink: 1,
+    minWidth: 0,
+    marginRight: 8,
   },
   selectedMethodName: {
     fontWeight: '600',
@@ -190,12 +217,17 @@ const styles = StyleSheet.create({
     color: '#6B7280',
   },
   categoryChip: {
-    marginLeft: 8,
-    height: 24,
+    height: 28,
+    minHeight: 28,
+    flexShrink: 0,
+    alignSelf: 'center',
   },
   chipText: {
-    fontSize: 10,
+    fontSize: 11,
     textTransform: 'capitalize',
+    fontWeight: '500',
+    lineHeight: 15,
+    includeFontPadding: false,
   },
   placeholder: {
     color: '#9CA3AF',
@@ -210,8 +242,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    maxHeight: '80%',
-    paddingBottom: 32,
+    height: SCREEN_HEIGHT * 0.8,
+    flexDirection: 'column',
   },
   modalHeader: {
     flexDirection: 'row',
@@ -220,6 +252,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7EB',
+    flexShrink: 0,
   },
   modalTitle: {
     fontWeight: '700',
@@ -240,9 +273,11 @@ const styles = StyleSheet.create({
   },
   methodsList: {
     flex: 1,
+    flexGrow: 1,
   },
   methodsListContent: {
     padding: 16,
+    paddingBottom: 32,
   },
   methodItem: {
     borderRadius: 12,
@@ -276,6 +311,15 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
     lineHeight: 16,
+  },
+  emptyContainer: {
+    padding: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    color: '#9CA3AF',
+    textAlign: 'center',
   },
 });
 
