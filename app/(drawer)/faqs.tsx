@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Text, Card, List, Divider, Searchbar, Surface } from "react-native-paper";
+import { Text, Card, List, Divider, Searchbar} from "react-native-paper";
 
 interface FAQ {
   id: string;
@@ -334,13 +334,6 @@ export default function FAQsPage() {
         </Card.Content>
       </Card>
 
-      {/* Disclaimer */}
-      <Surface style={styles.disclaimerSurface}>
-        <Text variant="bodySmall" style={styles.disclaimerText}>
-          <Text style={{ fontWeight: "bold" }}>Medical Disclaimer: </Text>
-          This information is only for learning. It does not replace medical advice. Always talk to a qualified healthcare provider about your contraceptive and reproductive health needs.
-        </Text>
-      </Surface>
     </ScrollView>
   );
 }
