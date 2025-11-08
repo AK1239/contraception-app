@@ -360,8 +360,7 @@ const styles = StyleSheet.create({
   },
   questionContainer: {
     flex: 1,
-    minHeight: 300, // Ensure minimum height for questions
-    paddingBottom: 20,
+    minHeight: 250, // Ensure minimum height for questions
   },
   navigationContainer: {
     flexDirection: "row",
