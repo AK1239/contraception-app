@@ -187,6 +187,27 @@ export default function DrawerLayout() {
           title: "Contraceptive Vaginal Ring",
         }}
       />
+      <Drawer.Screen
+        name="iud-methods"
+        options={{
+          drawerLabel: "IUD Methods",
+          title: "Intrauterine Device Methods",
+        }}
+      />
+      <Drawer.Screen
+        name="copper-iucd"
+        options={{
+          drawerLabel: "Copper IUCD",
+          title: "Copper IUCD",
+        }}
+      />
+      <Drawer.Screen
+        name="lng-ius"
+        options={{
+          drawerLabel: "LNG-IUS",
+          title: "LNG-IUS",
+        }}
+      />
     </Drawer>
   );
 }

@@ -16,8 +16,7 @@ export default function TemporaryMethodsScreen() {
   };
 
   const handleIUDExplore = () => {
-    // TODO: Navigate to IUD methods details
-    console.log('IUD methods explore clicked');
+    router.push('/(drawer)/iud-methods');
   };
 
   return (
