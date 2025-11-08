@@ -12,8 +12,7 @@ export default function ModernMethodsScreen() {
   };
 
   const handlePermanentOptions = () => {
-    // TODO: Navigate to permanent methods options
-    console.log('Permanent methods options clicked');
+    router.push('/(drawer)/permanent-methods');
   };
 
   return (

@@ -208,6 +208,27 @@ export default function DrawerLayout() {
           title: "LNG-IUS",
         }}
       />
+      <Drawer.Screen
+        name="permanent-methods"
+        options={{
+          drawerLabel: "Permanent Methods",
+          title: "Permanent Methods",
+        }}
+      />
+      <Drawer.Screen
+        name="tubal-ligation"
+        options={{
+          drawerLabel: "Tubal Ligation",
+          title: "Tubal Ligation",
+        }}
+      />
+      <Drawer.Screen
+        name="vasectomy"
+        options={{
+          drawerLabel: "Vasectomy",
+          title: "Vasectomy",
+        }}
+      />
     </Drawer>
   );
 }
