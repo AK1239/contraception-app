@@ -56,15 +56,20 @@ export default function PersonalizePage() {
       
       // If user wants surgical method, we'll handle early exit in handleNext
       // Don't add more questions if they want surgery
-      if (personalization.answers.wantsSurgicalMethod !== true) {
-        // Continue with remaining questions
-        questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "okayWithIrregularPeriods")!);
-        questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "preferredFrequency")!);
+      if (personalization.answers.wantsSurgicalMethod === false) {
+        // User doesn't want surgery - show the continue with long-term question
+        questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "wantsToContinueWithLongTerm")!);
         
-        // Add BMI question only if user selected "every 3 weeks"
-        const frequencyAnswer = personalization.answers.preferredFrequency;
-        if (frequencyAnswer === "every-3-weeks") {
-          questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "currentBMI")!);
+        // Only continue with remaining questions if user wants to continue
+        if (personalization.answers.wantsToContinueWithLongTerm === true) {
+          questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "okayWithIrregularPeriods")!);
+          questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "preferredFrequency")!);
+          
+          // Add BMI question only if user selected "every 3 weeks"
+          const frequencyAnswer = personalization.answers.preferredFrequency;
+          if (frequencyAnswer === "every-3-weeks") {
+            questions.push(PERSONALIZATION_QUESTIONS.find((q) => q.id === "currentBMI")!);
+          }
         }
       }
     } else if (wantsFuturePregnancy === true) {
@@ -88,6 +93,7 @@ export default function PersonalizePage() {
   }, [
     personalization.answers.wantsFuturePregnancy,
     personalization.answers.wantsSurgicalMethod,
+    personalization.answers.wantsToContinueWithLongTerm,
     personalization.answers.preferredFrequency,
     currentQuestionIndex,
   ]);
@@ -189,6 +195,7 @@ export default function PersonalizePage() {
     // This should trigger early exit to permanent methods
     const wantsFuturePregnancy = personalization.answers.wantsFuturePregnancy;
     const wantsSurgicalMethod = personalization.answers.wantsSurgicalMethod;
+    const wantsToContinueWithLongTerm = personalization.answers.wantsToContinueWithLongTerm;
     
     if (
       wantsFuturePregnancy === false &&
@@ -204,6 +211,23 @@ export default function PersonalizePage() {
           recommendationData: JSON.stringify(results),
           showPermanentMethods: "true",
         },
+      });
+      return;
+    }
+    
+    // Check if user doesn't want to continue with long-term options
+    if (
+      wantsFuturePregnancy === false &&
+      wantsSurgicalMethod === false &&
+      wantsToContinueWithLongTerm === false &&
+      currentQuestion.id === "wantsToContinueWithLongTerm"
+    ) {
+      // Early exit: User doesn't want to continue
+      // Get personalization results (will be empty) and navigate to final recommendation
+      const results = getPersonalizationResults();
+      router.push({
+        pathname: "/(screens)/final-recommendation",
+        params: { recommendationData: JSON.stringify(results) },
       });
       return;
     }
@@ -232,6 +256,7 @@ export default function PersonalizePage() {
       wantsFuturePregnancy: personalization.answers.wantsFuturePregnancy,
       okayWithIrregularPeriods: personalization.answers.okayWithIrregularPeriods,
       wantsSurgicalMethod: personalization.answers.wantsSurgicalMethod,
+      wantsToContinueWithLongTerm: personalization.answers.wantsToContinueWithLongTerm,
       preferredFrequency: personalization.answers.preferredFrequency,
       currentBMI: personalization.answers.currentBMI,
     };

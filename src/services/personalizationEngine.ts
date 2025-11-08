@@ -10,6 +10,7 @@ export interface PersonalizationFilters {
   wantsFuturePregnancy?: boolean;
   okayWithIrregularPeriods?: boolean;
   wantsSurgicalMethod?: boolean;
+  wantsToContinueWithLongTerm?: boolean;
   preferredFrequency?:
     | "daily"
     | "every-3-weeks"
@@ -88,6 +89,23 @@ export const personalizeRecommendations = (
         eliminated.push({ method: "h", reason: "Does not want surgical method" });
         filteredMethods = filteredMethods.filter((m) => m !== "h");
       }
+      
+      // Check if user wants to continue with long-term options
+      if (filters.wantsToContinueWithLongTerm === false) {
+        // User doesn't want to continue - end algorithm, return empty results
+        filteredMethods.forEach((method) => {
+          eliminated.push({
+            method,
+            reason: "User chose not to continue with long-term options",
+          });
+        });
+        return {
+          recommended: [],
+          notices: ["You chose not to continue with long-term contraceptive options."],
+          eliminated,
+        };
+      }
+      // If wantsToContinueWithLongTerm is true or undefined, continue
     }
     // If wantsSurgicalMethod is undefined, continue without filtering h
   }
@@ -209,6 +227,7 @@ export const generatePersonalizedRecommendations = (
     wantsFuturePregnancy: answers.wantsFuturePregnancy as boolean,
     okayWithIrregularPeriods: answers.okayWithIrregularPeriods as boolean,
     wantsSurgicalMethod: answers.wantsSurgicalMethod as boolean,
+    wantsToContinueWithLongTerm: answers.wantsToContinueWithLongTerm as boolean,
     preferredFrequency: answers.preferredFrequency as PersonalizationFilters["preferredFrequency"],
     currentBMI: answers.currentBMI as number,
   };

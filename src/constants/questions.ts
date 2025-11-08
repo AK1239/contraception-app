@@ -909,6 +909,12 @@ export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
     required: true,
   },
   {
+    id: "wantsToContinueWithLongTerm",
+    text: "If surgery isn't suitable for you, there are no other permanent methods but long-term options are available. Would you like to continue?",
+    type: "yes-no",
+    required: true,
+  },
+  {
     id: "preferredFrequency",
     text: "What is your preferred method frequency?",
     type: "select-one",
