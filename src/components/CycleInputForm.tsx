@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#1F2937',
     textAlign: 'center',
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_700Bold',
   },
   subtitle: {
-    fontSize: 15,
+    fontSize: 14,
     color: '#6B7280',
     textAlign: 'center',
     marginBottom: 32,
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   requiredLabel: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: '#374151',
     fontFamily: 'Poppins_600SemiBold',
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   badgeText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     color: '#6D28D9',
     fontFamily: 'Poppins_600SemiBold',
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   additionalLabel: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: '#374151',
     fontFamily: 'Poppins_600SemiBold',
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#D1FAE5',
   },
   optionalBadgeText: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
     color: '#10B981',
     fontFamily: 'Poppins_600SemiBold',
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 14,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     backgroundColor: '#F9FAFB',
@@ -264,13 +264,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 2,
     right: 8,
-    fontSize: 10,
+    fontSize: 9,
     color: '#9CA3AF',
     fontFamily: 'Poppins_500Medium',
   },
   asterisk: {
     color: '#EF4444',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     marginLeft: 4,
   },
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   addButtonText: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
     color: '#6D28D9',
     fontFamily: 'Poppins_600SemiBold',
@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   submitButtonText: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
     fontFamily: 'Poppins_700Bold',

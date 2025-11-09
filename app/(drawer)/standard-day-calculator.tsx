@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     borderColor: "#D1FAE5",
   },
   welcomeTitle: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: "bold",
     color: "#111827",
     textAlign: "center",
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins_700Bold",
   },
   welcomeSubtitle: {
-    fontSize: 18,
+    fontSize: 16,
     color: "#6B7280",
     textAlign: "center",
     marginBottom: 32,
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   noteHeaderText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#059669",
     fontFamily: "Poppins_700Bold",
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   requirementText: {
-    fontSize: 15,
+    fontSize: 14,
     color: "#374151",
     lineHeight: 22,
     flex: 1,
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   nextButtonText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
     fontFamily: "Poppins_700Bold",
@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#059669",
   },
   stepNumber: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "bold",
     color: "#9CA3AF",
     fontFamily: "Poppins_700Bold",
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   stepLabel: {
-    fontSize: 12,
+    fontSize: 11,
     color: "#6B7280",
     textAlign: "center",
     fontFamily: "Poppins_500Medium",
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   resetButtonText: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#059669",
     fontWeight: "600",
     fontFamily: "Poppins_600SemiBold",
