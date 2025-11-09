@@ -2,21 +2,21 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import NaturalMethodCard from '../../src/components/NaturalMethodCard';
+import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
 export default function NaturalMethodsScreen() {
   const router = useRouter();
 
   const handleLAMKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/lactational-amenorrhea');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/lactational-amenorrhea');
   };
 
   const handleStandardDaysKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/standard-days-method');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/standard-days-method');
   };
 
   const handleSDMKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/standard-days-method-sdm');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/standard-days-method-sdm');
   };
 
   return (
@@ -109,3 +109,4 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
 });
+

@@ -2,17 +2,17 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import NaturalMethodCard from '../../src/components/NaturalMethodCard';
+import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
 export default function PermanentMethodsScreen() {
   const router = useRouter();
 
   const handleTubalLigationKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/tubal-ligation');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/tubal-ligation');
   };
 
   const handleVasectomyKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/vasectomy');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/vasectomy');
   };
 
   return (

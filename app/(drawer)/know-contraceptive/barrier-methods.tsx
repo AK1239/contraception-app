@@ -2,17 +2,17 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import NaturalMethodCard from '../../src/components/NaturalMethodCard';
+import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
 export default function BarrierMethodsScreen() {
   const router = useRouter();
 
   const handleMaleCondomKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/male-condom');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/male-condom');
   };
 
   const handleFemaleCondomKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/female-condom');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/female-condom');
   };
 
   return (

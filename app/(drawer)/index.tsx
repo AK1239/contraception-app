@@ -28,7 +28,7 @@ export default function HomePage() {
         title="For Healthcare Providers"
         description="If you're a healthcare professional looking to select the safest contraceptive option for your client, head straight to the Choose Your Contraceptive – Medical Safety section."
         ctaLabel="Go to Medical Safety"
-        onPress={() => router.push("/medical-safety")}
+        onPress={() => router.push("/(drawer)/medical-safety")}
         buttonColor="#EF4444"
       />
 
@@ -37,7 +37,7 @@ export default function HomePage() {
         title="For Women Seeking Information"
         description="If you'd like to learn more about different contraceptives, explore the Natural Methods or Modern Methods sections."
         ctaLabel="View Methods"
-        onPress={() => router.push("/natural-methods")}
+        onPress={() => router.push("/(drawer)/know-contraceptive/natural-methods")}
         buttonColor="#3B82F6"
       />
 
@@ -46,7 +46,7 @@ export default function HomePage() {
         title="Compare Methods"
         description="Compare methods side by side with our Contraceptive Comparison Tool to see how they differ and decide what works best for you."
         ctaLabel="Compare Methods"
-        onPress={() => router.push("/compare-methods")}
+        onPress={() => router.push("/(drawer)/compare-methods")}
         buttonColor="#EAB308"
       />
 
@@ -55,7 +55,7 @@ export default function HomePage() {
         title="Personalized Guidance"
         description="Not sure which method suits your needs? Visit the Personalize Your Contraceptive section for tailored recommendations."
         ctaLabel="Personalize Your Choice"
-        onPress={() => router.push("/personalize")}
+        onPress={() => router.push("/(drawer)/personalize")}
         buttonColor="#EC4899"
       />
 
@@ -64,7 +64,7 @@ export default function HomePage() {
         title="Natural Methods"
         description="Prefer non-modern methods? Try our Calendar Method Calculator to identify your fertile days and avoid unprotected intercourse during those times."
         ctaLabel="Calendar Method Calculator"
-        onPress={() => router.push("/standard-day-calculator")}
+        onPress={() => router.push("/(drawer)/standard-day-calculator")}
         buttonColor="#22C55E"
       />
 

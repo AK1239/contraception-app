@@ -3,13 +3,13 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
-import ExpandableSection from '../../../src/components/ExpandableSection';
-import { getContraceptiveMethodById } from '../../../src/utils/contraceptiveMethodsData';
-import MethodHeader from '../../../src/components/shared/MethodHeader';
-import EfficacySection from '../../../src/components/shared/EfficacySection';
-import ListSection from '../../../src/components/shared/ListSection';
-import MethodImageSection from '../../../src/components/shared/MethodImageSection';
-import WarningBox from '../../../src/components/shared/WarningBox';
+import ExpandableSection from '../../../../src/components/ExpandableSection';
+import { getContraceptiveMethodById } from '../../../../src/utils/contraceptiveMethodsData';
+import MethodHeader from '../../../../src/components/shared/MethodHeader';
+import EfficacySection from '../../../../src/components/shared/EfficacySection';
+import ListSection from '../../../../src/components/shared/ListSection';
+import MethodImageSection from '../../../../src/components/shared/MethodImageSection';
+import WarningBox from '../../../../src/components/shared/WarningBox';
 
 export default function ContraceptiveMethodDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>();

@@ -2,33 +2,33 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import NaturalMethodCard from '../../src/components/NaturalMethodCard';
+import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
 export default function HormonalMethodsScreen() {
   const router = useRouter();
 
   const handleCOCKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/coc');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/coc');
   };
 
   const handlePOPKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/pop');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/pop');
   };
 
   const handleInjectionKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/contraceptive-injection');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/contraceptive-injection');
   };
 
   const handleImplantsKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/implants');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/implants');
   };
 
   const handlePatchKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/combination-patch');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/combination-patch');
   };
 
   const handleRingKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/contraceptive-vaginal-ring');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/contraceptive-vaginal-ring');
   };
 
   return (

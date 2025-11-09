@@ -2,21 +2,21 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import TemporaryMethodCard from '../../src/components/TemporaryMethodCard';
+import TemporaryMethodCard from '../../../src/components/TemporaryMethodCard';
 
 export default function TemporaryMethodsScreen() {
   const router = useRouter();
 
   const handleBarrierExplore = () => {
-    router.push('/(drawer)/barrier-methods');
+    router.push('/(drawer)/know-contraceptive/barrier-methods');
   };
 
   const handleHormonalExplore = () => {
-    router.push('/(drawer)/hormonal-methods');
+    router.push('/(drawer)/know-contraceptive/hormonal-methods');
   };
 
   const handleIUDExplore = () => {
-    router.push('/(drawer)/iud-methods');
+    router.push('/(drawer)/know-contraceptive/iud-methods');
   };
 
   return (
@@ -68,3 +68,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
 });
+

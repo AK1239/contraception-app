@@ -24,6 +24,7 @@ export default function DrawerLayout() {
         },
       }}
     >
+      {/* Home Screen */}
       <Drawer.Screen
         name="index"
         options={{
@@ -40,9 +41,21 @@ export default function DrawerLayout() {
           ),
         }}
       />
+      
+      {/* Know Your Contraceptive - Stack Navigator */}
+      <Drawer.Screen
+        name="know-contraceptive"
+        options={{
+          drawerItemStyle: { display: 'none' }, // Hide from drawer, accessed via CustomDrawerContent
+          headerShown: false, // Stack will handle headers
+        }}
+      />
+      
+      {/* Choose Your Contraceptive Screens */}
       <Drawer.Screen
         name="medical-safety"
         options={{
+          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Medical Safety",
           title: "Medical Safety",
         }}
@@ -50,71 +63,29 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="personalize"
         options={{
+          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Personalize Your Contraceptive Choice",
           title: "Personalize Your Choice",
         }}
       />
+      
+      {/* Compare Methods */}
       <Drawer.Screen
         name="compare-methods"
         options={{
+          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Compare Contraceptive Methods",
           title: "Compare Methods",
         }}
       />
-      <Drawer.Screen
-        name="natural-methods"
-        options={{
-          drawerLabel: "Natural Methods",
-          title: "Natural Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="modern-methods"
-        options={{
-          drawerLabel: "Modern Methods",
-          title: "Modern Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="temporary-methods"
-        options={{
-          drawerLabel: "Temporary Methods",
-          title: "Temporary Methods",
-        }}
-      />
+      
+      {/* Calendar Calculator */}
       <Drawer.Screen
         name="standard-day-calculator"
         options={{
+          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Calendar Method Calculator",
           title: "Calendar Method Calculator",
-        }}
-      />
-      <Drawer.Screen
-        name="barrier-methods"
-        options={{
-          drawerLabel: "Barrier Methods",
-          title: "Barrier Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="hormonal-methods"
-        options={{
-          drawerLabel: "Hormonal Methods",
-          title: "Hormonal Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="iud-methods"
-        options={{
-          drawerLabel: "IUD Methods",
-          title: "Intrauterine Device Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="permanent-methods"
-        options={{
-          drawerLabel: "Permanent Methods",
-          title: "Permanent Methods",
         }}
       />
     </Drawer>

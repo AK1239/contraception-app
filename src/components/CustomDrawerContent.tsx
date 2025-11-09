@@ -24,7 +24,7 @@ const drawerSections: DrawerSection[] = [
     id: 'home',
     title: 'Home',
     icon: 'home-outline',
-    route: '/',
+    route: '/(drawer)',
   },
   {
     id: 'know-contraceptive',
@@ -35,12 +35,12 @@ const drawerSections: DrawerSection[] = [
       {
         id: 'natural-methods',
         title: 'Natural Methods',
-        route: '/natural-methods',
+        route: '/(drawer)/know-contraceptive/natural-methods',
       },
       {
         id: 'modern-methods',
         title: 'Modern Methods',
-        route: '/modern-methods',
+        route: '/(drawer)/know-contraceptive/modern-methods',
       },
     ],
   },
@@ -53,12 +53,12 @@ const drawerSections: DrawerSection[] = [
       {
         id: 'medical-safety',
         title: 'Medical Safety',
-        route: '/medical-safety',
+        route: '/(drawer)/medical-safety',
       },
       {
         id: 'personalize',
         title: 'Personalize Your Contraceptive Choice',
-        route: '/personalize',
+        route: '/(drawer)/personalize',
       },
     ],
   },
@@ -66,13 +66,13 @@ const drawerSections: DrawerSection[] = [
     id: 'compare-methods',
     title: 'Compare Contraceptive Methods',
     icon: 'git-compare-outline',
-    route: '/compare-methods',
+    route: '/(drawer)/compare-methods',
   },
   {
     id: 'standard-day-calculator',
     title: 'Calendar Method Calculator',
     icon: 'calculator-outline',
-    route: '/standard-day-calculator',
+    route: '/(drawer)/standard-day-calculator',
   },
 ];
 

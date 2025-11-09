@@ -2,17 +2,17 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import ModernMethodCard from '../../src/components/ModernMethodCard';
+import ModernMethodCard from '../../../src/components/ModernMethodCard';
 
 export default function ModernMethodsScreen() {
   const router = useRouter();
 
   const handleTemporaryOptions = () => {
-    router.push('/(drawer)/temporary-methods');
+    router.push('/(drawer)/know-contraceptive/temporary-methods');
   };
 
   const handlePermanentOptions = () => {
-    router.push('/(drawer)/permanent-methods');
+    router.push('/(drawer)/know-contraceptive/permanent-methods');
   };
 
   return (
@@ -55,3 +55,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
 });
+

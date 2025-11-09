@@ -2,17 +2,17 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
-import NaturalMethodCard from '../../src/components/NaturalMethodCard';
+import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
 export default function IUDMethodsScreen() {
   const router = useRouter();
 
   const handleCopperIUCDKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/copper-iucd');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/copper-iucd');
   };
 
   const handleLNGIUSKnowMore = () => {
-    router.push('/(drawer)/contraceptive-method/lng-ius');
+    router.push('/(drawer)/know-contraceptive/contraceptive-method/lng-ius');
   };
 
   return (
