@@ -41,13 +41,6 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
-        name="choose-contraceptive"
-        options={{
-          drawerLabel: "Choose Your Contraceptive",
-          title: "Choose Your Contraceptive",
-        }}
-      />
-      <Drawer.Screen
         name="medical-safety"
         options={{
           drawerLabel: "Medical Safety",
@@ -122,14 +115,6 @@ export default function DrawerLayout() {
         options={{
           drawerLabel: "Permanent Methods",
           title: "Permanent Methods",
-        }}
-      />
-      <Drawer.Screen
-        name="contraceptive-method"
-        options={{
-          drawerLabel: () => null,
-          title: "Contraceptive Method",
-          drawerItemStyle: { height: 0 },
         }}
       />
     </Drawer>
