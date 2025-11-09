@@ -37,22 +37,6 @@ export function useQuestionnaire() {
     }
   }, [currentQuestion, answers, dispatch]);
 
-  // Check if user is pregnant (should redirect to home)
-  useEffect(() => {
-    if (answers['pregnancy-check'] === 'pregnant') {
-      Alert.alert(
-        'Notice',
-        'You cannot use contraceptives while you are pregnant. Please consult with your healthcare provider.',
-        [
-          {
-            text: 'OK',
-            onPress: () => router.push('/'),
-          },
-        ]
-      );
-    }
-  }, [answers, router]);
-
   const handleAnswerChange = (value: AnswerValue) => {
     if (!currentQuestion) return;
 

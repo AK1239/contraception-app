@@ -35,7 +35,7 @@ export default function PregnancyNotice({ onGoHome, onReset }: PregnancyNoticePr
             </Button>
 
             <Button mode="outlined" onPress={onReset} style={styles.resetButton}>
-              Start Over (for testing)
+              Start Over 
             </Button>
           </View>
         </Card.Content>
