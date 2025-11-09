@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { memo, useMemo, useCallback } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Card, Divider } from 'react-native-paper';
 import { ComparisonField, getFieldLabel } from '../services/methodDetailsService';
-import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
-import { getMethodDetails } from '../services/methodDetailsService';
 import { getCategoryColor } from '../utils/theme';
+import { useMemoizedComparison } from '../hooks/useMemoizedComparison';
 
 interface ComparisonResultsProps {
   firstMethodKey: string | null;
@@ -12,56 +11,111 @@ interface ComparisonResultsProps {
   selectedFields: ComparisonField[];
 }
 
-export default function ComparisonResults({
+/**
+ * Memoized field card component for comparison results
+ */
+const ComparisonFieldCard = memo(({ 
+  field, 
+  firstValue, 
+  secondValue, 
+  firstMethod, 
+  secondMethod 
+}: {
+  field: ComparisonField;
+  firstValue: any;
+  secondValue: any;
+  firstMethod: { shortName: string; category: string };
+  secondMethod: { shortName: string; category: string };
+}) => {
+  const firstCategoryColor = useMemo(
+    () => getCategoryColor(firstMethod.category) + '40',
+    [firstMethod.category]
+  );
+  const secondCategoryColor = useMemo(
+    () => getCategoryColor(secondMethod.category) + '40',
+    [secondMethod.category]
+  );
+
+  return (
+    <Card style={styles.fieldCard}>
+      <Card.Content>
+        <Text variant="titleMedium" style={styles.fieldTitle}>
+          {getFieldLabel(field)}
+        </Text>
+        <Divider style={styles.divider} />
+        <View style={styles.comparisonRow}>
+          <View style={[styles.methodColumn, { backgroundColor: firstCategoryColor }]}>
+            <Text variant="labelMedium" style={styles.methodHeader}>
+              {firstMethod.shortName}
+            </Text>
+            <View style={styles.valueContainer}>
+              {renderFieldValue(firstValue, field)}
+            </View>
+          </View>
+          <View style={[styles.methodColumn, { backgroundColor: secondCategoryColor }]}>
+            <Text variant="labelMedium" style={styles.methodHeader}>
+              {secondMethod.shortName}
+            </Text>
+            <View style={styles.valueContainer}>
+              {renderFieldValue(secondValue, field)}
+            </View>
+          </View>
+        </View>
+      </Card.Content>
+    </Card>
+  );
+});
+
+ComparisonFieldCard.displayName = 'ComparisonFieldCard';
+
+function ComparisonResults({
   firstMethodKey,
   secondMethodKey,
   selectedFields,
 }: ComparisonResultsProps) {
-  const firstMethod = firstMethodKey ? ALL_COMPARISON_METHODS.find(m => m.key === firstMethodKey) : null;
-  const secondMethod = secondMethodKey ? ALL_COMPARISON_METHODS.find(m => m.key === secondMethodKey) : null;
+  // Use memoized hook for expensive lookups
+  const { firstMethod, secondMethod, firstDetails, secondDetails, isValid } = 
+    useMemoizedComparison(firstMethodKey, secondMethodKey, selectedFields);
 
-  if (!firstMethod || !secondMethod || selectedFields.length === 0 || !firstMethodKey || !secondMethodKey) {
+  if (!isValid || !firstMethod || !secondMethod) {
     return null;
   }
 
-  const firstDetails = getMethodDetails(firstMethodKey);
-  const secondDetails = getMethodDetails(secondMethodKey);
+  // Memoize field values extraction
+  const fieldValues = useMemo(() => {
+    return selectedFields.map(field => ({
+      field,
+      firstValue: getFieldValue(firstDetails, field),
+      secondValue: getFieldValue(secondDetails, field),
+    }));
+  }, [selectedFields, firstDetails, secondDetails]);
 
-  const renderField = (field: ComparisonField) => {
-    const firstValue = getFieldValue(firstDetails, field);
-    const secondValue = getFieldValue(secondDetails, field);
+  // Memoize header colors
+  const firstCategoryColor = useMemo(
+    () => getCategoryColor(firstMethod.category),
+    [firstMethod.category]
+  );
+  const secondCategoryColor = useMemo(
+    () => getCategoryColor(secondMethod.category),
+    [secondMethod.category]
+  );
 
-    // Always show the field card, even if data is not available
-    // This provides a consistent comparison experience
+  const renderField = useCallback(({ field, firstValue, secondValue }: {
+    field: ComparisonField;
+    firstValue: any;
+    secondValue: any;
+  }) => {
     return (
-      <Card key={field} style={styles.fieldCard}>
-        <Card.Content>
-          <Text variant="titleMedium" style={styles.fieldTitle}>
-            {getFieldLabel(field)}
-          </Text>
-          <Divider style={styles.divider} />
-          <View style={styles.comparisonRow}>
-            <View style={[styles.methodColumn, { backgroundColor: getCategoryColor(firstMethod.category) + '40' }]}>
-              <Text variant="labelMedium" style={styles.methodHeader}>
-                {firstMethod.shortName}
-              </Text>
-              <View style={styles.valueContainer}>
-                {renderFieldValue(firstValue, field)}
-              </View>
-            </View>
-            <View style={[styles.methodColumn, { backgroundColor: getCategoryColor(secondMethod.category) + '40' }]}>
-              <Text variant="labelMedium" style={styles.methodHeader}>
-                {secondMethod.shortName}
-              </Text>
-              <View style={styles.valueContainer}>
-                {renderFieldValue(secondValue, field)}
-              </View>
-            </View>
-          </View>
-        </Card.Content>
-      </Card>
+      <ComparisonFieldCard
+        key={field}
+        field={field}
+        firstValue={firstValue}
+        secondValue={secondValue}
+        firstMethod={firstMethod}
+        secondMethod={secondMethod}
+      />
     );
-  };
+  }, [firstMethod, secondMethod]);
 
   return (
     <View style={styles.container}>
@@ -71,13 +125,13 @@ export default function ComparisonResults({
             Comparison Results
           </Text>
           <View style={styles.methodsHeader}>
-            <View style={[styles.methodBadge, { backgroundColor: getCategoryColor(firstMethod.category) }]}>
+            <View style={[styles.methodBadge, { backgroundColor: firstCategoryColor }]}>
               <Text variant="titleMedium" style={styles.methodBadgeText}>
                 {firstMethod.shortName}
               </Text>
             </View>
             <Text style={styles.vsText}>vs</Text>
-            <View style={[styles.methodBadge, { backgroundColor: getCategoryColor(secondMethod.category) }]}>
+            <View style={[styles.methodBadge, { backgroundColor: secondCategoryColor }]}>
               <Text variant="titleMedium" style={styles.methodBadgeText}>
                 {secondMethod.shortName}
               </Text>
@@ -86,10 +140,14 @@ export default function ComparisonResults({
         </Card.Content>
       </Card>
 
-      {selectedFields.map(field => renderField(field))}
+      {fieldValues.map(({ field, firstValue, secondValue }) => 
+        renderField({ field, firstValue, secondValue })
+      )}
     </View>
   );
 }
+
+export default memo(ComparisonResults);
 
 function getFieldValue(details: any, field: ComparisonField): any {
   if (!details) return null;
@@ -117,6 +175,19 @@ function getFieldValue(details: any, field: ComparisonField): any {
 }
 
 
+/**
+ * Memoized list item component for better performance
+ */
+const ListItem = memo(({ item }: { item: string }) => (
+  <View style={styles.listItem}>
+    <Text style={styles.bullet}>•</Text>
+    <Text variant="bodySmall" style={styles.listText}>
+      {item}
+    </Text>
+  </View>
+));
+ListItem.displayName = 'ListItem';
+
 function renderFieldValue(value: any, field: ComparisonField): React.ReactNode {
   if (!value || (typeof value === 'string' && value.trim() === '') || (Array.isArray(value) && value.length === 0)) {
     return (
@@ -136,12 +207,7 @@ function renderFieldValue(value: any, field: ComparisonField): React.ReactNode {
       return (
         <View style={styles.listContainer}>
           {value.map((item: string, index: number) => (
-            <View key={index} style={styles.listItem}>
-              <Text style={styles.bullet}>•</Text>
-              <Text variant="bodySmall" style={styles.listText}>
-                {item}
-              </Text>
-            </View>
+            <ListItem key={`${item}-${index}`} item={item} />
           ))}
         </View>
       );

@@ -1,20 +1,75 @@
-import React from "react";
+import React, { useMemo, useCallback, memo } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Button, Chip, IconButton } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 import { RootState } from "../../src/store";
-import {
-  categorizeRecommendations,
-  getEligibleMethods,
-} from "../../src/services/eligibilityEngine";
 import { getMethodByKey, MEC_CATEGORIES } from "../../src/constants";
 import { MECScore } from "../../src/types";
-import { LoadingOverlay, SkeletonScreen } from "../../src/components/shared";
+import { LoadingOverlay } from "../../src/components/shared";
+import { useMemoizedResults } from "../../src/hooks/useMemoizedResults";
+
+/**
+ * Memoized method card component to prevent unnecessary re-renders
+ */
+const MethodCard = memo(({ methodKey, score }: { methodKey: string; score: MECScore }) => {
+  const method = useMemo(() => getMethodByKey(methodKey as any), [methodKey]);
+  const mecCategory = useMemo(() => MEC_CATEGORIES[score], [score]);
+  const chipColor = useMemo(() => MEC_CATEGORIES[score]?.color || "#666", [score]);
+
+  if (!method) return null;
+
+  return (
+    <Card style={styles.methodCard}>
+      <Card.Content>
+        <View style={styles.methodHeader}>
+          <View style={styles.methodNameContainer}>
+            <Text variant="titleMedium" style={styles.methodName}>
+              {method.name}
+            </Text>
+          </View>
+          <Chip
+            style={[styles.mecChip, { backgroundColor: chipColor }]}
+            textStyle={styles.mecChipText}
+          >
+            MEC {score}
+          </Chip>
+        </View>
+        <Text variant="bodyMedium" style={styles.methodDescription}>
+          {method.description}
+        </Text>
+        <Text variant="bodySmall" style={styles.mecDescription}>
+          {mecCategory?.description}
+        </Text>
+      </Card.Content>
+    </Card>
+  );
+});
+
+MethodCard.displayName = 'MethodCard';
 
 export default function ResultsPage() {
   const router = useRouter();
   const { mecScores, isCalculating } = useSelector((state: RootState) => state.results);
+
+  // Use memoized hook for expensive calculations
+  const { safe, acceptable, sortedAvoidMethods, eligibleMethods } = useMemoizedResults(mecScores);
+
+  // Memoize navigation handlers
+  const handlePersonalize = useCallback(() => {
+    router.push({
+      pathname: "/(drawer)/personalize",
+      params: { eligibleMethods: JSON.stringify(eligibleMethods) },
+    });
+  }, [router, eligibleMethods]);
+
+  const handleCompareMethods = useCallback(() => {
+    router.push("/(drawer)/compare-methods");
+  }, [router]);
+
+  const handleTakeQuestionnaire = useCallback(() => {
+    router.push("/(drawer)/medical-safety");
+  }, [router]);
 
   if (isCalculating) {
     return (
@@ -32,59 +87,12 @@ export default function ResultsPage() {
     return (
       <View style={styles.container}>
         <Text>No results available. Please complete the questionnaire first.</Text>
-        <Button mode="contained" onPress={() => router.push("/(drawer)/medical-safety")}>
+        <Button mode="contained" onPress={handleTakeQuestionnaire}>
           Take Questionnaire
         </Button>
       </View>
     );
   }
-
-  const { safe, acceptable, avoid } = categorizeRecommendations(mecScores);
-  const eligibleMethods = getEligibleMethods(mecScores);
-
-  // Sort avoid methods by MEC score (3 first, then 4)
-  const sortedAvoidMethods = avoid.sort((a, b) => {
-    const scoreA = mecScores[a as keyof typeof mecScores] as MECScore;
-    const scoreB = mecScores[b as keyof typeof mecScores] as MECScore;
-    return scoreA - scoreB;
-  });
-
-  const getMECChipColor = (score: MECScore) => {
-    return MEC_CATEGORIES[score]?.color || "#666";
-  };
-
-  const renderMethodCard = (methodKey: string, score: MECScore) => {
-    const method = getMethodByKey(methodKey as any);
-    if (!method) return null;
-
-    const mecCategory = MEC_CATEGORIES[score];
-
-    return (
-      <Card key={methodKey} style={styles.methodCard}>
-        <Card.Content>
-          <View style={styles.methodHeader}>
-            <View style={styles.methodNameContainer}>
-              <Text variant="titleMedium" style={styles.methodName}>
-                {method.name}
-              </Text>
-            </View>
-            <Chip
-              style={[styles.mecChip, { backgroundColor: getMECChipColor(score) }]}
-              textStyle={styles.mecChipText}
-            >
-              MEC {score}
-            </Chip>
-          </View>
-          <Text variant="bodyMedium" style={styles.methodDescription}>
-            {method.description}
-          </Text>
-          <Text variant="bodySmall" style={styles.mecDescription}>
-            {mecCategory?.description}
-          </Text>
-        </Card.Content>
-      </Card>
-    );
-  };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
@@ -94,7 +102,7 @@ export default function ResultsPage() {
           <IconButton
             icon="arrow-left"
             mode="contained-tonal"
-            onPress={() => router.push("/(drawer)/medical-safety")}
+            onPress={handleTakeQuestionnaire}
             style={styles.backButton}
           />
         </View>
@@ -118,7 +126,9 @@ export default function ResultsPage() {
             <Text variant="bodyMedium" style={styles.categoryDescription}>
               These methods have no restrictions for your use.
             </Text>
-            {safe.map((methodKey) => renderMethodCard(methodKey, 1))}
+            {safe.map((methodKey) => (
+              <MethodCard key={methodKey} methodKey={methodKey} score={1} />
+            ))}
           </Card.Content>
         </Card>
       )}
@@ -133,7 +143,9 @@ export default function ResultsPage() {
             <Text variant="bodyMedium" style={styles.categoryDescription}>
               The advantages of using these methods generally outweigh the risks for you.
             </Text>
-            {acceptable.map((methodKey) => renderMethodCard(methodKey, 2))}
+            {acceptable.map((methodKey) => (
+              <MethodCard key={methodKey} methodKey={methodKey} score={2} />
+            ))}
           </Card.Content>
         </Card>
       )}
@@ -150,7 +162,7 @@ export default function ResultsPage() {
             </Text>
             {sortedAvoidMethods.map((methodKey) => {
               const score = mecScores[methodKey as keyof typeof mecScores] as MECScore;
-              return renderMethodCard(methodKey, score);
+              return <MethodCard key={methodKey} methodKey={methodKey} score={score} />;
             })}
           </Card.Content>
         </Card>
@@ -171,12 +183,7 @@ export default function ResultsPage() {
           <View style={styles.buttonContainer}>
             <Button
               mode="contained"
-              onPress={() =>
-                router.push({
-                  pathname: "/(drawer)/personalize",
-                  params: { eligibleMethods: JSON.stringify(eligibleMethods) },
-                })
-              }
+              onPress={handlePersonalize}
               style={styles.primaryButton}
             >
               Personalize Your Choice
@@ -184,7 +191,7 @@ export default function ResultsPage() {
 
             <Button
               mode="outlined"
-              onPress={() => router.push("/(drawer)/compare-methods")}
+              onPress={handleCompareMethods}
               style={styles.secondaryButton}
             >
               Compare Methods

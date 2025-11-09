@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useCallback, memo } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Button, Chip, Divider, IconButton } from "react-native-paper";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -14,22 +14,129 @@ interface RecommendationData {
   shouldShowPermanentMethods?: boolean;
 }
 
+/**
+ * Memoized method card component for recommendations
+ */
+const RecommendationMethodCard = memo(({ 
+  methodKey, 
+  isRecommended 
+}: { 
+  methodKey: ContraceptiveMethodKey; 
+  isRecommended: boolean;
+}) => {
+  const method = useMemo(() => getMethodByKey(methodKey), [methodKey]);
+  const chipColor = useMemo(() => isRecommended ? "#4CAF50" : "#FF9800", [isRecommended]);
+  const chipLabel = useMemo(() => isRecommended ? "Recommended" : "Alternative", [isRecommended]);
+
+  if (!method) return null;
+
+  return (
+    <Card style={styles.methodCard}>
+      <Card.Content>
+        <View style={styles.methodHeader}>
+          <View style={styles.methodNameContainer}>
+            <Text variant="titleMedium" style={styles.methodName}>
+              {method.name}
+            </Text>
+          </View>
+          <Chip
+            style={[styles.statusChip, { backgroundColor: chipColor }]}
+            textStyle={styles.chipText}
+          >
+            {chipLabel}
+          </Chip>
+        </View>
+        <Text variant="bodyMedium" style={styles.methodDescription}>
+          {method.description}
+        </Text>
+        {method.category && (
+          <Text variant="bodySmall" style={styles.methodCategory}>
+            Category: {method.category.charAt(0).toUpperCase() + method.category.slice(1)}
+          </Text>
+        )}
+      </Card.Content>
+    </Card>
+  );
+});
+
+RecommendationMethodCard.displayName = 'RecommendationMethodCard';
+
+/**
+ * Memoized eliminated method item component
+ */
+const EliminatedMethodItem = memo(({ 
+  method, 
+  reason 
+}: { 
+  method: ContraceptiveMethodKey; 
+  reason: string;
+}) => {
+  const methodInfo = useMemo(() => getMethodByKey(method), [method]);
+
+  if (!methodInfo) return null;
+
+  return (
+    <View style={styles.eliminatedItem}>
+      <Text variant="bodyMedium" style={styles.eliminatedMethodName}>
+        {methodInfo.name}
+      </Text>
+      <Text variant="bodySmall" style={styles.eliminatedReason}>
+        Reason: {reason}
+      </Text>
+    </View>
+  );
+});
+
+EliminatedMethodItem.displayName = 'EliminatedMethodItem';
+
 export default function FinalRecommendationPage() {
   const router = useRouter();
   const params = useLocalSearchParams();
 
-  // Parse recommendation data from navigation params
-  let recommendationData: RecommendationData | null = null;
-  try {
-    if (params.recommendationData) {
-      recommendationData = JSON.parse(params.recommendationData as string);
+  // Memoize parsed recommendation data
+  const recommendationData = useMemo<RecommendationData | null>(() => {
+    try {
+      if (params.recommendationData) {
+        return JSON.parse(params.recommendationData as string);
+      }
+    } catch (error) {
+      handleError(error, ErrorCode.DATA_INVALID_FORMAT, "FinalRecommendationPage");
+      logger.error("Error parsing recommendation data", error, {
+        recommendationData: params.recommendationData,
+      });
     }
-  } catch (error) {
-    handleError(error, ErrorCode.DATA_INVALID_FORMAT, "FinalRecommendationPage");
-    logger.error("Error parsing recommendation data", error, {
-      recommendationData: params.recommendationData,
-    });
-  }
+    return null;
+  }, [params.recommendationData]);
+
+  const showPermanentMethodsLink = useMemo(
+    () => params.showPermanentMethods === "true" || recommendationData?.shouldShowPermanentMethods,
+    [params.showPermanentMethods, recommendationData?.shouldShowPermanentMethods]
+  );
+
+  // Memoize navigation handlers
+  const handleStartOver = useCallback(() => {
+    router.push("/medical-safety");
+  }, [router]);
+
+  const handlePermanentMethods = useCallback(() => {
+    router.push("/(drawer)/permanent-methods");
+  }, [router]);
+
+  const handleKnowContraceptive = useCallback(() => {
+    router.push("/(drawer)/know-contraceptive");
+  }, [router]);
+
+  const handleCompareMethods = useCallback(() => {
+    router.push("/(drawer)/compare-methods");
+  }, [router]);
+
+  const handleModifyPreferences = useCallback(() => {
+    router.push("/(drawer)/personalize");
+  }, [router]);
+
+  const handleBack = useCallback(() => {
+    router.back();
+  }, [router]);
 
   if (!recommendationData) {
     return (
@@ -40,7 +147,7 @@ export default function FinalRecommendationPage() {
             <Text variant="bodyMedium" style={styles.errorText}>
               Please complete the personalization questionnaire first.
             </Text>
-            <Button mode="contained" onPress={() => router.push("/medical-safety")}>
+            <Button mode="contained" onPress={handleStartOver}>
               Start Over
             </Button>
           </Card.Content>
@@ -49,46 +156,10 @@ export default function FinalRecommendationPage() {
     );
   }
 
-  const { recommended, notices, eliminated, shouldShowPermanentMethods } = recommendationData;
-  const showPermanentMethodsLink = params.showPermanentMethods === "true" || shouldShowPermanentMethods;
+  const { recommended, notices, eliminated } = recommendationData;
 
-  const renderMethodCard = (methodKey: ContraceptiveMethodKey, isRecommended: boolean = true) => {
-    const method = getMethodByKey(methodKey);
-    if (!method) return null;
-
-    return (
-      <Card key={methodKey} style={styles.methodCard}>
-        <Card.Content>
-          <View style={styles.methodHeader}>
-            <View style={styles.methodNameContainer}>
-              <Text variant="titleMedium" style={styles.methodName}>
-                {method.name}
-              </Text>
-            </View>
-            <Chip
-              style={[
-                styles.statusChip,
-                { backgroundColor: isRecommended ? "#4CAF50" : "#FF9800" },
-              ]}
-              textStyle={styles.chipText}
-            >
-              {isRecommended ? "Recommended" : "Alternative"}
-            </Chip>
-          </View>
-          <Text variant="bodyMedium" style={styles.methodDescription}>
-            {method.description}
-          </Text>
-          {method.category && (
-            <Text variant="bodySmall" style={styles.methodCategory}>
-              Category: {method.category.charAt(0).toUpperCase() + method.category.slice(1)}
-            </Text>
-          )}
-        </Card.Content>
-      </Card>
-    );
-  };
-
-  const getRecommendationSummary = () => {
+  // Memoize recommendation summary
+  const recommendationSummary = useMemo(() => {
     if (recommended.length === 0) {
       return "Based on your preferences, we couldn't find a perfect match. Please consider the alternative options below or adjust your preferences.";
     } else if (recommended.length === 1) {
@@ -97,7 +168,7 @@ export default function FinalRecommendationPage() {
     } else {
       return `Based on your health profile and preferences, we've identified ${recommended.length} suitable contraceptive options for you.`;
     }
-  };
+  }, [recommended]);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
@@ -107,7 +178,7 @@ export default function FinalRecommendationPage() {
           <IconButton
             icon="arrow-left"
             mode="contained-tonal"
-            onPress={() => router.back()}
+            onPress={handleBack}
             style={styles.backButton}
           />
         </View>
@@ -116,7 +187,7 @@ export default function FinalRecommendationPage() {
             Your Personalized Recommendation
           </Text>
           <Text variant="bodyMedium" style={styles.subtitle}>
-            {getRecommendationSummary()}
+            {recommendationSummary}
           </Text>
         </View>
       </View>
@@ -133,7 +204,13 @@ export default function FinalRecommendationPage() {
                 ? "This method perfectly aligns with your health profile and lifestyle preferences."
                 : "These methods align well with your health profile and lifestyle preferences."}
             </Text>
-            {recommended.map((methodKey) => renderMethodCard(methodKey, true))}
+            {recommended.map((methodKey) => (
+              <RecommendationMethodCard 
+                key={methodKey} 
+                methodKey={methodKey} 
+                isRecommended={true} 
+              />
+            ))}
           </Card.Content>
         </Card>
       )}
@@ -146,7 +223,7 @@ export default function FinalRecommendationPage() {
               ⚠️ Important Information
             </Text>
             {notices.map((notice, index) => (
-              <View key={index} style={styles.noticeItem}>
+              <View key={`notice-${index}`} style={styles.noticeItem}>
                 <Text variant="bodyMedium" style={styles.noticeText}>
                   • {notice}
                 </Text>
@@ -179,19 +256,13 @@ export default function FinalRecommendationPage() {
               These methods were filtered out based on your preferences:
             </Text>
             <Divider style={styles.divider} />
-            {eliminated.map(({ method, reason }, index) => {
-              const methodInfo = getMethodByKey(method);
-              return (
-                <View key={index} style={styles.eliminatedItem}>
-                  <Text variant="bodyMedium" style={styles.eliminatedMethodName}>
-                    {methodInfo?.name}
-                  </Text>
-                  <Text variant="bodySmall" style={styles.eliminatedReason}>
-                    Reason: {reason}
-                  </Text>
-                </View>
-              );
-            })}
+            {eliminated.map(({ method, reason }, index) => (
+              <EliminatedMethodItem 
+                key={`eliminated-${method}-${index}`}
+                method={method} 
+                reason={reason} 
+              />
+            ))}
           </Card.Content>
         </Card>
       )}
@@ -211,7 +282,7 @@ export default function FinalRecommendationPage() {
             {showPermanentMethodsLink && (
               <Button
                 mode="contained"
-                onPress={() => router.push("/(drawer)/permanent-methods")}
+                onPress={handlePermanentMethods}
                 style={styles.primaryButton}
               >
                 Learn About Permanent Methods
@@ -220,7 +291,7 @@ export default function FinalRecommendationPage() {
             
             <Button
               mode="outlined"
-              onPress={() => router.push("/(drawer)/know-contraceptive")}
+              onPress={handleKnowContraceptive}
               style={styles.secondaryButton}
             >
               Learn More About Methods
@@ -228,7 +299,7 @@ export default function FinalRecommendationPage() {
 
             <Button
               mode="outlined"
-              onPress={() => router.push("/(drawer)/compare-methods")}
+              onPress={handleCompareMethods}
               style={styles.secondaryButton}
             >
               Compare All Methods
@@ -236,7 +307,7 @@ export default function FinalRecommendationPage() {
 
             <Button
               mode="text"
-              onPress={() => router.push("/(drawer)/personalize")}
+              onPress={handleModifyPreferences}
               style={styles.tertiaryButton}
             >
               Modify My Preferences
