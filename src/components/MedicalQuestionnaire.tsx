@@ -79,7 +79,7 @@ export const MedicalQuestionnaire: React.FC = () => {
         </View>
 
         {/* Question */}
-        <View style={styles.questionContainer}>
+        <View>
           <QuestionInput
             question={currentQuestion}
             value={getCurrentValue()}
@@ -164,10 +164,6 @@ const styles = StyleSheet.create({
   progressBar: {
     height: 8,
     borderRadius: 4,
-  },
-  questionContainer: {
-    flex: 1,
-    minHeight: 250, // Ensure minimum height for questions
   },
   navigationContainer: {
     flexDirection: "row",
