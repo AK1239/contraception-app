@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
 import { Text, Card, Button, Divider } from 'react-native-paper';
 import { ComparisonField, getFieldLabel } from '../services/methodDetailsService';
 import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
@@ -86,20 +86,42 @@ export default function SequentialComparisonView({
         </Card.Content>
       </Card>
 
-      {/* Methods Header */}
+      {/* Methods Header with Images */}
       <Card style={styles.headerCard}>
         <Card.Content>
           <View style={styles.methodsHeader}>
-            <View style={[styles.methodBadge, { backgroundColor: getCategoryColor(firstMethod.category) }]}>
-              <Text variant="titleMedium" style={styles.methodBadgeText} numberOfLines={1}>
-                {firstMethod.shortName}
-              </Text>
+            <View style={styles.methodHeaderSection}>
+              {firstMethodData?.image && (
+                <View style={styles.methodImageContainer}>
+                  <Image 
+                    source={firstMethodData.image} 
+                    style={styles.methodHeaderImage}
+                    resizeMode="contain"
+                  />
+                </View>
+              )}
+              <View style={[styles.methodBadge, { backgroundColor: getCategoryColor(firstMethod.category) }]}>
+                <Text variant="titleMedium" style={styles.methodBadgeText} numberOfLines={1}>
+                  {firstMethod.shortName}
+                </Text>
+              </View>
             </View>
             <Text style={styles.vsText}>vs</Text>
-            <View style={[styles.methodBadge, { backgroundColor: getCategoryColor(secondMethod.category) }]}>
-              <Text variant="titleMedium" style={styles.methodBadgeText} numberOfLines={1}>
-                {secondMethod.shortName}
-              </Text>
+            <View style={styles.methodHeaderSection}>
+              {secondMethodData?.image && (
+                <View style={styles.methodImageContainer}>
+                  <Image 
+                    source={secondMethodData.image} 
+                    style={styles.methodHeaderImage}
+                    resizeMode="contain"
+                  />
+                </View>
+              )}
+              <View style={[styles.methodBadge, { backgroundColor: getCategoryColor(secondMethod.category) }]}>
+                <Text variant="titleMedium" style={styles.methodBadgeText} numberOfLines={1}>
+                  {secondMethod.shortName}
+                </Text>
+              </View>
             </View>
           </View>
         </Card.Content>
@@ -122,6 +144,25 @@ export default function SequentialComparisonView({
                 </Text>
               </View>
               <View style={styles.valueContainer}>
+                {/* Show image for description field or howToUseImage for howToUse field */}
+                {currentField === 'description' && firstMethodData?.image && (
+                  <View style={styles.comparisonImageContainer}>
+                    <Image 
+                      source={firstMethodData.image} 
+                      style={styles.comparisonImage}
+                      resizeMode="contain"
+                    />
+                  </View>
+                )}
+                {currentField === 'howToUse' && firstMethodData?.howToUseImage && (
+                  <View style={styles.comparisonImageContainer}>
+                    <Image 
+                      source={firstMethodData.howToUseImage} 
+                      style={styles.comparisonImage}
+                      resizeMode="contain"
+                    />
+                  </View>
+                )}
                 {renderFieldValue(firstValue, currentField)}
               </View>
             </View>
@@ -134,6 +175,25 @@ export default function SequentialComparisonView({
                 </Text>
               </View>
               <View style={styles.valueContainer}>
+                {/* Show image for description field or howToUseImage for howToUse field */}
+                {currentField === 'description' && secondMethodData?.image && (
+                  <View style={styles.comparisonImageContainer}>
+                    <Image 
+                      source={secondMethodData.image} 
+                      style={styles.comparisonImage}
+                      resizeMode="contain"
+                    />
+                  </View>
+                )}
+                {currentField === 'howToUse' && secondMethodData?.howToUseImage && (
+                  <View style={styles.comparisonImageContainer}>
+                    <Image 
+                      source={secondMethodData.howToUseImage} 
+                      style={styles.comparisonImage}
+                      resizeMode="contain"
+                    />
+                  </View>
+                )}
                 {renderFieldValue(secondValue, currentField)}
               </View>
             </View>
@@ -351,22 +411,44 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 12,
   },
-  methodBadge: {
+  methodHeaderSection: {
     flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    alignItems: 'center',
+    gap: 8,
+  },
+  methodImageContainer: {
+    width: 60,
+    height: 60,
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    padding: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  methodHeaderImage: {
+    width: '100%',
+    height: '100%',
+  },
+  methodBadge: {
+    width: '100%',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     borderRadius: 12,
     alignItems: 'center',
   },
   methodBadgeText: {
     color: '#111827',
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
   },
   vsText: {
     fontSize: 18,
     fontWeight: '700',
     color: '#6B7280',
+    alignSelf: 'center',
+    marginTop: 8,
   },
   comparisonCard: {
     marginHorizontal: 16,
@@ -408,6 +490,21 @@ const styles = StyleSheet.create({
   valueContainer: {
     padding: 16,
     minHeight: 60,
+  },
+  comparisonImageContainer: {
+    marginBottom: 12,
+    alignItems: 'center',
+    backgroundColor: '#F9FAFB',
+    borderRadius: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  comparisonImage: {
+    width: '100%',
+    maxWidth: 250,
+    height: 150,
+    borderRadius: 6,
   },
   textValue: {
     color: '#4B5563',
