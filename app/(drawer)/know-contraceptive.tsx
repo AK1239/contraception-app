@@ -3,43 +3,10 @@ import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Text, Card, Chip, Divider } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { CONTRACEPTIVE_METHODS, NATURAL_METHODS } from "../../src/constants/contraceptiveMethods";
+import { getCategoryColor, getCategoryIcon } from "../../src/utils/theme";
 
 export default function KnowContraceptivePage() {
   const router = useRouter();
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "hormonal":
-        return "#e3f2fd";
-      case "non-hormonal":
-        return "#e8f5e8";
-      case "permanent":
-        return "#fff3e0";
-      case "barrier":
-        return "#f3e5f5";
-      case "natural":
-        return "#fce4ec";
-      default:
-        return "#f5f5f5";
-    }
-  };
-
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "hormonal":
-        return "💊";
-      case "non-hormonal":
-        return "🔗";
-      case "permanent":
-        return "✂️";
-      case "barrier":
-        return "🛡️";
-      case "natural":
-        return "🌿";
-      default:
-        return "📋";
-    }
-  };
 
   const renderMethodCard = (method: any, isNatural: boolean = false) => {
     const handlePress = () => {

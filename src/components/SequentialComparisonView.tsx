@@ -4,6 +4,7 @@ import { Text, Card, Button, Divider } from 'react-native-paper';
 import { ComparisonField, getFieldLabel } from '../services/methodDetailsService';
 import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
 import { getContraceptiveMethodById } from '../utils/contraceptiveMethodsData';
+import { getCategoryColor } from '../utils/theme';
 
 interface SequentialComparisonViewProps {
   firstMethodKey: string;
@@ -47,23 +48,6 @@ export default function SequentialComparisonView({
   // Get field values
   const firstValue = getFieldValue(firstMethodData, currentField);
   const secondValue = getFieldValue(secondMethodData, currentField);
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'hormonal':
-        return '#e3f2fd';
-      case 'non-hormonal':
-        return '#e8f5e8';
-      case 'permanent':
-        return '#fff3e0';
-      case 'barrier':
-        return '#f3e5f5';
-      case 'natural':
-        return '#fce4ec';
-      default:
-        return '#f5f5f5';
-    }
-  };
 
   const progressPercentage = ((currentFieldIndex + 1) / selectedFields.length) * 100;
 

@@ -5,6 +5,11 @@ import { Text } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
 import ExpandableSection from '../../../src/components/ExpandableSection';
 import { getContraceptiveMethodById } from '../../../src/utils/contraceptiveMethodsData';
+import { 
+  getCategoryIconBackground, 
+  getEfficacyBadgeColor, 
+  getEfficacyTextColor 
+} from '../../../src/utils/theme';
 
 export default function ContraceptiveMethodDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -27,52 +32,6 @@ export default function ContraceptiveMethodDetailPage() {
       </SafeAreaView>
     );
   }
-
-  // Get category-based background color for icon container
-  const getCategoryIconBackground = (category: string) => {
-    switch (category) {
-      case 'hormonal':
-        return '#DBEAFE';
-      case 'non-hormonal':
-        return '#D1FAE5';
-      case 'permanent':
-        return '#FEE2E2';
-      case 'barrier':
-        return '#FEE2E2';
-      case 'natural':
-        return '#FEF3C7';
-      default:
-        return '#E5E7EB';
-    }
-  };
-
-  // Get efficacy badge background color
-  const getEfficacyBadgeColor = (label: string) => {
-    switch (label) {
-      case 'Perfect':
-        return '#D1FAE5';
-      case 'Excellent':
-        return '#D1FAE5';
-      case 'Good':
-        return '#DBEAFE';
-      default:
-        return '#F3F4F6';
-    }
-  };
-
-  // Get efficacy badge text color
-  const getEfficacyTextColor = (label: string) => {
-    switch (label) {
-      case 'Perfect':
-        return '#065F46';
-      case 'Excellent':
-        return '#065F46';
-      case 'Good':
-        return '#1E40AF';
-      default:
-        return '#374151';
-    }
-  };
 
   // Helper to extract highlighted numbers from text (like "13%" or "2%")
   const renderEfficacyText = (text: string) => {

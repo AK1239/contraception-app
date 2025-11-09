@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Modal, FlatList, Dimensions } from 'react-native';
 import { Text, Chip } from 'react-native-paper';
 import { CONTRACEPTIVE_METHODS_DATA, ContraceptiveMethodData } from '../utils/contraceptiveMethodsData';
+import { getCategoryColor } from '../utils/theme';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -25,23 +26,6 @@ export default function MethodDropdown({
   );
   
   const selectedMethod = CONTRACEPTIVE_METHODS_DATA.find(m => m.id === selectedMethodKey);
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'hormonal':
-        return '#e3f2fd';
-      case 'non-hormonal':
-        return '#e8f5e8';
-      case 'permanent':
-        return '#fff3e0';
-      case 'barrier':
-        return '#f3e5f5';
-      case 'natural':
-        return '#fce4ec';
-      default:
-        return '#f5f5f5';
-    }
-  };
 
 
   const handleSelect = (methodKey: string) => {

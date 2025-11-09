@@ -4,6 +4,7 @@ import { Text, Card, Divider } from 'react-native-paper';
 import { ComparisonField, getFieldLabel } from '../services/methodDetailsService';
 import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
 import { getMethodDetails } from '../services/methodDetailsService';
+import { getCategoryColor } from '../utils/theme';
 
 interface ComparisonResultsProps {
   firstMethodKey: string | null;
@@ -25,23 +26,6 @@ export default function ComparisonResults({
 
   const firstDetails = getMethodDetails(firstMethodKey);
   const secondDetails = getMethodDetails(secondMethodKey);
-
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'hormonal':
-        return '#e3f2fd';
-      case 'non-hormonal':
-        return '#e8f5e8';
-      case 'permanent':
-        return '#fff3e0';
-      case 'barrier':
-        return '#f3e5f5';
-      case 'natural':
-        return '#fce4ec';
-      default:
-        return '#f5f5f5';
-    }
-  };
 
   const renderField = (field: ComparisonField) => {
     const firstValue = getFieldValue(firstDetails, field);
