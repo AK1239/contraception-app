@@ -175,10 +175,10 @@ export default function FinalRecommendationPage() {
       {recommended.length > 0 && (
         <Card style={styles.categoryCard}>
           <Card.Content>
-            <Text variant="titleLarge" style={[styles.categoryTitle, { color: "#4CAF50" }]}>
+            <Text variant="titleMedium" style={[styles.categoryTitle, { color: "#4CAF50" }]}>
               ✅ Your Best Match{recommended.length > 1 ? "es" : ""}
             </Text>
-            <Text variant="bodyMedium" style={styles.categoryDescription}>
+            <Text variant="bodySmall" style={styles.categoryDescription}>
               {recommended.length === 1
                 ? "This method perfectly aligns with your health profile and lifestyle preferences."
                 : "These methods align well with your health profile and lifestyle preferences."}
@@ -203,7 +203,7 @@ export default function FinalRecommendationPage() {
             </Text>
             {notices.map((notice, index) => (
               <View key={`notice-${index}`} style={styles.noticeItem}>
-                <Text variant="bodyMedium" style={styles.noticeText}>
+                <Text variant="bodySmall" style={styles.noticeText}>
                   • {notice}
                 </Text>
               </View>
@@ -218,8 +218,8 @@ export default function FinalRecommendationPage() {
           <Text variant="titleMedium" style={styles.stiTitle}>
             🛡️ STI Protection
           </Text>
-          <Text variant="bodyMedium" style={styles.stiText}>
-          Most contraceptives do not protect against STIs. If you’re at risk, use a condom or other barrier method for protection along with your chosen contraceptive.
+          <Text variant="bodySmall" style={styles.stiText}>
+          Most contraceptives do not protect against STIs. If you're at risk, use a condom or other barrier method for protection along with your chosen contraceptive.
           </Text>
         </Card.Content>
       </Card>
