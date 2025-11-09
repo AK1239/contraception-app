@@ -108,30 +108,9 @@ export default function FinalRecommendationPage() {
     return null;
   }, [params.recommendationData]);
 
-  const showPermanentMethodsLink = useMemo(
-    () => params.showPermanentMethods === "true" || recommendationData?.shouldShowPermanentMethods,
-    [params.showPermanentMethods, recommendationData?.shouldShowPermanentMethods]
-  );
-
   // Memoize navigation handlers
   const handleStartOver = useCallback(() => {
     router.push("/medical-safety");
-  }, [router]);
-
-  const handlePermanentMethods = useCallback(() => {
-    router.push("/(drawer)/permanent-methods");
-  }, [router]);
-
-  const handleKnowContraceptive = useCallback(() => {
-    router.push("/(drawer)/natural-methods");
-  }, [router]);
-
-  const handleCompareMethods = useCallback(() => {
-    router.push("/(drawer)/compare-methods");
-  }, [router]);
-
-  const handleModifyPreferences = useCallback(() => {
-    router.push("/(drawer)/personalize");
   }, [router]);
 
   const handleBack = useCallback(() => {
@@ -267,54 +246,7 @@ export default function FinalRecommendationPage() {
         </Card>
       )}
 
-      {/* Next Steps */}
-      <Card style={styles.actionCard}>
-        <Card.Content>
-          <Text variant="titleMedium" style={styles.actionTitle}>
-            🚀 Next Steps
-          </Text>
-          <Text variant="bodyMedium" style={styles.actionDescription}>
-            Ready to learn more about your recommended method{recommended.length > 1 ? "s" : ""}
-            or compare different options?
-          </Text>
-
-          <View style={styles.buttonContainer}>
-            {showPermanentMethodsLink && (
-              <Button
-                mode="contained"
-                onPress={handlePermanentMethods}
-                style={styles.primaryButton}
-              >
-                Learn About Permanent Methods
-              </Button>
-            )}
-            
-            <Button
-              mode="outlined"
-              onPress={handleKnowContraceptive}
-              style={styles.secondaryButton}
-            >
-              Learn More About Methods
-            </Button>
-
-            <Button
-              mode="outlined"
-              onPress={handleCompareMethods}
-              style={styles.secondaryButton}
-            >
-              Compare All Methods
-            </Button>
-
-            <Button
-              mode="text"
-              onPress={handleModifyPreferences}
-              style={styles.tertiaryButton}
-            >
-              Modify My Preferences
-            </Button>
-          </View>
-        </Card.Content>
-      </Card>
+    
 
       {/* Professional Disclaimer */}
       <Card style={styles.disclaimerCard}>

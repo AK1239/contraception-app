@@ -62,8 +62,8 @@ export default function HomePage() {
       <HomeSectionCard
         leadingEmoji="🌿"
         title="Natural Methods"
-        description="Prefer non-modern methods? Try our Standard Days Method Calculator to identify your fertile days and avoid unprotected intercourse during those times."
-        ctaLabel="Standard Days Calculator"
+        description="Prefer non-modern methods? Try our Calendar Method Calculator to identify your fertile days and avoid unprotected intercourse during those times."
+        ctaLabel="Calendar Method Calculator"
         onPress={() => router.push("/standard-day-calculator")}
         buttonColor="#22C55E"
       />
