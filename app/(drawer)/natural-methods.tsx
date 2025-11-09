@@ -15,6 +15,10 @@ export default function NaturalMethodsScreen() {
     router.push('/(drawer)/contraceptive-method/standard-days-method');
   };
 
+  const handleSDMKnowMore = () => {
+    router.push('/(drawer)/contraceptive-method/standard-days-method-sdm');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
@@ -37,6 +41,15 @@ export default function NaturalMethodsScreen() {
             onKnowMorePress={handleStandardDaysKnowMore}
             backgroundColor="#F0FDF4"
             buttonColor="#10B981"
+          />
+
+          <NaturalMethodCard
+            title="Standard Days Method"
+            description="A fertility awareness-based method for women with regular cycles of 26–32 days. Days 8–19 are considered fertile and require avoiding unprotected sex. Most effective when combined with additional fertility indicators."
+            icon="📅"
+            onKnowMorePress={handleSDMKnowMore}
+            backgroundColor="#FEF3C7"
+            buttonColor="#F59E0B"
           />
         </View>
 

@@ -406,6 +406,53 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
       ],
     },
   },
+  {
+    id: 'standard-days-method-sdm',
+    name: 'Standard Days Method',
+    shortName: 'SDM',
+    category: 'natural',
+    icon: '📅',
+    description: 'The Standard Days Method (SDM) is a fertility awareness-based method for women with regular menstrual cycles of 26–32 days, helping identify fertile and safe days to prevent pregnancy. It assumes ovulation occurs mid-cycle, with days 8–19 considered fertile; couples avoid unprotected sex during this period. The method involves counting from the first day of menstrual bleeding to track fertile and non-fertile days accurately.',
+    efficacy: {
+      label: 'Good',
+      typicalUse: 'About 12% chance of pregnancy, meaning 88 out of 100 women will not become pregnant with usual use.',
+      perfectUse: 'About 5% chance of pregnancy, meaning 95 out of 100 women will not become pregnant if this method is used correctly.',
+    },
+    advantages: [
+      'No side/adverse effects',
+      'No cost',
+      'Can be acceptable for couples for cultural or religious reasons',
+      'Easy to use with consistent menstrual cycles',
+    ],
+    disadvantages: [
+      'There is a notable chance of pregnancy',
+      'Not effective for women with irregular menstrual cycles',
+      'Requires daily attention to the menstrual cycle and careful tracking',
+    ],
+    howToUse: 'Track your menstrual cycle using a calendar or app. Identify days 8–19 as fertile days and avoid unprotected sex during this period. Days 1–7 and from day 20 onwards are considered safer for intercourse.',
+    timeToWork: 'Immediate',
+    conditionsRequired: [
+      'Regular menstrual cycles (length between 26–32 days)',
+      'Consistent tracking of cycle days',
+    ],
+    sideNotes: 'Since the fertile window may vary slightly among women, combining SDM with additional fertility indicators can improve effectiveness: monitoring cervical mucus changes (sticky, clear, egg-white mucus indicates fertility), observing basal body temperature shifts (temperature rises slightly after ovulation), and using ovulation predictor kits (optional for better accuracy).',
+    additionalInfo: {
+      additionalMethods: [
+        {
+          title: 'Monitoring Cervical Mucus Changes',
+          description: 'Sticky, clear, egg-white mucus indicates fertility. This can help identify when ovulation is occurring and improve the accuracy of the Standard Days Method.',
+        },
+        {
+          title: 'Observing Basal Body Temperature Shifts',
+          description: 'Temperature rises slightly after ovulation (typically ranges between 0.2 and 0.5°C). Tracking this can provide additional confirmation of your fertile window.',
+        },
+        {
+          title: 'Using Ovulation Predictor Kits',
+          description: 'Optional for better accuracy. These kits detect the surge in luteinizing hormone that occurs before ovulation, providing more precise timing of your fertile period.',
+        },
+      ],
+    },
+  },
 ];
 
 /**
