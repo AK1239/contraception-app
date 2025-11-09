@@ -7,6 +7,8 @@ import { Provider as ReduxProvider } from "react-redux";
 import { store } from "../src/store";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import { ErrorBoundary } from "../src/components/ErrorBoundary";
+import { logger } from "../src/services/logger";
 import {
   useFonts,
   Poppins_200ExtraLight,
@@ -67,15 +69,27 @@ export default function RootLayout() {
   if (!fontsLoaded) {
     return null;
   }
+  
   return (
-    <ReduxProvider store={store}>
-      <PaperProvider theme={theme}>
-        <GestureHandlerRootView style={styles.container}>
-          <StatusBar style="auto" />
-          <Slot />
-        </GestureHandlerRootView>
-      </PaperProvider>
-    </ReduxProvider>
+    <ErrorBoundary
+      onError={(error, errorInfo) => {
+        // Log error to our logging service
+        logger.error('Root Error Boundary caught an error', error, {
+          componentStack: errorInfo.componentStack,
+        });
+      }}
+    >
+      <ReduxProvider store={store}>
+        <PaperProvider theme={theme}>
+          <GestureHandlerRootView style={styles.container}>
+            <StatusBar style="auto" />
+            <ErrorBoundary>
+              <Slot />
+            </ErrorBoundary>
+          </GestureHandlerRootView>
+        </PaperProvider>
+      </ReduxProvider>
+    </ErrorBoundary>
   );
 }
 

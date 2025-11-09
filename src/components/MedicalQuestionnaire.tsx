@@ -13,9 +13,11 @@ import {
   setComplete,
   resetQuestionnaire,
 } from "../store/slices/questionnaire";
-import { setCalculating, setMECScores } from "../store/slices/results";
+import { setCalculating, setMECScores, setError } from "../store/slices/results";
 import { getVisibleQuestions } from "../constants/questions";
 import { calculateEligibility } from "../services/eligibilityEngine";
+import { handleError, getUserFriendlyMessage, ErrorCode } from "../services/errorHandler";
+import { logger } from "../services/logger";
 import { AnswerValue } from "../types";
 
 export const MedicalQuestionnaire: React.FC = () => {
@@ -178,9 +180,15 @@ export const MedicalQuestionnaire: React.FC = () => {
         params: { mecScores: JSON.stringify(mecScores) },
       });
     } catch (error) {
-      console.error("Error calculating eligibility:", error);
-      Alert.alert("Error", "Failed to calculate results. Please try again.");
+      // Use centralized error handling
+      const appError = handleError(error, ErrorCode.ELIGIBILITY_CALCULATION_FAILED, "MedicalQuestionnaire.handleComplete");
+      const userMessage = getUserFriendlyMessage(appError);
+      
+      logger.error("Error calculating eligibility", error, { answers });
+      dispatch(setError(userMessage));
       dispatch(setCalculating(false));
+      
+      Alert.alert("Error", userMessage);
     }
   };
 

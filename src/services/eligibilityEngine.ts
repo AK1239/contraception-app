@@ -1,5 +1,7 @@
 import { MECScores, MECScore, UserAnswers } from "../types";
 import { INITIAL_MEC_SCORES } from "../constants";
+import { logger } from "./logger";
+import { handleError, ErrorCode, createError, withSyncErrorHandling } from "./errorHandler";
 
 // Date calculation utilities
 const calculateDaysSince = (date: Date): number => {
@@ -53,160 +55,194 @@ const setAllExcept = (score: MECScore, exceptions: Partial<MECScores> = {}): Par
 };
 
 /**
+ * Validate user answers before processing
+ */
+function validateAnswers(answers: UserAnswers): void {
+  if (!answers || typeof answers !== 'object') {
+    throw createError(ErrorCode.ELIGIBILITY_INVALID_INPUT, {
+      reason: 'Answers must be an object',
+      provided: typeof answers,
+    });
+  }
+
+  // Check if age is provided and valid
+  if (answers.age !== undefined && answers.age !== null) {
+    const age = Number(answers.age);
+    if (isNaN(age) || age < 0 || age > 120) {
+      throw createError(ErrorCode.ELIGIBILITY_INVALID_INPUT, {
+        reason: 'Age must be a valid number between 0 and 120',
+        provided: answers.age,
+      });
+    }
+  }
+}
+
+/**
  * Main function to calculate medical eligibility for contraceptive methods
  * Based on WHO Medical Eligibility Criteria (MEC) 2015
+ * 
+ * @param answers - User answers to medical questionnaire
+ * @returns MEC scores for each contraceptive method
+ * @throws AppError if calculation fails or input is invalid
  */
 export const calculateEligibility = (answers: UserAnswers): MECScores => {
-  let scores: MECScores = { ...INITIAL_MEC_SCORES };
+  try {
+    // Validate input
+    validateAnswers(answers);
 
-  // Question 1: Age
-  const age = answers.age as number;
-  if (age) {
-    if (age < 18) {
-      scores = updateMECScores(scores, { d: 2 });
+    // Log calculation start
+    logger.debug('Starting eligibility calculation', { answerCount: Object.keys(answers).length });
+
+    let scores: MECScores = { ...INITIAL_MEC_SCORES };
+
+    // Question 1: Age
+    const age = answers.age as number;
+    if (age) {
+      if (age < 18) {
+        scores = updateMECScores(scores, { d: 2 });
+      }
+      if (age < 20) {
+        scores = updateMECScores(scores, { f: 2, g: 2 });
+      }
+      if (age > 39) {
+        scores = updateMECScores(scores, { a: 2 });
+      }
+      if (age > 45) {
+        scores = updateMECScores(scores, { d: 2 });
+      }
     }
-    if (age < 20) {
+
+    // Question 2: Ever been pregnant
+    const everPregnant = answers.everPregnant as boolean;
+    if (everPregnant === false) {
       scores = updateMECScores(scores, { f: 2, g: 2 });
     }
-    if (age > 39) {
-      scores = updateMECScores(scores, { a: 2 });
-    }
-    if (age > 45) {
-      scores = updateMECScores(scores, { d: 2 });
-    }
-  }
 
-  // Question 2: Ever been pregnant
-  const everPregnant = answers.everPregnant as boolean;
-  if (everPregnant === false) {
-    scores = updateMECScores(scores, { f: 2, g: 2 });
-  }
+    // Question 3: Given birth in past 2 years
+    const birthInPast2Years = answers.birthInPast2Years as boolean;
+    if (birthInPast2Years === true) {
+      const birthDate = answers.birthDate as Date;
+      const isBreastfeeding = answers.isBreastfeeding as boolean;
 
-  // Question 3: Given birth in past 2 years
-  const birthInPast2Years = answers.birthInPast2Years as boolean;
-  if (birthInPast2Years === true) {
-    const birthDate = answers.birthDate as Date;
-    const isBreastfeeding = answers.isBreastfeeding as boolean;
+      if (birthDate) {
+        const daysSinceBirth = calculateDaysSince(birthDate);
+        const weeksSinceBirth = calculateWeeksSince(birthDate);
+        const monthsSinceBirth = calculateMonthsSince(birthDate);
 
-    if (birthDate) {
-      const daysSinceBirth = calculateDaysSince(birthDate);
-      const weeksSinceBirth = calculateWeeksSince(birthDate);
-      const monthsSinceBirth = calculateMonthsSince(birthDate);
-
-      if (isBreastfeeding) {
-        if (daysSinceBirth < 2) {
-          scores = updateMECScores(scores, { f: 3, g: 3 });
-        } else if (daysSinceBirth >= 2 && daysSinceBirth <= 28) {
-          // 2 days to 4 weeks
-          scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 3, f: 3, g: 3 });
-        } else if (weeksSinceBirth >= 4 && weeksSinceBirth <= 6) {
-          scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 3, f: 1, g: 1 });
-        } else if (weeksSinceBirth >= 6 && monthsSinceBirth <= 6) {
-          scores = updateMECScores(scores, setAllExcept(1, { a: 3, b: 3 }));
-        } else if (monthsSinceBirth > 6) {
-          scores = updateMECScores(scores, setAllExcept(1, { a: 2, b: 2 }));
-        }
-      } else {
-        // Not breastfeeding
-        const hasRiskFactors = answers.postpartumRiskFactors as boolean;
-
-        if (daysSinceBirth < 21) {
-          if (hasRiskFactors) {
-            scores = updateMECScores(scores, setAllExcept(1, { a: 4, b: 4 }));
-          } else {
+        if (isBreastfeeding) {
+          if (daysSinceBirth < 2) {
+            scores = updateMECScores(scores, { f: 3, g: 3 });
+          } else if (daysSinceBirth >= 2 && daysSinceBirth <= 28) {
+            // 2 days to 4 weeks
+            scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 3, f: 3, g: 3 });
+          } else if (weeksSinceBirth >= 4 && weeksSinceBirth <= 6) {
+            scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 3, f: 1, g: 1 });
+          } else if (weeksSinceBirth >= 6 && monthsSinceBirth <= 6) {
             scores = updateMECScores(scores, setAllExcept(1, { a: 3, b: 3 }));
+          } else if (monthsSinceBirth > 6) {
+            scores = updateMECScores(scores, setAllExcept(1, { a: 2, b: 2 }));
           }
-        } else if (daysSinceBirth >= 21 && daysSinceBirth <= 42) {
-          if (hasRiskFactors) {
-            scores = updateMECScores(scores, setAllExcept(1, { a: 3, b: 3 }));
+        } else {
+          // Not breastfeeding
+          const hasRiskFactors = answers.postpartumRiskFactors as boolean;
+
+          if (daysSinceBirth < 21) {
+            if (hasRiskFactors) {
+              scores = updateMECScores(scores, setAllExcept(1, { a: 4, b: 4 }));
+            } else {
+              scores = updateMECScores(scores, setAllExcept(1, { a: 3, b: 3 }));
+            }
+          } else if (daysSinceBirth >= 21 && daysSinceBirth <= 42) {
+            if (hasRiskFactors) {
+              scores = updateMECScores(scores, setAllExcept(1, { a: 3, b: 3 }));
+            } else {
+              scores = updateMECScores(scores, setAllExcept(1, { a: 2, b: 2 }));
+            }
+          }
+          // If > 42 days, all remain at 1
+        }
+      }
+    }
+
+    // Question 4: Abortion history
+    const hadAbortion = answers.hadAbortion as boolean;
+    if (hadAbortion === true) {
+      const septicAbortion = answers.septicAbortion as boolean;
+
+      if (septicAbortion === true) {
+        scores = updateMECScores(scores, setAllExcept(1, { f: 4, g: 4 }));
+      } else {
+        const abortionWeek = answers.abortionWeek as number;
+        if (abortionWeek >= 13 && abortionWeek <= 26) {
+          scores = updateMECScores(scores, setAllExcept(1, { f: 2, g: 2 }));
+        }
+      }
+    }
+
+    // Question 5: Ectopic pregnancy
+    const hadEctopic = answers.hadEctopic as boolean;
+    if (hadEctopic === true) {
+      scores = updateMECScores(scores, setAllExcept(1, { c: 2 }));
+    }
+
+    // Question 6: Hypertension
+    const hasHypertension = answers.hasHypertension as boolean;
+    if (hasHypertension === true) {
+      const hasBPReading = answers.hasBPReading as boolean;
+
+      if (hasBPReading === false) {
+        scores = updateMECScores(scores, { a: 3, b: 3, c: 2, d: 2, e: 2, g: 2, f: 1 });
+      } else {
+        const bloodPressure = answers.bloodPressure as { systolic: number; diastolic: number };
+        if (bloodPressure) {
+          const { systolic, diastolic } = bloodPressure;
+
+          if (systolic < 140 && diastolic < 90) {
+            // All remain 1
+          } else if (systolic >= 140 && systolic <= 159 && diastolic >= 90 && diastolic <= 99) {
+            scores = updateMECScores(scores, setAllExcept(1, { a: 3, b: 3, d: 2 }));
+          } else if (systolic > 159 || diastolic > 99) {
+            scores = updateMECScores(
+              scores,
+              setAllExcept(1, { a: 4, b: 4, c: 2, e: 2, g: 2, d: 3, f: 1 })
+            );
+          }
+        }
+      }
+    }
+
+    // Question 7: DVT (Deep Vein Thrombosis)
+    const hasDVT = answers.hasDVT as boolean;
+    if (hasDVT === true) {
+      const currentDVT = answers.currentDVT as boolean;
+
+      if (currentDVT === true) {
+        scores = updateMECScores(scores, { a: 4, b: 4, c: 3, d: 3, e: 3, g: 3, f: 1 });
+      } else {
+        scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 2, e: 2, g: 2, f: 1 });
+      }
+    } else {
+      const familyDVT = answers.familyDVT as boolean;
+      if (familyDVT === true) {
+        scores = updateMECScores(scores, setAllExcept(1, { a: 2, b: 2 }));
+      } else {
+        const majorSurgery = answers.majorSurgery as boolean;
+        if (majorSurgery === true) {
+          const bedRestDays = answers.bedRestDays as number;
+          if (bedRestDays > 3) {
+            scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 2, e: 2, g: 2, f: 1 });
           } else {
             scores = updateMECScores(scores, setAllExcept(1, { a: 2, b: 2 }));
           }
         }
-        // If > 42 days, all remain at 1
       }
     }
-  }
 
-  // Question 4: Abortion history
-  const hadAbortion = answers.hadAbortion as boolean;
-  if (hadAbortion === true) {
-    const septicAbortion = answers.septicAbortion as boolean;
-
-    if (septicAbortion === true) {
-      scores = updateMECScores(scores, setAllExcept(1, { f: 4, g: 4 }));
-    } else {
-      const abortionWeek = answers.abortionWeek as number;
-      if (abortionWeek >= 13 && abortionWeek <= 26) {
-        scores = updateMECScores(scores, setAllExcept(1, { f: 2, g: 2 }));
-      }
+    // Question 9: Stroke (Note: Question 8 appears to be missing in the document)
+    const hadStroke = answers.hadStroke as boolean;
+    if (hadStroke === true) {
+      scores = updateMECScores(scores, { a: 4, b: 4, d: 3, f: 1, c: 2, e: 2, g: 2 });
     }
-  }
-
-  // Question 5: Ectopic pregnancy
-  const hadEctopic = answers.hadEctopic as boolean;
-  if (hadEctopic === true) {
-    scores = updateMECScores(scores, setAllExcept(1, { c: 2 }));
-  }
-
-  // Question 6: Hypertension
-  const hasHypertension = answers.hasHypertension as boolean;
-  if (hasHypertension === true) {
-    const hasBPReading = answers.hasBPReading as boolean;
-
-    if (hasBPReading === false) {
-      scores = updateMECScores(scores, { a: 3, b: 3, c: 2, d: 2, e: 2, g: 2, f: 1 });
-    } else {
-      const bloodPressure = answers.bloodPressure as { systolic: number; diastolic: number };
-      if (bloodPressure) {
-        const { systolic, diastolic } = bloodPressure;
-
-        if (systolic < 140 && diastolic < 90) {
-          // All remain 1
-        } else if (systolic >= 140 && systolic <= 159 && diastolic >= 90 && diastolic <= 99) {
-          scores = updateMECScores(scores, setAllExcept(1, { a: 3, b: 3, d: 2 }));
-        } else if (systolic > 159 || diastolic > 99) {
-          scores = updateMECScores(
-            scores,
-            setAllExcept(1, { a: 4, b: 4, c: 2, e: 2, g: 2, d: 3, f: 1 })
-          );
-        }
-      }
-    }
-  }
-
-  // Question 7: DVT (Deep Vein Thrombosis)
-  const hasDVT = answers.hasDVT as boolean;
-  if (hasDVT === true) {
-    const currentDVT = answers.currentDVT as boolean;
-
-    if (currentDVT === true) {
-      scores = updateMECScores(scores, { a: 4, b: 4, c: 3, d: 3, e: 3, g: 3, f: 1 });
-    } else {
-      scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 2, e: 2, g: 2, f: 1 });
-    }
-  } else {
-    const familyDVT = answers.familyDVT as boolean;
-    if (familyDVT === true) {
-      scores = updateMECScores(scores, setAllExcept(1, { a: 2, b: 2 }));
-    } else {
-      const majorSurgery = answers.majorSurgery as boolean;
-      if (majorSurgery === true) {
-        const bedRestDays = answers.bedRestDays as number;
-        if (bedRestDays > 3) {
-          scores = updateMECScores(scores, { a: 4, b: 4, c: 2, d: 2, e: 2, g: 2, f: 1 });
-        } else {
-          scores = updateMECScores(scores, setAllExcept(1, { a: 2, b: 2 }));
-        }
-      }
-    }
-  }
-
-  // Question 9: Stroke (Note: Question 8 appears to be missing in the document)
-  const hadStroke = answers.hadStroke as boolean;
-  if (hadStroke === true) {
-    scores = updateMECScores(scores, { a: 4, b: 4, d: 3, f: 1, c: 2, e: 2, g: 2 });
-  }
 
   // Question 10: Dyslipidemia
   const hasDyslipidemia = answers.hasDyslipidemia as boolean;
@@ -543,35 +579,100 @@ export const calculateEligibility = (answers: UserAnswers): MECScores => {
     }
   }
 
-  return scores;
+    // Log calculation completion
+    logger.debug('Eligibility calculation completed', { scores });
+
+    return scores;
+  } catch (error) {
+    // Log error with context
+    logger.error('Error in calculateEligibility', error, { answers });
+
+    // Re-throw as AppError if it's not already
+    if (error && typeof error === 'object' && 'code' in error) {
+      throw error;
+    }
+
+    throw handleError(
+      error,
+      ErrorCode.ELIGIBILITY_CALCULATION_FAILED,
+      'calculateEligibility'
+    );
+  }
 };
 
 /**
  * Categorize contraceptive methods based on MEC scores
+ * 
+ * @param mecScores - MEC scores for each method
+ * @returns Categorized methods by safety level
+ * @throws AppError if scores are invalid
  */
-export const categorizeRecommendations = (mecScores: MECScores) => {
-  const safe: string[] = []; // MEC 1
-  const acceptable: string[] = []; // MEC 2
-  const avoid: string[] = []; // MEC 3 & 4
-
-  Object.entries(mecScores).forEach(([method, score]) => {
-    if (score === 1) {
-      safe.push(method);
-    } else if (score === 2) {
-      acceptable.push(method);
-    } else if (score >= 3) {
-      avoid.push(method);
+export const categorizeRecommendations = withSyncErrorHandling(
+  (mecScores: MECScores) => {
+    if (!mecScores || typeof mecScores !== 'object') {
+      throw createError(ErrorCode.ELIGIBILITY_INVALID_INPUT, {
+        reason: 'MEC scores must be an object',
+        provided: typeof mecScores,
+      });
     }
-  });
 
-  return { safe, acceptable, avoid };
-};
+    const safe: string[] = []; // MEC 1
+    const acceptable: string[] = []; // MEC 2
+    const avoid: string[] = []; // MEC 3 & 4
+
+    Object.entries(mecScores).forEach(([method, score]) => {
+      if (typeof score !== 'number' || score < 1 || score > 4) {
+        logger.warn(`Invalid MEC score for method ${method}: ${score}`);
+        return;
+      }
+
+      if (score === 1) {
+        safe.push(method);
+      } else if (score === 2) {
+        acceptable.push(method);
+      } else if (score >= 3) {
+        avoid.push(method);
+      }
+    });
+
+    logger.debug('Categorized recommendations', { safe: safe.length, acceptable: acceptable.length, avoid: avoid.length });
+
+    return { safe, acceptable, avoid };
+  },
+  ErrorCode.ELIGIBILITY_CALCULATION_FAILED,
+  'categorizeRecommendations'
+);
 
 /**
  * Get eligible methods for personalization (MEC 1 and 2)
+ * 
+ * @param mecScores - MEC scores for each method
+ * @returns Array of eligible method keys
+ * @throws AppError if scores are invalid
  */
-export const getEligibleMethods = (mecScores: MECScores): string[] => {
-  return Object.entries(mecScores)
-    .filter(([_, score]) => score <= 2)
-    .map(([method, _]) => method);
-};
+export const getEligibleMethods = withSyncErrorHandling(
+  (mecScores: MECScores): string[] => {
+    if (!mecScores || typeof mecScores !== 'object') {
+      throw createError(ErrorCode.ELIGIBILITY_INVALID_INPUT, {
+        reason: 'MEC scores must be an object',
+        provided: typeof mecScores,
+      });
+    }
+
+    const eligible = Object.entries(mecScores)
+      .filter(([_, score]) => {
+        if (typeof score !== 'number') {
+          logger.warn(`Invalid MEC score type: ${typeof score}`);
+          return false;
+        }
+        return score <= 2;
+      })
+      .map(([method, _]) => method);
+
+    logger.debug('Get eligible methods', { count: eligible.length, methods: eligible });
+
+    return eligible;
+  },
+  ErrorCode.ELIGIBILITY_CALCULATION_FAILED,
+  'getEligibleMethods'
+);
