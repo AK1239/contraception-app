@@ -7,6 +7,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import OnboardingSlide from "../src/components/OnboardingSlide";
 import OnboardingDots from "../src/components/OnboardingDots";
 import OnboardingControls from "../src/components/OnboardingControls";
+import { logger } from "../src/services/logger";
+import { handleError, ErrorCode } from "../src/services/errorHandler";
 
 const ONBOARDING_COMPLETED_KEY = "@onboarding_completed";
 
@@ -63,7 +65,8 @@ export default function OnboardingScreen() {
           setShowOnboarding(true);
         }
       } catch (error) {
-        console.error("Error checking onboarding status:", error);
+        handleError(error, ErrorCode.DATA_LOAD_ERROR, "OnboardingScreen.checkOnboardingStatus");
+        logger.error("Error checking onboarding status", error);
         // On error, show onboarding to be safe
         setShowOnboarding(true);
       } finally {
@@ -97,7 +100,8 @@ export default function OnboardingScreen() {
       // Navigate to home screen
       router.replace("/(drawer)");
     } catch (error) {
-      console.error("Error saving onboarding status:", error);
+      handleError(error, ErrorCode.DATA_SAVE_ERROR, "OnboardingScreen.handleDone");
+      logger.error("Error saving onboarding status", error);
       // Navigate anyway even if saving fails
       router.replace("/(drawer)");
     }

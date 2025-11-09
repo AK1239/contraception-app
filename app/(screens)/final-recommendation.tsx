@@ -4,6 +4,8 @@ import { Text, Card, Button, Chip, Divider, IconButton } from "react-native-pape
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { getMethodByKey } from "../../src/constants";
 import { ContraceptiveMethodKey } from "../../src/types";
+import { logger } from "../../src/services/logger";
+import { handleError, ErrorCode } from "../../src/services/errorHandler";
 
 interface RecommendationData {
   recommended: ContraceptiveMethodKey[];
@@ -23,7 +25,10 @@ export default function FinalRecommendationPage() {
       recommendationData = JSON.parse(params.recommendationData as string);
     }
   } catch (error) {
-    console.error("Error parsing recommendation data:", error);
+    handleError(error, ErrorCode.DATA_INVALID_FORMAT, "FinalRecommendationPage");
+    logger.error("Error parsing recommendation data", error, {
+      recommendationData: params.recommendationData,
+    });
   }
 
   if (!recommendationData) {

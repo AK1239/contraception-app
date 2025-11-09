@@ -14,6 +14,8 @@ import {
 import { generatePersonalizedRecommendations } from "../../src/services/personalizationEngine";
 import { getEligibleMethods } from "../../src/services/eligibilityEngine";
 import { ContraceptiveMethodKey, AnswerValue } from "../../src/types";
+import { logger } from "../../src/services/logger";
+import { handleError, ErrorCode } from "../../src/services/errorHandler";
 
 export default function PersonalizePage() {
   const router = useRouter();
@@ -46,7 +48,10 @@ export default function PersonalizePage() {
           return;
         }
       } catch (error) {
-        console.error("Error parsing eligible methods from params:", error);
+        handleError(error, ErrorCode.DATA_INVALID_FORMAT, "PersonalizePage.parseEligibleMethodsFromParams");
+        logger.error("Error parsing eligible methods from params", error, {
+          eligibleMethods: params.eligibleMethods,
+        });
       }
     }
     
@@ -60,7 +65,10 @@ export default function PersonalizePage() {
           return;
         }
       } catch (error) {
-        console.error("Error extracting eligible methods from MEC scores:", error);
+        handleError(error, ErrorCode.ELIGIBILITY_CALCULATION_FAILED, "PersonalizePage.getEligibleMethodsFromMECScores");
+        logger.error("Error extracting eligible methods from MEC scores", error, {
+          mecScores,
+        });
       }
     }
     
@@ -90,7 +98,10 @@ export default function PersonalizePage() {
           }
         } catch (error) {
           // Error extracting methods - redirect to medical safety
-          console.error("Error extracting eligible methods:", error);
+          handleError(error, ErrorCode.ELIGIBILITY_CALCULATION_FAILED, "PersonalizePage.getEligibleMethods");
+          logger.error("Error extracting eligible methods", error, {
+            mecScores,
+          });
           setIsCheckingEligibility(false);
           hasRedirected.current = true;
           router.replace("/(drawer)/medical-safety");
