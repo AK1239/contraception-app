@@ -11,6 +11,8 @@ export interface ContraceptiveMethodData {
   category: 'hormonal' | 'non-hormonal' | 'barrier' | 'permanent' | 'natural';
   icon: string;
   description: string;
+  image?: any; // Image source from require() - React Native image resource
+  howToUseImage?: any; // Image source from require() - React Native image resource
   efficacy: {
     label: 'Good' | 'Excellent' | 'Perfect';
     typicalUse: string;
@@ -40,6 +42,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     name: 'Male Condom',
     category: 'barrier',
     icon: '🛡️',
+    image: require('../../assets/male-condom.png'),
+    howToUseImage: require('../../assets/male-condom-how-to-use.png'),
     description: 'A male condom is a thin sheath that is placed over the glans (the end part) and the shaft of the penis of your sexual partner before any vaginal insertion. A physical barrier method that prevents pregnancy and protects against STDs',
     efficacy: {
       label: 'Good',
@@ -71,6 +75,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     name: 'Female Condom',
     category: 'barrier',
     icon: '🛡️',
+    image: require('../../assets/female-condom.png'),
+    howToUseImage: require('../../assets/female-condom-how-to-use.png'),
     description: 'To be worn by the female during each coital act. Contains 2 flexible rings; 1 closed for insertion and the other open.',
     efficacy: {
       label: 'Good',
@@ -96,6 +102,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'COC',
     category: 'hormonal',
     icon: '💊',
+    image: require('../../assets/coc-pills.png'),
     description: 'As the name suggests, these are combined oral contraceptives (COCs) meaning that these are pills containing both estrogen and progesterone hormone.',
     efficacy: {
       label: 'Excellent',
@@ -122,6 +129,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'POP',
     category: 'hormonal',
     icon: '💊',
+    image: require('../../assets/pop-pills.png'),
     description: 'As the name suggests; these are Progestin Only Pills (POP) meaning that these are pills containing the progesterone hormone only (no estrogen).',
     efficacy: {
       label: 'Excellent',
@@ -147,6 +155,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'Intrauterine Copper Device',
     category: 'non-hormonal',
     icon: '🔧',
+    image: require('../../assets/copper-iucd.png'),
     description: 'A small T-shaped device made of plastic and wrapped in copper that will be placed inside the uterus by a healthcare provider. Copper prevents pregnancy by stopping the sperms from swimming and combining with the egg, but even if the egg has combined by chance, then copper will also prevent it from growing further.',
     efficacy: {
       label: 'Perfect',
@@ -175,6 +184,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     name: 'Contraceptive Vaginal Ring',
     category: 'hormonal',
     icon: '💍',
+    image: require('../../assets/vaginal-ring.png'),
+    howToUseImage: require('../../assets/vaginal-ring-how-to-use.jpg'),
     description: 'The contraceptive vaginal ring is a small, soft, flexible plastic ring (about 5–6 cm wide) that a woman puts inside her vagina once a month. The ring slowly releases two hormones (estrogen and progestin) which prevent pregnancy from occurring.',
     efficacy: {
       label: 'Excellent',
@@ -199,6 +210,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'DMPA',
     category: 'hormonal',
     icon: '💉',
+    image: require('../../assets/injectables.png'),
     description: 'The contraceptive injection contains DMPA which is a progestin hormone (no estrogen). The hormone works by preventing the egg from released by the ovaries, it also thickens the mucus released by the cervix making it difficult for the sperms to enter the womb, it also thins out the endometrium (the part responsible for growing and maintaining an embryo).',
     efficacy: {
       label: 'Excellent',
@@ -224,6 +236,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     name: 'Combination Patch Contraceptive',
     category: 'hormonal',
     icon: '🩹',
+    image: require('../../assets/patch.png'),
     description: 'A transdermal patch is like a small sticker that you place on your skin. It slowly releases hormones (estrogen and progesterone) through your skin and into your blood over time.',
     efficacy: {
       label: 'Excellent',
@@ -247,6 +260,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     name: 'Implants',
     category: 'hormonal',
     icon: '🔧',
+    image: require('../../assets/implants.png'),
     description: 'A contraceptive implant is a tiny, flexible rod (about the size of a matchstick) that a healthcare provider puts under the skin of your upper arm. It releases a hormone called progestin slowly into your body over time. The hormone works by preventing the egg from released by the ovaries, it also thickens the mucus released by the cervix making it difficult for the sperms to enter the womb, it also thins out the endometrium (the part responsible for growing and maintaining an embryo).',
     efficacy: {
       label: 'Perfect',
@@ -273,6 +287,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'Levonorgestrel Intrauterine System',
     category: 'hormonal',
     icon: '🔧',
+    image: require('../../assets/lng-ius.png'),
     description: 'A small, T-shaped plastic device that is placed inside the uterus. It slowly releases levonorgestrel, a type of hormone similar to progesterone. The hormone thickens your cervical mucus so that the sperm cannot enter and also thins out the inner lining of your uterus making a difficult environment for the baby to grow.',
     efficacy: {
       label: 'Perfect',
@@ -298,6 +313,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'Female Sterilization',
     category: 'permanent',
     icon: '🔒',
+    image: require('../../assets/female-sterilization.png'),
     description: 'A surgical procedure whereby the fallopian tubes are tied and hence blocked. This blocks the road for the sperm to reach the egg.',
     efficacy: {
       label: 'Perfect',
@@ -320,6 +336,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'Male Sterilization',
     category: 'permanent',
     icon: '🔒',
+    image: require('../../assets/vasectomy.png'),
     description: 'A vasectomy is a permanent male sterilization procedure where the vas deferens (tubes that carry sperm from the testicles to the semen) are cut, tied, or sealed, so sperm cannot mix with semen. The testicles still produce sperm, but the sperm cannot leave the body.',
     efficacy: {
       label: 'Perfect',
@@ -343,6 +360,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'LAM',
     category: 'natural',
     icon: '🤱',
+    image: require('../../assets/lam.png'),
     description: 'The act of breastfeeding changes the body\'s hormone balance in a way that you cannot get pregnant. This method only works for breastfeeding women and can be a very good contraceptive in the first 6 months of breastfeeding.',
     efficacy: {
       label: 'Excellent',
@@ -373,6 +391,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'Natural Family Planning',
     category: 'natural',
     icon: '📅',
+    image: require('../../assets/fertility-awareness.png'),
     description: 'To understand the calendar method, you need to understand the menstrual cycle. The ovaries in your body are responsible for producing eggs that can be potentially fertilized by sperm. The egg is released once a month, The method predicts when the egg is out and that you should avoid sexual intercourse during the days when the egg is potentially out. Once the egg is out, it can survive for up to 24 hours and the sperms can fertilize the eggs for up to 3 days. Since the menstrual cycle is different for every woman, the days when the egg is out may also vary. Hence why there is a calculator to determine the fertile window (days when the egg is possibly out and when the sperms can fertilize the egg).',
     efficacy: {
       label: 'Good',

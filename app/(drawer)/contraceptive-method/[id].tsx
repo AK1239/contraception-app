@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
@@ -122,6 +122,15 @@ export default function ContraceptiveMethodDetailPage() {
         <View style={styles.sectionsContainer}>
           {/* Description */}
           <ExpandableSection title="Description" icon="📝">
+            {method.image && (
+              <View style={styles.imageContainer}>
+                <Image 
+                  source={method.image} 
+                  style={styles.descriptionImage}
+                  resizeMode="contain"
+                />
+              </View>
+            )}
             <Text variant="bodyMedium" style={styles.sectionText}>
               {method.description}
             </Text>
@@ -177,6 +186,15 @@ export default function ContraceptiveMethodDetailPage() {
             <Text variant="bodyMedium" style={styles.sectionText}>
               {method.howToUse}
             </Text>
+            {method.howToUseImage && (
+              <View style={styles.imageContainer}>
+                <Image 
+                  source={method.howToUseImage} 
+                  style={styles.howToUseImage}
+                  resizeMode="contain"
+                />
+              </View>
+            )}
           </ExpandableSection>
 
           {/* Time to Work / Time of Onset */}
@@ -409,6 +427,31 @@ const styles = StyleSheet.create({
   errorText: {
     color: '#6B7280',
     textAlign: 'center',
+  },
+  imageContainer: {
+    marginBottom: 16,
+    marginTop: 8,
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  descriptionImage: {
+    width: '100%',
+    maxWidth: 320,
+    minHeight: 150,
+    maxHeight: 250,
+    borderRadius: 8,
+  },
+  howToUseImage: {
+    width: '100%',
+    maxWidth: 320,
+    minHeight: 200,
+    maxHeight: 300,
+    borderRadius: 8,
+    marginTop: 12,
   },
 });
 
