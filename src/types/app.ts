@@ -7,7 +7,6 @@ export type RootStackParamList = {
   "medical-safety": undefined;
   personalize: { eligibleMethods?: ContraceptiveMethodKey[] };
   "compare-methods": { methods?: ContraceptiveMethodKey[] };
-  "know-contraceptive": undefined;
   "about-us": undefined;
   "final-recommendation": { recommendation: ContraceptiveRecommendation };
 };

@@ -41,13 +41,6 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
-        name="know-contraceptive"
-        options={{
-          drawerLabel: "Know Your Contraceptive",
-          title: "Know Your Contraceptive",
-        }}
-      />
-      <Drawer.Screen
         name="choose-contraceptive"
         options={{
           drawerLabel: "Choose Your Contraceptive",

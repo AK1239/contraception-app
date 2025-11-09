@@ -35,9 +35,9 @@ export default function HomePage() {
       <HomeSectionCard
         leadingEmoji="📚"
         title="For Women Seeking Information"
-        description="If you'd like to learn more about different contraceptives, explore the Know Your Contraceptive section."
-        ctaLabel="Know Your Contraceptive"
-        onPress={() => router.push("/know-contraceptive")}
+        description="If you'd like to learn more about different contraceptives, explore the Natural Methods or Modern Methods sections."
+        ctaLabel="View Methods"
+        onPress={() => router.push("/natural-methods")}
         buttonColor="#3B82F6"
       />
 

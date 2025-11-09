@@ -257,10 +257,10 @@ export default function ChooseContraceptivePage() {
             <View style={styles.alternativeActions}>
               <Button
                 mode="outlined"
-                onPress={() => router.push("/know-contraceptive")}
+                onPress={() => router.push("/natural-methods")}
                 style={styles.secondaryButton}
               >
-                Learn About All Methods
+                Learn About Methods
               </Button>
 
               <Button

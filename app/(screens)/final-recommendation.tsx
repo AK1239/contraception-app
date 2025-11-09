@@ -123,7 +123,7 @@ export default function FinalRecommendationPage() {
   }, [router]);
 
   const handleKnowContraceptive = useCallback(() => {
-    router.push("/(drawer)/know-contraceptive");
+    router.push("/(drawer)/natural-methods");
   }, [router]);
 
   const handleCompareMethods = useCallback(() => {
