@@ -10,10 +10,23 @@ import {
 } from "../../src/services/eligibilityEngine";
 import { getMethodByKey, MEC_CATEGORIES } from "../../src/constants";
 import { MECScore } from "../../src/types";
+import { LoadingOverlay, SkeletonScreen } from "../../src/components/shared";
 
 export default function ResultsPage() {
   const router = useRouter();
-  const { mecScores } = useSelector((state: RootState) => state.results);
+  const { mecScores, isCalculating } = useSelector((state: RootState) => state.results);
+
+  if (isCalculating) {
+    return (
+      <View style={styles.container}>
+        <LoadingOverlay
+          visible={true}
+          message="Calculating your results..."
+          modal={false}
+        />
+      </View>
+    );
+  }
 
   if (!mecScores) {
     return (

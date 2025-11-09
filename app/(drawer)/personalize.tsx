@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Alert } from "react-native";
 import { Text, Card, Button, ProgressBar } from "react-native-paper";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter, useLocalSearchParams } from "expo-router";
@@ -16,6 +16,7 @@ import { getEligibleMethods } from "../../src/services/eligibilityEngine";
 import { ContraceptiveMethodKey, AnswerValue } from "../../src/types";
 import { logger } from "../../src/services/logger";
 import { handleError, ErrorCode } from "../../src/services/errorHandler";
+import { LoadingOverlay, LoadingSpinner } from "../../src/components/shared";
 
 export default function PersonalizePage() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function PersonalizePage() {
   const [eligibleMethods, setEligibleMethods] = useState<ContraceptiveMethodKey[]>([]);
   const [visibleQuestions, setVisibleQuestions] = useState<PersonalizationQuestion[]>([]);
   const [isCheckingEligibility, setIsCheckingEligibility] = useState(true);
+  const [isGeneratingResults, setIsGeneratingResults] = useState(false);
   const hasRedirected = useRef(false);
 
   // Parse eligible methods from navigation params or Redux store
@@ -301,12 +303,26 @@ export default function PersonalizePage() {
     }
 
     if (isLastQuestion) {
-      // Get personalization results and navigate to final recommendation
-      const results = getPersonalizationResults();
-      router.push({
-        pathname: "/(screens)/final-recommendation",
-        params: { recommendationData: JSON.stringify(results) },
-      });
+      // Show loading state while generating results
+      setIsGeneratingResults(true);
+      
+      // Use setTimeout to ensure UI updates before calculation
+      setTimeout(() => {
+        try {
+          // Get personalization results and navigate to final recommendation
+          const results = getPersonalizationResults();
+          setIsGeneratingResults(false);
+          router.push({
+            pathname: "/(screens)/final-recommendation",
+            params: { recommendationData: JSON.stringify(results) },
+          });
+        } catch (error) {
+          setIsGeneratingResults(false);
+          handleError(error, ErrorCode.PERSONALIZATION_FAILED, "PersonalizePage.handleNext");
+          logger.error("Error generating personalization results", error);
+          Alert.alert("Error", "Failed to generate recommendations. Please try again.");
+        }
+      }, 100);
     } else {
       setCurrentQuestionIndex((prev) => prev + 1);
     }
@@ -336,7 +352,10 @@ export default function PersonalizePage() {
   if (isCheckingEligibility) {
     return (
       <View style={styles.container}>
-        <Text>Loading personalization questions...</Text>
+        <LoadingSpinner
+          message="Loading personalization questions..."
+          centered
+        />
       </View>
     );
   }
@@ -344,13 +363,21 @@ export default function PersonalizePage() {
   if (!currentQuestion) {
     return (
       <View style={styles.container}>
-        <Text>Loading personalization questions...</Text>
+        <LoadingSpinner
+          message="Preparing questions..."
+          centered
+        />
       </View>
     );
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+    <>
+      <LoadingOverlay
+        visible={isGeneratingResults}
+        message="Generating your personalized recommendations..."
+      />
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <Card style={styles.headerCard}>
         <Card.Content>
           <Text variant="headlineSmall" style={styles.title}>
@@ -397,11 +424,18 @@ export default function PersonalizePage() {
         >
           Previous
         </Button>
-        <Button mode="contained" onPress={handleNext} style={styles.navigationButton}>
+        <Button
+          mode="contained"
+          onPress={handleNext}
+          disabled={isGeneratingResults}
+          loading={isGeneratingResults}
+          style={styles.navigationButton}
+        >
           {isLastQuestion ? "Get Results" : "Next"}
         </Button>
       </View>
     </ScrollView>
+    </>
   );
 }
 

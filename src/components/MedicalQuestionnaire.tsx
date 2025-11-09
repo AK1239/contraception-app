@@ -2,13 +2,17 @@ import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Button, Text, ProgressBar } from "react-native-paper";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 import { QuestionInput } from "./QuestionInput";
 import { useQuestionnaire } from "../hooks/useQuestionnaire";
 import PregnancyNotice from "./shared/PregnancyNotice";
+import { LoadingOverlay } from "./shared";
 
 export const MedicalQuestionnaire: React.FC = () => {
   const router = useRouter();
+  const { isCalculating } = useSelector((state: RootState) => state.results);
   const {
     currentQuestion,
     visibleQuestions,
@@ -26,7 +30,11 @@ export const MedicalQuestionnaire: React.FC = () => {
   if (!currentQuestion) {
     return (
       <View style={styles.container}>
-        <Text>Loading questionnaire...</Text>
+        <LoadingOverlay
+          visible={true}
+          message="Loading questionnaire..."
+          modal={false}
+        />
       </View>
     );
   }
@@ -42,6 +50,10 @@ export const MedicalQuestionnaire: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <LoadingOverlay
+        visible={isCalculating}
+        message="Calculating your eligibility results..."
+      />
       <ScrollView
         style={styles.scrollContainer}
         contentContainerStyle={styles.scrollContent}
@@ -81,13 +93,19 @@ export const MedicalQuestionnaire: React.FC = () => {
           <Button
             mode="outlined"
             onPress={handlePrevious}
-            disabled={currentQuestionIndex === 0}
+            disabled={currentQuestionIndex === 0 || isCalculating}
             style={styles.navButton}
           >
             Previous
           </Button>
 
-          <Button mode="contained" onPress={handleNext} style={styles.navButton}>
+          <Button
+            mode="contained"
+            onPress={handleNext}
+            disabled={isCalculating}
+            loading={isCalculating}
+            style={styles.navButton}
+          >
             {currentQuestionIndex >= visibleQuestions.length - 1 ? "Complete" : "Next"}
           </Button>
         </View>
