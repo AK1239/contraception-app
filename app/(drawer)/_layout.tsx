@@ -12,10 +12,10 @@ export default function DrawerLayout() {
         drawerActiveTintColor: "#6D28D9",
         drawerInactiveTintColor: "#666",
         drawerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#fff",
+          backgroundColor: "#fff",
         },
         headerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
+          backgroundColor: "#4C1D95",
         },
         headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
         headerTitleStyle: {

@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "create-adaptive-icon": "node scripts/create-adaptive-icon.js"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.4.1",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@types/react": "~19.1.10",
+    "sharp": "^0.34.5",
     "typescript": "~5.9.2"
   },
   "private": true
