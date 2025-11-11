@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import ModernMethodCard from '../../../src/components/ModernMethodCard';
 
@@ -16,7 +15,6 @@ export default function ModernMethodsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
         {/* Method Cards */}
         <View style={styles.methodsContainer}>
@@ -39,7 +37,6 @@ export default function ModernMethodsScreen() {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
   );
 }
 
@@ -53,6 +50,7 @@ const styles = StyleSheet.create({
   },
   methodsContainer: {
     paddingHorizontal: 0,
+    paddingVertical: 20,
   },
 });
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
@@ -20,7 +19,6 @@ export default function NaturalMethodsScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
       <ScrollView style={styles.content}>
       
         {/* Method Cards */}
@@ -55,7 +53,6 @@ export default function NaturalMethodsScreen() {
 
     
       </ScrollView>
-    </SafeAreaView>
   );
 }
 
@@ -89,6 +86,7 @@ const styles = StyleSheet.create({
   },
   methodsContainer: {
     paddingHorizontal: 0,
+    paddingVertical: 20,
   },
   infoCard: {
     margin: 16,
