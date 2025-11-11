@@ -1,22 +1,24 @@
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function KnowContraceptiveLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
-        },
-        headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
-        headerTitleStyle: {
-          fontWeight: "bold",
-          fontFamily: "Poppins_600SemiBold",
-        },
-        headerBackTitle: "Back",
-      }}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#4C1D95' }}>
+       <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
+          },
+          headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontFamily: "Poppins_600SemiBold",
+          },
+          headerBackTitle: "Back",
+        }}
     >
       <Stack.Screen
         name="natural-methods"
@@ -67,6 +69,8 @@ export default function KnowContraceptiveLayout() {
         }}
       />
     </Stack>
+    </SafeAreaView>
+   
   );
 }
 
