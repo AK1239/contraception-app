@@ -1,13 +1,10 @@
 import { Stack, useRouter } from 'expo-router';
-import { useColorScheme, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { TouchableOpacity, useColorScheme } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function KnowContraceptiveLayout() {
   const colorScheme = useColorScheme();
-
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#4C1D95' }}>
        <Stack
         screenOptions={({ navigation, route }) => {
           if (route.name === 'contraceptive-method') {
@@ -18,9 +15,9 @@ export default function KnowContraceptiveLayout() {
 
           return {
             headerStyle: {
-              backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
-            },
-            headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
+              backgroundColor: "#4C1D95",
+              },
+            headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
               fontFamily: "Poppins_600SemiBold",
@@ -79,7 +76,6 @@ export default function KnowContraceptiveLayout() {
         }}
       />
     </Stack>
-    </SafeAreaView>
    
   );
 }
