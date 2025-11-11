@@ -1,6 +1,7 @@
-import { Stack } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { Stack, useRouter } from 'expo-router';
+import { useColorScheme, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function KnowContraceptiveLayout() {
   const colorScheme = useColorScheme();
@@ -8,16 +9,25 @@ export default function KnowContraceptiveLayout() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#4C1D95' }}>
        <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
-          },
-          headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-            fontFamily: "Poppins_600SemiBold",
-          },
-          headerBackTitle: "Back",
+        screenOptions={({ navigation, route }) => {
+          if (route.name === 'contraceptive-method') {
+            return {
+              headerShown: false,
+            };
+          }
+
+          return {
+            headerStyle: {
+              backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
+            },
+            headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+              fontFamily: "Poppins_600SemiBold",
+            },
+            headerBackTitle: "Back",
+            headerLeft: () => <SmartBackButton navigation={navigation} route={route} colorScheme={colorScheme} />,
+          };
         }}
     >
       <Stack.Screen
@@ -71,6 +81,44 @@ export default function KnowContraceptiveLayout() {
     </Stack>
     </SafeAreaView>
    
+  );
+}
+
+function SmartBackButton({ 
+  navigation, 
+  route,
+  colorScheme 
+}: { 
+  navigation: any;
+  route: any;
+  colorScheme: 'light' | 'dark' | null | undefined;
+}) {
+  const router = useRouter();
+
+  const handlePress = () => {
+    if (route.name === 'natural-methods' || route.name === 'modern-methods') {
+      router.push('/(drawer)');
+      return;
+    }
+
+    if (navigation.canGoBack()) {
+      router.back();
+    } else {
+      router.push('/(drawer)');
+    }
+  };
+
+  return (
+    <TouchableOpacity
+      onPress={handlePress}
+      style={{ marginRight: 10, flexDirection: 'row', alignItems: 'center' }}
+    >
+      <Ionicons 
+        name="arrow-back" 
+        size={24} 
+        color={colorScheme === "dark" ? "#fff" : "#fff"} 
+      />
+    </TouchableOpacity>
   );
 }
 
