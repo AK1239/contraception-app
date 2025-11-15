@@ -88,6 +88,16 @@ export default function DrawerLayout() {
           title: "Calendar Method Calculator",
         }}
       />
+      
+      {/* Standard Day Calculator */}
+      <Drawer.Screen
+        name="standard-day-calculator-page"
+        options={{
+          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
+          drawerLabel: "Standard Day Calculator",
+          title: "Standard Day Calculator",
+        }}
+      />
     </Drawer>
   );
 }

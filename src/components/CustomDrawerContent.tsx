@@ -69,10 +69,22 @@ const drawerSections: DrawerSection[] = [
     route: '/(drawer)/compare-methods',
   },
   {
-    id: 'standard-day-calculator',
-    title: 'Calendar Method Calculator',
+    id: 'natural-method-calculators',
+    title: 'Natural Method Calculators',
     icon: 'calculator-outline',
-    route: '/(drawer)/standard-day-calculator',
+    hasSubsections: true,
+    subsections: [
+      {
+        id: 'standard-day-calculator',
+        title: 'Standard Day Method aCalculator',
+        route: '/(drawer)/standard-day-calculator-page',
+      },
+      {
+        id: 'calendar-method-calculator',
+        title: 'Calendar Method Calculator',
+        route: '/(drawer)/standard-day-calculator',
+      },
+    ],
   },
 ];
 
