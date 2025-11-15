@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 18,
-    paddingVertical: 16,
+    paddingVertical: 18,
     backgroundColor: '#FFFFFF',
   },
 });

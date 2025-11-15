@@ -36,14 +36,15 @@ export default memo(MethodImageSection);
 
 const styles = StyleSheet.create({
   imageContainer: {
-    marginBottom: 16,
-    marginTop: 8,
+    marginBottom: 32,
+    marginTop: 0,
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     borderRadius: 12,
-    padding: 8,
+    padding: 16,
     borderWidth: 1,
     borderColor: '#E5E7EB',
+    width: '100%',
   },
   descriptionImage: {
     width: '100%',

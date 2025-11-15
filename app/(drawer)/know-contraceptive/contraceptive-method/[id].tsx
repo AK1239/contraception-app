@@ -49,7 +49,7 @@ export default function ContraceptiveMethodDetailPage() {
         <View style={styles.sectionsContainer}>
           <ExpandableSection title="Description" icon="📝">
             {method.image && <MethodImageSection image={method.image} variant="description" />}
-            <Text variant="bodyMedium" style={styles.sectionText}>
+            <Text variant="bodyMedium" style={[styles.sectionText, method.image && styles.textAfterImage]}>
               {method.description}
             </Text>
           </ExpandableSection>
@@ -67,7 +67,7 @@ export default function ContraceptiveMethodDetailPage() {
           </ExpandableSection>
 
           <ExpandableSection title="How to Use" icon="📋">
-            <Text variant="bodyMedium" style={styles.sectionText}>
+            <Text variant="bodyMedium" style={[styles.sectionText, method.howToUseImage && styles.textBeforeImage]}>
               {method.howToUse}
             </Text>
             {method.howToUseImage && <MethodImageSection image={method.howToUseImage} variant="howToUse" />}
@@ -145,6 +145,12 @@ const styles = StyleSheet.create({
     color: '#4B5563',
     lineHeight: 24,
     fontSize: 15,
+  },
+  textAfterImage: {
+    marginTop: 5,
+  },
+  textBeforeImage: {
+    marginBottom: 8,
   },
   marginTop: {
     marginTop: 12,
