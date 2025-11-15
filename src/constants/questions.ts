@@ -737,7 +737,7 @@ export const MEDICAL_SAFETY_QUESTIONS: Question[] = [
   // Question 32: Cirrhosis
   {
     id: "hasCirrhosis",
-    text: "Are you currently diagnosed with cirrhosis",
+    text: "Are you currently diagnosed with cirrhosis?",
     type: "yes-no",
     required: true,
   },
