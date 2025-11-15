@@ -35,7 +35,7 @@ export default function OnboardingScreen() {
       color: "#8b5cf6",
     },
     {
-      title: "Personalized\nRecommendations",
+      title: "Personalized\nGuide",
       subtitle: "Tailored to Your Health Profile",
       body: "Get a personalized list of safe options based on your medical history, with expert guidance on modern and natural methods—all in one place.",
       icon: "💡",
