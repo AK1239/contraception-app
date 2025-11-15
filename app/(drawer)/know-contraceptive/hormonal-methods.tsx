@@ -65,7 +65,7 @@ export default function HormonalMethodsScreen() {
           <NaturalMethodCard
             title="Implants"
             description="A tiny, flexible rod placed under the skin of the upper arm. Provides perfect protection for 3-5 years. No daily maintenance required."
-            icon="🔧"
+            icon="📏"
             onKnowMorePress={handleImplantsKnowMore}
             backgroundColor="#F0F9FF"
             buttonColor="#0EA5E9"
