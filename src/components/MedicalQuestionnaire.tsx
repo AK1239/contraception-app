@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet, ScrollView, BackHandler } from "react-native";
 import { Button, Text, ProgressBar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
@@ -26,6 +26,20 @@ export const MedicalQuestionnaire: React.FC = () => {
     handleReset,
     getCurrentValue,
   } = useQuestionnaire();
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+      // If not on the first question, go to previous question
+      if (currentQuestionIndex > 0) {
+        handlePrevious();
+        return true; // Prevent default behavior (going back to home)
+      }
+      // If on first question, allow default behavior (go back to home)
+      return false;
+    });
+
+    return () => backHandler.remove();
+  }, [currentQuestionIndex, handlePrevious]);
 
   if (!currentQuestion) {
     return (
