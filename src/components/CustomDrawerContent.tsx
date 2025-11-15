@@ -76,7 +76,7 @@ const drawerSections: DrawerSection[] = [
     subsections: [
       {
         id: 'standard-day-calculator',
-        title: 'Standard Day Method aCalculator',
+        title: 'Standard Day Method Calculator',
         route: '/(drawer)/standard-day-calculator-page',
       },
       {
