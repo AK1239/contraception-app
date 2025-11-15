@@ -5,7 +5,7 @@ import { Card, Text, Button } from 'react-native-paper';
 interface TemporaryMethodCardProps {
   title: string;
   description: string;
-  icon: string;
+  icon: string | React.ReactNode;
   onExplorePress: () => void;
   backgroundColor?: string;
   buttonColor?: string;
@@ -31,7 +31,11 @@ export default function TemporaryMethodCard({
         <Card.Content style={styles.cardContent}>
           {/* Icon Container */}
           <View style={styles.iconContainer}>
-            <Text style={styles.emoji}>{icon}</Text>
+            {typeof icon === 'string' ? (
+              <Text style={styles.emoji}>{icon}</Text>
+            ) : (
+              icon
+            )}
           </View>
 
           {/* Content Section */}

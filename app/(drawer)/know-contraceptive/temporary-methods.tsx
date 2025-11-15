@@ -3,6 +3,14 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import TemporaryMethodCard from '../../../src/components/TemporaryMethodCard';
 
+// T-shaped icon component for IUD
+const TShapeIcon = () => (
+  <View style={tIconStyles.container}>
+    <View style={tIconStyles.horizontalBar} />
+    <View style={tIconStyles.verticalBar} />
+  </View>
+);
+
 export default function TemporaryMethodsScreen() {
   const router = useRouter();
 
@@ -44,7 +52,7 @@ export default function TemporaryMethodsScreen() {
           <TemporaryMethodCard
             title="Intrauterine Device Methods"
             description="Intrauterine devices that are inserted into the uterus. Includes hormonal and copper IUDs. Long-lasting, highly effective, and reversible contraceptive options."
-            icon="🔧"
+            icon={<TShapeIcon />}
             onExplorePress={handleIUDExplore}
             backgroundColor="#F0FDF4"
             buttonColor="#10B981"
@@ -66,6 +74,30 @@ const styles = StyleSheet.create({
   methodsContainer: {
     paddingHorizontal: 0,
     paddingVertical: 20,
+  },
+});
+
+const tIconStyles = StyleSheet.create({
+  container: {
+    width: 30,
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  horizontalBar: {
+    position: 'absolute',
+    top: 0,
+    width: 24,
+    height: 4,
+    backgroundColor: '#10B981',
+    borderRadius: 2,
+  },
+  verticalBar: {
+    width: 4,
+    height: 22,
+    backgroundColor: '#10B981',
+    borderRadius: 2,
+    marginTop: 4,
   },
 });
 
