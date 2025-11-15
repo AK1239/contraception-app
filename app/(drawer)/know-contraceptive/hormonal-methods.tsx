@@ -83,7 +83,7 @@ export default function HormonalMethodsScreen() {
           <NaturalMethodCard
             title="Contraceptive Vaginal Ring"
             description="A small, flexible plastic ring inserted into the vagina once a month. Releases hormones continuously. No daily maintenance required."
-            icon="💍"
+            icon="⭕"
             onKnowMorePress={handleRingKnowMore}
             backgroundColor="#F0F9FF"
             buttonColor="#0EA5E9"
