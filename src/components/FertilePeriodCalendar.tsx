@@ -14,7 +14,23 @@ export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: 
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
-    onDateSelect(date);
+    // Don't call onDateSelect immediately - wait for user confirmation
+  };
+
+  const handleConfirm = () => {
+    if (selectedDate) {
+      onDateSelect(selectedDate);
+    }
+  };
+
+  const formatSelectedDate = (date: Date): string => {
+    const options: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    };
+    return date.toLocaleDateString('en-US', options);
   };
 
   const navigateMonth = (direction: 'prev' | 'next') => {
@@ -186,6 +202,28 @@ export default function FertilePeriodCalendar({ onDateSelect, calendarResult }: 
               <View style={[styles.legendColor, styles.fertileColor]} />
               <Text style={styles.legendText}>Fertile days</Text>
             </View>
+          </View>
+        )}
+
+        {selectedDate && (
+          <View style={styles.confirmationSection}>
+            <View style={styles.selectedDateContainer}>
+              <Ionicons name="calendar-outline" size={20} color="#6D28D9" />
+              <View style={styles.selectedDateTextContainer}>
+                <Text style={styles.selectedDateLabel}>Selected date:</Text>
+                <Text style={styles.selectedDateValue}>
+                  {formatSelectedDate(selectedDate)}
+                </Text>
+              </View>
+            </View>
+            
+            <TouchableOpacity 
+              style={styles.confirmButton}
+              onPress={handleConfirm}
+            >
+              <Text style={styles.confirmButtonText}>Confirm & Continue</Text>
+              <Ionicons name="arrow-forward" size={20} color="#fff" />
+            </TouchableOpacity>
           </View>
         )}
       </View>
@@ -370,5 +408,56 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#374151',
     fontFamily: 'Poppins_500Medium',
+  },
+  confirmationSection: {
+    marginTop: 24,
+    paddingTop: 24,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+  },
+  selectedDateContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F3E8FF',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 16,
+    gap: 12,
+  },
+  selectedDateTextContainer: {
+    flex: 1,
+  },
+  selectedDateLabel: {
+    fontSize: 12,
+    color: '#6B7280',
+    marginBottom: 4,
+    fontFamily: 'Poppins_500Medium',
+  },
+  selectedDateValue: {
+    fontSize: 15,
+    color: '#6D28D9',
+    fontWeight: '600',
+    fontFamily: 'Poppins_600SemiBold',
+  },
+  confirmButton: {
+    backgroundColor: '#6D28D9',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    gap: 8,
+    shadowColor: '#6D28D9',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  confirmButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#fff',
+    fontFamily: 'Poppins_700Bold',
   },
 });
