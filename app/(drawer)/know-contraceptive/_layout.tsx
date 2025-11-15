@@ -28,6 +28,12 @@ export default function KnowContraceptiveLayout() {
         }}
     >
       <Stack.Screen
+        name="index"
+        options={{
+          title: "Know Your Contraceptive",
+        }}
+      />
+      <Stack.Screen
         name="natural-methods"
         options={{
           title: "Natural Methods",
@@ -92,8 +98,13 @@ function SmartBackButton({
   const router = useRouter();
 
   const handlePress = () => {
-    if (route.name === 'natural-methods' || route.name === 'modern-methods') {
+    if (route.name === 'index') {
       router.push('/(drawer)');
+      return;
+    }
+
+    if (route.name === 'natural-methods' || route.name === 'modern-methods') {
+      router.push('/(drawer)/know-contraceptive');
       return;
     }
 

@@ -37,7 +37,7 @@ export default function HomePage() {
         title="For Women Seeking Information"
         description="If you'd like to learn more about different contraceptives, explore the Natural Methods or Modern Methods sections."
         ctaLabel="View Methods"
-        onPress={() => router.push("/(drawer)/know-contraceptive/natural-methods")}
+        onPress={() => router.push("/(drawer)/know-contraceptive")}
         buttonColor="#3B82F6"
       />
 
