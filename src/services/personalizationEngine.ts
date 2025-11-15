@@ -180,8 +180,8 @@ export const personalizeRecommendations = (
 
       switch (filters.preferredFrequency) {
         case "daily":
-          // Suggest a, b, k (only if still available)
-          frequencyMethods = ["a", "b", "k"];
+          // Suggest a, c, k (only if still available)
+          frequencyMethods = ["a", "c", "k"];
           break;
         case "every-3-weeks":
           // Check BMI for patch (method 'i') first
