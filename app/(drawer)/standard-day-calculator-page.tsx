@@ -276,6 +276,13 @@ export default function StandardDayCalculatorPage() {
             </Text>
           </View>
 
+          <View style={styles.reminderNoteCard}>
+            <Ionicons name="calendar-outline" size={24} color="#059669" />
+            <Text style={styles.reminderNoteText}>
+              Come back again to calculate when your next period starts
+            </Text>
+          </View>
+
           <TouchableOpacity 
             style={styles.resetButton}
             onPress={resetCalculator}
@@ -809,5 +816,23 @@ const styles = StyleSheet.create({
     color: "#059669",
     fontWeight: "600",
     fontFamily: "Poppins_600SemiBold",
+  },
+  reminderNoteCard: {
+    flexDirection: "row",
+    backgroundColor: "#F0FDF4",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 24,
+    gap: 12,
+    borderWidth: 1,
+    borderColor: "#D1FAE5",
+    alignItems: "center",
+  },
+  reminderNoteText: {
+    flex: 1,
+    fontSize: 14,
+    color: "#065F46",
+    lineHeight: 20,
+    fontFamily: "Poppins_500Medium",
   },
 });

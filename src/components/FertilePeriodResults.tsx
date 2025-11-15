@@ -137,6 +137,14 @@ export default function FertilePeriodResults({ fertilePeriod, calendarResult }: 
             </Text>
           </View>
         </View>
+
+        {/* Reminder Note */}
+        <View style={styles.reminderNoteCard}>
+          <Ionicons name="calendar-outline" size={24} color="#059669" />
+          <Text style={styles.reminderNoteText}>
+            Come back again to calculate when your next period starts
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -347,6 +355,24 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     flex: 1,
     fontFamily: 'Poppins_400Regular',
+  },
+  reminderNoteCard: {
+    flexDirection: 'row',
+    backgroundColor: '#F0FDF4',
+    borderRadius: 12,
+    padding: 16,
+    marginTop: 16,
+    gap: 12,
+    borderWidth: 1,
+    borderColor: '#D1FAE5',
+    alignItems: 'center',
+  },
+  reminderNoteText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#065F46',
+    lineHeight: 20,
+    fontFamily: 'Poppins_500Medium',
   },
 });
 
