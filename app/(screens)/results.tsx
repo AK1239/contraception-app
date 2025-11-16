@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Button, Chip, IconButton } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "../../src/store";
 import { getMethodByKey, MEC_CATEGORIES } from "../../src/constants";
 import { MECScore } from "../../src/types";
@@ -50,6 +51,7 @@ MethodCard.displayName = 'MethodCard';
 
 export default function ResultsPage() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { mecScores, isCalculating } = useSelector((state: RootState) => state.results);
 
   // Use memoized hook for expensive calculations
@@ -95,7 +97,10 @@ export default function ResultsPage() {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+    <ScrollView 
+      style={styles.container} 
+      contentContainerStyle={[styles.scrollContent, { paddingBottom: Math.max(100, insets.bottom + 100) }]}
+    >
       {/* Header with back button */}
       <View style={styles.headerContainer}>
         <View style={styles.backButtonRow}>

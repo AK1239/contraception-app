@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Divider } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ComparisonField, getFieldLabel } from '../services/methodDetailsService';
 import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
 import { getContraceptiveMethodById } from '../utils/contraceptiveMethodsData';
@@ -30,6 +31,7 @@ export default function SequentialComparisonView({
   onNext,
   onBackToSelection,
 }: SequentialComparisonViewProps) {
+  const insets = useSafeAreaInsets();
   const currentField = selectedFields[currentFieldIndex];
   const isFirstField = currentFieldIndex === 0;
   const isLastField = currentFieldIndex === selectedFields.length - 1;
@@ -55,7 +57,11 @@ export default function SequentialComparisonView({
   const secondValue = getFieldValue(secondMethodData, currentField);
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView 
+      style={styles.container} 
+      contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
+      showsVerticalScrollIndicator={false}
+    >
       <ComparisonProgressIndicator
         currentIndex={currentFieldIndex}
         totalFields={selectedFields.length}

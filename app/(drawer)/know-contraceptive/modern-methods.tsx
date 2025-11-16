@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ModernMethodCard from '../../../src/components/ModernMethodCard';
 
 export default function ModernMethodsScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const handleTemporaryOptions = () => {
     router.push('/(drawer)/know-contraceptive/temporary-methods');
@@ -15,7 +17,10 @@ export default function ModernMethodsScreen() {
   };
 
   return (
-      <ScrollView style={styles.content}>
+      <ScrollView 
+        style={styles.content}
+        contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
+      >
         {/* Method Cards */}
         <View style={styles.methodsContainer}>
           <ModernMethodCard

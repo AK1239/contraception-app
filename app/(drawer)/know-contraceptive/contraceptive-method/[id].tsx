@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ExpandableSection from '../../../../src/components/ExpandableSection';
 import { getContraceptiveMethodById } from '../../../../src/utils/contraceptiveMethodsData';
 import MethodHeader from '../../../../src/components/shared/MethodHeader';
@@ -12,6 +13,7 @@ import WarningBox from '../../../../src/components/shared/WarningBox';
 
 export default function ContraceptiveMethodDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const insets = useSafeAreaInsets();
   
   // Get method data by ID
   const method = id ? getContraceptiveMethodById(id) : undefined;
@@ -36,6 +38,7 @@ export default function ContraceptiveMethodDetailPage() {
     // <SafeAreaView style={styles.container}>
       <ScrollView 
         style={styles.content}
+        contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
         showsVerticalScrollIndicator={false}
       >
         <MethodHeader

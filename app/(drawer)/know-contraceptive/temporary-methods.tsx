@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TemporaryMethodCard from '../../../src/components/TemporaryMethodCard';
 
 // T-shaped icon component for IUD
@@ -13,6 +14,7 @@ const TShapeIcon = () => (
 
 export default function TemporaryMethodsScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const handleBarrierExplore = () => {
     router.push('/(drawer)/know-contraceptive/barrier-methods');
@@ -28,7 +30,10 @@ export default function TemporaryMethodsScreen() {
 
   return (
     // <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.content}>
+      <ScrollView 
+        style={styles.content}
+        contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
+      >
         {/* Method Cards */}
         <View style={styles.methodsContainer}>
           <TemporaryMethodCard

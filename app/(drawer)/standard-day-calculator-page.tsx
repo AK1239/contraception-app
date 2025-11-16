@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { calculateStandardDays, StandardDayResult } from "../../src/utils/standardDayCalculator";
 import {
   WelcomeScreen,
@@ -14,6 +15,7 @@ type CalculatorStep = 'welcome' | 'question1' | 'notEligible' | 'question2' | 'r
 
 export default function StandardDayCalculatorPage() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [currentStep, setCurrentStep] = useState<CalculatorStep>('welcome');
   const [lastPeriodDate, setLastPeriodDate] = useState<Date | null>(null);
   const [result, setResult] = useState<StandardDayResult | null>(null);
@@ -73,7 +75,10 @@ export default function StandardDayCalculatorPage() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView 
+      style={styles.container} 
+      contentContainerStyle={[styles.contentContainer, { paddingBottom: Math.max(40, insets.bottom + 40) }]}
+    >
       {renderCurrentStep()}
     </ScrollView>
   );

@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import Animated, { useSharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import OnboardingSlide from "../src/components/OnboardingSlide";
 import OnboardingDots from "../src/components/OnboardingDots";
 import OnboardingControls from "../src/components/OnboardingControls";
@@ -15,6 +16,7 @@ const ONBOARDING_COMPLETED_KEY = "@onboarding_completed";
 export default function OnboardingScreen() {
   const router = useRouter();
   const { width } = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   const scrollX = useSharedValue(0);
   const [isChecking, setIsChecking] = React.useState(true);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
@@ -159,7 +161,7 @@ export default function OnboardingScreen() {
       />
 
       <View style={styles.footer}>
-        <View style={styles.footerContent}>
+        <View style={[styles.footerContent, { paddingBottom: Math.max(32, insets.bottom + 20) }]}>
           <OnboardingDots count={slides.length} activeIndex={index} />
           <OnboardingControls isLast={index === slides.length - 1} onNext={handleNext} onDone={handleDone} />
         </View>
@@ -202,7 +204,6 @@ const styles = StyleSheet.create({
   },
   footerContent: {
     paddingTop: 20,
-    paddingBottom: 32,
     paddingHorizontal: 24,
     gap: 20,
   },

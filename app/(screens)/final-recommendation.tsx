@@ -2,6 +2,7 @@ import React, { useMemo, useCallback, memo } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Button, Chip, Divider, IconButton } from "react-native-paper";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { getMethodByKey } from "../../src/constants";
 import { ContraceptiveMethodKey } from "../../src/types";
 import { logger } from "../../src/services/logger";
@@ -91,6 +92,7 @@ EliminatedMethodItem.displayName = 'EliminatedMethodItem';
 
 export default function FinalRecommendationPage() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
 
   // Memoize parsed recommendation data
@@ -150,7 +152,10 @@ export default function FinalRecommendationPage() {
   }, [recommended]);
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+    <ScrollView 
+      style={styles.container} 
+      contentContainerStyle={[styles.scrollContent, { paddingBottom: Math.max(100, insets.bottom + 100) }]}
+    >
       {/* Header with back button */}
       <View style={styles.headerContainer}>
         <View style={styles.backButtonRow}>

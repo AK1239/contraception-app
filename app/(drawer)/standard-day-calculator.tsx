@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Alert, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CycleInputForm from "../../src/components/CycleInputForm";
 import FertilePeriodCalendar from "../../src/components/FertilePeriodCalendar";
 import FertilePeriodResults from "../../src/components/FertilePeriodResults";
@@ -15,6 +16,7 @@ import {
 type CalculatorStep = 'welcome' | 'input' | 'calendar' | 'results';
 
 export default function StandardDayCalculator() {
+  const insets = useSafeAreaInsets();
   const [currentStep, setCurrentStep] = useState<CalculatorStep>('welcome');
   const [fertilePeriod, setFertilePeriod] = useState<FertilePeriodResult | null>(null);
   const [calendarResult, setCalendarResult] = useState<CalendarResult | null>(null);
@@ -132,7 +134,10 @@ export default function StandardDayCalculator() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView 
+      style={styles.container} 
+      contentContainerStyle={[styles.contentContainer, { paddingBottom: Math.max(40, insets.bottom + 40) }]}
+    >
       {currentStep !== 'welcome' && (
         <View style={styles.progressContainer}>
           <View style={styles.progressBar}>

@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
 export default function PermanentMethodsScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const handleTubalLigationKnowMore = () => {
     router.push('/(drawer)/know-contraceptive/contraceptive-method/tubal-ligation');
@@ -16,7 +18,10 @@ export default function PermanentMethodsScreen() {
 
   return (
     // <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.content}>
+      <ScrollView 
+        style={styles.content}
+        contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
+      >
         {/* Method Cards */}
         <View style={styles.methodsContainer}>
           <NaturalMethodCard

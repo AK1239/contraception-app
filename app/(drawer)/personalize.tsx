@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "../../src/store";
 import { useEligibleMethods } from "../../src/hooks/useEligibleMethods";
 import { usePersonalizationQuestions } from "../../src/hooks/usePersonalizationQuestions";
@@ -15,6 +16,7 @@ import {
 } from "../../src/components/personalization";
 
 export default function PersonalizePage() {
+  const insets = useSafeAreaInsets();
   const { personalization } = useSelector((state: RootState) => state.questionnaire);
   
   // Check eligible methods and handle redirects
@@ -76,7 +78,10 @@ export default function PersonalizePage() {
         visible={isGeneratingResults}
         message="Generating your personalized recommendations..."
       />
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+      <ScrollView 
+        style={styles.container} 
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: Math.max(100, insets.bottom + 100) }]}
+      >
         <PersonalizationHeader
           currentQuestionIndex={currentQuestionIndex}
           totalQuestions={visibleQuestions.length}
@@ -111,6 +116,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     flexGrow: 1,
-    paddingBottom: 100, // Extra space for mobile navigation
+    paddingBottom: 100,
   },
 });

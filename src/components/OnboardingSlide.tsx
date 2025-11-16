@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 28,
     paddingTop: height * 0.06,
-    paddingBottom: 24,
+    paddingBottom: 100,
     justifyContent: 'space-between',
   },
   // Icon Section Styles

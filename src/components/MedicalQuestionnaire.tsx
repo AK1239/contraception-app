@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, BackHandler } from "react-native";
 import { Button, Text, ProgressBar } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "../store";
 
 import { QuestionInput } from "./QuestionInput";
@@ -12,6 +13,7 @@ import { LoadingOverlay } from "./shared";
 
 export const MedicalQuestionnaire: React.FC = () => {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const { isCalculating } = useSelector((state: RootState) => state.results);
   const {
     currentQuestion,
@@ -70,7 +72,7 @@ export const MedicalQuestionnaire: React.FC = () => {
       />
       <ScrollView
         style={styles.scrollContainer}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[styles.scrollContent, { paddingBottom: Math.max(100, insets.bottom + 100) }]}
         showsVerticalScrollIndicator={true}
         keyboardShouldPersistTaps="handled"
       >

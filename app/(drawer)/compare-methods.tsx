@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Button } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MethodDropdown from '../../src/components/MethodDropdown';
 import ComparisonFieldsCheckbox from '../../src/components/ComparisonFieldsCheckbox';
 import SequentialComparisonView from '../../src/components/SequentialComparisonView';
@@ -12,6 +13,7 @@ const getAllComparisonFields = (): ComparisonField[] => {
 };
 
 export default function CompareMethodsPage() {
+  const insets = useSafeAreaInsets();
   const [firstMethodKey, setFirstMethodKey] = useState<string | null>(null);
   const [secondMethodKey, setSecondMethodKey] = useState<string | null>(null);
   const [selectedFields, setSelectedFields] = useState<ComparisonField[]>(getAllComparisonFields());
@@ -69,7 +71,11 @@ export default function CompareMethodsPage() {
 
   // Show selection UI
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView 
+      style={styles.container} 
+      contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
+      showsVerticalScrollIndicator={false}
+    >
       {/* Header */}
       <Card style={styles.headerCard}>
         <Card.Content>

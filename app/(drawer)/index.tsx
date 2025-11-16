@@ -2,14 +2,20 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HomeSectionCard from "../../src/components/HomeSectionCard";
 import WelcomeCard from "../../src/components/WelcomeCard";
 
 export default function HomePage() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView 
+      style={styles.container} 
+      contentContainerStyle={[styles.contentContainer, { paddingBottom: Math.max(40, insets.bottom + 40) }]}
+      showsVerticalScrollIndicator={false}
+    >
       {/* Welcome Hero Card */}
       <View style={styles.welcomeContainer}>
         <WelcomeCard />
@@ -68,7 +74,6 @@ export default function HomePage() {
         buttonColor="#22C55E"
       />
 
-      <View style={styles.footerSpacer} />
     </ScrollView>
   );
 }
@@ -77,7 +82,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#FFFFFF",
-    paddingBottom: 20,
+  },
+  contentContainer: {
+    paddingBottom: 40,
   },
   welcomeContainer: {
     paddingHorizontal: 16,
@@ -101,8 +108,5 @@ const styles = StyleSheet.create({
     width: 50,
     backgroundColor: "#6D28D9",
     borderRadius: 2,
-  },
-  footerSpacer: {
-    height: 24,
   },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 
 export default function NaturalMethodsScreen() {
@@ -18,8 +19,13 @@ export default function NaturalMethodsScreen() {
     router.push('/(drawer)/know-contraceptive/contraceptive-method/standard-days-method-sdm');
   };
 
+  const insets = useSafeAreaInsets();
+
   return (
-      <ScrollView style={styles.content}>
+      <ScrollView 
+        style={styles.content}
+        contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
+      >
       
         {/* Method Cards */}
         <View style={styles.methodsContainer}>

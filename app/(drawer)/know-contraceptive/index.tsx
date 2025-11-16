@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeSectionCard from '../../../src/components/HomeSectionCard';
 
 export default function KnowContraceptiveIndexScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   const handleNaturalMethods = () => {
     router.push('/(drawer)/know-contraceptive/natural-methods');
@@ -15,7 +17,10 @@ export default function KnowContraceptiveIndexScreen() {
   };
 
   return (
-    <ScrollView style={styles.content}>
+    <ScrollView 
+      style={styles.content}
+      contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
+    >
       <View style={styles.methodsContainer}>
         <HomeSectionCard
           leadingEmoji="🌿"

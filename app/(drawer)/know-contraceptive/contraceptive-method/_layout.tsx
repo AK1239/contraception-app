@@ -9,7 +9,7 @@ export default function ContraceptiveMethodLayout() {
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: colorScheme === "dark" ? "#0b1220" : "#4C1D95",
+          backgroundColor: "#4C1D95",
         },
         headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
         headerTitleStyle: {
