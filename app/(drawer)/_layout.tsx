@@ -51,6 +51,15 @@ export default function DrawerLayout() {
         }}
       />
       
+      {/* Natural Calculators - Stack Navigator */}
+      <Drawer.Screen
+        name="natural-calculators"
+        options={{
+          drawerItemStyle: { display: 'none' }, // Hide from drawer, accessed via navigation
+          headerShown: false, // Stack will handle headers
+        }}
+      />
+      
       {/* Choose Your Contraceptive Screens */}
       <Drawer.Screen
         name="medical-safety"
