@@ -7,7 +7,14 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "create-adaptive-icon": "node scripts/create-adaptive-icon.js"
+    "create-adaptive-icon": "node scripts/create-adaptive-icon.js",
+    "build:android": "eas build --platform android --profile production",
+    "build:android:preview": "eas build --platform android --profile preview",
+    "build:android:dev": "eas build --platform android --profile development",
+    "build:android:local": "eas build --platform android --profile production --local",
+    "submit:android": "eas submit --platform android",
+    "build:list": "eas build:list",
+    "build:view": "eas build:view"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.4.1",
