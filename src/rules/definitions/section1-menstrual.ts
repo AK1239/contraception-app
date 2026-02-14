@@ -52,24 +52,6 @@ export const SECTION1_MENSTRUAL_RULES: Rule[] = [
     ],
     description: "IUD restriction for users under 20",
   },
-  // Q1: Age 20-38 -> h, o = 3 (possible regret)
-  {
-    id: "age-20-38-sterilization",
-    section: "menstrual-history",
-    priority: 12,
-    trigger: (a) => {
-      const age = getAge(a);
-      return age !== undefined && age >= 20 && age <= 38;
-    },
-    effects: [
-      {
-        methodKeys: ["h", "o"],
-        mec: 3,
-        reason: "Age 20-38: Possible regret with permanent sterilization",
-      },
-    ],
-    description: "Sterilization caution for reproductive age",
-  },
   // Q1: Age >39 -> a, b, k, i = 2
   {
     id: "age-over-39-combined",

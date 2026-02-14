@@ -264,7 +264,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               <DateTimePicker
                 value={dateValue}
                 mode="date"
-                display={Platform.OS === "ios" ? "spinner" : "default"}
+                display={Platform.OS === "ios" ? "inline" : "calendar"}
                 maximumDate={maxDate}
                 minimumDate={minDate}
                 onChange={(_event, selectedDate) => {
