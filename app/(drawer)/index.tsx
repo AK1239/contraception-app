@@ -30,6 +30,15 @@ export default function HomePage() {
       </View>
 
       <HomeSectionCard
+        leadingEmoji="🎯"
+        title="Choose Your Contraceptive"
+        description="Answer health-related questions to get WHO-based recommendations on safe contraceptive methods for you."
+        ctaLabel="Choose Your Contraceptive"
+        onPress={() => router.push("/(drawer)/choose-contraceptive")}
+        buttonColor="#6D28D9"
+      />
+
+      <HomeSectionCard
         leadingEmoji="📚"
         title="For Women Seeking Information"
         description="If you'd like to learn more about different contraceptives, explore the Natural Methods or Modern Methods sections."
