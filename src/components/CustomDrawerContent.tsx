@@ -63,6 +63,11 @@ const drawerSections: DrawerSection[] = [
     hasSubsections: true,
     subsections: [
       {
+        id: 'natural-method-eligibility',
+        title: 'Natural Method Eligibility (FAB)',
+        route: '/(drawer)/fab-eligibility',
+      },
+      {
         id: 'standard-day-calculator',
         title: 'Standard Day Method Calculator',
         route: '/(drawer)/standard-day-calculator-page',

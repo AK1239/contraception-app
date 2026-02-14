@@ -16,12 +16,26 @@ export default function NaturalCalculatorsIndexScreen() {
     router.push('/(drawer)/standard-day-calculator');
   };
 
+  const handleFABEligibility = () => {
+    router.push('/(drawer)/fab-eligibility');
+  };
+
   return (
     <ScrollView 
       style={styles.content}
       contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
     >
       <View style={styles.calculatorsContainer}>
+        <HomeSectionCard
+          leadingEmoji="🎯"
+          title="Natural Method Eligibility (FAB)"
+          description="Assess eligibility for Symptoms-Based (SYM) and Calendar-Based (CAL) fertility awareness methods. Get Accept, Caution, or Delay recommendations with STI/HIV and high-risk pregnancy advisories."
+          ctaLabel="Check FAB Eligibility"
+          onPress={handleFABEligibility}
+          backgroundColor="#ECFDF5"
+          buttonColor="#10B981"
+        />
+
         <HomeSectionCard
           leadingEmoji="📅"
           title="Standard Days Method Calculator"

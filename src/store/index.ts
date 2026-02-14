@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import questionnaireReducer from "./slices/questionnaire";
 import resultsReducer from "./slices/results";
+import fabEligibilityReducer from "./slices/fabEligibility";
 import { questionnairePersistConfig, resultsPersistConfig } from "./persistConfig";
 
 // Create persisted reducers with nested configuration for granular control
@@ -12,6 +13,7 @@ const persistedResultsReducer = persistReducer(resultsPersistConfig, resultsRedu
 const rootReducer = combineReducers({
   questionnaire: persistedQuestionnaireReducer,
   results: persistedResultsReducer,
+  fabEligibility: fabEligibilityReducer,
 });
 
 export const store = configureStore({

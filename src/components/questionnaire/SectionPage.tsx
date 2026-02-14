@@ -1,15 +1,21 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text } from "react-native-paper";
-import type { Section } from "../../types/sections";
+import type { SectionQuestion } from "../../types/sections";
 import type { AnswerState } from "../../types/rules";
 import type { AnswerValue } from "../../types/questionnaire";
 import { getVisibleSectionQuestions } from "../../utils/sectionQuestionVisibility";
 import { SectionQuestionInput } from "./SectionQuestionInput";
 import { theme } from "../../utils/theme";
 
+/** Section-like shape for questionnaire pages (supports both MEC and FAB sections) */
+export interface SectionPageSection {
+  title: string;
+  questions: SectionQuestion[];
+}
+
 interface SectionPageProps {
-  section: Section;
+  section: SectionPageSection;
   answers: AnswerState;
   onAnswerChange: (questionId: string, value: AnswerValue) => void;
   errors?: Record<string, string>;

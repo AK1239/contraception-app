@@ -1,16 +1,21 @@
 import { useCallback } from "react";
-import type { Section } from "../types/sections";
+import type { SectionQuestion } from "../types/sections";
 import type { AnswerState } from "../types/rules";
 import type { AnswerValue } from "../types/questionnaire";
 import { getVisibleSectionQuestions } from "../utils/sectionQuestionVisibility";
 import { validateAnswer } from "../validators/answerValidators";
+
+/** Section-like shape (supports both MEC and FAB sections) */
+export interface SectionLike {
+  questions: SectionQuestion[];
+}
 
 /**
  * Hook to validate section answers before proceeding
  */
 export function useSectionValidation() {
   const validateSection = useCallback(
-    (section: Section, answers: AnswerState): Record<string, string> => {
+    (section: SectionLike, answers: AnswerState): Record<string, string> => {
       const errors: Record<string, string> = {};
       const visibleQuestions = getVisibleSectionQuestions(section.questions, answers);
 
@@ -28,7 +33,7 @@ export function useSectionValidation() {
   );
 
   const isSectionValid = useCallback(
-    (section: Section, answers: AnswerState): boolean => {
+    (section: SectionLike, answers: AnswerState): boolean => {
       const errors = validateSection(section, answers);
       return Object.keys(errors).length === 0;
     },

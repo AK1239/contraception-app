@@ -111,6 +111,17 @@ export default function DrawerLayout() {
           title: "Standard Day Calculator",
         }}
       />
+
+      {/* Natural Method (FAB) Eligibility */}
+      <Drawer.Screen
+        name="fab-eligibility"
+        options={{
+          drawerItemStyle: { display: "none" },
+          drawerLabel: "Natural Method Eligibility",
+          title: "Natural Method Eligibility",
+          headerRight: () => <StartOverHeaderButton fabMode />,
+        }}
+      />
     </Drawer>
   );
 }
