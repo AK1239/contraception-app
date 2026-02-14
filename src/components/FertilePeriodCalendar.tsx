@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     color: '#1F2937',
     textAlign: 'center',
     marginBottom: 8,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   subtitle: {
     fontSize: 15,
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 22,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   calendarContainer: {
     backgroundColor: '#F9FAFB',
@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#1F2937',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   dayNamesRow: {
     flexDirection: 'row',
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     color: '#6B7280',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   calendarGrid: {
     flexDirection: 'row',
@@ -324,12 +324,12 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 15,
     fontWeight: '600',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   dayOfCycle: {
     fontSize: 9,
     color: '#9CA3AF',
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
     marginTop: 2,
   },
   normalDate: {
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
   legendText: {
     fontSize: 13,
     color: '#374151',
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
   },
   confirmationSection: {
     marginTop: 24,
@@ -431,13 +431,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#6B7280',
     marginBottom: 4,
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
   },
   selectedDateValue: {
     fontSize: 15,
     color: '#6D28D9',
     fontWeight: '600',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   confirmButton: {
     backgroundColor: '#6D28D9',
@@ -458,6 +458,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
 });

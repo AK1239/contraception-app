@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     color: "#111827",
     textAlign: "center",
     marginBottom: 16,
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   notEligibleText: {
     fontSize: 15,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     textAlign: "center",
     marginBottom: 16,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   suggestionCard: {
     backgroundColor: "#F0F9FF",
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#0EA5E9",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   suggestionText: {
     fontSize: 14,
     color: "#0C4A6E",
     lineHeight: 22,
     marginBottom: 16,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   exploreButton: {
     backgroundColor: "#0EA5E9",
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "#fff",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
     paddingLeft: 10,
   },
   backButton: {
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#059669",
     fontWeight: "600",
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "PlusJakartaSans_600SemiBold",
   },
 });
 

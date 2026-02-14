@@ -11,13 +11,13 @@ import { ErrorBoundary } from "../src/components/ErrorBoundary";
 import { logger } from "../src/services/logger";
 import {
   useFonts,
-  Poppins_200ExtraLight,
-  Poppins_300Light,
-  Poppins_400Regular,
-  Poppins_500Medium,
-  Poppins_600SemiBold,
-  Poppins_700Bold,
-} from "@expo-google-fonts/poppins";
+  PlusJakartaSans_200ExtraLight,
+  PlusJakartaSans_300Light,
+  PlusJakartaSans_400Regular,
+  PlusJakartaSans_500Medium,
+  PlusJakartaSans_600SemiBold,
+  PlusJakartaSans_700Bold,
+} from "@expo-google-fonts/plus-jakarta-sans";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,24 +25,24 @@ const theme = {
   ...MD3LightTheme,
   fonts: {
     ...MD3LightTheme.fonts,
-    bodySmall: { ...MD3LightTheme.fonts.bodySmall, fontFamily: "Poppins_400Regular" },
-    bodyMedium: { ...MD3LightTheme.fonts.bodyMedium, fontFamily: "Poppins_400Regular" },
-    bodyLarge: { ...MD3LightTheme.fonts.bodyLarge, fontFamily: "Poppins_400Regular" },
-    titleSmall: { ...MD3LightTheme.fonts.titleSmall, fontFamily: "Poppins_600SemiBold" },
-    titleMedium: { ...MD3LightTheme.fonts.titleMedium, fontFamily: "Poppins_600SemiBold" },
-    titleLarge: { ...MD3LightTheme.fonts.titleLarge, fontFamily: "Poppins_700Bold" },
-    labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontFamily: "Poppins_500Medium" },
+    bodySmall: { ...MD3LightTheme.fonts.bodySmall, fontFamily: "PlusJakartaSans_400Regular" },
+    bodyMedium: { ...MD3LightTheme.fonts.bodyMedium, fontFamily: "PlusJakartaSans_400Regular" },
+    bodyLarge: { ...MD3LightTheme.fonts.bodyLarge, fontFamily: "PlusJakartaSans_400Regular" },
+    titleSmall: { ...MD3LightTheme.fonts.titleSmall, fontFamily: "PlusJakartaSans_600SemiBold" },
+    titleMedium: { ...MD3LightTheme.fonts.titleMedium, fontFamily: "PlusJakartaSans_600SemiBold" },
+    titleLarge: { ...MD3LightTheme.fonts.titleLarge, fontFamily: "PlusJakartaSans_700Bold" },
+    labelLarge: { ...MD3LightTheme.fonts.labelLarge, fontFamily: "PlusJakartaSans_500Medium" },
   },
 };
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
-    Poppins_200ExtraLight,
-    Poppins_300Light,
-    Poppins_400Regular,
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_700Bold,
+    PlusJakartaSans_200ExtraLight,
+    PlusJakartaSans_300Light,
+    PlusJakartaSans_400Regular,
+    PlusJakartaSans_500Medium,
+    PlusJakartaSans_600SemiBold,
+    PlusJakartaSans_700Bold,
   });
 
   useEffect(() => {
@@ -51,14 +51,14 @@ export default function RootLayout() {
       const RNText: any = Text as unknown as { defaultProps?: any };
       if (RNText.defaultProps == null) RNText.defaultProps = {};
       RNText.defaultProps.style = [
-        { fontFamily: "Poppins_400Regular" },
+        { fontFamily: "PlusJakartaSans_400Regular" },
         RNText.defaultProps.style,
       ];
 
       const RNTextInput: any = TextInput as unknown as { defaultProps?: any };
       if (RNTextInput.defaultProps == null) RNTextInput.defaultProps = {};
       RNTextInput.defaultProps.style = [
-        { fontFamily: "Poppins_400Regular" },
+        { fontFamily: "PlusJakartaSans_400Regular" },
         RNTextInput.defaultProps.style,
       ];
 

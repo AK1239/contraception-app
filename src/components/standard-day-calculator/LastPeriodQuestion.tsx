@@ -60,20 +60,20 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#fff",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   questionTitle: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#111827",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   questionText: {
     fontSize: 16,
     color: "#374151",
     lineHeight: 24,
     marginBottom: 24,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
 });
 

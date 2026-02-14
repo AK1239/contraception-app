@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#6D28D9',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   sectionsContainer: {
     paddingTop: 20,
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#333',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     flex: 1,
   },
   subsectionsContainer: {
@@ -219,6 +219,6 @@ const styles = StyleSheet.create({
   subsectionText: {
     fontSize: 14,
     color: '#666',
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
 });

@@ -14,7 +14,7 @@ export default function ContraceptiveMethodLayout() {
         headerTintColor: colorScheme === "dark" ? "#fff" : "#fff",
         headerTitleStyle: {
           fontWeight: "bold",
-          fontFamily: "Poppins_600SemiBold",
+          fontFamily: "PlusJakartaSans_600SemiBold",
         },
         headerBackTitle: "Back",
       }}

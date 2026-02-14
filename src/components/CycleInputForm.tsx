@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     color: '#1F2937',
     textAlign: 'center',
     marginBottom: 8,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   subtitle: {
     fontSize: 14,
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 32,
     lineHeight: 22,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   requiredCyclesContainer: {
     marginBottom: 24,
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: '#374151',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   badge: {
     backgroundColor: '#EDE9FE',
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '600',
     color: '#6D28D9',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   additionalCyclesContainer: {
     marginBottom: 24,
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: '#374151',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   optionalBadge: {
     backgroundColor: '#D1FAE5',
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '600',
     color: '#10B981',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   cyclesGrid: {
     flexDirection: 'row',
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     backgroundColor: '#F9FAFB',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1F2937',
   },
   inputFilled: {
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     right: 8,
     fontSize: 9,
     color: '#9CA3AF',
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
   },
   asterisk: {
     color: '#EF4444',
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#6D28D9',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   submitButton: {
     flexDirection: 'row',
@@ -312,6 +312,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
 });

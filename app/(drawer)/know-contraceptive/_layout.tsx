@@ -20,7 +20,7 @@ export default function KnowContraceptiveLayout() {
             headerTintColor: "#fff",
             headerTitleStyle: {
               fontWeight: "bold",
-              fontFamily: "Poppins_600SemiBold",
+              fontFamily: "PlusJakartaSans_600SemiBold",
             },
             headerBackTitle: "Back",
             headerLeft: () => <SmartBackButton navigation={navigation} route={route} colorScheme={colorScheme} />,

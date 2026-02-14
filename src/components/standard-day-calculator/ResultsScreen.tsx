@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "#111827",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   resultSection: {
     marginBottom: 24,
@@ -168,13 +168,13 @@ const styles = StyleSheet.create({
   resultItemTitle: {
     fontSize: 14,
     color: "#6B7280",
-    fontFamily: "Poppins_500Medium",
+    fontFamily: "PlusJakartaSans_500Medium",
   },
   resultItemValue: {
     fontSize: 16,
     color: "#111827",
     fontWeight: "600",
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "PlusJakartaSans_600SemiBold",
   },
   dangerDaysSection: {
     marginBottom: 24,
@@ -189,13 +189,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#EF4444",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   dangerDaysSubtitle: {
     fontSize: 14,
     color: "#6B7280",
     marginBottom: 16,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   dateRangeCard: {
     backgroundColor: "#FEF2F2",
@@ -211,19 +211,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#991B1B",
     marginBottom: 8,
-    fontFamily: "Poppins_500Medium",
+    fontFamily: "PlusJakartaSans_500Medium",
   },
   dateRangeValue: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#DC2626",
     marginBottom: 4,
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   dateRangeFull: {
     fontSize: 13,
     color: "#991B1B",
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   dateRangeDivider: {
     height: 1,
@@ -243,13 +243,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#10B981",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   safeDaysSubtitle: {
     fontSize: 14,
     color: "#6B7280",
     marginBottom: 16,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   safeDaysCard: {
     backgroundColor: "#F0FDF4",
@@ -273,12 +273,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#065F46",
     marginBottom: 8,
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "PlusJakartaSans_600SemiBold",
   },
   safeDayPeriodDates: {
     fontSize: 16,
     color: "#047857",
-    fontFamily: "Poppins_500Medium",
+    fontFamily: "PlusJakartaSans_500Medium",
   },
   disclaimerCard: {
     flexDirection: "row",
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: "#6B7280",
     lineHeight: 20,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   resetButton: {
     flexDirection: "row",
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#059669",
     fontWeight: "600",
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "PlusJakartaSans_600SemiBold",
   },
   reminderNoteCard: {
     flexDirection: "row",
@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#065F46",
     lineHeight: 20,
-    fontFamily: "Poppins_500Medium",
+    fontFamily: "PlusJakartaSans_500Medium",
   },
 });
 

@@ -178,14 +178,14 @@ const styles = StyleSheet.create({
     color: '#1F2937',
     textAlign: 'center',
     marginBottom: 8,
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   subtitle: {
     fontSize: 15,
     color: '#6B7280',
     textAlign: 'center',
     marginBottom: 32,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   
   // Info Cards
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#374151',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   
   
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#991B1B',
     textAlign: 'center',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   datesList: {
     gap: 8,
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
   dateItemLabel: {
     fontSize: 14,
     color: '#6B7280',
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
   },
   dateItemValue: {
     fontSize: 14,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     color: '#991B1B',
     flex: 1,
     textAlign: 'right',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   
   // Safe Card
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#065F46',
     marginBottom: 16,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   safePeriods: {
     gap: 12,
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   safePeriodContent: {
     flex: 1,
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#065F46',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   
   // Period Card
@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#8B5CF6',
     textAlign: 'center',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   
   // Warning Section
@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#92400E',
-    fontFamily: 'Poppins_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   reminderItem: {
     flexDirection: 'row',
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     color: '#92400E',
     lineHeight: 20,
     flex: 1,
-    fontFamily: 'Poppins_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   reminderNoteCard: {
     flexDirection: 'row',
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#065F46',
     lineHeight: 20,
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
   },
 });
 

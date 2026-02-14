@@ -241,14 +241,14 @@ const styles = StyleSheet.create({
     color: "#111827",
     textAlign: "center",
     marginBottom: 8,
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   welcomeSubtitle: {
     fontSize: 16,
     color: "#6B7280",
     textAlign: "center",
     marginBottom: 32,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   noteCard: {
     backgroundColor: "#F9FAFB",
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#059669",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   requirementItem: {
     flexDirection: "row",
@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
     color: "#374151",
     lineHeight: 22,
     flex: 1,
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "PlusJakartaSans_400Regular",
   },
   bold: {
     fontWeight: "bold",
     color: "#059669",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   nextButton: {
     backgroundColor: "#059669",
@@ -308,7 +308,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   
   // Progress Indicator Styles
@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     color: "#9CA3AF",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "PlusJakartaSans_700Bold",
   },
   stepNumberActive: {
     color: "#fff",
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: "#6B7280",
     textAlign: "center",
-    fontFamily: "Poppins_500Medium",
+    fontFamily: "PlusJakartaSans_500Medium",
   },
   stepDivider: {
     height: 2,
@@ -402,7 +402,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#059669",
     fontWeight: "600",
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "PlusJakartaSans_600SemiBold",
   },
 });
 
