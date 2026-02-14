@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { View, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../src/store";
 import {
@@ -25,6 +26,7 @@ import type { AnswerValue } from "../../src/types/questionnaire";
 import type { AnswerState } from "../../src/types/rules";
 
 export default function ChooseContraceptiveScreen() {
+  const router = useRouter();
   const dispatch = useDispatch();
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const { validateSection } = useSectionValidation();
@@ -104,7 +106,10 @@ export default function ChooseContraceptiveScreen() {
   if (mecEvaluationResult) {
     return (
       <View style={styles.container}>
-        <MECResults result={mecEvaluationResult} />
+        <MECResults
+          result={mecEvaluationResult}
+          onPersonalize={() => router.push("/(drawer)/personalize")}
+        />
       </View>
     );
   }

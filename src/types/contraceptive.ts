@@ -2,7 +2,7 @@
 export type MECScore = 1 | 2 | 3 | 4;
 
 // Contraceptive method keys - WHO MEC spec (lowercase only, unique keys)
-// a=COP, b=Combined injectable, c=POP, d=DMPA, e=Implant, f=Copper IUD, g=LNG IUD,
+// a=COC, b=Combined injectable, c=POP, d=DMPA, e=Implant, f=Copper IUD, g=LNG IUD,
 // h=Female sterilization, o=Male sterilization, i=Combined patch, j=Barrier (general),
 // k=Vaginal ring, l=Male condom, m=Female condom, n=Diaphragm
 export type ContraceptiveMethodKey =

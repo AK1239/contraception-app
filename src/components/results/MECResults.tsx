@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Text, Card, Divider } from "react-native-paper";
+import { Text, Card, Divider, Button } from "react-native-paper";
 import type { EvaluationResult } from "../../types/rules";
 import type { ContraceptiveMethodKey } from "../../types/contraceptive";
 import { MEC_METHOD_NAMES } from "../../constants/mecMethodNames";
@@ -8,6 +8,7 @@ import { theme } from "../../utils/theme";
 
 interface MECResultsProps {
   result: EvaluationResult;
+  onPersonalize?: () => void;
 }
 
 function MethodCard({
@@ -60,7 +61,7 @@ function MethodCard({
   );
 }
 
-export function MECResults({ result }: MECResultsProps) {
+export function MECResults({ result, onPersonalize }: MECResultsProps) {
   const getMecResult = (key: ContraceptiveMethodKey) => {
     return result.mecResults.find((r) => r.methodKey === key);
   };
@@ -163,6 +164,22 @@ export function MECResults({ result }: MECResultsProps) {
           </Text>
         )}
       </View>
+
+      {onPersonalize && (
+        <View style={styles.personalizeSection}>
+          <Button
+            mode="contained"
+            onPress={onPersonalize}
+            style={styles.personalizeButton}
+            contentStyle={styles.personalizeButtonContent}
+          >
+            Personalize your choice
+          </Button>
+          <Text variant="bodySmall" style={styles.personalizeHint}>
+            Refine your options based on preferences (frequency, future pregnancy, etc.)
+          </Text>
+        </View>
+      )}
     </ScrollView>
   );
 }
@@ -263,5 +280,22 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: theme.spacing.lg,
+  },
+  personalizeSection: {
+    marginTop: theme.spacing.xl,
+    paddingTop: theme.spacing.lg,
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.border,
+  },
+  personalizeButton: {
+    backgroundColor: theme.colors.primary,
+  },
+  personalizeButtonContent: {
+    paddingVertical: 8,
+  },
+  personalizeHint: {
+    color: theme.colors.textSecondary,
+    marginTop: theme.spacing.sm,
+    textAlign: "center",
   },
 });

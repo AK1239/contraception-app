@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocalSearchParams } from "expo-router";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import { ContraceptiveMethodKey } from "../types";
 import { CONTRACEPTIVE_METHODS } from "../constants/contraceptiveMethods";
 import { handleError, ErrorCode } from "../services/errorHandler";
@@ -11,16 +13,32 @@ const ALL_METHOD_KEYS: ContraceptiveMethodKey[] = CONTRACEPTIVE_METHODS.map(
 
 /**
  * Custom hook to manage eligible methods for personalization
- * Reads from route params when available, otherwise returns all contraceptive methods
+ * Priority: 1) mecEvaluationResult (MEC 1 + 2 from questionnaire), 2) route params, 3) all methods
  */
 export const useEligibleMethods = () => {
   const params = useLocalSearchParams();
+  const mecEvaluationResult = useSelector(
+    (state: RootState) => state.questionnaire.mecEvaluationResult
+  );
 
   const [eligibleMethods, setEligibleMethods] = useState<ContraceptiveMethodKey[]>([]);
   const [isCheckingEligibility, setIsCheckingEligibility] = useState(true);
 
   useEffect(() => {
-    // First, try to get eligible methods from route params
+    // First: use MEC evaluation result (suggested + greaterBenefit = MEC 1 & 2)
+    if (mecEvaluationResult) {
+      const fromMEC = [
+        ...mecEvaluationResult.suggested,
+        ...mecEvaluationResult.greaterBenefit,
+      ];
+      if (fromMEC.length > 0) {
+        setEligibleMethods(fromMEC);
+        setIsCheckingEligibility(false);
+        return;
+      }
+    }
+
+    // Second: try route params
     if (params.eligibleMethods) {
       try {
         const methods = JSON.parse(params.eligibleMethods as string);
@@ -41,10 +59,10 @@ export const useEligibleMethods = () => {
       }
     }
 
-    // No params or parse failed - use all contraceptive methods
+    // Fallback: all contraceptive methods (e.g. when navigating to personalize without MEC)
     setEligibleMethods(ALL_METHOD_KEYS);
     setIsCheckingEligibility(false);
-  }, [params.eligibleMethods]);
+  }, [mecEvaluationResult, params.eligibleMethods]);
 
   return {
     eligibleMethods,
