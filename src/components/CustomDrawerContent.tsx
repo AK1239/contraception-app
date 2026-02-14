@@ -48,19 +48,7 @@ const drawerSections: DrawerSection[] = [
     id: 'choose-contraceptive',
     title: 'Choose Your Contraceptive',
     icon: 'checkmark-circle-outline',
-    hasSubsections: true,
-    subsections: [
-      {
-        id: 'medical-safety',
-        title: 'Medical Safety',
-        route: '/(drawer)/medical-safety',
-      },
-      {
-        id: 'personalize',
-        title: 'Personalize Your Contraceptive Choice',
-        route: '/(drawer)/personalize',
-      },
-    ],
+    route: '/(drawer)/personalize',
   },
   {
     id: 'compare-methods',

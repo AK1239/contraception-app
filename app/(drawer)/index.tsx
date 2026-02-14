@@ -30,15 +30,6 @@ export default function HomePage() {
       </View>
 
       <HomeSectionCard
-        leadingEmoji="👩‍⚕️"
-        title="For Healthcare Providers"
-        description="If you're a healthcare professional looking to select the safest contraceptive option for your client, head straight to the Choose Your Contraceptive – Medical Safety section."
-        ctaLabel="Go to Medical Safety"
-        onPress={() => router.push("/(drawer)/medical-safety")}
-        buttonColor="#EF4444"
-      />
-
-      <HomeSectionCard
         leadingEmoji="📚"
         title="For Women Seeking Information"
         description="If you'd like to learn more about different contraceptives, explore the Natural Methods or Modern Methods sections."

@@ -62,14 +62,6 @@ export default function DrawerLayout() {
       
       {/* Choose Your Contraceptive Screens */}
       <Drawer.Screen
-        name="medical-safety"
-        options={{
-          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
-          drawerLabel: "Medical Safety",
-          title: "Medical Safety",
-        }}
-      />
-      <Drawer.Screen
         name="personalize"
         options={{
           drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent

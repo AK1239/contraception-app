@@ -112,7 +112,7 @@ export default function FinalRecommendationPage() {
 
   // Memoize navigation handlers
   const handleStartOver = useCallback(() => {
-    router.push("/medical-safety");
+    router.push("/(drawer)/personalize");
   }, [router]);
 
   const handleBack = useCallback(() => {

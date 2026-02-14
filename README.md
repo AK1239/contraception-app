@@ -2,16 +2,9 @@
 
 ## 📱 Overview
 
-ContraSafe is a comprehensive contraceptive recommendation mobile application built with Expo and React Native. The app implements the **WHO Medical Eligibility Criteria (MEC) 2015** guidelines to provide safe, evidence-based contraceptive recommendations tailored to individual medical conditions and personal preferences.
+ContraSafe is a comprehensive contraceptive recommendation mobile application built with Expo and React Native. The app provides evidence-based contraceptive recommendations tailored to individual preferences and lifestyle factors.
 
 ## ✨ Features
-
-### 🏥 Medical Safety Assessment
-
-- **36-question medical questionnaire** based on WHO MEC 2015 guidelines
-- Conditional logic for complex medical scenarios (postpartum, breastfeeding, medical conditions)
-- Real-time eligibility scoring with MEC categories (1-4 scale)
-- Professional-grade safety recommendations
 
 ### 🎯 Personalized Recommendations
 
@@ -39,8 +32,7 @@ ContraSafe is a comprehensive contraceptive recommendation mobile application bu
 ### 🎨 User Interface
 
 - Modern, intuitive design with React Native Paper
-- Drawer navigation with 8 main sections
-- Color-coded safety recommendations
+- Drawer navigation
 - Progress tracking and validation
 - Responsive design for all screen sizes
 
@@ -52,7 +44,6 @@ ContraSafe is a comprehensive contraceptive recommendation mobile application bu
 - **State Management**: Redux Toolkit
 - **Navigation**: Expo Router
 - **Styling**: React Native StyleSheet
-- **Medical Guidelines**: WHO MEC 2015
 
 ## 📦 Installation
 
@@ -92,52 +83,20 @@ ContraSafe is a comprehensive contraceptive recommendation mobile application bu
 
 ## 🚀 Usage Guide
 
-### 1. Medical Safety Assessment
+### 1. Personalize Your Choice
 
-1. Navigate to **"Medical Safety"** from the drawer menu
-2. Complete the 36-question medical questionnaire
-3. Questions adapt based on your previous answers
-4. Receive WHO MEC-based safety recommendations
-
-### 2. View Results
-
-- **Safe (MEC 1)**: Green - No restrictions
-- **Acceptable (MEC 2)**: Yellow - Generally safe with monitoring
-- **Avoid (MEC 3-4)**: Red - Not recommended due to health risks
-
-### 3. Personalize Your Choice
-
-1. Click **"Personalize Your Choice"** from results
+1. Navigate to **"Choose Your Contraceptive"** from the drawer menu
 2. Answer preference questions about:
    - Pregnancy planning timeline
    - Period management preferences
    - Usage frequency preferences
 3. Receive personalized recommendations
 
-### 4. Explore Methods
+### 2. Explore Methods
 
 - **"Know Your Contraceptive"**: Detailed method information
 - **"Choose Your Contraceptive"**: Browse all available methods
 - **"Compare Methods"**: Side-by-side comparison
-
-## 🏥 WHO Medical Eligibility Criteria (MEC)
-
-The app implements the WHO MEC 2015 guidelines with four categories:
-
-- **Category 1**: No restrictions (method can be used)
-- **Category 2**: Generally use (advantages generally outweigh risks)
-- **Category 3**: Usually not recommended (risks usually outweigh advantages)
-- **Category 4**: Should not be used (unacceptable health risk)
-
-### Medical Conditions Assessed
-
-- Cardiovascular conditions
-- Reproductive health history
-- Metabolic disorders
-- Liver conditions
-- Medication interactions
-- Age-related factors
-- Postpartum and breastfeeding status
 
 ## 🔧 Development
 
@@ -163,12 +122,6 @@ npm run lint
 
 ### Key Components
 
-#### Eligibility Engine (`src/services/eligibilityEngine.ts`)
-
-- Implements WHO MEC scoring algorithm
-- Handles complex medical condition logic
-- Provides category-based recommendations
-
 #### Personalization Engine (`src/services/personalizationEngine.ts`)
 
 - Filters methods based on user preferences
@@ -177,8 +130,7 @@ npm run lint
 
 #### Redux Store (`src/store/`)
 
-- Manages questionnaire state
-- Stores assessment results
+- Manages personalization state
 - Handles navigation state
 
 ## 🤝 Contributing
@@ -192,7 +144,6 @@ npm run lint
 ### Development Guidelines
 
 - Follow TypeScript best practices
-- Maintain WHO MEC compliance
 - Write comprehensive tests
 - Update documentation
 - Follow existing code style
@@ -217,15 +168,12 @@ npm run lint
 
 **Important**: This app is for educational and informational purposes only. It should not replace professional medical advice, diagnosis, or treatment. Always consult with qualified healthcare providers before making contraceptive decisions.
 
-The WHO MEC guidelines are implemented as accurately as possible, but medical decisions should always involve healthcare professionals who can consider individual circumstances not captured in standardized questionnaires.
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
-- **World Health Organization** for the Medical Eligibility Criteria guidelines
 - **Expo team** for the excellent development platform
 - **React Native Paper** for the beautiful UI components
 - **Redux Toolkit** team for simplified state management
@@ -240,7 +188,6 @@ For questions, issues, or suggestions:
 
 ## 🔗 Resources
 
-- [WHO MEC 2015 Guidelines](https://www.who.int/publications/i/item/9789241549158)
 - [Expo Documentation](https://docs.expo.dev/)
 - [React Native Paper](https://reactnativepaper.com/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)

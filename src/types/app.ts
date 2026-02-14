@@ -4,7 +4,6 @@ import { ContraceptiveMethodKey,  ContraceptiveRecommendation } from "./contrace
 export type RootStackParamList = {
   index: undefined;
   "choose-contraceptive": undefined;
-  "medical-safety": undefined;
   personalize: { eligibleMethods?: ContraceptiveMethodKey[] };
   "compare-methods": { methods?: ContraceptiveMethodKey[] };
   "about-us": undefined;
