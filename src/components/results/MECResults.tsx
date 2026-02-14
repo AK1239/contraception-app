@@ -142,7 +142,9 @@ export function MECResults({ result }: MECResultsProps) {
         </Text>
         {result.avoid.length > 0 ? (
           <View style={styles.methodList}>
-            {result.avoid.map((key) => {
+            {[...result.avoid]
+              .sort((a, b) => (getMecResult(a)?.score ?? 3) - (getMecResult(b)?.score ?? 3))
+              .map((key) => {
               const mec = getMecResult(key);
               return (
                 <MethodCard
