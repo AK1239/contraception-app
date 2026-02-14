@@ -1,6 +1,7 @@
 import { Drawer } from "expo-router/drawer";
 import { useColorScheme, View, Image } from "react-native";
 import CustomDrawerContent from "../../src/components/CustomDrawerContent";
+import { StartOverHeaderButton } from "../../src/components/StartOverHeaderButton";
 
 export default function DrawerLayout() {
   const colorScheme = useColorScheme();
@@ -67,6 +68,7 @@ export default function DrawerLayout() {
           drawerItemStyle: { display: "none" },
           drawerLabel: "Choose Your Contraceptive",
           title: "Choose Your Contraceptive",
+          headerRight: () => <StartOverHeaderButton />,
         }}
       />
       {/* Choose Your Contraceptive Screens */}
@@ -76,6 +78,7 @@ export default function DrawerLayout() {
           drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Personalize Your Contraceptive Choice",
           title: "Personalize Your Choice",
+          headerRight: () => <StartOverHeaderButton />,
         }}
       />
       

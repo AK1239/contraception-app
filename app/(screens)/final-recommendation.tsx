@@ -170,7 +170,7 @@ export default function FinalRecommendationPage() {
       style={styles.container} 
       contentContainerStyle={[styles.scrollContent, { paddingBottom: Math.max(100, insets.bottom + 100) }]}
     >
-      {/* Header with back button */}
+      {/* Header with back button and start over */}
       <View style={styles.headerContainer}>
         <View style={styles.backButtonRow}>
           <IconButton
@@ -178,6 +178,13 @@ export default function FinalRecommendationPage() {
             mode="contained-tonal"
             onPress={handleBack}
             style={styles.backButton}
+          />
+          <IconButton
+            icon="refresh"
+            mode="contained-tonal"
+            onPress={handleStartOver}
+            style={styles.backButton}
+            accessibilityLabel="Start over"
           />
         </View>
         <View style={styles.titleContainer}>
@@ -324,6 +331,7 @@ const styles = StyleSheet.create({
   backButtonRow: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 16,
   },
   backButton: {
