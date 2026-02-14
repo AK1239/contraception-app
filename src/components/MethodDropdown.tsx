@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, TouchableOpacity, Modal, FlatList, Dimensions } from 'react-native';
-import { Text, Chip } from 'react-native-paper';
+import { Text, Chip, Searchbar } from 'react-native-paper';
 import { CONTRACEPTIVE_METHODS_DATA, ContraceptiveMethodData } from '../utils/contraceptiveMethodsData';
 import { getCategoryColor } from '../utils/theme';
 
@@ -20,10 +20,25 @@ export default function MethodDropdown({
   excludeMethodKey,
 }: MethodDropdownProps) {
   const [visible, setVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   
   const availableMethods = CONTRACEPTIVE_METHODS_DATA.filter(
     method => method.id !== excludeMethodKey
   );
+
+  // Filter methods based on search query
+  const filteredMethods = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return availableMethods;
+    }
+    const query = searchQuery.toLowerCase();
+    return availableMethods.filter((method) => 
+      method.name.toLowerCase().includes(query) ||
+      method.shortName?.toLowerCase().includes(query) ||
+      method.description.toLowerCase().includes(query) ||
+      method.category.toLowerCase().includes(query)
+    );
+  }, [searchQuery, availableMethods]);
   
   const selectedMethod = CONTRACEPTIVE_METHODS_DATA.find(m => m.id === selectedMethodKey);
 
@@ -31,6 +46,12 @@ export default function MethodDropdown({
   const handleSelect = (methodKey: string) => {
     onSelect(methodKey);
     setVisible(false);
+    setSearchQuery('');
+  };
+
+  const handleClose = () => {
+    setVisible(false);
+    setSearchQuery('');
   };
 
   const renderMethodItem = ({ item }: { item: ContraceptiveMethodData }) => (
@@ -119,7 +140,7 @@ export default function MethodDropdown({
         visible={visible}
         transparent
         animationType="slide"
-        onRequestClose={() => setVisible(false)}
+        onRequestClose={handleClose}
       >
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
@@ -128,14 +149,25 @@ export default function MethodDropdown({
                 {label}
               </Text>
               <TouchableOpacity
-                onPress={() => setVisible(false)}
+                onPress={handleClose}
                 style={styles.closeButton}
               >
                 <Text style={styles.closeButtonText}>X</Text>
               </TouchableOpacity>
             </View>
+            <View style={styles.searchContainer}>
+              <Searchbar
+                placeholder="Search contraceptive methods..."
+                onChangeText={setSearchQuery}
+                value={searchQuery}
+                style={styles.searchBar}
+                inputStyle={styles.searchInput}
+                iconColor="#6B7280"
+                clearIcon="close"
+              />
+            </View>
             <FlatList
-              data={availableMethods}
+              data={filteredMethods}
               keyExtractor={(item) => item.id}
               renderItem={renderMethodItem}
               style={styles.methodsList}
@@ -144,7 +176,7 @@ export default function MethodDropdown({
               ListEmptyComponent={
                 <View style={styles.emptyContainer}>
                   <Text variant="bodyMedium" style={styles.emptyText}>
-                    No methods available
+                    {searchQuery ? 'No methods found matching your search' : 'No methods available'}
                   </Text>
                 </View>
               }
@@ -254,6 +286,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#6B7280',
     fontWeight: '600',
+  },
+  searchContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7EB',
+    flexShrink: 0,
+  },
+  searchBar: {
+    backgroundColor: '#F9FAFB',
+    borderRadius: 12,
+    elevation: 0,
+  },
+  searchInput: {
+    fontSize: 14,
   },
   methodsList: {
     flex: 1,
