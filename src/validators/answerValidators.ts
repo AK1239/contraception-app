@@ -11,7 +11,7 @@ export interface ValidationResult {
  */
 export function validateAnswer(
   question: SectionQuestion,
-  value: AnswerValue | undefined
+  value: AnswerValue | undefined | null
 ): ValidationResult {
   if (question.required && (value === undefined || value === null || value === "")) {
     return { valid: false, error: "This question is required" };

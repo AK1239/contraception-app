@@ -36,5 +36,8 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# test coverage
+coverage/
+
 development_plan.md
 app-details.txt
