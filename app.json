@@ -9,7 +9,7 @@
     "newArchEnabled": true,
     "scheme": "contrasafe",
     "splash": {
-      "image": "./assets/logo.png",
+      "image": "./assets/Splash.jpeg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
