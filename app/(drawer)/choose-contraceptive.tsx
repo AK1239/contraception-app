@@ -138,6 +138,7 @@ export default function ChooseContraceptiveScreen() {
   return (
     <View style={styles.container}>
       <SectionPage
+        key={mecCurrentSection}
         section={currentSection}
         answers={answers as AnswerState}
         onAnswerChange={handleAnswerChange}
