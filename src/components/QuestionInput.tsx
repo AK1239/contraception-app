@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Platform } from "react-native";
-import { TextInput, RadioButton, Checkbox, Text, Card, Button } from "react-native-paper";
+import { TextInput, RadioButton, Text, Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Question, AnswerValue } from "../types";
 import type { PersonalizationQuestion } from "../constants";
@@ -24,26 +24,38 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
     switch (question.type) {
       case "yes-no":
         return (
-          <View style={styles.radioGroup}>
-            <View style={styles.radioItem}>
-              <RadioButton
-                value="yes"
-                status={value === true ? "checked" : "unchecked"}
-                onPress={() => onValueChange(true)}
-                color="#6D28D9"
-                uncheckedColor="#6B7280"
-              />
-              <Text onPress={() => onValueChange(true)} style={styles.radioLabel}>Yes</Text>
+          <View style={styles.toggleContainer}>
+            <View
+              style={[
+                styles.toggleOption,
+                value === true && styles.toggleOptionActive,
+              ]}
+              onTouchEnd={() => onValueChange(true)}
+            >
+              <Text
+                style={[
+                  styles.toggleText,
+                  value === true && styles.toggleTextActive,
+                ]}
+              >
+                Yes
+              </Text>
             </View>
-            <View style={styles.radioItem}>
-              <RadioButton
-                value="no"
-                status={value === false ? "checked" : "unchecked"}
-                onPress={() => onValueChange(false)}
-                color="#6D28D9"
-                uncheckedColor="#6B7280"
-              />
-              <Text onPress={() => onValueChange(false)} style={styles.radioLabel}>No</Text>
+            <View
+              style={[
+                styles.toggleOption,
+                value === false && styles.toggleOptionActive,
+              ]}
+              onTouchEnd={() => onValueChange(false)}
+            >
+              <Text
+                style={[
+                  styles.toggleText,
+                  value === false && styles.toggleTextActive,
+                ]}
+              >
+                No
+              </Text>
             </View>
           </View>
         );
@@ -99,17 +111,31 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
       case "select-one":
         if ("options" in question) {
           return (
-            <View style={styles.radioGroup}>
+            <View style={styles.selectGroup}>
               {question.options.map((option) => (
-                <View key={option.value} style={styles.radioItem}>
-                  <RadioButton
-                    value={option.value}
-                    status={value === option.value ? "checked" : "unchecked"}
-                    onPress={() => onValueChange(option.value)}
-                    color="#6D28D9"
-                    uncheckedColor="#6B7280"
-                  />
-                  <Text onPress={() => onValueChange(option.value)} style={styles.radioLabel}>{option.label}</Text>
+                <View
+                  key={option.value}
+                  style={[
+                    styles.selectOption,
+                    value === option.value && styles.selectOptionActive,
+                  ]}
+                  onTouchEnd={() => onValueChange(option.value)}
+                >
+                  <View style={styles.selectOptionContent}>
+                    <Text
+                      style={[
+                        styles.selectOptionText,
+                        value === option.value && styles.selectOptionTextActive,
+                      ]}
+                    >
+                      {option.label}
+                    </Text>
+                    {value === option.value && (
+                      <View style={styles.checkmark}>
+                        <Text style={styles.checkmarkText}>✓</Text>
+                      </View>
+                    )}
+                  </View>
                 </View>
               ))}
             </View>
@@ -122,32 +148,41 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
           const selectedValues: string[] = Array.isArray(value) ? (value as string[]) : [];
 
           return (
-            <View style={styles.checkboxGroup}>
-              {question.options.map((option) => (
-                <View key={option.value} style={styles.checkboxItem}>
-                  <Checkbox
-                    status={selectedValues.includes(option.value) ? "checked" : "unchecked"}
-                    color="#6D28D9"
-                    uncheckedColor="#6B7280"
-                    onPress={() => {
-                      const newValues: string[] = selectedValues.includes(option.value)
-                        ? selectedValues.filter((v) => v !== option.value)
-                        : [...selectedValues, option.value];
-                      onValueChange(newValues);
-                    }}
-                  />
-                  <Text
-                    onPress={() => {
-                      const newValues: string[] = selectedValues.includes(option.value)
+            <View style={styles.selectGroup}>
+              {question.options.map((option) => {
+                const isSelected = selectedValues.includes(option.value);
+                return (
+                  <View
+                    key={option.value}
+                    style={[
+                      styles.selectOption,
+                      isSelected && styles.selectOptionActive,
+                    ]}
+                    onTouchEnd={() => {
+                      const newValues: string[] = isSelected
                         ? selectedValues.filter((v) => v !== option.value)
                         : [...selectedValues, option.value];
                       onValueChange(newValues);
                     }}
                   >
-                    {option.label}
-                  </Text>
-                </View>
-              ))}
+                    <View style={styles.selectOptionContent}>
+                      <Text
+                        style={[
+                          styles.selectOptionText,
+                          isSelected && styles.selectOptionTextActive,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                      {isSelected && (
+                        <View style={styles.checkmark}>
+                          <Text style={styles.checkmarkText}>✓</Text>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                );
+              })}
             </View>
           );
         }
@@ -292,15 +327,14 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   };
 
   return (
-      <Card style={styles.container}>
-      <Card.Content>
-        <Text variant="titleMedium" style={styles.questionText}>
-          {question.text}
-        </Text>
-        <View style={styles.inputContainer}>{renderInput()}</View>
-        {error && <Text style={styles.errorText}>{error}</Text>}
-      </Card.Content>
-    </Card>
+    <View style={styles.container}>
+      <Text variant="bodyLarge" style={styles.questionText}>
+        {question.text}
+        {question.required && <Text style={styles.requiredAsterisk}> *</Text>}
+      </Text>
+      <View style={styles.inputContainer}>{renderInput()}</View>
+      {error && <Text style={styles.errorText}>{error}</Text>}
+    </View>
   );
 };
 
@@ -460,20 +494,113 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    margin: 16,
-    marginBottom: 24, // Extra space between questions
+    backgroundColor: "#FFFFFF",
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
   },
   questionText: {
-    marginBottom: 8,
-    lineHeight: 24,
+    fontSize: 14,
+    color: "#111827",
+    lineHeight: 20,
+    fontWeight: "500",
+    marginBottom: 2,
+  },
+  requiredAsterisk: {
+    color: "#EF4444",
+    fontSize: 14,
   },
   requiredText: {
-    fontSize: 12,
-    color: "#666",
-    marginBottom: 16,
+    fontSize: 11,
+    color: "#6B7280",
+    marginBottom: 12,
   },
   inputContainer: {
-    marginTop: 16,
+    marginTop: 12,
+  },
+  // Modern toggle for yes/no questions
+  toggleContainer: {
+    flexDirection: "row",
+    gap: 8,
+    backgroundColor: "#F3F4F6",
+    padding: 4,
+    borderRadius: 10,
+  },
+  toggleOption: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    backgroundColor: "transparent",
+    alignItems: "center",
+  },
+  toggleOptionActive: {
+    backgroundColor: "#6D28D9",
+    shadowColor: "#6D28D9",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  toggleText: {
+    fontSize: 13,
+    fontWeight: "500",
+    color: "#6B7280",
+  },
+  toggleTextActive: {
+    color: "#FFFFFF",
+    fontWeight: "600",
+  },
+  // Modern select options
+  selectGroup: {
+    gap: 8,
+  },
+  selectOption: {
+    backgroundColor: "#F9FAFB",
+    borderWidth: 1.5,
+    borderColor: "#E5E7EB",
+    borderRadius: 12,
+    padding: 14,
+    minHeight: 50,
+  },
+  selectOptionActive: {
+    backgroundColor: "#EDE9FE",
+    borderColor: "#6D28D9",
+  },
+  selectOptionContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  selectOptionText: {
+    fontSize: 13,
+    color: "#374151",
+    fontWeight: "500",
+    flex: 1,
+  },
+  selectOptionTextActive: {
+    color: "#6D28D9",
+    fontWeight: "600",
+  },
+  checkmark: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#6D28D9",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  checkmarkText: {
+    color: "#FFFFFF",
+    fontSize: 12,
+    fontWeight: "bold",
   },
   radioGroup: {
     gap: 8,
@@ -485,6 +612,8 @@ const styles = StyleSheet.create({
   },
   radioLabel: {
     marginLeft: 8,
+    fontSize: 13,
+    color: "#374151",
   },
   checkboxGroup: {
     gap: 8,
@@ -493,45 +622,53 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 8,
+    paddingHorizontal: 12,
+    backgroundColor: "#F9FAFB",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   },
   bloodPressureContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 16,
+    gap: 12,
   },
   bpInput: {
     flex: 1,
   },
   bpSeparator: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
+    color: "#9CA3AF",
   },
   cycleDurationsContainer: {
-    gap: 12,
+    gap: 10,
   },
   cycleDurationInput: {
     marginBottom: 4,
   },
   lipidContainer: {
-    gap: 16,
+    gap: 12,
   },
   lipidInput: {
-    marginBottom: 8,
+    marginBottom: 6,
   },
   dateContainer: {
-    marginVertical: 8,
+    marginVertical: 4,
   },
   dateButton: {
-    marginVertical: 8,
+    marginVertical: 4,
+    borderRadius: 10,
   },
   dateButtonContent: {
-    paddingVertical: 12,
+    paddingVertical: 10,
     justifyContent: "flex-start",
   },
   errorText: {
-    color: "#d32f2f",
-    fontSize: 12,
+    color: "#EF4444",
+    fontSize: 11,
     marginTop: 8,
+    fontWeight: "500",
   },
   radioOption: {
     flexDirection: "row",
@@ -539,17 +676,17 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   heightWeightContainer: {
-    gap: 12,
+    gap: 10,
   },
   heightWeightInput: {
-    marginBottom: 8,
+    marginBottom: 6,
   },
   textInput: {
-    marginBottom: 16,
+    marginBottom: 12,
   },
   required: {
-    fontSize: 12,
-    color: "#666",
+    fontSize: 11,
+    color: "#6B7280",
     marginLeft: 8,
   },
 });

@@ -158,6 +158,6 @@ export default function ChooseContraceptiveScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F9FAFB",
+    backgroundColor: "#F3F4F6",
   },
 });

@@ -35,17 +35,19 @@ export function SectionPage({
       keyboardShouldPersistTaps="handled"
     >
       <View style={styles.header}>
-        <Text variant="headlineSmall" style={styles.title}>
+        <Text variant="titleLarge" style={styles.title}>
           {section.title}
         </Text>
-        <Text variant="bodyMedium" style={styles.subtitle}>
-          {visibleQuestions.length} question{visibleQuestions.length !== 1 ? "s" : ""}
-        </Text>
+        <View style={styles.questionCountBadge}>
+          <Text variant="labelSmall" style={styles.questionCountText}>
+            {visibleQuestions.length} question{visibleQuestions.length !== 1 ? "s" : ""}
+          </Text>
+        </View>
       </View>
 
       <View style={styles.questionsContainer}>
         {visibleQuestions.map((question) => (
-          <View key={question.id} style={styles.questionWrapper}>
+          <View key={question.id}>
             <SectionQuestionInput
               question={question}
               value={answers[question.id] as AnswerValue | undefined}
@@ -62,28 +64,39 @@ export function SectionPage({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.background,
+    backgroundColor: "#F3F4F6",
     minHeight: 200,
   },
   content: {
-    padding: theme.spacing.lg,
-    paddingBottom: theme.spacing.xxl * 2,
+    padding: 16,
+    paddingBottom: 120,
   },
   header: {
-    marginBottom: theme.spacing.xl,
+    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 8,
   },
   title: {
     color: theme.colors.textPrimary,
-    fontWeight: theme.typography.fontWeight.semiBold,
-    marginBottom: theme.spacing.xs,
+    fontWeight: theme.typography.fontWeight.bold,
+    fontSize: 18,
+    flex: 1,
   },
-  subtitle: {
-    color: theme.colors.textSecondary,
+  questionCountBadge: {
+    backgroundColor: "#EDE9FE",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  questionCountText: {
+    color: "#6D28D9",
+    fontSize: 11,
+    fontWeight: "600",
   },
   questionsContainer: {
-    gap: theme.spacing.lg,
-  },
-  questionWrapper: {
-    marginBottom: theme.spacing.lg,
+    gap: 12,
   },
 });
