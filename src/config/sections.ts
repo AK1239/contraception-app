@@ -42,6 +42,12 @@ export const SECTIONS: Section[] = [
         required: true,
       },
       {
+        id: "irregular-periods",
+        text: "Are your periods irregular? (Cycle length varies by more than 7 days between cycles)",
+        type: "yes-no",
+        required: true,
+      },
+      {
         id: "unexplained-vaginal-bleeding",
         text: "Presence of unexplained vaginal bleeding?",
         type: "yes-no",
