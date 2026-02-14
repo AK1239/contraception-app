@@ -152,6 +152,7 @@ export default function DrawerLayout() {
           drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Standard Day Calculator",
           title: "Standard Day Calculator",
+          headerRight: () => <StartOverHeaderButton sdmMode />,
         }}
       />
     </Drawer>

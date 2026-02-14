@@ -1,95 +1,183 @@
-import React, { useState } from "react";
-import { StyleSheet, ScrollView } from "react-native";
-import { useRouter } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { calculateStandardDays, StandardDayResult } from "../../src/utils/standardDayCalculator";
-import {
-  WelcomeScreen,
-  CycleDurationQuestion,
-  NotEligibleScreen,
-  LastPeriodQuestion,
-  ResultsScreen,
-} from "../../src/components/standard-day-calculator";
+/**
+ * Standard Days Method Calculator Screen
+ */
 
-type CalculatorStep = 'welcome' | 'question1' | 'notEligible' | 'question2' | 'results';
+import React, { useEffect, useCallback, useState } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../src/store';
+import {
+  setCycleLength,
+  setLMPDate,
+  setCurrentSection,
+  setEvaluationResult,
+  setComplete,
+  initializeSDM,
+  resetSDM,
+} from '../../src/store/slices/standardDayMethod';
+import { getSDMSection } from '../../src/config/standardDaySections';
+import { SectionPage } from '../../src/components/questionnaire';
+import { StandardDayResults, StandardDaySectionNavigator } from '../../src/components/sdm';
+import { evaluateSDM } from '../../src/engine/standardDayEngine';
+import {
+  getNextSDMSection,
+  getPreviousSDMSection,
+  isLastSDMSection,
+  isSDMSectionComplete,
+  calculateSDMProgress,
+} from '../../src/utils/standardDayNavigation';
+import type { AnswerValue } from '../../src/types/questionnaire';
+import type { SDMSectionKey } from '../../src/types/standardDayMethod';
 
 export default function StandardDayCalculatorPage() {
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
-  const [currentStep, setCurrentStep] = useState<CalculatorStep>('welcome');
-  const [lastPeriodDate, setLastPeriodDate] = useState<Date | null>(null);
-  const [result, setResult] = useState<StandardDayResult | null>(null);
+  const dispatch = useDispatch();
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
-  const handleCycleRangeAnswer = (isInRange: boolean) => {
-    if (isInRange) {
-      setCurrentStep('question2');
+  const { answers, currentSection, evaluationResult, isComplete } = useSelector(
+    (state: RootState) => state.standardDayMethod
+  );
+
+  // Initialize on mount
+  useEffect(() => {
+    if (!currentSection && !isComplete) {
+      dispatch(initializeSDM());
+    }
+  }, [currentSection, isComplete, dispatch]);
+
+  // Evaluate and get average cycle length
+  const currentResult = evaluateSDM(answers);
+  const avgCycleLength = currentResult.avgCycleLength;
+
+  const currentSectionConfig = currentSection ? getSDMSection(currentSection) : null;
+
+  const currentIndex = currentSection
+    ? ['eligibility-info', 'cycle-lengths', 'lmp-date'].indexOf(currentSection)
+    : 0;
+  const isFirstSection = currentIndex <= 0;
+  const isLast = currentSection ? isLastSDMSection(currentSection, avgCycleLength) : false;
+  const canProceed = currentSection ? isSDMSectionComplete(currentSection, answers) : false;
+  const progress = currentSection ? calculateSDMProgress(currentSection, avgCycleLength) : 0;
+
+  const handleAnswerChange = useCallback(
+    (questionId: string, value: AnswerValue) => {
+      // Handle cycle length inputs (cycle-1 through cycle-6)
+      if (questionId.startsWith('cycle-') && questionId !== 'cycle-definition') {
+        const index = parseInt(questionId.split('-')[1]) - 1;
+        const numValue = typeof value === 'number' ? value : null;
+        dispatch(setCycleLength({ index, value: numValue }));
+      }
+      // Handle LMP date
+      else if (questionId === 'lmp-date') {
+        const dateValue = value instanceof Date ? value : null;
+        dispatch(setLMPDate(dateValue));
+      }
+    },
+    [dispatch]
+  );
+
+  const runEvaluation = useCallback(() => {
+    const result = evaluateSDM(answers);
+    dispatch(setEvaluationResult(result));
+    dispatch(setComplete(true));
+    dispatch(setCurrentSection(null as any));
+  }, [answers, dispatch]);
+
+  const handleNext = useCallback(() => {
+    if (!currentSection) return;
+
+    // Validate current section
+    if (!canProceed) {
+      setValidationErrors({ general: 'Please complete all required fields' });
+      return;
+    }
+    setValidationErrors({});
+
+    const nextSection = getNextSDMSection(currentSection, answers, avgCycleLength);
+
+    if (nextSection) {
+      dispatch(setCurrentSection(nextSection));
     } else {
-      setCurrentStep('notEligible');
+      // No next section means either not eligible or ready for results
+      runEvaluation();
     }
-  };
+  }, [currentSection, answers, avgCycleLength, canProceed, dispatch, runEvaluation]);
 
-  const handleDateSelect = (date: Date) => {
-    setLastPeriodDate(date);
-    const calculatedResult = calculateStandardDays(date);
-    setResult(calculatedResult);
-    setCurrentStep('results');
-  };
+  const handlePrevious = useCallback(() => {
+    if (!currentSection) return;
 
-  const resetCalculator = () => {
-    setCurrentStep('welcome');
-    setLastPeriodDate(null);
-    setResult(null);
-  };
-
-  const handleExploreModernMethods = () => {
-    router.push('/(drawer)/know-contraceptive/modern-methods');
-  };
-
-  const renderCurrentStep = () => {
-    switch (currentStep) {
-      case 'welcome':
-        return <WelcomeScreen onGetStarted={() => setCurrentStep('question1')} />;
-      case 'question1':
-        return <CycleDurationQuestion onAnswer={handleCycleRangeAnswer} />;
-      case 'notEligible':
-        return (
-          <NotEligibleScreen
-            onExploreModernMethods={handleExploreModernMethods}
-            onStartOver={resetCalculator}
-          />
-        );
-      case 'question2':
-        return <LastPeriodQuestion onDateSelect={handleDateSelect} />;
-      case 'results':
-        if (!result || !lastPeriodDate) return null;
-        return (
-          <ResultsScreen
-            lastPeriodDate={lastPeriodDate}
-            result={result}
-            onCalculateAgain={resetCalculator}
-          />
-        );
-      default:
-        return null;
+    const prevSection = getPreviousSDMSection(currentSection);
+    if (prevSection) {
+      dispatch(setCurrentSection(prevSection));
+      setValidationErrors({});
     }
-  };
+  }, [currentSection, dispatch]);
 
+  const handleComplete = useCallback(() => {
+    runEvaluation();
+  }, [runEvaluation]);
+
+  const handleReset = useCallback(() => {
+    dispatch(resetSDM());
+    dispatch(initializeSDM());
+  }, [dispatch]);
+
+  // Convert answers to format expected by SectionPage
+  const convertedAnswers: Record<string, AnswerValue | undefined> = {};
+  
+  // Add cycle lengths
+  answers.cycleLengths.forEach((length, index) => {
+    convertedAnswers[`cycle-${index + 1}`] = length || undefined;
+  });
+  
+  // Add LMP date
+  if (answers.lmpDate) {
+    convertedAnswers['lmp-date'] = answers.lmpDate;
+  }
+
+  // Show results if complete
+  if (isComplete && evaluationResult) {
+    return <StandardDayResults result={evaluationResult} onReset={handleReset} />;
+  }
+
+  // Show questionnaire
   return (
-    <ScrollView 
-      style={styles.container} 
-      contentContainerStyle={[styles.contentContainer, { paddingBottom: Math.max(40, insets.bottom + 40) }]}
-    >
-      {renderCurrentStep()}
-    </ScrollView>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        {currentSectionConfig && (
+          <SectionPage
+            section={currentSectionConfig}
+            answers={convertedAnswers}
+            onAnswerChange={handleAnswerChange}
+            validationErrors={validationErrors}
+          />
+        )}
+      </ScrollView>
+
+      {currentSection && (
+        <StandardDaySectionNavigator
+          currentSection={currentSection}
+          progress={progress}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          onComplete={handleComplete}
+          isFirstSection={isFirstSection}
+          isLastSection={isLast}
+          canProceed={canProceed}
+        />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F3F4F6",
+    backgroundColor: '#F3F4F6',
   },
-  contentContainer: {
-    paddingBottom: 40,
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
 });

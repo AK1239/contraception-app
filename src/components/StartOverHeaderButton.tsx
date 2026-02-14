@@ -7,6 +7,7 @@ import { resetQuestionnaire, resetPersonalization } from "../store/slices/questi
 import { resetFABEligibility } from "../store/slices/fabEligibility";
 import { resetFemaleSterilizationEligibility } from "../store/slices/femaleSterilizationEligibility";
 import { resetMaleSterilizationEligibility } from "../store/slices/maleSterilizationEligibility";
+import { resetSDM } from "../store/slices/standardDayMethod";
 
 interface StartOverHeaderButtonProps {
   /** When true, resets FAB eligibility flow instead of MEC questionnaire */
@@ -15,6 +16,8 @@ interface StartOverHeaderButtonProps {
   femaleSterilizationMode?: boolean;
   /** When true, resets Male Sterilization eligibility flow */
   maleSterilizationMode?: boolean;
+  /** When true, resets Standard Days Method calculator */
+  sdmMode?: boolean;
 }
 
 /**
@@ -22,13 +25,22 @@ interface StartOverHeaderButtonProps {
  * Use fabMode for Natural Method Eligibility flow.
  * Use femaleSterilizationMode for Female Sterilization Eligibility flow.
  * Use maleSterilizationMode for Male Sterilization Eligibility flow.
+ * Use sdmMode for Standard Days Method calculator.
  */
-export function StartOverHeaderButton({ fabMode = false, femaleSterilizationMode = false, maleSterilizationMode = false }: StartOverHeaderButtonProps) {
+export function StartOverHeaderButton({ 
+  fabMode = false, 
+  femaleSterilizationMode = false, 
+  maleSterilizationMode = false,
+  sdmMode = false 
+}: StartOverHeaderButtonProps) {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handlePress = () => {
-    if (maleSterilizationMode) {
+    if (sdmMode) {
+      dispatch(resetSDM());
+      router.replace("/(drawer)/standard-day-calculator-page");
+    } else if (maleSterilizationMode) {
       dispatch(resetMaleSterilizationEligibility());
       router.replace("/(drawer)/male-sterilization-eligibility");
     } else if (femaleSterilizationMode) {
