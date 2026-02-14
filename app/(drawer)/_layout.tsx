@@ -99,7 +99,18 @@ export default function DrawerLayout() {
           drawerItemStyle: { display: "none" },
           drawerLabel: "Female Sterilization Eligibility",
           title: "Female Sterilization Eligibility",
-          headerRight: () => <StartOverHeaderButton sterilizationMode />,
+          headerRight: () => <StartOverHeaderButton femaleSterilizationMode />,
+        }}
+      />
+
+      {/* Male Sterilization Eligibility */}
+      <Drawer.Screen
+        name="male-sterilization-eligibility"
+        options={{
+          drawerItemStyle: { display: "none" },
+          drawerLabel: "Male Sterilization Eligibility",
+          title: "Male Sterilization Eligibility",
+          headerRight: () => <StartOverHeaderButton maleSterilizationMode />,
         }}
       />
       

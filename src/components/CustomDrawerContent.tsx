@@ -70,7 +70,7 @@ const drawerSections: DrawerSection[] = [
       {
         id: 'male-sterilization',
         title: 'Male Sterilization Eligibility',
-        route: '/(drawer)/sterilization-eligibility', // Coming soon
+        route: '/(drawer)/male-sterilization-eligibility',
       },
     ],
   },

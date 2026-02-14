@@ -13,8 +13,7 @@ export default function SterilizationEligibilityIndexScreen() {
   };
 
   const handleMaleSterilization = () => {
-    // TODO: Implement male sterilization eligibility
-    console.log('Male sterilization eligibility coming soon');
+    router.push('/(drawer)/male-sterilization-eligibility');
   };
 
   return (
@@ -36,12 +35,11 @@ export default function SterilizationEligibilityIndexScreen() {
         <HomeSectionCard
           leadingEmoji="👨‍⚕️"
           title="Male Sterilization Eligibility"
-          description="Determine eligibility for male surgical sterilization (vasectomy) using evidence-based clinical criteria. Coming soon."
-          ctaLabel="Coming Soon"
+          description="Determine eligibility for male surgical sterilization (vasectomy) using WHO Medical Eligibility Criteria. Evaluates conditions including HIV status, endocrine disorders, genital infections, and scrotal structural abnormalities to provide Accept, Caution, Delay, or Special Setting recommendations."
+          ctaLabel="Assess Male Eligibility"
           onPress={handleMaleSterilization}
           backgroundColor="#EFF6FF"
           buttonColor="#3B82F6"
-          disabled={true}
         />
       </View>
     </ScrollView>
