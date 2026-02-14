@@ -57,6 +57,24 @@ const drawerSections: DrawerSection[] = [
     route: '/(drawer)/fab-eligibility',
   },
   {
+    id: 'sterilization-eligibility',
+    title: 'Sterilization Eligibility',
+    icon: 'medical-outline',
+    hasSubsections: true,
+    subsections: [
+      {
+        id: 'female-sterilization',
+        title: 'Female Sterilization Eligibility',
+        route: '/(drawer)/sterilization-eligibility/female-sterilization-eligibility',
+      },
+      {
+        id: 'male-sterilization',
+        title: 'Male Sterilization Eligibility',
+        route: '/(drawer)/sterilization-eligibility', // Coming soon
+      },
+    ],
+  },
+  {
     id: 'compare-methods',
     title: 'Compare Contraceptive Methods',
     icon: 'git-compare-outline',

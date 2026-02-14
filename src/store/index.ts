@@ -3,6 +3,7 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import questionnaireReducer from "./slices/questionnaire";
 import resultsReducer from "./slices/results";
 import fabEligibilityReducer from "./slices/fabEligibility";
+import femaleSterilizationEligibilityReducer from "./slices/femaleSterilizationEligibility";
 import { questionnairePersistConfig, resultsPersistConfig } from "./persistConfig";
 
 // Create persisted reducers with nested configuration for granular control
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   questionnaire: persistedQuestionnaireReducer,
   results: persistedResultsReducer,
   fabEligibility: fabEligibilityReducer,
+  femaleSterilizationEligibility: femaleSterilizationEligibilityReducer,
 });
 
 export const store = configureStore({

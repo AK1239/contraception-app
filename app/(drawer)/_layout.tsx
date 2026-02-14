@@ -61,6 +61,15 @@ export default function DrawerLayout() {
         }}
       />
       
+      {/* Sterilization Eligibility - Stack Navigator */}
+      <Drawer.Screen
+        name="sterilization-eligibility"
+        options={{
+          drawerItemStyle: { display: 'none' }, // Hide from drawer, accessed via CustomDrawerContent
+          headerShown: false, // Stack will handle headers
+        }}
+      />
+      
       {/* WHO MEC Questionnaire - Choose Your Contraceptive */}
       <Drawer.Screen
         name="choose-contraceptive"

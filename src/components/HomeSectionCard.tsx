@@ -10,33 +10,36 @@ type HomeSectionCardProps = {
   leadingEmoji?: string;
   backgroundColor?: string;
   buttonColor?: string;
+  disabled?: boolean;
 };
 
-export default function HomeSectionCard({ title, description, ctaLabel, onPress, leadingEmoji, backgroundColor = "#FFFFFF", buttonColor = "#6D28D9" }: HomeSectionCardProps) {
+export default function HomeSectionCard({ title, description, ctaLabel, onPress, leadingEmoji, backgroundColor = "#FFFFFF", buttonColor = "#6D28D9", disabled = false }: HomeSectionCardProps) {
   return (
     <Pressable 
-      onPress={onPress}
+      onPress={disabled ? undefined : onPress}
+      disabled={disabled}
       style={({ pressed }) => [
         styles.pressable,
-        pressed && styles.pressed
+        pressed && !disabled && styles.pressed,
+        disabled && styles.disabled
       ]}
     >
-      <Card style={[styles.card, { backgroundColor }]} mode="elevated">
+      <Card style={[styles.card, { backgroundColor }, disabled && styles.disabledCard]} mode="elevated">
         <Card.Content style={styles.cardContent}>
           {/* Icon Container */}
           {leadingEmoji && (
-            <View style={styles.iconContainer}>
+            <View style={[styles.iconContainer, disabled && styles.disabledIcon]}>
               <Text style={styles.emoji}>{leadingEmoji}</Text>
             </View>
           )}
 
           {/* Content Section */}
           <View style={styles.textContainer}>
-            <Text variant="headlineSmall" style={styles.title}>
+            <Text variant="headlineSmall" style={[styles.title, disabled && styles.disabledText]}>
               {title}
             </Text>
 
-            <Text variant="bodyMedium" style={styles.description}>
+            <Text variant="bodyMedium" style={[styles.description, disabled && styles.disabledText]}>
               {description}
             </Text>
           </View>
@@ -45,10 +48,11 @@ export default function HomeSectionCard({ title, description, ctaLabel, onPress,
           <Button 
             mode="contained" 
             onPress={onPress}
-            style={[styles.button, { backgroundColor: buttonColor }]} 
+            disabled={disabled}
+            style={[styles.button, { backgroundColor: disabled ? "#D1D5DB" : buttonColor }]} 
             contentStyle={styles.buttonContent}
             labelStyle={styles.buttonLabel}
-            elevation={2}
+            elevation={disabled ? 0 : 2}
           >
             {ctaLabel}
           </Button>
@@ -137,6 +141,16 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 0.3,
   },
-});
-
-
+  disabled: {
+    opacity: 0.6,
+  },
+  disabledCard: {
+    backgroundColor: "#F9FAFB",
+  },
+  disabledIcon: {
+    backgroundColor: "#E5E7EB",
+    borderColor: "#D1D5DB",
+  },
+  disabledText: {
+    color: "#9CA3AF",
+  },});
