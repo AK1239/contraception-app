@@ -431,6 +431,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     shortName: 'SDM',
     category: 'natural',
     icon: '📅',
+    image: require('../../assets/standard-day-method.jpeg'),
     description: 'The Standard Days Method (SDM) is a fertility awareness-based method for women with regular menstrual cycles of 26–32 days, helping identify fertile and safe days to prevent pregnancy. It assumes ovulation occurs mid-cycle, with days 8–19 considered fertile; couples avoid unprotected sex during this period. The method involves counting from the first day of menstrual bleeding to track fertile and non-fertile days accurately.',
     efficacy: {
       label: 'Good',
