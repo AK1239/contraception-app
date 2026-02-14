@@ -287,6 +287,10 @@ export const INITIAL_MEC_SCORES: Record<ContraceptiveMethodKey, 1> = {
   i: 1,
   j: 1,
   k: 1,
+  l: 1,
+  m: 1,
+  n: 1,
+  o: 1,
 };
 
 // Methods that require medical evaluation before use

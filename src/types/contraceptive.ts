@@ -1,19 +1,26 @@
 // WHO Medical Eligibility Criteria scoring system
 export type MECScore = 1 | 2 | 3 | 4;
 
-// Contraceptive method keys as defined in the app requirements
+// Contraceptive method keys - WHO MEC spec (lowercase only, unique keys)
+// a=COP, b=Combined injectable, c=POP, d=DMPA, e=Implant, f=Copper IUD, g=LNG IUD,
+// h=Female sterilization, o=Male sterilization, i=Combined patch, j=Barrier (general),
+// k=Vaginal ring, l=Male condom, m=Female condom, n=Diaphragm
 export type ContraceptiveMethodKey =
   | "a" // Combined oral contraceptive (COC)
   | "b" // Combined injectable contraceptive
   | "c" // Progestin only pill (POP)
   | "d" // Depot Medroxyprogesterone Acetate (DMPA) injection
-  | "e" // Implant (includes Jadelle and implanon)
+  | "e" // Implant (includes Jadelle and Implanon)
   | "f" // Copper IUD
   | "g" // Levonogestrel (LNG) IUD
-  | "h" // Sterilization
+  | "h" // Female sterilization
   | "i" // Combined patch contraceptive
-  | "j" // Barrier method
-  | "k"; // Contraceptive vaginal ring
+  | "j" // Barrier method (general)
+  | "k" // Contraceptive vaginal ring
+  | "l" // Male condom
+  | "m" // Female condom
+  | "n" // Diaphragm
+  | "o"; // Male sterilization
 
 // Contraceptive method definition
 export interface ContraceptiveMethod {
