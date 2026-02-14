@@ -28,12 +28,25 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // Ignore redux-persist actions
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, "questionnaire/setAnswer"],
-        ignoredActionsPaths: ["payload.timestamp"],
+        ignoredActions: [
+          FLUSH, 
+          REHYDRATE, 
+          PAUSE, 
+          PERSIST, 
+          PURGE, 
+          REGISTER, 
+          "questionnaire/setAnswer",
+          "standardDayMethod/setLMPDate",
+          "standardDayMethod/setEvaluationResult",
+        ],
+        ignoredActionsPaths: ["payload.timestamp", "payload"],
         ignoredPaths: [
           "questionnaire.answers.birthDate",
           "questionnaire.answers.birth-date",
           "questionnaire.answers.timestamp",
+          "standardDayMethod.answers.lmpDate",
+          "standardDayMethod.evaluationResult.fertileWindow",
+          "standardDayMethod.evaluationResult.safeWindow",
         ],
       },
     }),
