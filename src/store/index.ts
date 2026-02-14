@@ -6,6 +6,7 @@ import fabEligibilityReducer from "./slices/fabEligibility";
 import femaleSterilizationEligibilityReducer from "./slices/femaleSterilizationEligibility";
 import maleSterilizationEligibilityReducer from "./slices/maleSterilizationEligibility";
 import standardDayMethodReducer from "./slices/standardDayMethod";
+import calendarMethodReducer from "./slices/calendarMethod";
 import { questionnairePersistConfig, resultsPersistConfig } from "./persistConfig";
 
 // Create persisted reducers with nested configuration for granular control
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   femaleSterilizationEligibility: femaleSterilizationEligibilityReducer,
   maleSterilizationEligibility: maleSterilizationEligibilityReducer,
   standardDayMethod: standardDayMethodReducer,
+  calendarMethod: calendarMethodReducer,
 });
 
 export const store = configureStore({
@@ -38,6 +40,8 @@ export const store = configureStore({
           "questionnaire/setAnswer",
           "standardDayMethod/setLMPDate",
           "standardDayMethod/setEvaluationResult",
+          "calendarMethod/setLMPDate",
+          "calendarMethod/setEvaluationResult",
         ],
         ignoredActionsPaths: ["payload.timestamp", "payload"],
         ignoredPaths: [
@@ -47,6 +51,9 @@ export const store = configureStore({
           "standardDayMethod.answers.lmpDate",
           "standardDayMethod.evaluationResult.fertileWindow",
           "standardDayMethod.evaluationResult.safeWindow",
+          "calendarMethod.answers.lmpDate",
+          "calendarMethod.evaluationResult.fertileWindow",
+          "calendarMethod.evaluationResult.safeWindow",
         ],
       },
     }),

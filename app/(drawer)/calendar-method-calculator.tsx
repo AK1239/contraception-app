@@ -1,5 +1,5 @@
 /**
- * Standard Days Method Calculator Screen
+ * Calendar Method (Ogino-Knaus / Rhythm Method) Calculator Screen
  */
 
 import React, { useEffect, useCallback, useState } from 'react';
@@ -12,50 +12,50 @@ import {
   setCurrentSection,
   setEvaluationResult,
   setComplete,
-  initializeSDM,
-  resetSDM,
-} from '../../src/store/slices/standardDayMethod';
-import { getSDMSection } from '../../src/config/standardDaySections';
+  initializeCalendarMethod,
+  resetCalendarMethod,
+} from '../../src/store/slices/calendarMethod';
+import { getCalendarMethodSection } from '../../src/config/calendarMethodSections';
 import { SectionPage } from '../../src/components/questionnaire';
-import { StandardDayResults, StandardDaySectionNavigator } from '../../src/components/sdm';
-import { evaluateSDM } from '../../src/engine/standardDayEngine';
+import { CalendarMethodResults, CalendarMethodSectionNavigator } from '../../src/components/calendar-method';
+import { evaluateCalendarMethod } from '../../src/engine/calendarMethodEngine';
 import {
-  getNextSDMSection,
-  getPreviousSDMSection,
-  isLastSDMSection,
-  isSDMSectionComplete,
-  calculateSDMProgress,
-} from '../../src/utils/standardDayNavigation';
+  getNextCalendarMethodSection,
+  getPreviousCalendarMethodSection,
+  isLastCalendarMethodSection,
+  isCalendarMethodSectionComplete,
+  calculateCalendarMethodProgress,
+} from '../../src/utils/calendarMethodNavigation';
 import type { AnswerValue } from '../../src/types/questionnaire';
 
-export default function StandardDayCalculatorPage() {
+export default function CalendarMethodCalculatorPage() {
   const dispatch = useDispatch();
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
   const { answers, currentSection, evaluationResult, isComplete } = useSelector(
-    (state: RootState) => state.standardDayMethod
+    (state: RootState) => state.calendarMethod
   );
 
   // Initialize on mount
   useEffect(() => {
     if (!currentSection && !isComplete) {
-      dispatch(initializeSDM());
+      dispatch(initializeCalendarMethod());
     }
   }, [currentSection, isComplete, dispatch]);
 
-  // Evaluate and get average cycle length
-  const currentResult = evaluateSDM(answers);
-  const avgCycleLength = currentResult.avgCycleLength;
+  // Evaluate to get eligibility status
+  const currentResult = evaluateCalendarMethod(answers);
+  const eligible = currentResult.eligible;
 
-  const currentSectionConfig = currentSection ? getSDMSection(currentSection) : null;
+  const currentSectionConfig = currentSection ? getCalendarMethodSection(currentSection) : null;
 
   const currentIndex = currentSection
     ? ['eligibility-info', 'cycle-lengths', 'lmp-date'].indexOf(currentSection)
     : 0;
   const isFirstSection = currentIndex <= 0;
-  const isLast = currentSection ? isLastSDMSection(currentSection, avgCycleLength) : false;
-  const canProceed = currentSection ? isSDMSectionComplete(currentSection, answers) : false;
-  const progress = currentSection ? calculateSDMProgress(currentSection, avgCycleLength) : 0;
+  const isLast = currentSection ? isLastCalendarMethodSection(currentSection, eligible) : false;
+  const canProceed = currentSection ? isCalendarMethodSectionComplete(currentSection, answers) : false;
+  const progress = currentSection ? calculateCalendarMethodProgress(currentSection, eligible) : 0;
 
   const handleAnswerChange = useCallback(
     (questionId: string, value: AnswerValue) => {
@@ -75,7 +75,7 @@ export default function StandardDayCalculatorPage() {
   );
 
   const runEvaluation = useCallback(() => {
-    const result = evaluateSDM(answers);
+    const result = evaluateCalendarMethod(answers);
     dispatch(setEvaluationResult(result));
     dispatch(setComplete(true));
     dispatch(setCurrentSection(null as any));
@@ -91,7 +91,7 @@ export default function StandardDayCalculatorPage() {
     }
     setValidationErrors({});
 
-    const nextSection = getNextSDMSection(currentSection, answers, avgCycleLength);
+    const nextSection = getNextCalendarMethodSection(currentSection, answers, eligible);
 
     if (nextSection) {
       dispatch(setCurrentSection(nextSection));
@@ -99,12 +99,12 @@ export default function StandardDayCalculatorPage() {
       // No next section means either not eligible or ready for results
       runEvaluation();
     }
-  }, [currentSection, answers, avgCycleLength, canProceed, dispatch, runEvaluation]);
+  }, [currentSection, answers, eligible, canProceed, dispatch, runEvaluation]);
 
   const handlePrevious = useCallback(() => {
     if (!currentSection) return;
 
-    const prevSection = getPreviousSDMSection(currentSection);
+    const prevSection = getPreviousCalendarMethodSection(currentSection);
     if (prevSection) {
       dispatch(setCurrentSection(prevSection));
       setValidationErrors({});
@@ -116,8 +116,8 @@ export default function StandardDayCalculatorPage() {
   }, [runEvaluation]);
 
   const handleReset = useCallback(() => {
-    dispatch(resetSDM());
-    dispatch(initializeSDM());
+    dispatch(resetCalendarMethod());
+    dispatch(initializeCalendarMethod());
   }, [dispatch]);
 
   // Convert answers to format expected by SectionPage
@@ -135,7 +135,7 @@ export default function StandardDayCalculatorPage() {
 
   // Show results if complete
   if (isComplete && evaluationResult) {
-    return <StandardDayResults result={evaluationResult} onReset={handleReset} />;
+    return <CalendarMethodResults result={evaluationResult} onReset={handleReset} />;
   }
 
   // Show questionnaire
@@ -153,7 +153,7 @@ export default function StandardDayCalculatorPage() {
       </ScrollView>
 
       {currentSection && (
-        <StandardDaySectionNavigator
+        <CalendarMethodSectionNavigator
           currentSection={currentSection}
           progress={progress}
           onPrevious={handlePrevious}

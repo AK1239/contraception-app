@@ -137,11 +137,12 @@ export default function DrawerLayout() {
       
       {/* Calendar Calculator */}
       <Drawer.Screen
-        name="standard-day-calculator"
+        name="calendar-method-calculator"
         options={{
           drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Calendar Method Calculator",
           title: "Calendar Method Calculator",
+          headerRight: () => <StartOverHeaderButton calendarMethodMode />,
         }}
       />
       

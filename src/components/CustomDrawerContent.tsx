@@ -94,7 +94,7 @@ const drawerSections: DrawerSection[] = [
       {
         id: 'calendar-method-calculator',
         title: 'Calendar Method Calculator',
-        route: '/(drawer)/standard-day-calculator',
+        route: '/(drawer)/calendar-method-calculator',
       },
     ],
   },

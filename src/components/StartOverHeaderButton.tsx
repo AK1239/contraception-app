@@ -8,6 +8,7 @@ import { resetFABEligibility } from "../store/slices/fabEligibility";
 import { resetFemaleSterilizationEligibility } from "../store/slices/femaleSterilizationEligibility";
 import { resetMaleSterilizationEligibility } from "../store/slices/maleSterilizationEligibility";
 import { resetSDM } from "../store/slices/standardDayMethod";
+import { resetCalendarMethod } from "../store/slices/calendarMethod";
 
 interface StartOverHeaderButtonProps {
   /** When true, resets FAB eligibility flow instead of MEC questionnaire */
@@ -18,6 +19,8 @@ interface StartOverHeaderButtonProps {
   maleSterilizationMode?: boolean;
   /** When true, resets Standard Days Method calculator */
   sdmMode?: boolean;
+  /** When true, resets Calendar Method calculator */
+  calendarMethodMode?: boolean;
 }
 
 /**
@@ -31,13 +34,17 @@ export function StartOverHeaderButton({
   fabMode = false, 
   femaleSterilizationMode = false, 
   maleSterilizationMode = false,
-  sdmMode = false 
+  sdmMode = false,
+  calendarMethodMode = false 
 }: StartOverHeaderButtonProps) {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handlePress = () => {
-    if (sdmMode) {
+    if (calendarMethodMode) {
+      dispatch(resetCalendarMethod());
+      router.replace("/(drawer)/calendar-method-calculator");
+    } else if (sdmMode) {
       dispatch(resetSDM());
       router.replace("/(drawer)/standard-day-calculator-page");
     } else if (maleSterilizationMode) {
