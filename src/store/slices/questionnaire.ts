@@ -1,19 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UserAnswers, AnswerValue, PersonalizationState } from "../../types";
+import type { SectionKey } from "../../types/rules";
+import type { EvaluationResult } from "../../types/rules";
 
 interface QuestionnaireState {
   answers: UserAnswers;
   currentQuestionIndex: number;
   currentSection: "medical" | "personalization";
+  /** WHO MEC: current section in questionnaire flow */
+  mecCurrentSection: SectionKey | null;
+  /** WHO MEC: section completion tracking */
+  mecSectionProgress: Partial<Record<SectionKey, boolean>>;
+  /** WHO MEC: evaluation result from rules engine */
+  mecEvaluationResult: EvaluationResult | null;
   isComplete: boolean;
   validationErrors: Record<string, string>;
   personalization: PersonalizationState;
 }
 
 const initialState: QuestionnaireState = {
+  answers: {},
   currentSection: "medical",
   currentQuestionIndex: 0,
-  answers: {},
+  mecCurrentSection: null,
+  mecSectionProgress: {},
+  mecEvaluationResult: null,
   isComplete: false,
   validationErrors: {},
   personalization: {
@@ -61,6 +72,21 @@ const questionnaireSlice = createSlice({
       state.currentQuestionIndex = 0;
       state.answers = {};
       state.isComplete = false;
+      state.mecCurrentSection = null;
+      state.mecSectionProgress = {};
+      state.mecEvaluationResult = null;
+    },
+
+    // WHO MEC questionnaire actions
+    setMECCurrentSection: (state, action: PayloadAction<SectionKey | null>) => {
+      state.mecCurrentSection = action.payload;
+    },
+    setMECSectionComplete: (state, action: PayloadAction<SectionKey>) => {
+      if (!state.mecSectionProgress) state.mecSectionProgress = {};
+      state.mecSectionProgress[action.payload] = true;
+    },
+    setMECEvaluationResult: (state, action: PayloadAction<EvaluationResult | null>) => {
+      state.mecEvaluationResult = action.payload;
     },
 
     setAnswers: (state, action: PayloadAction<UserAnswers>) => {
@@ -112,6 +138,9 @@ export const {
   setAnswers,
   setPersonalizationAnswer,
   resetPersonalization,
+  setMECCurrentSection,
+  setMECSectionComplete,
+  setMECEvaluationResult,
 } = questionnaireSlice.actions;
 
 export default questionnaireSlice.reducer;

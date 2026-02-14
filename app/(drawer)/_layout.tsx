@@ -60,6 +60,15 @@ export default function DrawerLayout() {
         }}
       />
       
+      {/* WHO MEC Questionnaire - Choose Your Contraceptive */}
+      <Drawer.Screen
+        name="choose-contraceptive"
+        options={{
+          drawerItemStyle: { display: "none" },
+          drawerLabel: "Choose Your Contraceptive",
+          title: "Choose Your Contraceptive",
+        }}
+      />
       {/* Choose Your Contraceptive Screens */}
       <Drawer.Screen
         name="personalize"

@@ -22,7 +22,11 @@ export const store = configureStore({
         // Ignore redux-persist actions
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, "questionnaire/setAnswer"],
         ignoredActionsPaths: ["payload.timestamp"],
-        ignoredPaths: ["questionnaire.answers.birthDate", "questionnaire.answers.timestamp"],
+        ignoredPaths: [
+          "questionnaire.answers.birthDate",
+          "questionnaire.answers.birth-date",
+          "questionnaire.answers.timestamp",
+        ],
       },
     }),
 });

@@ -17,9 +17,9 @@ export const questionnairePersistConfig: PersistConfig<any> = {
   key: "questionnaire",
   storage: persistStorage,
   // Only persist important data, exclude navigation/UI state
-  whitelist: ["answers", "personalization", "isComplete"],
+  whitelist: ["answers", "personalization", "isComplete", "mecEvaluationResult"],
   // Don't persist navigation state - users should start from beginning of their section
-  blacklist: ["currentQuestionIndex", "currentSection", "validationErrors"],
+  blacklist: ["currentQuestionIndex", "currentSection", "validationErrors", "mecCurrentSection", "mecSectionProgress"],
 };
 
 /**

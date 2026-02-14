@@ -48,7 +48,7 @@ const drawerSections: DrawerSection[] = [
     id: 'choose-contraceptive',
     title: 'Choose Your Contraceptive',
     icon: 'checkmark-circle-outline',
-    route: '/(drawer)/personalize',
+    route: '/(drawer)/choose-contraceptive',
   },
   {
     id: 'compare-methods',
