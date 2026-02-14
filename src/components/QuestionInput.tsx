@@ -199,10 +199,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             <TextInput
               mode="outlined"
               label="Systolic (top number)"
-              value={bpValue.systolic?.toString() || ""}
+              value={bpValue.systolic && bpValue.systolic > 0 ? bpValue.systolic.toString() : ""}
               onChangeText={(text) => {
-                const systolic = parseFloat(text) || 0;
-                onValueChange({ ...bpValue, systolic });
+                const systolic = text === "" ? 0 : parseFloat(text);
+                onValueChange({ ...bpValue, systolic: !isNaN(systolic) ? systolic : 0 });
               }}
               keyboardType="numeric"
               style={styles.bpInput}
@@ -211,10 +211,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             <TextInput
               mode="outlined"
               label="Diastolic (bottom number)"
-              value={bpValue.diastolic?.toString() || ""}
+              value={bpValue.diastolic && bpValue.diastolic > 0 ? bpValue.diastolic.toString() : ""}
               onChangeText={(text) => {
-                const diastolic = parseFloat(text) || 0;
-                onValueChange({ ...bpValue, diastolic });
+                const diastolic = text === "" ? 0 : parseFloat(text);
+                onValueChange({ ...bpValue, diastolic: !isNaN(diastolic) ? diastolic : 0 });
               }}
               keyboardType="numeric"
               style={styles.bpInput}
@@ -235,10 +235,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             <TextInput
               mode="outlined"
               label="LDL (mg/dL)"
-              value={lipidValue.ldl?.toString() || ""}
+              value={lipidValue.ldl && lipidValue.ldl > 0 ? lipidValue.ldl.toString() : ""}
               onChangeText={(text) => {
-                const ldl = parseFloat(text) || 0;
-                onValueChange({ ...lipidValue, ldl });
+                const ldl = text === "" ? 0 : parseFloat(text);
+                onValueChange({ ...lipidValue, ldl: !isNaN(ldl) ? ldl : 0 });
               }}
               keyboardType="numeric"
               style={styles.lipidInput}
@@ -246,10 +246,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             <TextInput
               mode="outlined"
               label="HDL (mg/dL)"
-              value={lipidValue.hdl?.toString() || ""}
+              value={lipidValue.hdl && lipidValue.hdl > 0 ? lipidValue.hdl.toString() : ""}
               onChangeText={(text) => {
-                const hdl = parseFloat(text) || 0;
-                onValueChange({ ...lipidValue, hdl });
+                const hdl = text === "" ? 0 : parseFloat(text);
+                onValueChange({ ...lipidValue, hdl: !isNaN(hdl) ? hdl : 0 });
               }}
               keyboardType="numeric"
               style={styles.lipidInput}
@@ -257,10 +257,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             <TextInput
               mode="outlined"
               label="Total Cholesterol (mg/dL)"
-              value={lipidValue.cholesterol?.toString() || ""}
+              value={lipidValue.cholesterol && lipidValue.cholesterol > 0 ? lipidValue.cholesterol.toString() : ""}
               onChangeText={(text) => {
-                const cholesterol = parseFloat(text) || 0;
-                onValueChange({ ...lipidValue, cholesterol });
+                const cholesterol = text === "" ? 0 : parseFloat(text);
+                onValueChange({ ...lipidValue, cholesterol: !isNaN(cholesterol) ? cholesterol : 0 });
               }}
               keyboardType="numeric"
               style={styles.lipidInput}
@@ -268,10 +268,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             <TextInput
               mode="outlined"
               label="Triglyceride (mg/dL)"
-              value={lipidValue.triglyceride?.toString() || ""}
+              value={lipidValue.triglyceride && lipidValue.triglyceride > 0 ? lipidValue.triglyceride.toString() : ""}
               onChangeText={(text) => {
-                const triglyceride = parseFloat(text) || 0;
-                onValueChange({ ...lipidValue, triglyceride });
+                const triglyceride = text === "" ? 0 : parseFloat(text);
+                onValueChange({ ...lipidValue, triglyceride: !isNaN(triglyceride) ? triglyceride : 0 });
               }}
               keyboardType="numeric"
               style={styles.lipidInput}
