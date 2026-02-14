@@ -1,7 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "../../src/store";
 import { useEligibleMethods } from "../../src/hooks/useEligibleMethods";
 import { usePersonalizationQuestions } from "../../src/hooks/usePersonalizationQuestions";
@@ -10,13 +9,11 @@ import { usePersonalizationNavigation } from "../../src/hooks/usePersonalization
 import { LoadingOverlay, LoadingSpinner } from "../../src/components/shared";
 import {
   PersonalizationHeader,
-  STIProtectionNotice,
   QuestionCard,
   NavigationButtons,
 } from "../../src/components/personalization";
 
 export default function PersonalizePage() {
-  const insets = useSafeAreaInsets();
   const { personalization } = useSelector((state: RootState) => state.questionnaire);
   
   // Check eligible methods and handle redirects
@@ -78,24 +75,27 @@ export default function PersonalizePage() {
         visible={isGeneratingResults}
         message="Generating your personalized recommendations..."
       />
-      <ScrollView 
-        style={styles.container} 
-        contentContainerStyle={[styles.scrollContent, { paddingBottom: Math.max(100, insets.bottom + 100) }]}
-      >
-        <PersonalizationHeader
-          currentQuestionIndex={currentQuestionIndex}
-          totalQuestions={visibleQuestions.length}
-          progress={progress}
-        />
+      <View style={styles.container}>
+        <ScrollView 
+          key={currentQuestionIndex}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled"
+        >
+          <PersonalizationHeader
+            currentQuestionIndex={currentQuestionIndex}
+            totalQuestions={visibleQuestions.length}
+            progress={progress}
+          />
 
-        <STIProtectionNotice />
-
-        <QuestionCard
-          question={currentQuestion}
-          value={personalization.answers[currentQuestion.id]}
-          onValueChange={handleAnswerChange}
-          error={errors[currentQuestion.id]}
-        />
+          <QuestionCard
+            question={currentQuestion}
+            value={personalization.answers[currentQuestion.id]}
+            onValueChange={handleAnswerChange}
+            error={errors[currentQuestion.id]}
+          />
+        </ScrollView>
 
         <NavigationButtons
           onPrevious={goToPrevious}
@@ -103,8 +103,11 @@ export default function PersonalizePage() {
           isFirstQuestion={currentQuestionIndex === 0}
           isLastQuestion={isLastQuestion}
           isGeneratingResults={isGeneratingResults}
+          currentQuestionIndex={currentQuestionIndex}
+          totalQuestions={visibleQuestions.length}
+          progress={progress}
         />
-      </ScrollView>
+      </View>
     </>
   );
 }
@@ -112,10 +115,13 @@ export default function PersonalizePage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#F3F4F6",
+  },
+  scrollView: {
+    flex: 1,
   },
   scrollContent: {
-    flexGrow: 1,
-    paddingBottom: 100,
+    padding: 16,
+    paddingBottom: 120,
   },
 });

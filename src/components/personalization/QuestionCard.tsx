@@ -1,6 +1,5 @@
 import React from "react";
-import { Card } from "react-native-paper";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { PersonalizationInput } from "../QuestionInput";
 import { PersonalizationQuestion } from "../../constants/questions";
 import { AnswerValue } from "../../types";
@@ -19,23 +18,20 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   error,
 }) => {
   return (
-    <Card style={styles.questionCard}>
-      <Card.Content>
-        <PersonalizationInput
-          question={question}
-          value={value}
-          onValueChange={onValueChange}
-          error={error}
-        />
-      </Card.Content>
-    </Card>
+    <View style={styles.container}>
+      <PersonalizationInput
+        question={question}
+        value={value}
+        onValueChange={onValueChange}
+        error={error}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  questionCard: {
-    margin: 16,
-    marginBottom: 8,
+  container: {
+    gap: 12,
   },
 });
 

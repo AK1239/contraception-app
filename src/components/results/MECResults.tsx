@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   personalizeSection: {
-    marginTop: 24,
+    marginTop: 8,
     paddingTop: 20,
     borderTopWidth: 1,
     borderTopColor: theme.colors.border,
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   startOverButton: {
-    marginTop: 12,
+    marginTop: 24,
     borderRadius: 10,
     borderColor: "#D1D5DB",
   },

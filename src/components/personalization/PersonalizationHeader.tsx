@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Text, ProgressBar } from "react-native-paper";
-import { StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Text } from "react-native-paper";
+import { theme } from "../../utils/theme";
 
 interface PersonalizationHeaderProps {
   currentQuestionIndex: number;
@@ -9,48 +10,47 @@ interface PersonalizationHeaderProps {
 }
 
 export const PersonalizationHeader: React.FC<PersonalizationHeaderProps> = ({
-  currentQuestionIndex,
   totalQuestions,
-  progress,
 }) => {
   return (
-    <Card style={styles.headerCard}>
-      <Card.Content>
-        <Text variant="headlineSmall" style={styles.title}>
-          Personalize Your Choice
+    <View style={styles.header}>
+      <Text variant="titleLarge" style={styles.title}>
+        Personalize Your Choice
+      </Text>
+      <View style={styles.questionCountBadge}>
+        <Text variant="labelSmall" style={styles.questionCountText}>
+          {totalQuestions} question{totalQuestions !== 1 ? "s" : ""}
         </Text>
-        <Text variant="bodyMedium" style={styles.subtitle}>
-          Answer a few questions about your lifestyle and preferences
-        </Text>
-        <ProgressBar progress={progress} style={styles.progressBar} />
-        <Text variant="bodySmall" style={styles.progressText}>
-          Question {currentQuestionIndex + 1} of {totalQuestions}
-        </Text>
-      </Card.Content>
-    </Card>
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  headerCard: {
-    margin: 16,
-    marginBottom: 8,
+  header: {
+    marginBottom: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 8,
   },
   title: {
-    textAlign: "center",
-    marginBottom: 8,
+    color: theme.colors.textPrimary,
+    fontWeight: theme.typography.fontWeight.bold,
+    fontSize: 18,
+    flex: 1,
   },
-  subtitle: {
-    textAlign: "center",
-    color: "#666",
-    marginBottom: 16,
+  questionCountBadge: {
+    backgroundColor: "#EDE9FE",
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
-  progressBar: {
-    marginBottom: 8,
-  },
-  progressText: {
-    textAlign: "center",
-    color: "#666",
+  questionCountText: {
+    color: "#6D28D9",
+    fontSize: 11,
+    fontWeight: "600",
   },
 });
 
