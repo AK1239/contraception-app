@@ -3,95 +3,46 @@ import { PersonalizationState } from "../types";
 
 /**
  * Get visible questions based on current personalization answers
- * This implements the conditional logic for showing/hiding questions
+ * Per ContraSafe algorithm:
+ * Q1: Future pregnancy → Q1b (surgery, only if Q1=No) → Q2 (irregular periods) → Q3 (frequency) → Q3b (height/weight if every-3-weeks)
  */
 export const getVisibleQuestions = (
   answers: PersonalizationState["answers"]
 ): PersonalizationQuestion[] => {
   const questions: PersonalizationQuestion[] = [];
 
-  // Question 1: Always show wantsFuturePregnancy
-  const wantsFuturePregnancyQuestion = PERSONALIZATION_QUESTIONS.find(
-    (q) => q.id === "wantsFuturePregnancy"
-  );
-  if (wantsFuturePregnancyQuestion) {
-    questions.push(wantsFuturePregnancyQuestion);
+  // Q1: Always show wantsFuturePregnancy
+  const q1 = PERSONALIZATION_QUESTIONS.find((q) => q.id === "wantsFuturePregnancy");
+  if (q1) questions.push(q1);
+
+  const wantsFuturePregnancy = answers.wantsFuturePregnancy as boolean | undefined;
+
+  // Q1b: Only if Q1 = No (doesn't want future pregnancy)
+  if (wantsFuturePregnancy === false) {
+    const q1b = PERSONALIZATION_QUESTIONS.find((q) => q.id === "wantsSurgicalMethod");
+    if (q1b) questions.push(q1b);
+
+    const wantsSurgicalMethod = answers.wantsSurgicalMethod as boolean | undefined;
+    // If wants surgery, we're done - no more questions (early exit to results)
+    if (wantsSurgicalMethod === true) {
+      return questions;
+    }
   }
 
-  const wantsFuturePregnancy = answers.wantsFuturePregnancy;
+  // Q2: Irregular periods (when: future pregnancy=Yes, OR future=No and surgery=No)
+  const q2 = PERSONALIZATION_QUESTIONS.find((q) => q.id === "okayWithIrregularPeriods");
+  if (q2) questions.push(q2);
 
-  if (wantsFuturePregnancy === false) {
-    // Show surgical method question
-    const wantsSurgicalMethodQuestion = PERSONALIZATION_QUESTIONS.find(
-      (q) => q.id === "wantsSurgicalMethod"
-    );
-    if (wantsSurgicalMethodQuestion) {
-      questions.push(wantsSurgicalMethodQuestion);
-    }
+  // Q3: Preferred frequency
+  const q3 = PERSONALIZATION_QUESTIONS.find((q) => q.id === "preferredFrequency");
+  if (q3) questions.push(q3);
 
-    // If user doesn't want surgery, show continue with long-term question
-    if (answers.wantsSurgicalMethod === false) {
-      const wantsToContinueQuestion = PERSONALIZATION_QUESTIONS.find(
-        (q) => q.id === "wantsToContinueWithLongTerm"
-      );
-      if (wantsToContinueQuestion) {
-        questions.push(wantsToContinueQuestion);
-      }
-
-      // Only continue with remaining questions if user wants to continue
-      if (answers.wantsToContinueWithLongTerm === true) {
-        const okayWithIrregularPeriodsQuestion = PERSONALIZATION_QUESTIONS.find(
-          (q) => q.id === "okayWithIrregularPeriods"
-        );
-        if (okayWithIrregularPeriodsQuestion) {
-          questions.push(okayWithIrregularPeriodsQuestion);
-        }
-
-        const preferredFrequencyQuestion = PERSONALIZATION_QUESTIONS.find(
-          (q) => q.id === "preferredFrequency"
-        );
-        if (preferredFrequencyQuestion) {
-          questions.push(preferredFrequencyQuestion);
-        }
-
-        // Add BMI question only if user selected "every 3 weeks"
-        if (answers.preferredFrequency === "every-3-weeks") {
-          const currentBMIQuestion = PERSONALIZATION_QUESTIONS.find(
-            (q) => q.id === "currentBMI"
-          );
-          if (currentBMIQuestion) {
-            questions.push(currentBMIQuestion);
-          }
-        }
-      }
-    }
-  } else if (wantsFuturePregnancy === true) {
-    // If wantsFuturePregnancy = true, skip surgical question and go to regular questions
-    const okayWithIrregularPeriodsQuestion = PERSONALIZATION_QUESTIONS.find(
-      (q) => q.id === "okayWithIrregularPeriods"
-    );
-    if (okayWithIrregularPeriodsQuestion) {
-      questions.push(okayWithIrregularPeriodsQuestion);
-    }
-
-    const preferredFrequencyQuestion = PERSONALIZATION_QUESTIONS.find(
-      (q) => q.id === "preferredFrequency"
-    );
-    if (preferredFrequencyQuestion) {
-      questions.push(preferredFrequencyQuestion);
-    }
-
-    // Add BMI question only if user selected "every 3 weeks"
-    if (answers.preferredFrequency === "every-3-weeks") {
-      const currentBMIQuestion = PERSONALIZATION_QUESTIONS.find(
-        (q) => q.id === "currentBMI"
-      );
-      if (currentBMIQuestion) {
-        questions.push(currentBMIQuestion);
-      }
-    }
+  // Q3b: Height/weight only if every-3-weeks selected (for BMI check)
+  const preferredFrequency = answers.preferredFrequency as string | undefined;
+  if (preferredFrequency === "every-3-weeks") {
+    const q3b = PERSONALIZATION_QUESTIONS.find((q) => q.id === "heightWeight");
+    if (q3b) questions.push(q3b);
   }
 
   return questions;
 };
-

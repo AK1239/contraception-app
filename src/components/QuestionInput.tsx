@@ -362,6 +362,42 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
           </View>
         );
 
+      case "height-weight": {
+        const hw = (value as { height?: number; weight?: number }) || {};
+        return (
+          <View style={styles.heightWeightContainer}>
+            <TextInput
+              mode="outlined"
+              label="Height (cm)"
+              value={hw.height ? String(hw.height) : ""}
+              onChangeText={(t) => {
+                const h = parseFloat(t);
+                onValueChange({
+                  height: !isNaN(h) ? h : undefined,
+                  weight: hw.weight,
+                });
+              }}
+              keyboardType="numeric"
+              style={styles.heightWeightInput}
+            />
+            <TextInput
+              mode="outlined"
+              label="Weight (kg)"
+              value={hw.weight ? String(hw.weight) : ""}
+              onChangeText={(t) => {
+                const w = parseFloat(t);
+                onValueChange({
+                  height: hw.height,
+                  weight: !isNaN(w) ? w : undefined,
+                });
+              }}
+              keyboardType="numeric"
+              style={styles.heightWeightInput}
+            />
+          </View>
+        );
+      }
+
       case "select-one":
         const displayValue = getDisplayValue(value);
 
@@ -373,6 +409,8 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
                   value={option}
                   status={displayValue === option ? "checked" : "unchecked"}
                   onPress={() => onValueChange(option)}
+                  color="#6D28D9"
+                  uncheckedColor="#6B7280"
                 />
                 <Text style={styles.radioLabel}>{option}</Text>
               </View>
@@ -499,6 +537,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 8,
+  },
+  heightWeightContainer: {
+    gap: 12,
+  },
+  heightWeightInput: {
+    marginBottom: 8,
   },
   textInput: {
     marginBottom: 16,

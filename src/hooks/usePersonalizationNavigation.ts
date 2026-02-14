@@ -28,16 +28,14 @@ export const usePersonalizationNavigation = (
   const [isGeneratingResults, setIsGeneratingResults] = useState(false);
 
   const getPersonalizationResults = () => {
-    const personalizedAnswers = {
+    const answers = {
       wantsFuturePregnancy: personalization.answers.wantsFuturePregnancy,
       okayWithIrregularPeriods: personalization.answers.okayWithIrregularPeriods,
       wantsSurgicalMethod: personalization.answers.wantsSurgicalMethod,
-      wantsToContinueWithLongTerm: personalization.answers.wantsToContinueWithLongTerm,
       preferredFrequency: personalization.answers.preferredFrequency,
-      currentBMI: personalization.answers.currentBMI,
+      heightWeight: personalization.answers.heightWeight,
     };
-
-    return generatePersonalizedRecommendations(eligibleMethods, personalizedAnswers);
+    return generatePersonalizedRecommendations(eligibleMethods, answers);
   };
 
   const navigateToResults = (showPermanentMethods = false) => {
@@ -85,28 +83,15 @@ export const usePersonalizationNavigation = (
 
     const wantsFuturePregnancy = personalization.answers.wantsFuturePregnancy;
     const wantsSurgicalMethod = personalization.answers.wantsSurgicalMethod;
-    const wantsToContinueWithLongTerm = personalization.answers.wantsToContinueWithLongTerm;
+    const currentQ = currentQuestionId;
 
-    // Check if user selected surgical method after saying no to future pregnancy
+    // Early exit: User wants permanent method (surgery)
     if (
       wantsFuturePregnancy === false &&
       wantsSurgicalMethod === true &&
-      currentQuestionId === "wantsSurgicalMethod"
+      currentQ === "wantsSurgicalMethod"
     ) {
-      // Early exit: User wants permanent method
       navigateToResults(true);
-      return;
-    }
-
-    // Check if user doesn't want to continue with long-term options
-    if (
-      wantsFuturePregnancy === false &&
-      wantsSurgicalMethod === false &&
-      wantsToContinueWithLongTerm === false &&
-      currentQuestionId === "wantsToContinueWithLongTerm"
-    ) {
-      // Early exit: User doesn't want to continue
-      navigateToResults(false);
       return;
     }
 

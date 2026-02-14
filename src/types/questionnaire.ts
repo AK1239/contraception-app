@@ -91,7 +91,8 @@ export type AnswerValue =
   | string[]
   | { systolic: number; diastolic: number }
   | { ldl: number; hdl: number; cholesterol: number; triglyceride: number }
-  | number[];
+  | number[]
+  | { height?: number; weight?: number };
 
 export interface UserAnswer {
   questionId: string;
@@ -135,7 +136,7 @@ export interface PersonalizationState {
   wantsFuturePregnancy?: boolean;
   okayWithIrregularPeriods?: boolean;
   wantsSurgicalMethod?: boolean;
-  preferredFrequency?: "daily" | "weekly" | "monthly" | "quarterly" | "yearly" | "long-term";
+  preferredFrequency?: "daily" | "every-3-weeks" | "every-3-months" | "every-3-years" | "every-8-years";
   currentBMI?: number;
   answers: Record<string, AnswerValue>;
 }

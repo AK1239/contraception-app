@@ -108,9 +108,8 @@ const questionnaireSlice = createSlice({
         state.personalization.okayWithIrregularPeriods = value as boolean;
       } else if (questionId === "wantsSurgicalMethod") {
         state.personalization.wantsSurgicalMethod = value as boolean;
-      } else if (questionId === "wantsToContinueWithLongTerm") {
-        // Store in answers only (not in top-level fields as it's not in the type)
-        // This is fine as it's accessed via answers record
+      } else if (questionId === "heightWeight") {
+        // Store height/weight object for BMI calculation
       } else if (questionId === "preferredFrequency") {
         state.personalization.preferredFrequency =
           value as PersonalizationState["preferredFrequency"];

@@ -1,14 +1,15 @@
-// Personalization questions for lifestyle and preference filtering
+/**
+ * Personalization questions - strictly per ContraSafe algorithm
+ * Flow: Q1 (future pregnancy) → Q1b (surgery, if Q1=No) → Q2 (irregular periods) → Q3 (frequency) → Q3b (height/weight if every-3-weeks)
+ */
+
 export interface PersonalizationQuestion {
   id: string;
   text: string;
-  type: "yes-no" | "select-one" | "numeric";
+  type: "yes-no" | "select-one" | "numeric" | "height-weight";
   options?: string[];
   required: boolean;
-  validation?: {
-    min?: number;
-    max?: number;
-  };
+  validation?: { min?: number; max?: number };
 }
 
 export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
@@ -19,20 +20,14 @@ export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
     required: true,
   },
   {
-    id: "okayWithIrregularPeriods",
-    text: "Are you okay with having irregular/no periods during the time of your contraceptive use?",
-    type: "yes-no",
-    required: true,
-  },
-  {
     id: "wantsSurgicalMethod",
     text: "Are you okay with having a surgery done that will give you permanent contraception? (Fertility is not reversible)",
     type: "yes-no",
     required: true,
   },
   {
-    id: "wantsToContinueWithLongTerm",
-    text: "If surgery isn't suitable for you, there are no other permanent methods but long-term options are available. Would you like to continue?",
+    id: "okayWithIrregularPeriods",
+    text: "Are you okay with having irregular/no periods during the time of your contraceptive use?",
     type: "yes-no",
     required: true,
   },
@@ -44,19 +39,15 @@ export const PERSONALIZATION_QUESTIONS: PersonalizationQuestion[] = [
     required: true,
   },
   {
-    id: "currentBMI",
-    text: "What is your current BMI? (Body Mass Index - kg/m²)",
-    type: "numeric",
-    required: false,
-    validation: {
-      min: 10,
-      max: 60,
-    },
+    id: "heightWeight",
+    text: "Enter your height (cm) and weight (kg) to check eligibility for 3-week methods",
+    type: "height-weight",
+    required: true,
+    validation: { min: 100, max: 250 },
   },
 ];
 
-// Helper to convert option text to value
-export const getFrequencyValue = (optionText: string): string => {
+export function getFrequencyValue(optionText: string): string {
   const mapping: Record<string, string> = {
     "Every day": "daily",
     "Every 3 weeks": "every-3-weeks",
@@ -65,4 +56,4 @@ export const getFrequencyValue = (optionText: string): string => {
     "Every 8 years": "every-8-years",
   };
   return mapping[optionText] || optionText;
-};
+}

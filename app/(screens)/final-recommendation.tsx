@@ -13,6 +13,7 @@ interface RecommendationData {
   notices: string[];
   eliminated: { method: ContraceptiveMethodKey; reason: string }[];
   shouldShowPermanentMethods?: boolean;
+  bmiTooHighFor3Weeks?: boolean;
 }
 
 /**
@@ -112,11 +113,19 @@ export default function FinalRecommendationPage() {
 
   // Memoize navigation handlers
   const handleStartOver = useCallback(() => {
-    router.push("/(drawer)/personalize");
+    router.push("/(drawer)/choose-contraceptive");
   }, [router]);
 
   const handleBack = useCallback(() => {
     router.back();
+  }, [router]);
+
+  const handleKnowContraceptive = useCallback(() => {
+    router.push("/(drawer)/know-contraceptive");
+  }, [router]);
+
+  const handleCompareMethods = useCallback(() => {
+    router.push("/(drawer)/compare-methods");
   }, [router]);
 
   if (!recommendationData) {
@@ -195,6 +204,14 @@ export default function FinalRecommendationPage() {
                 isRecommended={true} 
               />
             ))}
+            <View style={styles.actionLinks}>
+              <Button mode="outlined" onPress={handleKnowContraceptive} style={styles.linkButton}>
+                Know Your Contraceptive
+              </Button>
+              <Button mode="outlined" onPress={handleCompareMethods} style={styles.linkButton}>
+                Compare Contraceptive Methods
+              </Button>
+            </View>
           </Card.Content>
         </Card>
       )}
@@ -224,7 +241,7 @@ export default function FinalRecommendationPage() {
             🛡️ STI Protection
           </Text>
           <Text variant="bodySmall" style={styles.stiText}>
-          Most contraceptives do not protect against STIs. If you're at risk, use a condom or other barrier method for protection along with your chosen contraceptive.
+          None of the below methods provide protection against STIs, so if you think you're at an increased risk of STI, barrier methods should be used either alone acting both as a contraceptive and a protector for STI or you can use barrier methods along with your chosen contraceptive.
           </Text>
         </Card.Content>
       </Card>
@@ -465,5 +482,12 @@ const styles = StyleSheet.create({
   errorText: {
     color: "#c62828",
     marginBottom: 16,
+  },
+  actionLinks: {
+    marginTop: 16,
+    gap: 8,
+  },
+  linkButton: {
+    marginBottom: 8,
   },
 });

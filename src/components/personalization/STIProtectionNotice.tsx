@@ -10,7 +10,7 @@ export const STIProtectionNotice: React.FC = () => {
           ⚠️ STI Protection Notice
         </Text>
         <Text variant="bodySmall" style={styles.stiNoticeText}>
-          None of the listed contraceptives protect against STIs. If you may be at risk, use barrier methods (like condoms) alone or together with your contraceptive for protection.
+          None of the below methods provide protection against STIs, so if you think you're at an increased risk of STI, barrier methods should be used either alone acting both as a contraceptive and a protector for STI or you can use barrier methods along with your chosen contraceptive.
         </Text>
       </Card.Content>
     </Card>

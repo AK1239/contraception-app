@@ -60,6 +60,27 @@ export const usePersonalizationValidation = (
       }
     }
 
+    // height-weight: require both, and BMI must be <= 30 for every-3-weeks
+    if (currentQuestion.type === "height-weight" && currentQuestion.id === "heightWeight") {
+      const hw = value as { height?: number; weight?: number } | undefined;
+      if (!hw || hw.height === undefined || hw.weight === undefined || hw.height <= 0 || hw.weight <= 0) {
+        setErrors((prev) => ({
+          ...prev,
+          [currentQuestion.id]: "Please enter both height and weight",
+        }));
+        return false;
+      }
+      const bmi = hw.weight / Math.pow(hw.height / 100, 2);
+      if (bmi > 30) {
+        setErrors((prev) => ({
+          ...prev,
+          [currentQuestion.id]:
+            "Unfortunately, there's no safe method that can be used every 3 weeks for BMI >30. Please go back and select a different frequency.",
+        }));
+        return false;
+      }
+    }
+
     return true;
   };
 

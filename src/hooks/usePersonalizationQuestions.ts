@@ -28,7 +28,6 @@ export const usePersonalizationQuestions = () => {
   }, [
     personalization.answers.wantsFuturePregnancy,
     personalization.answers.wantsSurgicalMethod,
-    personalization.answers.wantsToContinueWithLongTerm,
     personalization.answers.preferredFrequency,
     currentQuestionIndex,
   ]);
