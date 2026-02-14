@@ -91,6 +91,18 @@ export default function DrawerLayout() {
           headerRight: () => <StartOverHeaderButton fabMode />,
         }}
       />
+
+      {/* Female Sterilization Eligibility */}
+      <Drawer.Screen
+        name="female-sterilization-eligibility"
+        options={{
+          drawerItemStyle: { display: "none" },
+          drawerLabel: "Female Sterilization Eligibility",
+          title: "Female Sterilization Eligibility",
+          headerRight: () => <StartOverHeaderButton sterilizationMode />,
+        }}
+      />
+      
       {/* Choose Your Contraceptive Screens */}
       <Drawer.Screen
         name="personalize"

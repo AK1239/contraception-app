@@ -9,7 +9,7 @@ export default function SterilizationEligibilityIndexScreen() {
   const insets = useSafeAreaInsets();
 
   const handleFemaleSterilization = () => {
-    router.push('/(drawer)/sterilization-eligibility/female-sterilization-eligibility');
+    router.push('/(drawer)/female-sterilization-eligibility');
   };
 
   const handleMaleSterilization = () => {

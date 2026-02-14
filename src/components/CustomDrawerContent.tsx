@@ -65,7 +65,7 @@ const drawerSections: DrawerSection[] = [
       {
         id: 'female-sterilization',
         title: 'Female Sterilization Eligibility',
-        route: '/(drawer)/sterilization-eligibility/female-sterilization-eligibility',
+        route: '/(drawer)/female-sterilization-eligibility',
       },
       {
         id: 'male-sterilization',
