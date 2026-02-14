@@ -52,13 +52,13 @@ export const CONTRACEPTIVE_METHODS: ContraceptiveMethod[] = [
     category: "hormonal",
     description: "Intrauterine device that releases progestin hormone",
   },
-  // Additional methods (h-k) added for personalization
+  // h = Female sterilization, o = Male sterilization
   {
     key: "h",
-    name: "Sterilization",
-    shortName: "Sterilization",
+    name: "Female sterilization",
+    shortName: "Female Sterilization",
     category: "permanent",
-    description: "Permanent surgical contraception method",
+    description: "Permanent surgical contraception (tubal ligation)",
   },
   {
     key: "i",
@@ -80,6 +80,34 @@ export const CONTRACEPTIVE_METHODS: ContraceptiveMethod[] = [
     shortName: "Vaginal Ring",
     category: "hormonal",
     description: "Monthly vaginal ring containing both estrogen and progestin hormones",
+  },
+  {
+    key: "l",
+    name: "Male condom",
+    shortName: "Male Condom",
+    category: "barrier",
+    description: "Barrier method worn by the male during each act",
+  },
+  {
+    key: "m",
+    name: "Female condom",
+    shortName: "Female Condom",
+    category: "barrier",
+    description: "Barrier method worn by the female during each act",
+  },
+  {
+    key: "n",
+    name: "Diaphragm",
+    shortName: "Diaphragm",
+    category: "barrier",
+    description: "Barrier method placed in the vagina before intercourse",
+  },
+  {
+    key: "o",
+    name: "Male sterilization",
+    shortName: "Male Sterilization",
+    category: "permanent",
+    description: "Permanent surgical contraception (vasectomy)",
   },
 ];
 
@@ -296,21 +324,25 @@ export const INITIAL_MEC_SCORES: Record<ContraceptiveMethodKey, 1> = {
 // Methods that require medical evaluation before use
 export const MEDICAL_EVALUATION_REQUIRED: ContraceptiveMethodKey[] = ["f", "g", "e", "h"];
 
-// Methods that provide STI protection
-export const STI_PROTECTION_METHODS: ContraceptiveMethodKey[] = ["j"];
+// Methods that provide STI protection (j=barrier general, l=male condom, m=female condom)
+export const STI_PROTECTION_METHODS: ContraceptiveMethodKey[] = ["j", "l", "m"];
 
 // Hormonal vs non-hormonal method classification
 export const HORMONAL_METHODS: ContraceptiveMethodKey[] = ["a", "b", "c", "d", "e", "g", "i", "k"];
 export const NON_HORMONAL_METHODS: ContraceptiveMethodKey[] = ["f", "j"];
-export const PERMANENT_METHODS: ContraceptiveMethodKey[] = ["h"];
+export const PERMANENT_METHODS: ContraceptiveMethodKey[] = ["h", "o"];
 
 // Method frequency classifications for personalization
 export const METHOD_FREQUENCY: Record<string, ContraceptiveMethodKey[]> = {
   daily: ["a", "c"],
+  "every-3-weeks": ["i", "k"],
   weekly: ["i"],
   monthly: ["k"],
   quarterly: ["d"],
+  "every-3-months": ["d"],
+  "every-3-years": ["e"],
+  "every-8-years": ["f", "g"],
   "long-term": ["e", "f", "g"],
-  permanent: ["h"],
-  "as-needed": ["j"],
+  permanent: ["h", "o"],
+  "as-needed": ["j", "l", "m", "n"],
 };

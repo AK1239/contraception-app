@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../src/store";
@@ -20,11 +20,14 @@ import {
   getFirstSection,
   hasCompletedAllSections,
 } from "../../src/utils/sectionNavigation";
+import { useSectionValidation } from "../../src/hooks/useSectionValidation";
 import type { AnswerValue } from "../../src/types/questionnaire";
 import type { AnswerState } from "../../src/types/rules";
 
 export default function ChooseContraceptiveScreen() {
   const dispatch = useDispatch();
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const { validateSection } = useSectionValidation();
   const { answers, mecCurrentSection, mecEvaluationResult } = useSelector(
     (state: RootState) => state.questionnaire
   );
@@ -48,7 +51,14 @@ export default function ChooseContraceptiveScreen() {
   );
 
   const handleNext = useCallback(() => {
-    if (!mecCurrentSection) return;
+    if (!mecCurrentSection || !currentSection) return;
+
+    const errors = validateSection(currentSection, answers as AnswerState);
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+    setValidationErrors({});
 
     dispatch(setMECSectionComplete(mecCurrentSection));
 
@@ -63,7 +73,7 @@ export default function ChooseContraceptiveScreen() {
       dispatch(setMECEvaluationResult(result));
       dispatch(setMECCurrentSection(null));
     }
-  }, [mecCurrentSection, answers, dispatch]);
+  }, [mecCurrentSection, currentSection, answers, dispatch, validateSection]);
 
   const handlePrevious = useCallback(() => {
     const prevSection = getPreviousSection(mecCurrentSection);
@@ -73,14 +83,22 @@ export default function ChooseContraceptiveScreen() {
   }, [mecCurrentSection, dispatch]);
 
   const handleComplete = useCallback(() => {
-    if (!mecCurrentSection) return;
+    if (!mecCurrentSection || !currentSection) return;
+
+    const errors = validateSection(currentSection, answers as AnswerState);
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+    setValidationErrors({});
+
     dispatch(setMECSectionComplete(mecCurrentSection));
     const engine = createRulesEngine(ALL_RULES);
     const answerState: AnswerState = { ...answers };
     const result = engine.evaluate(answerState);
     dispatch(setMECEvaluationResult(result));
     dispatch(setMECCurrentSection(null));
-  }, [mecCurrentSection, answers, dispatch]);
+  }, [mecCurrentSection, currentSection, answers, dispatch, validateSection]);
 
   // Show results if evaluation is complete
   if (mecEvaluationResult) {
@@ -110,6 +128,7 @@ export default function ChooseContraceptiveScreen() {
         section={currentSection}
         answers={answers as AnswerState}
         onAnswerChange={handleAnswerChange}
+        errors={validationErrors}
       />
       <SectionNavigator
         currentSection={mecCurrentSection}

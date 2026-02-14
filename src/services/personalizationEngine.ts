@@ -90,32 +90,32 @@ export const personalizeRecommendations = (
     const notices: string[] = [];
     let shouldShowPermanentMethods = false;
 
-    // Add additional methods for personalization (h, i, j, k)
-    const additionalMethods: ContraceptiveMethodKey[] = ["h", "i", "j", "k"];
-    additionalMethods.forEach((method) => {
-      if (!filteredMethods.includes(method)) {
-        filteredMethods.push(method);
-      }
-    });
-
     // Filter 1: Future pregnancy plans (Question 1)
+    // Eliminate h (female) and o (male sterilization) when user wants future pregnancy
     if (filters.wantsFuturePregnancy === true) {
-      // Yes - eliminate h and proceed to question 2
       if (filteredMethods.includes("h")) {
         eliminated.push({
           method: "h",
-          reason: "Wants future pregnancy - sterilization is permanent",
+          reason: "Wants future pregnancy - female sterilization is permanent",
         });
         filteredMethods = filteredMethods.filter((m) => m !== "h");
       }
+      if (filteredMethods.includes("o")) {
+        eliminated.push({
+          method: "o",
+          reason: "Wants future pregnancy - male sterilization is permanent",
+        });
+        filteredMethods = filteredMethods.filter((m) => m !== "o");
+      }
     } else if (filters.wantsFuturePregnancy === false) {
-      // No - ask about surgery
+      // No - ask about surgery (h = female, o = male sterilization)
       if (filters.wantsSurgicalMethod === true) {
-        // User wants surgical method - suggest only h
-        if (filteredMethods.includes("h")) {
+        // User wants surgical method - suggest h and/or o if eligible
+        const surgicalMethods = filteredMethods.filter((m) => m === "h" || m === "o");
+        if (surgicalMethods.length > 0) {
           shouldShowPermanentMethods = true;
           return {
-            recommended: ["h"],
+            recommended: surgicalMethods,
             notices: ["Sterilization is permanent and fertility is not reversible"],
             eliminated,
             shouldShowPermanentMethods: true,
@@ -131,10 +131,14 @@ export const personalizeRecommendations = (
           };
         }
       } else if (filters.wantsSurgicalMethod === false) {
-        // User doesn't want surgical method - remove h and continue
+        // User doesn't want surgical method - remove h and o
         if (filteredMethods.includes("h")) {
           eliminated.push({ method: "h", reason: "Does not want surgical method" });
           filteredMethods = filteredMethods.filter((m) => m !== "h");
+        }
+        if (filteredMethods.includes("o")) {
+          eliminated.push({ method: "o", reason: "Does not want surgical method" });
+          filteredMethods = filteredMethods.filter((m) => m !== "o");
         }
         
         // Check if user wants to continue with long-term options
@@ -158,8 +162,8 @@ export const personalizeRecommendations = (
     }
 
     // Filter 2: Regular periods preference (Question 2)
+    // Spec: eliminate ALL except a, i, j, k when user wants regular periods
     if (filters.okayWithIrregularPeriods === false) {
-      // Only keep methods that maintain regular periods: a, i, j, k
       const regularPeriodMethods: ContraceptiveMethodKey[] = ["a", "i", "j", "k"];
       const methodsToEliminate = filteredMethods.filter(
         (m) => !regularPeriodMethods.includes(m)
@@ -184,14 +188,14 @@ export const personalizeRecommendations = (
           frequencyMethods = ["a", "c", "k"];
           break;
         case "every-3-weeks":
-          // Check BMI for patch (method 'i') first
+          // Patch (i) and ring (k) - check BMI for patch
           if (filters.currentBMI && filters.currentBMI > 30) {
             notices.push(
               "Unfortunately, there's no safe method that can be used every 3 weeks for BMI >30"
             );
             shouldExcludeAllMethods = true;
           } else {
-            frequencyMethods = ["i"]; // patch
+            frequencyMethods = ["i", "k"]; // patch and vaginal ring
           }
           break;
         case "every-3-months":
