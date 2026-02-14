@@ -36,7 +36,7 @@ const RecommendationMethodCard = memo(({
 
   return (
     <Card style={styles.methodCard}>
-      <Card.Content>
+      <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
         <View style={styles.methodHeader}>
           <View style={styles.methodNameContainer}>
             <Text variant="titleMedium" style={styles.methodName}>
@@ -81,7 +81,7 @@ const EliminatedMethodItem = memo(({
 
   return (
     <View style={styles.eliminatedItem}>
-      <Text variant="bodyMedium" style={styles.eliminatedMethodName}>
+      <Text variant="bodySmall" style={styles.eliminatedMethodName}>
         {methodInfo.name}
       </Text>
       <Text variant="bodySmall" style={styles.eliminatedReason}>
@@ -137,12 +137,12 @@ export default function FinalRecommendationPage() {
     return (
       <View style={styles.container}>
         <Card style={styles.errorCard}>
-          <Card.Content>
-            <Text variant="titleMedium">No recommendations available</Text>
-            <Text variant="bodyMedium" style={styles.errorText}>
+          <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
+            <Text variant="titleMedium" style={{ fontSize: 16, fontWeight: "700", marginBottom: 8 }}>No recommendations available</Text>
+            <Text variant="bodySmall" style={styles.errorText}>
               Please complete the personalization questionnaire first.
             </Text>
-            <Button mode="contained" onPress={handleStartOver}>
+            <Button mode="contained" onPress={handleStartOver} labelStyle={{ fontSize: 13, fontWeight: "600" }}>
               Start Over
             </Button>
           </Card.Content>
@@ -153,85 +153,69 @@ export default function FinalRecommendationPage() {
 
   const { recommended, notices, eliminated } = recommendationData;
 
-  // Memoize recommendation summary
-  const recommendationSummary = useMemo(() => {
-    if (recommended.length === 0) {
-      return "Based on your preferences, we couldn't find a perfect match. Please consider the alternative options below or adjust your preferences.";
-    } else if (recommended.length === 1) {
-      const method = getMethodByKey(recommended[0]);
-      return `Based on your health profile and preferences, we recommend ${method?.name}. This method best matches your needs and lifestyle.`;
-    } else {
-      return `Based on your health profile and preferences, we've identified ${recommended.length} suitable contraceptive options for you.`;
-    }
-  }, [recommended]);
+  
 
   return (
     <ScrollView 
       style={styles.container} 
       contentContainerStyle={[styles.scrollContent, { paddingBottom: Math.max(100, insets.bottom + 100) }]}
     >
-      {/* Header with back button and start over */}
-      <View style={styles.headerContainer}>
-        <View style={styles.backButtonRow}>
-          <IconButton
-            icon="arrow-left"
-            mode="contained-tonal"
-            onPress={handleBack}
-            style={styles.backButton}
-          />
-          <IconButton
-            icon="refresh"
-            mode="contained-tonal"
-            onPress={handleStartOver}
-            style={styles.backButton}
-            accessibilityLabel="Start over"
-          />
-        </View>
-        <View style={styles.titleContainer}>
-          <Text variant="headlineSmall" style={styles.title}>
-            Your Personalized Recommendation
-          </Text>
-          <Text variant="bodyMedium" style={styles.subtitle}>
-            {recommendationSummary}
-          </Text>
-        </View>
+      {/* App Bar Header */}
+      <View style={styles.appBar}>
+        <IconButton
+          icon="arrow-left"
+          size={20}
+          iconColor="#FFFFFF"
+          onPress={handleBack}
+          style={styles.appBarButton}
+        />
+        <Text variant="titleMedium" style={styles.appBarTitle}>
+          Your Personalized Recommendation
+        </Text>
+        <IconButton
+          icon="refresh"
+          size={20}
+          iconColor="#FFFFFF"
+          onPress={handleStartOver}
+          style={styles.appBarButton}
+        />
       </View>
+
+    
 
       {/* Primary Recommendations */}
       {recommended.length > 0 && (
-        <Card style={styles.categoryCard}>
-          <Card.Content>
-            <Text variant="titleMedium" style={[styles.categoryTitle, { color: "#4CAF50" }]}>
-              ✅ Your Best Match{recommended.length > 1 ? "es" : ""}
-            </Text>
-            <Text variant="bodySmall" style={styles.categoryDescription}>
-              {recommended.length === 1
-                ? "This method perfectly aligns with your health profile and lifestyle preferences."
-                : "These methods align well with your health profile and lifestyle preferences."}
-            </Text>
-            {recommended.map((methodKey) => (
-              <RecommendationMethodCard 
-                key={methodKey} 
-                methodKey={methodKey} 
-                isRecommended={true} 
-              />
-            ))}
-            <View style={styles.actionLinks}>
-              <Button mode="outlined" onPress={handleKnowContraceptive} style={styles.linkButton}>
-                Know Your Contraceptive
-              </Button>
-              <Button mode="outlined" onPress={handleCompareMethods} style={styles.linkButton}>
-                Compare Contraceptive Methods
-              </Button>
-            </View>
-          </Card.Content>
-        </Card>
+        <View style={styles.categoryCard}>
+          <Text variant="titleMedium" style={[styles.categoryTitle, { color: "#4CAF50" }]}>
+            ✅ Your Best Match{recommended.length > 1 ? "es" : ""}
+          </Text>
+          <Text variant="bodySmall" style={styles.categoryDescription}>
+            {recommended.length === 1
+              ? "This method perfectly aligns with your health profile and lifestyle preferences."
+              : "These methods align well with your health profile and lifestyle preferences."}
+          </Text>
+          {recommended.map((methodKey) => (
+            <RecommendationMethodCard 
+              key={methodKey} 
+              methodKey={methodKey} 
+              isRecommended={true} 
+            />
+          ))}
+          <View style={styles.actionLinks}>
+            <Button mode="outlined" onPress={handleKnowContraceptive} style={styles.linkButton} labelStyle={{ fontSize: 13, fontWeight: "600" }}>
+              Know Your Contraceptive
+            </Button>
+            <Button mode="outlined" onPress={handleCompareMethods} style={styles.linkButton} labelStyle={{ fontSize: 13, fontWeight: "600" }}>
+              Compare Contraceptive Methods
+            </Button>
+          </View>
+        </View>
       )}
 
       {/* Important Notices */}
       {notices.length > 0 && (
         <Card style={styles.noticeCard}>
-          <Card.Content>
+          <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
             <Text variant="titleMedium" style={styles.noticeTitle}>
               ⚠️ Important Information
             </Text>
@@ -248,7 +232,7 @@ export default function FinalRecommendationPage() {
 
       {/* STI Protection Notice */}
       <Card style={styles.stiCard}>
-        <Card.Content>
+        <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
           <Text variant="titleMedium" style={styles.stiTitle}>
             🛡️ STI Protection
           </Text>
@@ -261,7 +245,7 @@ export default function FinalRecommendationPage() {
       {/* Methods Not Recommended */}
       {eliminated.length > 0 && (
         <Card style={styles.eliminatedCard}>
-          <Card.Content>
+          <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
             <Text variant="titleMedium" style={styles.eliminatedTitle}>
               ❌ Methods Not Recommended for You
             </Text>
@@ -284,9 +268,9 @@ export default function FinalRecommendationPage() {
 
       {/* Professional Disclaimer */}
       <Card style={styles.disclaimerCard}>
-        <Card.Content>
+        <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
           <Text variant="bodySmall" style={styles.disclaimerText}>
-            <Text style={{ fontWeight: "bold" }}>Medical Disclaimer: </Text>
+            <Text style={{ fontWeight: "700" }}>Medical Disclaimer: </Text>
             Recommendations are based on WHO guidelines and the details you shared. Please consult a healthcare provider before starting any contraceptive. 
           </Text>
         </Card.Content>
@@ -299,6 +283,7 @@ export default function FinalRecommendationPage() {
           onPress={handleStartOver}
           icon="refresh"
           style={styles.startOverButton}
+          labelStyle={{ fontSize: 14, fontWeight: "600" }}
         >
           Start Over
         </Button>
@@ -310,71 +295,85 @@ export default function FinalRecommendationPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#F3F4F6",
   },
   scrollContent: {
-    paddingBottom: 100,
+    paddingBottom: 80,
   },
-  headerContainer: {
-    backgroundColor: "#fff",
-    paddingTop: 50,
-    paddingBottom: 24,
-    paddingHorizontal: 16,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
-  },
-  backButtonRow: {
+  appBar: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 16,
+    backgroundColor: "#43099f",
+    paddingTop: 50,
+    paddingHorizontal: 8,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#5B21B6",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
   },
-  backButton: {
+  appBarButton: {
     margin: 0,
   },
-  titleContainer: {
-    alignItems: "center",
+  appBarTitle: {
+    flex: 1,
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "700",
+    color: "#FFFFFF",
+    paddingHorizontal: 8,
+  },
+  summarySection: {
+    backgroundColor: "#FFFFFF",
     paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: "#E5E7EB",
   },
-  title: {
+  summaryText: {
     textAlign: "center",
-    marginBottom: 8,
-    color: "#1a1a1a",
-    fontWeight: "600",
-  },
-  subtitle: {
-    textAlign: "center",
-    color: "#666",
-    fontSize: 14,
-    lineHeight: 20,
+    color: "#6B7280",
+    fontSize: 12,
+    lineHeight: 18,
   },
   categoryCard: {
     margin: 16,
-    marginBottom: 8,
+    marginTop: 16,
+    marginBottom: 20,
   },
   categoryTitle: {
-    fontWeight: "bold",
-    marginBottom: 8,
+    fontWeight: "700",
+    marginBottom: 4,
+    fontSize: 16,
+    marginTop: 20
   },
   categoryDescription: {
-    marginBottom: 16,
-    color: "#666",
-    lineHeight: 20,
+    marginBottom: 12,
+    color: "#6B7280",
+    lineHeight: 18,
+    fontSize: 12,
   },
   methodCard: {
-    marginBottom: 12,
-    backgroundColor: "#fafafa",
-    elevation: 2,
+    marginBottom: 8,
+    backgroundColor: "#FFFFFF",
+    elevation: 0,
+    shadowOpacity: 0,
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: "#4CAF50",
   },
   methodHeader: {
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     marginBottom: 8,
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    gap: 8,
   },
   methodNameContainer: {
     flex: 1,
@@ -382,102 +381,132 @@ const styles = StyleSheet.create({
   },
   methodName: {
     flexWrap: "wrap",
+    fontSize: 14,
+    fontWeight: "600",
   },
   methodDescription: {
-    marginBottom: 8,
-    color: "#333",
-    lineHeight: 20,
+    marginBottom: 6,
+    color: "#6B7280",
+    lineHeight: 18,
+    fontSize: 12,
   },
   methodCategory: {
-    color: "#666",
+    color: "#6B7280",
     fontStyle: "italic",
+    fontSize: 11,
   },
   statusChip: {
     alignSelf: "flex-start",
-    minWidth: 80,
-    maxWidth: 120,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
   chipText: {
     color: "white",
-    fontSize: 12,
-    fontWeight: "bold",
+    fontSize: 10,
+    fontWeight: "700",
   },
   noticeCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#fff3e0",
+    backgroundColor: "#FFFBEB",
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: "#F59E0B",
+    elevation: 0,
   },
   noticeTitle: {
-    marginBottom: 12,
-    fontWeight: "bold",
-    color: "#e65100",
+    marginBottom: 8,
+    fontWeight: "700",
+    color: "#F59E0B",
+    fontSize: 14,
   },
   noticeItem: {
-    marginBottom: 8,
+    marginBottom: 6,
   },
   noticeText: {
-    color: "#e65100",
-    lineHeight: 20,
+    color: "#92400E",
+    lineHeight: 16,
+    fontSize: 11,
   },
   stiCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#e8f5e8",
+    backgroundColor: "#EFF6FF",
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: "#3B82F6",
+    elevation: 0,
   },
   stiTitle: {
     marginBottom: 8,
-    fontWeight: "bold",
-    color: "#2e7d32",
+    fontWeight: "700",
+    color: "#1E40AF",
+    fontSize: 14,
   },
   stiText: {
-    color: "#2e7d32",
-    lineHeight: 22,
+    color: "#1E40AF",
+    lineHeight: 18,
+    fontSize: 11,
   },
   eliminatedCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#fce4ec",
+    backgroundColor: "#FEF2F2",
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: "#EF4444",
+    elevation: 0,
   },
   eliminatedTitle: {
-    marginBottom: 8,
-    fontWeight: "bold",
-    color: "#c2185b",
+    marginBottom: 4,
+    fontWeight: "700",
+    color: "#DC2626",
+    fontSize: 16,
   },
   eliminatedDescription: {
     marginBottom: 12,
-    color: "#ad1457",
+    color: "#6B7280",
+    fontSize: 12,
   },
   divider: {
     marginBottom: 12,
+    backgroundColor: "#FEE2E2",
   },
   eliminatedItem: {
-    marginBottom: 12,
-    paddingBottom: 8,
+    marginBottom: 10,
+    paddingBottom: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#f8bbd9",
+    borderBottomColor: "#FEE2E2",
   },
   eliminatedMethodName: {
-    fontWeight: "500",
-    color: "#880e4f",
+    fontWeight: "600",
+    color: "#991B1B",
     marginBottom: 4,
+    fontSize: 13,
   },
   eliminatedReason: {
-    color: "#ad1457",
+    color: "#6B7280",
     fontStyle: "italic",
+    fontSize: 11,
   },
   actionCard: {
     margin: 16,
     marginBottom: 8,
-    backgroundColor: "#e3f2fd",
+    backgroundColor: "#EFF6FF",
+    borderRadius: 12,
+    elevation: 0,
   },
   actionTitle: {
     marginBottom: 8,
-    fontWeight: "bold",
+    fontWeight: "700",
+    fontSize: 14,
   },
   actionDescription: {
     marginBottom: 16,
-    color: "#666",
-    lineHeight: 20,
+    color: "#6B7280",
+    lineHeight: 18,
+    fontSize: 12,
   },
   buttonContainer: {
     gap: 12,
@@ -485,42 +514,59 @@ const styles = StyleSheet.create({
   primaryButton: {
     paddingVertical: 4,
     marginBottom: 4,
+    borderRadius: 10,
   },
   secondaryButton: {
     paddingVertical: 4,
+    borderRadius: 10,
   },
   tertiaryButton: {
     paddingVertical: 4,
+    borderRadius: 10,
   },
   disclaimerCard: {
     margin: 16,
-    backgroundColor: "#fff3e0",
+    backgroundColor: "#FFFBEB",
+    borderRadius: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: "#F59E0B",
+    elevation: 0,
   },
   disclaimerText: {
-    lineHeight: 18,
-    color: "#e65100",
+    lineHeight: 16,
+    color: "#92400E",
+    fontSize: 11,
   },
   errorCard: {
     margin: 16,
-    backgroundColor: "#ffebee",
+    backgroundColor: "#FEF2F2",
+    borderRadius: 12,
+    elevation: 0,
   },
   errorText: {
-    color: "#c62828",
+    color: "#DC2626",
     marginBottom: 16,
+    fontSize: 12,
   },
   actionLinks: {
-    marginTop: 16,
+    marginTop: 12,
     gap: 8,
   },
   linkButton: {
-    marginBottom: 8,
+    marginBottom: 6,
+    borderRadius: 10,
+    borderColor: "#D1D5DB",
   },
   startOverSection: {
     margin: 16,
-    marginTop: 24,
-    marginBottom: 32,
+    marginTop: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#E5E7EB",
   },
   startOverButton: {
-    paddingVertical: 8,
+    paddingVertical: 6,
+    borderRadius: 10,
+    borderColor: "#D1D5DB",
   },
 });
