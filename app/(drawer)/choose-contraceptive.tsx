@@ -8,6 +8,8 @@ import {
   setMECCurrentSection,
   setMECSectionComplete,
   setMECEvaluationResult,
+  resetQuestionnaire,
+  resetPersonalization,
 } from "../../src/store/slices/questionnaire";
 import { SECTIONS, MEDICAL_SECTIONS } from "../../src/config/sections";
 import { SectionPage } from "../../src/components/questionnaire";
@@ -84,6 +86,11 @@ export default function ChooseContraceptiveScreen() {
     }
   }, [mecCurrentSection, dispatch]);
 
+  const handleStartOver = useCallback(() => {
+    dispatch(resetQuestionnaire());
+    dispatch(resetPersonalization());
+  }, [dispatch]);
+
   const handleComplete = useCallback(() => {
     if (!mecCurrentSection || !currentSection) return;
 
@@ -109,6 +116,7 @@ export default function ChooseContraceptiveScreen() {
         <MECResults
           result={mecEvaluationResult}
           onPersonalize={() => router.push("/(drawer)/personalize")}
+          onStartOver={handleStartOver}
         />
       </View>
     );

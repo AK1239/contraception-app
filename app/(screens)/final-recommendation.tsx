@@ -3,8 +3,10 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Button, Chip, Divider, IconButton } from "react-native-paper";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 import { getMethodByKey } from "../../src/constants";
 import { ContraceptiveMethodKey } from "../../src/types";
+import { resetQuestionnaire, resetPersonalization } from "../../src/store/slices/questionnaire";
 import { logger } from "../../src/services/logger";
 import { handleError, ErrorCode } from "../../src/services/errorHandler";
 
@@ -93,6 +95,7 @@ EliminatedMethodItem.displayName = 'EliminatedMethodItem';
 
 export default function FinalRecommendationPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
 
@@ -113,8 +116,10 @@ export default function FinalRecommendationPage() {
 
   // Memoize navigation handlers
   const handleStartOver = useCallback(() => {
+    dispatch(resetQuestionnaire());
+    dispatch(resetPersonalization());
     router.push("/(drawer)/choose-contraceptive");
-  }, [router]);
+  }, [router, dispatch]);
 
   const handleBack = useCallback(() => {
     router.back();
@@ -279,6 +284,18 @@ export default function FinalRecommendationPage() {
           </Text>
         </Card.Content>
       </Card>
+
+      {/* Start Over Button */}
+      <View style={styles.startOverSection}>
+        <Button
+          mode="outlined"
+          onPress={handleStartOver}
+          icon="refresh"
+          style={styles.startOverButton}
+        >
+          Start Over
+        </Button>
+      </View>
     </ScrollView>
   );
 }
@@ -489,5 +506,13 @@ const styles = StyleSheet.create({
   },
   linkButton: {
     marginBottom: 8,
+  },
+  startOverSection: {
+    margin: 16,
+    marginTop: 24,
+    marginBottom: 32,
+  },
+  startOverButton: {
+    paddingVertical: 8,
   },
 });

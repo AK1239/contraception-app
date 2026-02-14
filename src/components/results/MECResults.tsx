@@ -9,6 +9,7 @@ import { theme } from "../../utils/theme";
 interface MECResultsProps {
   result: EvaluationResult;
   onPersonalize?: () => void;
+  onStartOver?: () => void;
 }
 
 function MethodCard({
@@ -61,7 +62,7 @@ function MethodCard({
   );
 }
 
-export function MECResults({ result, onPersonalize }: MECResultsProps) {
+export function MECResults({ result, onPersonalize, onStartOver }: MECResultsProps) {
   const getMecResult = (key: ContraceptiveMethodKey) => {
     return result.mecResults.find((r) => r.methodKey === key);
   };
@@ -165,21 +166,33 @@ export function MECResults({ result, onPersonalize }: MECResultsProps) {
         )}
       </View>
 
-      {onPersonalize && (
-        <View style={styles.personalizeSection}>
+      <View style={styles.personalizeSection}>
+        {onPersonalize && (
+          <>
+            <Button
+              mode="contained"
+              onPress={onPersonalize}
+              style={styles.personalizeButton}
+              contentStyle={styles.personalizeButtonContent}
+            >
+              Personalize your choice
+            </Button>
+            <Text variant="bodySmall" style={styles.personalizeHint}>
+              Refine your options based on preferences (frequency, future pregnancy, etc.)
+            </Text>
+          </>
+        )}
+        {onStartOver && (
           <Button
-            mode="contained"
-            onPress={onPersonalize}
-            style={styles.personalizeButton}
-            contentStyle={styles.personalizeButtonContent}
+            mode="outlined"
+            onPress={onStartOver}
+            icon="refresh"
+            style={styles.startOverButton}
           >
-            Personalize your choice
+            Start Over
           </Button>
-          <Text variant="bodySmall" style={styles.personalizeHint}>
-            Refine your options based on preferences (frequency, future pregnancy, etc.)
-          </Text>
-        </View>
-      )}
+        )}
+      </View>
     </ScrollView>
   );
 }
@@ -297,5 +310,8 @@ const styles = StyleSheet.create({
     color: theme.colors.textSecondary,
     marginTop: theme.spacing.sm,
     textAlign: "center",
+  },
+  startOverButton: {
+    marginTop: theme.spacing.lg,
   },
 });
