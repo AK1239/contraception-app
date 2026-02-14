@@ -134,6 +134,20 @@ export class RulesEngine {
       };
     }
 
+    // Compute irregular-periods from 6 cycle durations (variation > 7 days = irregular)
+    const cycleDurations = answers["cycle-durations"];
+    if (Array.isArray(cycleDurations) && cycleDurations.length >= 2) {
+      const valid = cycleDurations.filter(
+        (n): n is number => typeof n === "number" && n >= 21 && n <= 45 && n > 0
+      );
+      if (valid.length >= 2) {
+        const min = Math.min(...valid);
+        const max = Math.max(...valid);
+        const range = max - min;
+        (normalized as Record<string, unknown>)["irregular-periods"] = range > 7;
+      }
+    }
+
     // Compute days/weeks/months since birth
     const birthDate = answers["birth-date"];
     if (birthDate instanceof Date) {

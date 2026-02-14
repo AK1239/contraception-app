@@ -3,7 +3,7 @@ import { View, StyleSheet, Platform } from "react-native";
 import { TextInput, RadioButton, Checkbox, Text, Card, Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Question, AnswerValue } from "../types";
-import { PersonalizationQuestion } from "../constants/questions";
+import type { PersonalizationQuestion } from "../constants";
 
 interface QuestionInputProps {
   question: Question;
@@ -30,19 +30,52 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                 value="yes"
                 status={value === true ? "checked" : "unchecked"}
                 onPress={() => onValueChange(true)}
+                color="#6D28D9"
+                uncheckedColor="#6B7280"
               />
-              <Text onPress={() => onValueChange(true)}>Yes</Text>
+              <Text onPress={() => onValueChange(true)} style={styles.radioLabel}>Yes</Text>
             </View>
             <View style={styles.radioItem}>
               <RadioButton
                 value="no"
                 status={value === false ? "checked" : "unchecked"}
                 onPress={() => onValueChange(false)}
+                color="#6D28D9"
+                uncheckedColor="#6B7280"
               />
-              <Text onPress={() => onValueChange(false)}>No</Text>
+              <Text onPress={() => onValueChange(false)} style={styles.radioLabel}>No</Text>
             </View>
           </View>
         );
+
+      case "cycle-durations": {
+        const CYCLE_COUNT = 6;
+        const raw = Array.isArray(value) ? value : [];
+        const durations: number[] = raw.filter((n): n is number => typeof n === "number");
+        while (durations.length < CYCLE_COUNT) durations.push(0);
+
+        return (
+          <View style={styles.cycleDurationsContainer}>
+            {Array.from({ length: CYCLE_COUNT }, (_, i) => (
+              <TextInput
+                key={i}
+                mode="outlined"
+                label={`Cycle ${i + 1} (days)`}
+                value={durations[i] && durations[i] > 0 ? String(durations[i]) : ""}
+                onChangeText={(text) => {
+                  const arr: number[] = [...durations];
+                  const num = text === "" ? 0 : parseFloat(text);
+                  arr[i] = !isNaN(num) ? num : 0;
+                  onValueChange(arr as AnswerValue);
+                }}
+                keyboardType="numeric"
+                style={styles.cycleDurationInput}
+                error={!!error}
+              />
+            ))}
+          </View>
+        );
+      }
 
       case "numeric":
         return (
@@ -73,8 +106,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                     value={option.value}
                     status={value === option.value ? "checked" : "unchecked"}
                     onPress={() => onValueChange(option.value)}
+                    color="#6D28D9"
+                    uncheckedColor="#6B7280"
                   />
-                  <Text onPress={() => onValueChange(option.value)}>{option.label}</Text>
+                  <Text onPress={() => onValueChange(option.value)} style={styles.radioLabel}>{option.label}</Text>
                 </View>
               ))}
             </View>
@@ -84,7 +119,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
 
       case "select-multiple":
         if ("options" in question) {
-          const selectedValues = Array.isArray(value) ? value : [];
+          const selectedValues: string[] = Array.isArray(value) ? (value as string[]) : [];
 
           return (
             <View style={styles.checkboxGroup}>
@@ -92,8 +127,10 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                 <View key={option.value} style={styles.checkboxItem}>
                   <Checkbox
                     status={selectedValues.includes(option.value) ? "checked" : "unchecked"}
+                    color="#6D28D9"
+                    uncheckedColor="#6B7280"
                     onPress={() => {
-                      const newValues = selectedValues.includes(option.value)
+                      const newValues: string[] = selectedValues.includes(option.value)
                         ? selectedValues.filter((v) => v !== option.value)
                         : [...selectedValues, option.value];
                       onValueChange(newValues);
@@ -101,7 +138,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                   />
                   <Text
                     onPress={() => {
-                      const newValues = selectedValues.includes(option.value)
+                      const newValues: string[] = selectedValues.includes(option.value)
                         ? selectedValues.filter((v) => v !== option.value)
                         : [...selectedValues, option.value];
                       onValueChange(newValues);
@@ -230,7 +267,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                 display={Platform.OS === "ios" ? "spinner" : "default"}
                 maximumDate={maxDate}
                 minimumDate={minDate}
-                onChange={(event, selectedDate) => {
+                onChange={(_event, selectedDate) => {
                   setDatePickerOpen(false);
                   if (selectedDate) {
                     onValueChange(selectedDate);
@@ -307,6 +344,8 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
                 value="yes"
                 status={value === true ? "checked" : "unchecked"}
                 onPress={() => onValueChange(true)}
+                color="#6D28D9"
+                uncheckedColor="#6B7280"
               />
               <Text style={styles.radioLabel}>Yes</Text>
             </View>
@@ -315,6 +354,8 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
                 value="no"
                 status={value === false ? "checked" : "unchecked"}
                 onPress={() => onValueChange(false)}
+                color="#6D28D9"
+                uncheckedColor="#6B7280"
               />
               <Text style={styles.radioLabel}>No</Text>
             </View>
@@ -326,7 +367,7 @@ export const PersonalizationInput: React.FC<PersonalizationInputProps> = ({
 
         return (
           <View style={styles.radioGroup}>
-            {question.options?.map((option, index) => (
+            {question.options?.map((option: string, index: number) => (
               <View key={index} style={styles.radioOption}>
                 <RadioButton
                   value={option}
@@ -404,6 +445,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 8,
   },
+  radioLabel: {
+    marginLeft: 8,
+  },
   checkboxGroup: {
     gap: 8,
   },
@@ -423,6 +467,12 @@ const styles = StyleSheet.create({
   bpSeparator: {
     fontSize: 24,
     fontWeight: "bold",
+  },
+  cycleDurationsContainer: {
+    gap: 12,
+  },
+  cycleDurationInput: {
+    marginBottom: 4,
   },
   lipidContainer: {
     gap: 16,
@@ -449,9 +499,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 8,
-  },
-  radioLabel: {
-    marginLeft: 8,
   },
   textInput: {
     marginBottom: 16,

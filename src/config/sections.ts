@@ -20,12 +20,15 @@ export const SECTIONS: Section[] = [
         metadata: { unit: "years", placeholder: "Enter age" },
       },
       {
-        id: "cycle-duration",
-        text: "Duration of cycle?",
-        type: "numeric",
+        id: "cycle-durations",
+        text: "Duration of your last 6 menstrual cycles (days between period starts)",
+        type: "cycle-durations",
         required: true,
         validation: { min: 21, max: 45 },
-        metadata: { unit: "days", helpText: "Typical length between period starts" },
+        metadata: {
+          unit: "days",
+          helpText: "Enter the length of each cycle from start of one period to the start of the next. Irregularity is auto-calculated (variation > 7 days).",
+        },
       },
       {
         id: "bleeding-days",
@@ -38,12 +41,6 @@ export const SECTIONS: Section[] = [
       {
         id: "heavy-menstrual-bleeding",
         text: "Presence of heavy menstrual bleeding? (Amount that interferes with physical/social/emotional life)",
-        type: "yes-no",
-        required: true,
-      },
-      {
-        id: "irregular-periods",
-        text: "Are your periods irregular? (Cycle length varies by more than 7 days between cycles)",
         type: "yes-no",
         required: true,
       },

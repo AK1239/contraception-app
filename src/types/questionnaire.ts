@@ -6,7 +6,8 @@ export type QuestionType =
   | "select-one"
   | "select-multiple"
   | "blood-pressure"
-  | "lipid-profile";
+  | "lipid-profile"
+  | "cycle-durations";
 
 // Base question interface
 export interface BaseQuestion {
@@ -62,6 +63,14 @@ export interface LipidProfileQuestion extends BaseQuestion {
   type: "lipid-profile";
 }
 
+export interface CycleDurationsQuestion extends BaseQuestion {
+  type: "cycle-durations";
+  min?: number;
+  max?: number;
+  count?: number;
+  unit?: string;
+}
+
 // Union type for all question types
 export type Question =
   | YesNoQuestion
@@ -70,7 +79,8 @@ export type Question =
   | SelectOneQuestion
   | SelectMultipleQuestion
   | BloodPressureQuestion
-  | LipidProfileQuestion;
+  | LipidProfileQuestion
+  | CycleDurationsQuestion;
 
 // User answer types
 export type AnswerValue =
@@ -80,7 +90,8 @@ export type AnswerValue =
   | Date
   | string[]
   | { systolic: number; diastolic: number }
-  | { ldl: number; hdl: number; cholesterol: number; triglyceride: number };
+  | { ldl: number; hdl: number; cholesterol: number; triglyceride: number }
+  | number[];
 
 export interface UserAnswer {
   questionId: string;

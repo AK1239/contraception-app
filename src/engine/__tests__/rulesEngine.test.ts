@@ -139,6 +139,32 @@ describe("RulesEngine", () => {
     });
   });
 
+  describe("irregular periods (computed from 6 cycle durations)", () => {
+    it("marks progestin-only (c,d,e) as greater benefit when cycle variation > 7 days", () => {
+      const answers: AnswerState = {
+        "cycle-durations": [28, 30, 26, 38, 29, 27],
+      };
+      // Range 38-26 = 12 > 7 => irregular
+      const result = engine.evaluate(answers);
+
+      expect(result.greaterBenefit).toContain("c");
+      expect(result.greaterBenefit).toContain("d");
+      expect(result.greaterBenefit).toContain("e");
+    });
+
+    it("does not trigger irregular rule when cycle variation <= 7 days", () => {
+      const answers: AnswerState = {
+        "cycle-durations": [28, 30, 29, 28, 31, 27],
+      };
+      // Range 31-27 = 4 <= 7 => regular
+      const result = engine.evaluate(answers);
+
+      expect(result.greaterBenefit).not.toContain("c");
+      expect(result.greaterBenefit).not.toContain("d");
+      expect(result.greaterBenefit).not.toContain("e");
+    });
+  });
+
   describe("max MEC wins", () => {
     it("when multiple rules affect same method, highest MEC applies", () => {
       // Age 45: combined = 2, but smoking + age 40 + >14 cigs gives MEC 4

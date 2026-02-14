@@ -50,6 +50,14 @@ function toQuestionFormat(sq: SectionQuestion): Question {
       return { ...base, type: "blood-pressure" };
     case "lipid-profile":
       return { ...base, type: "lipid-profile" };
+    case "cycle-durations":
+      return {
+        ...base,
+        type: "cycle-durations",
+        min: sq.validation?.min,
+        max: sq.validation?.max,
+        unit: sq.metadata?.unit,
+      };
     default:
       return { ...base, type: sq.type };
   }

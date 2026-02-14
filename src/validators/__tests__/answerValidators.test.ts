@@ -73,6 +73,19 @@ describe("answerValidators", () => {
       ).toBe(false); // systolic must be > diastolic
     });
 
+    it("validates cycle-durations requires all 6 values in range", () => {
+      const q: SectionQuestion = {
+        id: "cycle-durations",
+        text: "Cycle durations",
+        type: "cycle-durations",
+        required: true,
+        validation: { min: 21, max: 45 },
+      };
+      expect(validateAnswer(q, [28, 30, 29, 28, 31, 27]).valid).toBe(true);
+      expect(validateAnswer(q, [28, 30]).valid).toBe(false);
+      expect(validateAnswer(q, [28, 30, 29, 28, 31, 15]).valid).toBe(false);
+    });
+
     it("passes yes-no without validation rules", () => {
       const q: SectionQuestion = {
         id: "yn",

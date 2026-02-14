@@ -96,6 +96,25 @@ export function validateAnswer(
       return { valid: true };
     }
 
+    case "cycle-durations": {
+      const arr = Array.isArray(value) ? value : [];
+      if (arr.length < 6) {
+        return { valid: false, error: "Please enter all 6 cycle durations" };
+      }
+      const { min = 21, max = 45 } = question.validation ?? {};
+      const valid = arr.filter((n) => typeof n === "number" && n > 0);
+      if (valid.length < 6) {
+        return { valid: false, error: "Please enter all 6 cycle durations" };
+      }
+      for (let i = 0; i < 6; i++) {
+        const n = arr[i];
+        if (typeof n !== "number" || n < min || n > max) {
+          return { valid: false, error: `Cycle ${i + 1} must be between ${min} and ${max} days` };
+        }
+      }
+      return { valid: true };
+    }
+
     case "select-one":
     case "select-multiple":
     case "yes-no":
