@@ -71,6 +71,17 @@ export default function DrawerLayout() {
           headerRight: () => <StartOverHeaderButton />,
         }}
       />
+
+      {/* Natural Method (FAB) Eligibility */}
+      <Drawer.Screen
+        name="fab-eligibility"
+        options={{
+          drawerItemStyle: { display: "none" },
+          drawerLabel: "Natural Method Eligibility (FAB)",
+          title: "Natural Method Eligibility",
+          headerRight: () => <StartOverHeaderButton fabMode />,
+        }}
+      />
       {/* Choose Your Contraceptive Screens */}
       <Drawer.Screen
         name="personalize"
@@ -109,17 +120,6 @@ export default function DrawerLayout() {
           drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
           drawerLabel: "Standard Day Calculator",
           title: "Standard Day Calculator",
-        }}
-      />
-
-      {/* Natural Method (FAB) Eligibility */}
-      <Drawer.Screen
-        name="fab-eligibility"
-        options={{
-          drawerItemStyle: { display: "none" },
-          drawerLabel: "Natural Method Eligibility",
-          title: "Natural Method Eligibility",
-          headerRight: () => <StartOverHeaderButton fabMode />,
         }}
       />
     </Drawer>

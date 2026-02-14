@@ -51,6 +51,12 @@ const drawerSections: DrawerSection[] = [
     route: '/(drawer)/choose-contraceptive',
   },
   {
+    id: 'natural-method-eligibility',
+    title: 'Natural Method Eligibility (FAB)',
+    icon: 'leaf-outline',
+    route: '/(drawer)/fab-eligibility',
+  },
+  {
     id: 'compare-methods',
     title: 'Compare Contraceptive Methods',
     icon: 'git-compare-outline',
@@ -62,11 +68,6 @@ const drawerSections: DrawerSection[] = [
     icon: 'calculator-outline',
     hasSubsections: true,
     subsections: [
-      {
-        id: 'natural-method-eligibility',
-        title: 'Natural Method Eligibility (FAB)',
-        route: '/(drawer)/fab-eligibility',
-      },
       {
         id: 'standard-day-calculator',
         title: 'Standard Day Method Calculator',
