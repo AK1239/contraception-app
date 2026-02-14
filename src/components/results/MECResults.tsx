@@ -12,10 +12,12 @@ interface MECResultsProps {
 
 function MethodCard({
   methodKey,
+  mecScore,
   reasons,
   category,
 }: {
   methodKey: ContraceptiveMethodKey;
+  mecScore: number;
   reasons: string[];
   category: "suggested" | "greaterBenefit" | "avoid";
 }) {
@@ -31,13 +33,20 @@ function MethodCard({
   return (
     <Card style={[styles.methodCard, cardStyle]} mode="outlined">
       <Card.Content>
-        <Text variant="titleMedium" style={styles.methodName}>
-          {name}
-        </Text>
-        {category !== "suggested" && reasons.length > 0 && (
+        <View style={styles.methodHeader}>
+          <Text variant="titleMedium" style={styles.methodName}>
+            {name}
+          </Text>
+          <View style={[styles.mecBadge, mecScore === 1 ? styles.mecBadge1 : mecScore === 2 ? styles.mecBadge2 : mecScore === 3 ? styles.mecBadge3 : styles.mecBadge4]}>
+            <Text variant="labelSmall" style={styles.mecBadgeText}>
+              MEC {mecScore}
+            </Text>
+          </View>
+        </View>
+        {mecScore > 1 && reasons.length > 0 && (
           <View style={styles.reasonsContainer}>
             <Text variant="labelSmall" style={styles.reasonsLabel}>
-              Why:
+              Why MEC {mecScore}:
             </Text>
             {reasons.map((reason, idx) => (
               <Text key={idx} variant="bodySmall" style={styles.reasonText}>
@@ -52,9 +61,8 @@ function MethodCard({
 }
 
 export function MECResults({ result }: MECResultsProps) {
-  const getReasons = (key: ContraceptiveMethodKey): string[] => {
-    const mecResult = result.mecResults.find((r) => r.methodKey === key);
-    return mecResult?.reasons ?? [];
+  const getMecResult = (key: ContraceptiveMethodKey) => {
+    return result.mecResults.find((r) => r.methodKey === key);
   };
 
   return (
@@ -66,7 +74,7 @@ export function MECResults({ result }: MECResultsProps) {
       {/* Suggested safe contraceptives (MEC 1) */}
       <View style={styles.section}>
         <Text variant="titleLarge" style={[styles.sectionTitle, styles.sectionTitleSuggested]}>
-          Suggested safe contraceptives
+          Suggested safe contraceptives (MEC 1)
         </Text>
         <Text variant="bodyMedium" style={styles.sectionDescription}>
           These methods have no restrictions based on your answers.
@@ -77,6 +85,7 @@ export function MECResults({ result }: MECResultsProps) {
               <MethodCard
                 key={key}
                 methodKey={key}
+                mecScore={getMecResult(key)?.score ?? 1}
                 reasons={[]}
                 category="suggested"
               />
@@ -94,21 +103,25 @@ export function MECResults({ result }: MECResultsProps) {
       {/* Greater benefit than risk (MEC 2) */}
       <View style={styles.section}>
         <Text variant="titleLarge" style={[styles.sectionTitle, styles.sectionTitleGreaterBenefit]}>
-          Greater benefit than risk
+          Greater benefit than risk (MEC 2)
         </Text>
         <Text variant="bodyMedium" style={styles.sectionDescription}>
           Advantages generally outweigh risks. Consider with your healthcare provider.
         </Text>
         {result.greaterBenefit.length > 0 ? (
           <View style={styles.methodList}>
-            {result.greaterBenefit.map((key) => (
-              <MethodCard
-                key={key}
-                methodKey={key}
-                reasons={getReasons(key)}
-                category="greaterBenefit"
-              />
-            ))}
+            {result.greaterBenefit.map((key) => {
+              const mec = getMecResult(key);
+              return (
+                <MethodCard
+                  key={key}
+                  methodKey={key}
+                  mecScore={mec?.score ?? 2}
+                  reasons={mec?.reasons ?? []}
+                  category="greaterBenefit"
+                />
+              );
+            })}
           </View>
         ) : (
           <Text variant="bodyMedium" style={styles.emptyText}>
@@ -122,21 +135,25 @@ export function MECResults({ result }: MECResultsProps) {
       {/* Avoid these contraceptives (MEC 3/4) */}
       <View style={styles.section}>
         <Text variant="titleLarge" style={[styles.sectionTitle, styles.sectionTitleAvoid]}>
-          Avoid these contraceptives
+          Avoid these contraceptives (MEC 3/4)
         </Text>
         <Text variant="bodyMedium" style={styles.sectionDescription}>
           Risks usually outweigh advantages or represent unacceptable health risk.
         </Text>
         {result.avoid.length > 0 ? (
           <View style={styles.methodList}>
-            {result.avoid.map((key) => (
-              <MethodCard
-                key={key}
-                methodKey={key}
-                reasons={getReasons(key)}
-                category="avoid"
-              />
-            ))}
+            {result.avoid.map((key) => {
+              const mec = getMecResult(key);
+              return (
+                <MethodCard
+                  key={key}
+                  methodKey={key}
+                  mecScore={mec?.score ?? 3}
+                  reasons={mec?.reasons ?? []}
+                  category="avoid"
+                />
+              );
+            })}
           </View>
         ) : (
           <Text variant="bodyMedium" style={styles.emptyText}>
@@ -195,8 +212,36 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: theme.colors.error,
   },
+  methodHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: 8,
+  },
   methodName: {
     fontWeight: theme.typography.fontWeight.medium,
+    flex: 1,
+  },
+  mecBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+  },
+  mecBadge1: {
+    backgroundColor: theme.colors.success + "30",
+  },
+  mecBadge2: {
+    backgroundColor: theme.colors.warning + "30",
+  },
+  mecBadge3: {
+    backgroundColor: theme.colors.error + "40",
+  },
+  mecBadge4: {
+    backgroundColor: theme.colors.error + "60",
+  },
+  mecBadgeText: {
+    fontWeight: theme.typography.fontWeight.semiBold,
   },
   reasonsContainer: {
     marginTop: theme.spacing.sm,
