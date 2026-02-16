@@ -87,7 +87,15 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
                 <Text style={styles.windowSubtitle}>Lower pregnancy risk during these periods</Text>
                 <Divider style={styles.divider} />
                 <Text style={styles.safeDayText}>• Day 1-7 (before fertile window)</Text>
+                <View style={styles.dateRow}>
+                  <Text style={styles.dateLabel}>  {result.safeWindow.beforeFertile.calendarDates.start}</Text>
+                  <Text style={styles.dateLabel}> to </Text>
+                  <Text style={styles.dateLabel}>{result.safeWindow.beforeFertile.calendarDates.end}</Text>
+                </View>
                 <Text style={styles.safeDayText}>• Day 20 onward (after fertile window)</Text>
+                <View style={styles.dateRow}>
+                  <Text style={styles.dateLabel}>  From {result.safeWindow.afterFertile.calendarDate} onwards</Text>
+                </View>
               </Card.Content>
             </Card>
           )}

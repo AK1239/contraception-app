@@ -31,9 +31,14 @@ export interface SDMEligibilityResult {
     beforeFertile: {
       start: Date;
       end: Date;
+      calendarDates: {
+        start: string;
+        end: string;
+      };
     };
     afterFertile: {
       start: Date;
+      calendarDate: string;
     };
   };
   message: string;

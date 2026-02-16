@@ -113,9 +113,17 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
             <Text style={styles.safeDayText}>
               • Day 1 to Day {result.earliestFertileDay! - 1} (before fertile window)
             </Text>
+            <View style={styles.dateRow}>
+              <Text style={styles.dateLabel}>  {result.safeWindow.beforeFertile.calendarDates.start}</Text>
+              <Text style={styles.dateLabel}> to </Text>
+              <Text style={styles.dateLabel}>{result.safeWindow.beforeFertile.calendarDates.end}</Text>
+            </View>
             <Text style={styles.safeDayText}>
               • Day {result.latestFertileDay! + 1} onward (after fertile window)
             </Text>
+            <View style={styles.dateRow}>
+              <Text style={styles.dateLabel}>  From {result.safeWindow.afterFertile.calendarDate} onwards</Text>
+            </View>
           </Card.Content>
         </Card>
       )}

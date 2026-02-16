@@ -106,9 +106,14 @@ function calculateSafeWindow(lmpDate: Date, earliestDay: number, latestDay: numb
     beforeFertile: {
       start: new Date(lmpDate), // Day 1
       end: safeBeforeEnd, // Day (a-1)
+      calendarDates: {
+        start: formatDate(new Date(lmpDate)),
+        end: formatDate(safeBeforeEnd),
+      },
     },
     afterFertile: {
       start: afterFertileStart, // Day (b+1) onward
+      calendarDate: formatDate(afterFertileStart),
     },
   };
 }
