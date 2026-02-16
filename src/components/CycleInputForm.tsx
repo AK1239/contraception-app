@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 32,
     lineHeight: 22,
-    fontFamily: 'PlusJakartaSans_400Regular',
+    fontFamily: 'PlusJakartaSans_700Bold',
+    fontWeight: 'bold',
   },
   requiredCyclesContainer: {
     marginBottom: 24,

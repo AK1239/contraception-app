@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
     color: "#374151",
     lineHeight: 24,
     marginBottom: 24,
-    fontFamily: "PlusJakartaSans_400Regular",
+    fontFamily: "PlusJakartaSans_700Bold",
+    fontWeight: "bold",
   },
 });
 

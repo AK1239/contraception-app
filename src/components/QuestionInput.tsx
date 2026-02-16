@@ -510,7 +510,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#111827",
     lineHeight: 20,
-    fontWeight: "500",
+    fontWeight: "700",
+    fontFamily: "PlusJakartaSans_700Bold",
     marginBottom: 2,
   },
   requiredAsterisk: {
