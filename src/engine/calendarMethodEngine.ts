@@ -133,8 +133,8 @@ function formatDate(date: Date): string {
  */
 function buildEducationalMessage(): string {
   return 'Fertility awareness methods require consistent tracking and correct use.\n\n' +
-    'Typical-use effectiveness ranges approximately 76–88%.\n\n' +
-    'Perfect-use effectiveness can reach up to ~95% depending on method.\n\n' +
+    'Typical-use effectiveness is approximately 81%.\n\n' +
+    'Perfect-use effectiveness can reach up to 95%.\n\n' +
     'Does not protect against sexually transmitted infections.';
 }
 

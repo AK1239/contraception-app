@@ -97,7 +97,7 @@ function formatDate(date: Date): string {
  */
 function buildEducationalMessage(eligible: boolean): string {
   const baseMessage = 'Standard Days Method requires consistent tracking and cycles 26–32 days long.\n\n';
-  const effectiveness = 'Typical-use effectiveness is approximately 88%.\n\n';
+  const effectiveness = 'Typical-use effectiveness is approximately 87%.\n\n';
   const protection = 'Does not protect against sexually transmitted infections.';
   
   if (!eligible) {

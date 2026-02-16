@@ -106,7 +106,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'As the name suggests, these are combined oral contraceptives (COCs) meaning that these are pills containing both estrogen and progesterone hormone.',
     efficacy: {
       label: 'Excellent',
-      typicalUse: 'With typical use; 93% (93 in 100 women) will not become pregnant while using COC. With perfect use (daily adherence) almost no women will become pregnant while being on COC.',
+      typicalUse: 'With typical use the chance of pregnancy is 6%. Meaning that out of 100 women who use this method normally, there is a chance that 6 of them will become pregnant.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost no women will become pregnant while being on COC.',
     },
     advantages: [
       'Regular and predictable menses',
@@ -133,7 +134,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'As the name suggests; these are Progestin Only Pills (POP) meaning that these are pills containing the progesterone hormone only (no estrogen).',
     efficacy: {
       label: 'Excellent',
-      typicalUse: 'With typical use; 93% (93 in 100 women) will not become pregnant while using POP. With perfect use (daily timely adherence) almost no women will become pregnant while being on POPs.',
+      typicalUse: 'With typical use the chance of pregnancy is 6%. Meaning that out of 100 women who use this method normally, there is a chance that 6 of them will become pregnant.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost no women will become pregnant while being on POPs.',
     },
     advantages: [
       'No high estrogen side effects (nausea, headache, breast tenderness) and complications (breast cancer, gallstones, clot formation in blood vessels)',
@@ -159,7 +161,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'A small T-shaped device made of plastic and wrapped in copper that will be placed inside the uterus by a healthcare provider. Copper prevents pregnancy by stopping the sperms from swimming and combining with the egg, but even if the egg has combined by chance, then copper will also prevent it from growing further.',
     efficacy: {
       label: 'Perfect',
-      typicalUse: 'Almost none of the women will become pregnant when inserted with Copper IUCD.',
+      typicalUse: 'With typical use the chance of pregnancy is 0.8%. Meaning that less than 1 in 100 women will become pregnant when using Copper IUCD.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost no women will become pregnant.',
     },
     advantages: [
       'The effect lasts longer (from 5 to 12 years depending on the model)',
@@ -189,7 +192,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'The contraceptive vaginal ring is a small, soft, flexible plastic ring (about 5–6 cm wide) that a woman puts inside her vagina once a month. The ring slowly releases two hormones (estrogen and progestin) which prevent pregnancy from occurring.',
     efficacy: {
       label: 'Excellent',
-      typicalUse: 'With typical use; 91% (91 in 100 women) will not become pregnant while using contraceptive vaginal ring. With perfect use almost no women will become pregnant while using contraceptive vaginal ring.',
+      typicalUse: 'With typical use the chance of pregnancy is 7%. Meaning that out of 100 women who use this method normally, there is a chance that 7 of them will become pregnant.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost no women will become pregnant while using the vaginal ring.',
     },
     advantages: [
       'Works are relatively longer than pills so no need to change every day',
@@ -214,7 +218,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'The contraceptive injection contains DMPA which is a progestin hormone (no estrogen). The hormone works by preventing the egg from released by the ovaries, it also thickens the mucus released by the cervix making it difficult for the sperms to enter the womb, it also thins out the endometrium (the part responsible for growing and maintaining an embryo).',
     efficacy: {
       label: 'Excellent',
-      typicalUse: 'Less than 1 in 100 women will become pregnant.',
+      typicalUse: 'With typical use the chance of pregnancy is 4%. Meaning that out of 100 women who use this method normally with usual timing of injections, there is a chance that 4 of them will become pregnant.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost no women will become pregnant if injections are received on schedule.',
     },
     advantages: [
       'No high estrogen side effects (nausea, headache, breast tenderness) and complications (breast cancer, gallstones, clot formation in blood vessels)',
@@ -240,7 +245,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'A transdermal patch is like a small sticker that you place on your skin. It slowly releases hormones (estrogen and progesterone) through your skin and into your blood over time.',
     efficacy: {
       label: 'Excellent',
-      typicalUse: 'With typical use; 93% (93 in 100 women) will not become pregnant while using Combination patch contraceptive. With perfect use almost no women will become pregnant while on combination patch contraceptive.',
+      typicalUse: 'With typical use the chance of pregnancy is 7%. Meaning that out of 100 women who use this method normally, there is a chance that 7 of them will become pregnant.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost no women will become pregnant while using the patch.',
     },
     advantages: [
       'Works relatively longer than pills',
@@ -264,7 +270,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'A contraceptive implant is a tiny, flexible rod (about the size of a matchstick) that a healthcare provider puts under the skin of your upper arm. It releases a hormone called progestin slowly into your body over time. The hormone works by preventing the egg from released by the ovaries, it also thickens the mucus released by the cervix making it difficult for the sperms to enter the womb, it also thins out the endometrium (the part responsible for growing and maintaining an embryo).',
     efficacy: {
       label: 'Perfect',
-      typicalUse: 'The chance of pregnancy is 0.15% for at least 3 years. Meaning almost no women will get pregnant when using this method.',
+      typicalUse: 'The chance of pregnancy is 0.3%. Meaning that less than 1 in 100 women will become pregnant when using this method.',
     },
     advantages: [
       'Longevity',
@@ -291,7 +297,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'A small, T-shaped plastic device that is placed inside the uterus. It slowly releases levonorgestrel, a type of hormone similar to progesterone. The hormone thickens your cervical mucus so that the sperm cannot enter and also thins out the inner lining of your uterus making a difficult environment for the baby to grow.',
     efficacy: {
       label: 'Perfect',
-      typicalUse: 'Almost no women will become pregnant while on a LNG-IUS.',
+      typicalUse: 'With typical use the chance of pregnancy is 0.2%. Meaning that less than 1 in 100 women will become pregnant when using LNG-IUS.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost no women will become pregnant.',
     },
     advantages: [
       'Lasts longer (depending on the brand, it can last for 3 to 5 years)',
@@ -317,7 +324,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'A surgical procedure whereby the fallopian tubes are tied and hence blocked. This blocks the road for the sperm to reach the egg.',
     efficacy: {
       label: 'Perfect',
-      typicalUse: 'Almost all of the women after this procedure will no longer be able to get pregnant.',
+      typicalUse: 'With typical use the chance of pregnancy is 0.5%. Meaning that about 5 in 1000 women will become pregnant in one year.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost all women will not become pregnant after the procedure.',
     },
     advantages: [
       'No hormonal related side effects',
@@ -340,7 +348,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'A vasectomy is a permanent male sterilization procedure where the vas deferens (tubes that carry sperm from the testicles to the semen) are cut, tied, or sealed, so sperm cannot mix with semen. The testicles still produce sperm, but the sperm cannot leave the body.',
     efficacy: {
       label: 'Perfect',
-      typicalUse: 'Almost all the men after this procedure will no longer be able to make a woman pregnant.',
+      typicalUse: 'With typical use the chance of pregnancy is 0.15%. Meaning that about 1–2 in 1000 couples will conceive in one year.',
+      perfectUse: 'With perfect use the chance of pregnancy is less than 1%. Meaning that almost all men will not cause pregnancy after confirmed azoospermia.',
     },
     advantages: [
       'No hormonal related side effects',
@@ -364,7 +373,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'The act of breastfeeding changes the body\'s hormone balance in a way that you cannot get pregnant. This method only works for breastfeeding women and can be a very good contraceptive in the first 6 months of breastfeeding.',
     efficacy: {
       label: 'Excellent',
-      typicalUse: 'The perfect use failure rate is 2%. Meaning that there is a chance that 2 in 100 women will get pregnant if they use this method perfectly.',
+      typicalUse: 'With typical use the chance of pregnancy is 2%. Meaning that 2 in 100 women will become pregnant in one year when LAM criteria are followed under real-life conditions.',
+      perfectUse: 'With perfect use the chance of pregnancy is 2%. Meaning that 2 in 100 women will become pregnant if all LAM conditions are strictly met.',
     },
     advantages: [
       'It can be used immediately after childbirth',
@@ -395,8 +405,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'To understand the calendar method, you need to understand the menstrual cycle. The ovaries in your body are responsible for producing eggs that can be potentially fertilized by sperm. The egg is released once a month, The method predicts when the egg is out and that you should avoid sexual intercourse during the days when the egg is potentially out. Once the egg is out, it can survive for up to 24 hours and the sperms can fertilize the eggs for up to 3 days. Since the menstrual cycle is different for every woman, the days when the egg is out may also vary. Hence why there is a calculator to determine the fertile window (days when the egg is possibly out and when the sperms can fertilize the egg).',
     efficacy: {
       label: 'Good',
-      typicalUse: 'With typical use, the chance of pregnancy is 25%, meaning that 75 out of 100 women will not become pregnant if this method is used.',
-      perfectUse: 'If perfectly used, the chance of pregnancy is 5%, meaning that 95 out of 100 women will not become pregnant if this method is used perfectly.',
+      typicalUse: 'With typical use the chance of pregnancy is 19%. Meaning that 19 in 100 women will become pregnant in one year with usual use.',
+      perfectUse: 'With perfect use the chance of pregnancy is 5%. Meaning that 5 in 100 women will become pregnant if used perfectly.',
     },
     advantages: [
       'No side/adverse effects',
@@ -435,8 +445,8 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     description: 'The Standard Days Method (SDM) is a fertility awareness-based method for women with regular menstrual cycles of 26–32 days, helping identify fertile and safe days to prevent pregnancy. It assumes ovulation occurs mid-cycle, with days 8–19 considered fertile; couples avoid unprotected sex during this period. The method involves counting from the first day of menstrual bleeding to track fertile and non-fertile days accurately.',
     efficacy: {
       label: 'Good',
-      typicalUse: 'About 12% chance of pregnancy, meaning 88 out of 100 women will not become pregnant with usual use.',
-      perfectUse: 'About 5% chance of pregnancy, meaning 95 out of 100 women will not become pregnant if this method is used correctly.',
+      typicalUse: 'With typical use the chance of pregnancy is 13%. Meaning that 13 in 100 women will become pregnant with usual use.',
+      perfectUse: 'With perfect use the chance of pregnancy is 5%. Meaning that 5 in 100 women will become pregnant if used correctly every cycle.',
     },
     advantages: [
       'No side/adverse effects',
