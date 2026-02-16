@@ -59,11 +59,14 @@ export default function CalendarMethodCalculatorPage() {
 
   const handleAnswerChange = useCallback(
     (questionId: string, value: AnswerValue) => {
-      // Handle cycle length inputs (cycle-1 through cycle-6)
-      if (questionId.startsWith('cycle-') && questionId !== 'cycle-definition') {
-        const index = parseInt(questionId.split('-')[1]) - 1;
-        const numValue = typeof value === 'number' ? value : null;
-        dispatch(setCycleLength({ index, value: numValue }));
+      // Handle cycle durations array
+      if (questionId === 'cycle-durations') {
+        if (Array.isArray(value)) {
+          value.forEach((cycleValue, index) => {
+            const numValue = typeof cycleValue === 'number' ? cycleValue : null;
+            dispatch(setCycleLength({ index, value: numValue }));
+          });
+        }
       }
       // Handle LMP date
       else if (questionId === 'lmp-date') {
@@ -123,10 +126,8 @@ export default function CalendarMethodCalculatorPage() {
   // Convert answers to format expected by SectionPage
   const convertedAnswers: Record<string, AnswerValue | undefined> = {};
   
-  // Add cycle lengths
-  answers.cycleLengths.forEach((length, index) => {
-    convertedAnswers[`cycle-${index + 1}`] = length || undefined;
-  });
+  // Add cycle lengths as an array for cycle-durations question
+  convertedAnswers['cycle-durations'] = answers.cycleLengths.length > 0 ? answers.cycleLengths : undefined;
   
   // Add LMP date
   if (answers.lmpDate) {

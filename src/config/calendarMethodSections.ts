@@ -24,9 +24,9 @@ export const calendarMethodSections: Record<CalendarMethodSectionKey, Section> =
     title: 'Enter Your Last 6 Menstrual Cycles',
     questions: [
       {
-        id: 'cycle-1',
-        text: 'Enter the length of your most recent cycle (in days)',
-        type: 'numeric',
+        id: 'cycle-durations',
+        text: 'Enter the duration of your last 6 menstrual cycles (in days)',
+        type: 'cycle-durations',
         required: true,
         validation: {
           min: 21,
@@ -34,77 +34,7 @@ export const calendarMethodSections: Record<CalendarMethodSectionKey, Section> =
         },
         metadata: {
           unit: 'days',
-          helpText: 'Must be between 21 and 35 days',
-        },
-      },
-      {
-        id: 'cycle-2',
-        text: 'Enter the length of your 2nd most recent cycle (in days)',
-        type: 'numeric',
-        required: true,
-        validation: {
-          min: 21,
-          max: 35,
-        },
-        metadata: {
-          unit: 'days',
-          helpText: 'Must be between 21 and 35 days',
-        },
-      },
-      {
-        id: 'cycle-3',
-        text: 'Enter the length of your 3rd most recent cycle (in days)',
-        type: 'numeric',
-        required: true,
-        validation: {
-          min: 21,
-          max: 35,
-        },
-        metadata: {
-          unit: 'days',
-          helpText: 'Must be between 21 and 35 days',
-        },
-      },
-      {
-        id: 'cycle-4',
-        text: 'Enter the length of your 4th most recent cycle (in days)',
-        type: 'numeric',
-        required: true,
-        validation: {
-          min: 21,
-          max: 35,
-        },
-        metadata: {
-          unit: 'days',
-          helpText: 'Must be between 21 and 35 days',
-        },
-      },
-      {
-        id: 'cycle-5',
-        text: 'Enter the length of your 5th most recent cycle (in days)',
-        type: 'numeric',
-        required: true,
-        validation: {
-          min: 21,
-          max: 35,
-        },
-        metadata: {
-          unit: 'days',
-          helpText: 'Must be between 21 and 35 days',
-        },
-      },
-      {
-        id: 'cycle-6',
-        text: 'Enter the length of your 6th most recent cycle (in days)',
-        type: 'numeric',
-        required: true,
-        validation: {
-          min: 21,
-          max: 35,
-        },
-        metadata: {
-          unit: 'days',
-          helpText: 'Must be between 21 and 35 days',
+          helpText: 'Enter cycle lengths from most recent to oldest. Each cycle must be between 21 and 35 days.',
         },
       },
     ],
