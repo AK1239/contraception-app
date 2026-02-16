@@ -110,6 +110,11 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
 
       case "select-one":
         if ("options" in question) {
+          // If no options, treat as read-only info text (no input control)
+          if (!question.options || question.options.length === 0) {
+            return null;
+          }
+          
           return (
             <View style={styles.selectGroup}>
               {question.options.map((option) => (
@@ -326,9 +331,14 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
     }
   };
 
+  // Check if this is a read-only info question (select-one with no options)
+  const isReadOnlyInfo = question.type === "select-one" && 
+    "options" in question && 
+    (!question.options || question.options.length === 0);
+
   return (
     <View style={styles.container}>
-      <Text variant="bodyLarge" style={styles.questionText}>
+      <Text variant="bodyLarge" style={isReadOnlyInfo ? styles.infoText : styles.questionText}>
         {question.text}
         {question.required && <Text style={styles.requiredAsterisk}> *</Text>}
       </Text>
@@ -512,6 +522,14 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: "700",
     fontFamily: "PlusJakartaSans_700Bold",
+    marginBottom: 2,
+  },
+  infoText: {
+    fontSize: 14,
+    color: "#374151",
+    lineHeight: 22,
+    fontWeight: "400",
+    fontFamily: "PlusJakartaSans_400Regular",
     marginBottom: 2,
   },
   requiredAsterisk: {

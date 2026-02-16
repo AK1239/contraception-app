@@ -164,7 +164,10 @@ export default function CustomDrawerContent(props: any) {
                 style={styles.subsectionItem}
                 onPress={() => handleNavigation(subsection.route)}
               >
-                <Text style={styles.subsectionText}>● {subsection.title}</Text>
+                <View style={styles.subsectionContent}>
+                  <Text style={styles.subsectionBullet}>●</Text>
+                  <Text style={styles.subsectionText}>{subsection.title}</Text>
+                </View>
               </TouchableOpacity>
             ))}
           </View>
@@ -246,9 +249,20 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingLeft: 40,
   },
+  subsectionContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  subsectionBullet: {
+    fontSize: 16,
+    color: '#6D28D9',
+    marginRight: 12,
+    fontWeight: 'bold',
+  },
   subsectionText: {
     fontSize: 14,
     color: '#666',
     fontFamily: 'PlusJakartaSans_400Regular',
+    flex: 1,
   },
 });

@@ -12,10 +12,13 @@ export const calendarMethodSections: Record<CalendarMethodSectionKey, Section> =
     title: 'Eligibility Information',
     questions: [
       {
-        id: 'ready-to-start',
-        text: 'Before we begin:\n\nThis method requires relatively regular menstrual cycles. If your cycles are consistently shorter than 21 days or longer than 35 days, calendar-based methods may be unreliable.\n\nYou will be asked to enter the length of your last 6 menstrual cycles.\n\nCycle length is the number of days from the first day of one period to the first day of the next period.\n\nAre you ready to continue?',
-        type: 'yes-no',
-        required: true,
+        id: 'info-text',
+        text: 'Before we begin:\n\nThis method requires relatively regular menstrual cycles. If your cycles are consistently shorter than 21 days or longer than 35 days, calendar-based methods may be unreliable.\n\nYou will be asked to enter the length of your last 6 menstrual cycles.\n\nCycle length is the number of days from the first day of one period to the first day of the next period.',
+        type: 'select-one' as any,
+        required: false,
+        metadata: {
+          options: [],
+        },
       },
     ],
   },

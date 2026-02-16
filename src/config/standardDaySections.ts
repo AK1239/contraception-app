@@ -12,10 +12,13 @@ export const standardDaySections: Record<SDMSectionKey, Section> = {
     title: 'Eligibility Information',
     questions: [
       {
-        id: 'ready-to-start',
-        text: 'Before we begin:\n\nThe Standard Days Method is validated only for women with menstrual cycles between 26 and 32 days.\n\nYou will be asked to enter the length of your last 6 menstrual cycles to determine if this method is suitable for you.\n\nCycle length is the number of days from the first day of one period to the first day of the next period.\n\nAre you ready to continue?',
-        type: 'yes-no',
-        required: true,
+        id: 'info-text',
+        text: 'Before we begin:\n\nThe Standard Days Method is validated only for women with menstrual cycles between 26 and 32 days.\n\nYou will be asked to enter the length of your last 6 menstrual cycles to determine if this method is suitable for you.\n\nCycle length is the number of days from the first day of one period to the first day of the next period.',
+        type: 'select-one' as any,
+        required: false,
+        metadata: {
+          options: [],
+        },
       },
     ],
   },
