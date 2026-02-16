@@ -77,7 +77,7 @@ export default function StandardDayCalendar({ onDateSelect }: StandardDayCalenda
             style={styles.monthNav}
             onPress={() => navigateMonth('prev')}
           >
-            <Ionicons name="chevron-back" size={24} color="#059669" />
+            <Ionicons name="chevron-back" size={24} color="#6D28D9" />
           </TouchableOpacity>
           <Text style={styles.monthTitle}>
             {monthNames[currentMonth]} {currentYear}
@@ -86,7 +86,7 @@ export default function StandardDayCalendar({ onDateSelect }: StandardDayCalenda
             style={styles.monthNav}
             onPress={() => navigateMonth('next')}
           >
-            <Ionicons name="chevron-forward" size={24} color="#059669" />
+            <Ionicons name="chevron-forward" size={24} color="#6D28D9" />
           </TouchableOpacity>
         </View>
         
@@ -137,7 +137,7 @@ export default function StandardDayCalendar({ onDateSelect }: StandardDayCalenda
       {selectedDate && (
         <View style={styles.confirmationSection}>
           <View style={styles.selectedDateContainer}>
-            <Ionicons name="calendar-outline" size={20} color="#059669" />
+            <Ionicons name="calendar-outline" size={20} color="#6D28D9" />
             <View style={styles.selectedDateTextContainer}>
               <Text style={styles.selectedDateLabel}>Selected date:</Text>
               <Text style={styles.selectedDateValue}>
@@ -222,16 +222,16 @@ const styles = StyleSheet.create({
   },
   todayDate: {
     borderWidth: 2,
-    borderColor: '#059669',
+    borderColor: '#6D28D9',
   },
   todayText: {
-    color: '#059669',
+    color: '#6D28D9',
     fontWeight: 'bold',
   },
   selectedDate: {
-    backgroundColor: '#059669',
+    backgroundColor: '#6D28D9',
     borderWidth: 0,
-    shadowColor: '#059669',
+    shadowColor: '#6D28D9',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
@@ -256,13 +256,13 @@ const styles = StyleSheet.create({
   selectedDateContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F0FDF4',
+    backgroundColor: '#F3E8FF',
     padding: 16,
     borderRadius: 12,
     marginBottom: 16,
     gap: 12,
     borderWidth: 1,
-    borderColor: '#D1FAE5',
+    borderColor: '#E9D5FF',
   },
   selectedDateTextContainer: {
     flex: 1,
@@ -275,12 +275,12 @@ const styles = StyleSheet.create({
   },
   selectedDateValue: {
     fontSize: 15,
-    color: '#059669',
+    color: '#6D28D9',
     fontWeight: '600',
     fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   confirmButton: {
-    backgroundColor: '#059669',
+    backgroundColor: '#6D28D9',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     borderRadius: 12,
     gap: 8,
-    shadowColor: '#059669',
+    shadowColor: '#6D28D9',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,

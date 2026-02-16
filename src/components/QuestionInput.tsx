@@ -304,9 +304,11 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               <DateTimePicker
                 value={dateValue}
                 mode="date"
-                display={Platform.OS === "ios" ? "inline" : "calendar"}
+                display={Platform.OS === "ios" ? "inline" : "spinner"}
                 maximumDate={maxDate}
                 minimumDate={minDate}
+                themeVariant="light"
+                accentColor="#6D28D9"
                 onChange={(_event, selectedDate) => {
                   setDatePickerOpen(false);
                   if (selectedDate) {
