@@ -238,7 +238,10 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '48%',
+    width: '47%',
+    minWidth: 140,
+    flexGrow: 0,
+    flexShrink: 0,
   },
   inputContainer: {
     flex: 1,

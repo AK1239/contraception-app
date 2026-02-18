@@ -713,7 +713,10 @@ const styles = StyleSheet.create({
   cycleInputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    width: '48%',
+    width: '47%',
+    minWidth: 140,
+    flexGrow: 0,
+    flexShrink: 0,
   },
   cycleInputContainer: {
     flex: 1,
