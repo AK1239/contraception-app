@@ -86,15 +86,23 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
                 </View>
                 <Text style={styles.windowSubtitle}>Lower pregnancy risk during these periods</Text>
                 <Divider style={styles.divider} />
-                <Text style={styles.safeDayText}>• Day 1-7 (before fertile window)</Text>
-                <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>  {result.safeWindow.beforeFertile.calendarDates.start}</Text>
-                  <Text style={styles.dateLabel}> to </Text>
-                  <Text style={styles.dateLabel}>{result.safeWindow.beforeFertile.calendarDates.end}</Text>
+                
+                <View style={styles.safeDaySection}>
+                  <Text style={styles.safeDayLabel}>
+                    • Day 1-7 (before fertile window)
+                  </Text>
+                  <Text style={styles.safeDayDateRange}>
+                    {result.safeWindow.beforeFertile.calendarDates.start} - {result.safeWindow.beforeFertile.calendarDates.end}
+                  </Text>
                 </View>
-                <Text style={styles.safeDayText}>• Day 20 onward (after fertile window)</Text>
-                <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>  From {result.safeWindow.afterFertile.calendarDate} onwards</Text>
+                
+                <View style={styles.safeDaySection}>
+                  <Text style={styles.safeDayLabel}>
+                    • Day 20 onward (after fertile window)
+                  </Text>
+                  <Text style={styles.safeDayDateRange}>
+                    From {result.safeWindow.afterFertile.calendarDate} onwards
+                  </Text>
                 </View>
               </Card.Content>
             </Card>
@@ -229,6 +237,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#111827',
     fontFamily: 'PlusJakartaSans_700Bold',
+  },
+  safeDaySection: {
+    marginBottom: 20,
+  },
+  safeDayLabel: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#065F46',
+    marginBottom: 8,
+    fontFamily: 'PlusJakartaSans_600SemiBold',
+  },
+  safeDayDateRange: {
+    fontSize: 15,
+    color: '#6B7280',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   safeDayText: {
     fontSize: 16,
