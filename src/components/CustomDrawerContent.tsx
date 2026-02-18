@@ -57,30 +57,6 @@ const drawerSections: DrawerSection[] = [
     route: '/(drawer)/choose-contraceptive',
   },
   {
-    id: 'natural-method-eligibility',
-    title: 'Natural Method Eligibility (FAB)',
-    icon: 'leaf-outline',
-    route: '/(drawer)/fab-eligibility',
-  },
-  {
-    id: 'sterilization-eligibility',
-    title: 'Sterilization Eligibility',
-    icon: 'medical-outline',
-    hasSubsections: true,
-    subsections: [
-      {
-        id: 'female-sterilization',
-        title: 'Female Sterilization Eligibility',
-        route: '/(drawer)/female-sterilization-eligibility',
-      },
-      {
-        id: 'male-sterilization',
-        title: 'Male Sterilization Eligibility',
-        route: '/(drawer)/male-sterilization-eligibility',
-      },
-    ],
-  },
-  {
     id: 'compare-methods',
     title: 'Compare Contraceptive Methods',
     icon: 'git-compare-outline',
@@ -101,6 +77,30 @@ const drawerSections: DrawerSection[] = [
         id: 'calendar-method-calculator',
         title: 'Calendar Method Calculator',
         route: '/(drawer)/calendar-method-calculator',
+      },
+    ],
+  },
+  {
+    id: 'natural-method-eligibility',
+    title: 'Natural Method Eligibility (FAB)',
+    icon: 'leaf-outline',
+    route: '/(drawer)/fab-eligibility',
+  },
+  {
+    id: 'sterilization-eligibility',
+    title: 'Sterilization Eligibility',
+    icon: 'medical-outline',
+    hasSubsections: true,
+    subsections: [
+      {
+        id: 'female-sterilization',
+        title: 'Female Sterilization Eligibility',
+        route: '/(drawer)/female-sterilization-eligibility',
+      },
+      {
+        id: 'male-sterilization',
+        title: 'Male Sterilization Eligibility',
+        route: '/(drawer)/male-sterilization-eligibility',
       },
     ],
   },
