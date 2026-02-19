@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native';
+// @ts-ignore - Expo vector icons types
 import { Ionicons } from '@expo/vector-icons';
 
 interface CycleInputFormProps {
@@ -66,7 +67,11 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
       return;
     }
 
-    oScrollView
+    onCyclesSubmit(cycleNumbers);
+  };
+
+  return (
+    <ScrollView
       ref={scrollViewRef}
       style={styles.scrollContainer}
       contentContainerStyle={styles.container}
@@ -97,7 +102,7 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
               <View key={index} style={styles.inputWrapper}>
                 <View style={styles.inputContainer}>
                   <TextInput
-                    ref={(ref) => (inputRefs.current[index] = ref)}
+                    ref={(ref) => { inputRefs.current[index] = ref; }}
                     style={[styles.input, cycle && styles.inputFilled]}
                     value={cycle}
                     onChangeText={(value) => updateCycle(index, value)}
@@ -129,7 +134,7 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
                 <View key={`additional-${index}`} style={styles.inputWrapper}>
                   <View style={styles.inputContainer}>
                     <TextInput
-                      ref={(ref) => (inputRefs.current[cycles.length + index] = ref)}
+                      ref={(ref) => { inputRefs.current[cycles.length + index] = ref; }}
                       style={[styles.input, cycle && styles.inputFilled]}
                       value={cycle}
                       onChangeText={(value) => updateCycle(index, value, true)}
@@ -159,21 +164,17 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
           onPress={validateAndSubmit}
         >
           <Text style={styles.submitButtonText}>Next: Select Date</Text>
-  scrollContainer: {
-    flex: 1,
-  },
           <Ionicons name="arrow-forward" size={20} color="#fff" />
         </TouchableOpacity>
       </View>
-    </Scroll    <Text style={styles.submitButtonText}>Next: Select Date</Text>
-          <Ionicons name="arrow-forward" size={20} color="#fff" />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flex: 1,
+  },
   container: {
     padding: 20,
   },
