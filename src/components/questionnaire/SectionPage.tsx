@@ -1,5 +1,5 @@
-import React, { useRef, useCallback } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useRef, useCallback, useState } from "react";
+import { View, StyleSheet, ScrollView, type NativeSyntheticEvent, type NativeScrollEvent } from "react-native";
 import { Text } from "react-native-paper";
 import type { SectionQuestion } from "../../types/sections";
 import type { AnswerState } from "../../types/rules";
@@ -34,8 +34,16 @@ export function SectionPage({
   const visibleQuestions = getVisibleSectionQuestions(section.questions, answers);
   const scrollViewRef = useRef<ScrollView>(null);
   const questionViewRefs = useRef<Map<string, View>>(new Map());
+  const [viewportInfo, setViewportInfo] = useState({ scrollY: 0, height: 0 });
 
-  // Auto-scroll to next question after answering
+  // Track scroll position and viewport height
+  const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const scrollY = event.nativeEvent.contentOffset.y;
+    const height = event.nativeEvent.layoutMeasurement.height;
+    setViewportInfo({ scrollY, height });
+  }, []);
+
+  // Auto-scroll to next question after answering (with smart logic)
   const handleAnswerChange = useCallback(
     (questionId: string, value: AnswerValue) => {
       onAnswerChange(questionId, value);
@@ -45,7 +53,14 @@ export function SectionPage({
       
       // If there's a next question, scroll to it after a brief delay
       if (currentIndex >= 0 && currentIndex < visibleQuestions.length - 1) {
+        const currentQuestion = visibleQuestions[currentIndex];
         const nextQuestion = visibleQuestions[currentIndex + 1];
+        
+        // Don't auto-scroll for numeric/date inputs - let user finish typing/selecting
+        if (currentQuestion.type === "numeric" || currentQuestion.type === "date") {
+          return;
+        }
+        
         setTimeout(() => {
           const nextView = questionViewRefs.current.get(nextQuestion.id);
           if (nextView && scrollViewRef.current) {
@@ -53,10 +68,17 @@ export function SectionPage({
               // @ts-ignore - measureLayout types are incomplete
               scrollViewRef.current.getNativeScrollRef?.() || scrollViewRef.current,
               (_x, y) => {
-                scrollViewRef.current?.scrollTo({
-                  y: y - 20, // Scroll with 20px offset from top
-                  animated: true,
-                });
+                // Only scroll if next question is in the bottom portion of the viewport or below it
+                // This prevents unnecessary scrolling when the next question is already visible at the top/middle
+                const scrollThreshold = viewportInfo.scrollY + viewportInfo.height * 0.6; // Bottom 40% of screen
+                
+                // Scroll only if the next question is below the threshold (not already visible in top/middle)
+                if (y > scrollThreshold) {
+                  scrollViewRef.current?.scrollTo({
+                    y: y - 20, // Scroll with 20px offset from top
+                    animated: true,
+                  });
+                }
               },
               () => {
                 // Fallback if measureLayout fails
@@ -67,7 +89,7 @@ export function SectionPage({
         }, 150); // Small delay to allow state update
       }
     },
-    [onAnswerChange, visibleQuestions]
+    [onAnswerChange, visibleQuestions, viewportInfo]
   );
 
   return (
@@ -77,6 +99,8 @@ export function SectionPage({
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
+      onScroll={handleScroll}
+      scrollEventThrottle={16}
     >
       <View style={styles.header}>
         <Text variant="titleLarge" style={styles.title}>
