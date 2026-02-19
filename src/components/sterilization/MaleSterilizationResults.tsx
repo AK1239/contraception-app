@@ -238,7 +238,6 @@ const styles = StyleSheet.create({
   recommendationText: {
     color: "#555",
     lineHeight: 22,
-    fontFamily: "monospace",
   },
   reasonItem: {
     flexDirection: "row",

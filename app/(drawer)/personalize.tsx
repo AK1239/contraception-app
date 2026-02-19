@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
+import { Card, Text } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { RootState } from "../../src/store";
 import { useEligibleMethods } from "../../src/hooks/useEligibleMethods";
@@ -90,6 +91,18 @@ export default function PersonalizePage() {
             progress={progress}
           />
 
+          {/* STI Protection Notice */}
+          <Card style={styles.stiCard}>
+            <Card.Content style={styles.stiContent}>
+              <Text variant="titleSmall" style={styles.stiTitle}>
+                🛡️ STI Protection
+              </Text>
+              <Text variant="bodySmall" style={styles.stiText}>
+                None of the below methods provide protection against STIs, so if you think you're at an increased risk of STI, barrier methods should be used either alone acting both as a contraceptive and a protector for STI or you can use barrier methods along with your chosen contraceptive.
+              </Text>
+            </Card.Content>
+          </Card>
+
           <QuestionCard
             question={currentQuestion}
             value={personalization.answers[currentQuestion.id]}
@@ -124,5 +137,25 @@ const styles = StyleSheet.create({
   scrollContent: {
     padding: 16,
     paddingBottom: 120,
+  },
+  stiCard: {
+    marginBottom: 20,
+    backgroundColor: "#FEF3C7",
+    borderLeftWidth: 4,
+    borderLeftColor: "#F59E0B",
+    elevation: 2,
+  },
+  stiContent: {
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+  },
+  stiTitle: {
+    color: "#92400E",
+    fontWeight: "700",
+    marginBottom: 6,
+  },
+  stiText: {
+    color: "#78350F",
+    lineHeight: 18,
   },
 });

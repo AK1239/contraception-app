@@ -36,6 +36,24 @@ function MethodResultCard({ methodResult }: { methodResult: FABMethodResult }) {
         <Text variant="bodyMedium" style={styles.explanation}>
           {methodResult.explanation}
         </Text>
+        
+        {/* Show contributing factors for C or D categories */}
+        {methodResult.contributingFactors && methodResult.contributingFactors.length > 0 && (
+          <View style={styles.contributingFactorsSection}>
+            <Text variant="labelSmall" style={styles.contributingFactorsTitle}>
+              Contributing factors:
+            </Text>
+            {methodResult.contributingFactors.map((factor, index) => (
+              <View key={index} style={styles.factorItem}>
+                <Text variant="bodySmall" style={styles.factorBullet}>•</Text>
+                <Text variant="bodySmall" style={styles.factorText}>
+                  {factor.condition}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+        
         {methodResult.actionRequired && (
           <Text variant="bodySmall" style={styles.actionRequired}>
             Action: {methodResult.actionRequired}
@@ -229,6 +247,35 @@ const styles = StyleSheet.create({
     color: theme.colors.textPrimary,
     lineHeight: 20,
     fontSize: 13,
+  },
+  contributingFactorsSection: {
+    marginTop: 12,
+    paddingTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: "#E5E7EB",
+  },
+  contributingFactorsTitle: {
+    fontWeight: "600",
+    color: theme.colors.textSecondary,
+    marginBottom: 6,
+    fontSize: 11,
+    textTransform: "uppercase",
+  },
+  factorItem: {
+    flexDirection: "row",
+    marginBottom: 4,
+    paddingLeft: 4,
+  },
+  factorBullet: {
+    color: theme.colors.textSecondary,
+    marginRight: 6,
+    fontSize: 13,
+  },
+  factorText: {
+    flex: 1,
+    color: theme.colors.textPrimary,
+    fontSize: 12,
+    lineHeight: 18,
   },
   actionRequired: {
     marginTop: 10,

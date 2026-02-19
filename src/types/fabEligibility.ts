@@ -11,6 +11,12 @@ export type FABCategory = "A" | "C" | "D";
 
 export type FABMethod = "SYM" | "CAL";
 
+/** Contributing factor that led to C or D category */
+export interface FABContributingFactor {
+  condition: string;
+  category: FABCategory;
+}
+
 /** Result for a single FAB method (SYM or CAL) */
 export interface FABMethodResult {
   method: FABMethod;
@@ -19,6 +25,8 @@ export interface FABMethodResult {
   categoryLabel: string;
   explanation: string;
   actionRequired?: string;
+  /** List of conditions that contributed to C or D category (empty for A) */
+  contributingFactors?: FABContributingFactor[];
 }
 
 /** Advisory messages (STI/HIV, high-risk pregnancy) */

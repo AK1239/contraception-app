@@ -113,9 +113,9 @@ export const personalizeRecommendations = (
     });
   }
 
-  // Q2: Irregular periods - keep only a, i, j, k
+  // Q2: Irregular periods - keep only a, i, j, k, l, m, n
   if (filters.okayWithIrregularPeriods === false) {
-    const keep: ContraceptiveMethodKey[] = ["a", "i", "j", "k"];
+    const keep: ContraceptiveMethodKey[] = ["a", "i", "j", "k", "l", "m", "n"];
     filtered.forEach((m) => {
       if (!keep.includes(m)) {
         eliminated.push({ method: m, reason: "May cause irregular or no periods" });
@@ -131,7 +131,7 @@ export const personalizeRecommendations = (
 
     switch (freq) {
       case "daily":
-        freqMethods = ["a", "b", "c"];
+        freqMethods = ["a", "b", "c", "l", "m", "n"];
         break;
       case "every-3-weeks":
         freqMethods = ["i", "k"];

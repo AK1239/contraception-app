@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet, Platform, TextInput as RNTextInput, Text as RNText } from "react-native";
 import { TextInput, RadioButton, Text, Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Question, AnswerValue } from "../types";
@@ -68,23 +68,39 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
 
         return (
           <View style={styles.cycleDurationsContainer}>
-            {Array.from({ length: CYCLE_COUNT }, (_, i) => (
-              <TextInput
-                key={i}
-                mode="outlined"
-                label={`Cycle ${i + 1} (days)`}
-                value={durations[i] && durations[i] > 0 ? String(durations[i]) : ""}
-                onChangeText={(text) => {
-                  const arr: number[] = [...durations];
-                  const num = text === "" ? 0 : parseFloat(text);
-                  arr[i] = !isNaN(num) ? num : 0;
-                  onValueChange(arr as AnswerValue);
-                }}
-                keyboardType="numeric"
-                style={styles.cycleDurationInput}
-                error={!!error}
-              />
-            ))}
+            <View style={styles.cycleHeader}>
+              <Text style={styles.cycleHeaderText}>Required cycles</Text>
+              <View style={styles.cycleBadge}>
+                <Text style={styles.cycleBadgeText}>Min. 6</Text>
+              </View>
+            </View>
+            <View style={styles.cyclesGrid}>
+              {Array.from({ length: CYCLE_COUNT }, (_, i) => (
+                <View key={i} style={styles.cycleInputWrapper}>
+                  <View style={styles.cycleInputContainer}>
+                    <RNTextInput
+                      style={[
+                        styles.cycleInput,
+                        durations[i] && durations[i] > 0 && styles.cycleInputFilled,
+                      ]}
+                      value={durations[i] && durations[i] > 0 ? String(durations[i]) : ""}
+                      onChangeText={(text) => {
+                        const arr: number[] = [...durations];
+                        const num = text === "" ? 0 : parseFloat(text);
+                        arr[i] = !isNaN(num) ? num : 0;
+                        onValueChange(arr as AnswerValue);
+                      }}
+                      placeholder="--"
+                      placeholderTextColor="#9CA3AF"
+                      keyboardType="numeric"
+                      maxLength={2}
+                    />
+                    <RNText style={styles.cycleDaysLabel}>days</RNText>
+                  </View>
+                  <RNText style={styles.cycleAsterisk}>*</RNText>
+                </View>
+              ))}
+            </View>
           </View>
         );
       }
@@ -304,11 +320,12 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               <DateTimePicker
                 value={dateValue}
                 mode="date"
-                display={Platform.OS === "ios" ? "inline" : "spinner"}
+                display={Platform.OS === "ios" ? "inline" : "calendar"}
                 maximumDate={maxDate}
                 minimumDate={minDate}
                 themeVariant="light"
                 accentColor="#6D28D9"
+                textColor="#1F2937"
                 onChange={(_event, selectedDate) => {
                   setDatePickerOpen(false);
                   if (selectedDate) {
@@ -663,7 +680,77 @@ const styles = StyleSheet.create({
     color: "#9CA3AF",
   },
   cycleDurationsContainer: {
-    gap: 10,
+    marginTop: 8,
+  },
+  cycleHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+    gap: 8,
+  },
+  cycleHeaderText: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#374151',
+  },
+  cycleBadge: {
+    backgroundColor: '#EDE9FE',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  cycleBadgeText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#6D28D9',
+  },
+  cyclesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    justifyContent: 'space-between',
+  },
+  cycleInputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '47%',
+    minWidth: 140,
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  cycleInputContainer: {
+    flex: 1,
+    position: 'relative',
+  },
+  cycleInput: {
+    borderWidth: 2,
+    borderColor: '#E5E7EB',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+    paddingBottom: 20,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: '#F9FAFB',
+    color: '#1F2937',
+  },
+  cycleInputFilled: {
+    borderColor: '#6D28D9',
+    backgroundColor: '#fff',
+  },
+  cycleDaysLabel: {
+    position: 'absolute',
+    bottom: 2,
+    right: 8,
+    fontSize: 9,
+    color: '#9CA3AF',
+  },
+  cycleAsterisk: {
+    color: '#EF4444',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 4,
   },
   cycleDurationInput: {
     marginBottom: 4,

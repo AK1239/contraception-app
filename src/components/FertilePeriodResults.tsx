@@ -62,30 +62,26 @@ export default function FertilePeriodResults({ fertilePeriod, calendarResult }: 
           </View>
           
           <Text style={styles.safeDescription}>
-            You can have intercourse during these periods:
+            Lower pregnancy risk during these periods
           </Text>
           
           <View style={styles.safePeriods}>
-            <View style={styles.safePeriodItem}>
-              <View style={styles.safePeriodBadge}>
-                <Text style={styles.safePeriodNumber}>1</Text>
-              </View>
-              <View style={styles.safePeriodContent}>
-                <Text style={styles.safePeriodText}>
-                  {formatDate(calendarResult.safeStartDate)} - {formatDate(calendarResult.safeEndDate)}
-                </Text>
-              </View>
+            <View style={styles.safePeriodSection}>
+              <Text style={styles.safePeriodLabel}>
+                Day 1-7 (before fertile window)
+              </Text>
+              <Text style={styles.safePeriodDateRange}>
+                {formatDate(calendarResult.safeStartDate)} - {formatDate(calendarResult.safeEndDate)}
+              </Text>
             </View>
             
-            <View style={styles.safePeriodItem}>
-              <View style={styles.safePeriodBadge}>
-                <Text style={styles.safePeriodNumber}>2</Text>
-              </View>
-              <View style={styles.safePeriodContent}>
-                <Text style={styles.safePeriodText}>
-                  After {formatDate(calendarResult.fertileEndDate)} until next period
-                </Text>
-              </View>
+            <View style={styles.safePeriodSection}>
+              <Text style={styles.safePeriodLabel}>
+                Day 20 onward (after fertile window)
+              </Text>
+              <Text style={styles.safePeriodDateRange}>
+                From {formatDate(calendarResult.fertileEndDate)} onwards
+              </Text>
             </View>
           </View>
         </View>
@@ -272,7 +268,22 @@ const styles = StyleSheet.create({
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   safePeriods: {
-    gap: 12,
+    gap: 8,
+  },
+  safePeriodSection: {
+    marginBottom: 20,
+  },
+  safePeriodLabel: {
+    fontSize: 15,
+    fontWeight: '600',
+    color: '#065F46',
+    marginBottom: 8,
+    fontFamily: 'PlusJakartaSans_600SemiBold',
+  },
+  safePeriodDateRange: {
+    fontSize: 15,
+    color: '#6B7280',
+    fontFamily: 'PlusJakartaSans_400Regular',
   },
   safePeriodItem: {
     flexDirection: 'row',
