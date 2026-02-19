@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 import { RootState } from "../store";
 import { setPersonalizationAnswer } from "../store/slices/questionnaire";
 import { generatePersonalizedRecommendations } from "../services/personalizationEngine";
-import { ContraceptiveMethodKey, AnswerValue } from "../types";
+import { ContraceptiveMethodKey, AnswerValue, MECScore } from "../types";
 import { getFrequencyValue } from "../constants/questions";
 import { handleError, ErrorCode } from "../services/errorHandler";
 import { logger } from "../services/logger";
@@ -15,6 +15,7 @@ import { logger } from "../services/logger";
  */
 export const usePersonalizationNavigation = (
   eligibleMethods: ContraceptiveMethodKey[],
+  mecScores: Record<ContraceptiveMethodKey, MECScore>,
   currentQuestionId: string | undefined,
   isLastQuestion: boolean,
   validateCurrentQuestion: () => boolean,
@@ -35,7 +36,7 @@ export const usePersonalizationNavigation = (
       preferredFrequency: personalization.answers.preferredFrequency,
       heightWeight: personalization.answers.heightWeight,
     };
-    return generatePersonalizedRecommendations(eligibleMethods, answers);
+    return generatePersonalizedRecommendations(eligibleMethods, answers, mecScores);
   };
 
   const navigateToResults = (showPermanentMethods = false) => {

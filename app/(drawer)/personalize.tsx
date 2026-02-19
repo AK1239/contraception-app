@@ -17,7 +17,7 @@ export default function PersonalizePage() {
   const { personalization } = useSelector((state: RootState) => state.questionnaire);
   
   // Check eligible methods and handle redirects
-  const { eligibleMethods, isCheckingEligibility } = useEligibleMethods();
+  const { eligibleMethods, mecScores, isCheckingEligibility } = useEligibleMethods();
   
   // Manage question visibility and navigation
   const {
@@ -38,6 +38,7 @@ export default function PersonalizePage() {
   // Handle navigation and result generation
   const { isGeneratingResults, handleNext, handleAnswerChange } = usePersonalizationNavigation(
     eligibleMethods,
+    mecScores,
     currentQuestion?.id,
     isLastQuestion,
     validateCurrentQuestion,

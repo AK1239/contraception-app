@@ -56,12 +56,7 @@ export const SECTIONS: Section[] = [
         type: "yes-no",
         required: true,
       },
-      {
-        id: "latex-allergy",
-        text: "Do you have allergy to latex?",
-        type: "yes-no",
-        required: true,
-      },
+      
     ],
   },
 

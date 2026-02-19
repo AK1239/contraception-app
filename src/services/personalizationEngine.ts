@@ -1,4 +1,4 @@
-import { ContraceptiveMethodKey } from "../types";
+import { ContraceptiveMethodKey, MECScore } from "../types";
 import { logger } from "./logger";
 import { ErrorCode, createError, withSyncErrorHandling } from "./errorHandler";
 
@@ -25,11 +25,33 @@ function computeBMI(heightCm: number, weightKg: number): number {
 }
 
 /**
+ * Sort methods by MEC grade first (1 → 2 → 3 → 4), then alphabetically by key
+ */
+function sortByMECAndAlpha(
+  methods: ContraceptiveMethodKey[],
+  mecScores: Record<ContraceptiveMethodKey, MECScore>
+): ContraceptiveMethodKey[] {
+  return [...methods].sort((a, b) => {
+    const scoreA = mecScores[a] || 1;
+    const scoreB = mecScores[b] || 1;
+    
+    // Sort by MEC score first (ascending: 1, 2, 3, 4)
+    if (scoreA !== scoreB) {
+      return scoreA - scoreB;
+    }
+    
+    // Within same MEC score, sort alphabetically by key
+    return a.localeCompare(b);
+  });
+}
+
+/**
  * Per spec: Filter eligible methods and suggest based on preferences
  */
 export const personalizeRecommendations = (
   eligibleMethods: ContraceptiveMethodKey[],
-  filters: PersonalizationFilters
+  filters: PersonalizationFilters,
+  mecScores: Record<ContraceptiveMethodKey, MECScore> = {} as Record<ContraceptiveMethodKey, MECScore>
 ): {
   recommended: ContraceptiveMethodKey[];
   notices: string[];
@@ -68,7 +90,7 @@ export const personalizeRecommendations = (
     const surgical = filtered.filter((m) => m === "h" || m === "o");
     if (surgical.length > 0) {
       return {
-        recommended: surgical,
+        recommended: sortByMECAndAlpha(surgical, mecScores),
         notices: ["Sterilization is permanent and fertility is not reversible"],
         eliminated,
         shouldShowPermanentMethods: true,
@@ -164,7 +186,7 @@ export const personalizeRecommendations = (
   });
 
   return {
-    recommended: filtered,
+    recommended: sortByMECAndAlpha(filtered, mecScores),
     notices,
     eliminated,
     shouldShowPermanentMethods,
@@ -193,7 +215,8 @@ export interface PersonalizationAnswers {
 export const generatePersonalizedRecommendations = withSyncErrorHandling(
   (
     eligibleMethods: ContraceptiveMethodKey[],
-    answers: Record<string, unknown>
+    answers: Record<string, unknown>,
+    mecScores: Record<ContraceptiveMethodKey, MECScore> = {} as Record<ContraceptiveMethodKey, MECScore>
   ): {
     recommended: ContraceptiveMethodKey[];
     notices: string[];
@@ -217,7 +240,7 @@ export const generatePersonalizedRecommendations = withSyncErrorHandling(
       currentBMI: bmi,
     };
 
-    return personalizeRecommendations(eligibleMethods, filters);
+    return personalizeRecommendations(eligibleMethods, filters, mecScores);
   },
   ErrorCode.PERSONALIZATION_FAILED,
   "generatePersonalizedRecommendations"

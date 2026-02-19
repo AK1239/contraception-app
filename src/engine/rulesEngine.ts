@@ -206,6 +206,19 @@ export class RulesEngine {
       }
     }
 
+    // Sort each category alphabetically by method key (a-o)
+    suggested.sort();
+    greaterBenefit.sort();
+    // For avoid, sort by MEC score DESC first (4 before 3), then alphabetically within same score
+    avoid.sort((a, b) => {
+      const scoreA = mecScores[a];
+      const scoreB = mecScores[b];
+      if (scoreA !== scoreB) {
+        return scoreB - scoreA; // Higher score first (4 before 3)
+      }
+      return a.localeCompare(b); // Alphabetically within same score
+    });
+
     return {
       mecResults,
       suggested,
