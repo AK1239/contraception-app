@@ -14,14 +14,26 @@ export interface CalendarMethodAnswers {
 }
 
 /**
+ * Calendar date data for visual display
+ */
+export interface CalendarDateData {
+  date: Date;
+  formattedDate: string; // e.g., "Mon 15"
+  type: 'safe' | 'fertile' | 'expected-period';
+  dayNumber: number; // Day of cycle
+}
+
+/**
  * Eligibility and calculation result
  */
 export interface CalendarMethodEligibilityResult {
   eligible: boolean;
   shortestCycle: number | null;
   longestCycle: number | null;
+  avgCycleLength: number | null; // Rounded average
   earliestFertileDay: number | null; // Day 'a' in cycle
   latestFertileDay: number | null; // Day 'b' in cycle
+  lmpDate: Date | null; // Last menstrual period date
   fertileWindow?: {
     start: Date;
     end: Date;
@@ -41,9 +53,22 @@ export interface CalendarMethodEligibilityResult {
     };
     afterFertile: {
       start: Date;
-      calendarDate: string;
+      end: Date; // NEW: End date of safe window
+      calendarDates: {
+        start: string;
+        end: string; // NEW: Formatted end date
+      };
     };
   };
+  nextPeriod?: {
+    predictedDate: Date;
+    formattedDate: string; // e.g., "Monday, March 15, 2026"
+  };
+  recalculationDate?: {
+    date: Date;
+    formattedDate: string;
+  };
+  calendarDates?: CalendarDateData[]; // Array of all days for visual calendar
   message: string;
   educationalMessage: string;
   warning?: string;

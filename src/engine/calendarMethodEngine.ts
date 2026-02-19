@@ -1,26 +1,32 @@
 /**
  * Calendar Method (Ogino-Knaus / Rhythm Method) Eligibility Engine
  * Based on WHO Fertility Awareness Methods Handbook and CDC guidance
+ * Updated with complete date calculations and WHO requirements
  */
 
-import { CalendarMethodAnswers, CalendarMethodEligibilityResult } from '../types/calendarMethod';
+import { CalendarMethodAnswers, CalendarMethodEligibilityResult, CalendarDateData } from '../types/calendarMethod';
 
 /**
- * Get shortest and longest cycle from 6 cycles
+ * Get shortest, longest, and average cycle from 6 cycles
  */
-function getShortestAndLongestCycles(cycleLengths: (number | null)[]): {
+function getCycleStatistics(cycleLengths: (number | null)[]): {
   shortest: number | null;
   longest: number | null;
+  average: number | null;
 } {
   const validCycles = cycleLengths.filter((length): length is number => length !== null);
   
   if (validCycles.length !== 6) {
-    return { shortest: null, longest: null };
+    return { shortest: null, longest: null, average: null };
   }
+  
+  const sum = validCycles.reduce((acc, val) => acc + val, 0);
+  const average = Math.round(sum / validCycles.length); // WHO: Round to nearest integer
   
   return {
     shortest: Math.min(...validCycles),
     longest: Math.max(...validCycles),
+    average,
   };
 }
 
@@ -93,14 +99,18 @@ function calculateFertileDates(
 }
 
 /**
- * Calculate safe window periods
+ * Calculate safe window periods with end date
  */
-function calculateSafeWindow(lmpDate: Date, earliestDay: number, latestDay: number) {
+function calculateSafeWindow(lmpDate: Date, earliestDay: number, latestDay: number, avgCycleLength: number) {
   const safeBeforeEnd = new Date(lmpDate);
   safeBeforeEnd.setDate(safeBeforeEnd.getDate() + earliestDay - 2); // Day before earliest fertile day
   
   const afterFertileStart = new Date(lmpDate);
   afterFertileStart.setDate(afterFertileStart.getDate() + latestDay); // Day after latest fertile day
+  
+  // Safe window ENDS the day before the next period
+  const afterFertileEnd = new Date(lmpDate);
+  afterFertileEnd.setDate(afterFertileEnd.getDate() + avgCycleLength - 1);
   
   return {
     beforeFertile: {
@@ -112,8 +122,12 @@ function calculateSafeWindow(lmpDate: Date, earliestDay: number, latestDay: numb
       },
     },
     afterFertile: {
-      start: afterFertileStart, // Day (b+1) onward
-      calendarDate: formatDate(afterFertileStart),
+      start: afterFertileStart, // Day (b+1)
+      end: afterFertileEnd, // Day before next cycle
+      calendarDates: {
+        start: formatDate(afterFertileStart),
+        end: formatDate(afterFertileEnd),
+      },
     },
   };
 }
@@ -129,12 +143,89 @@ function formatDate(date: Date): string {
 }
 
 /**
- * Build educational message
+ * Format date with full day name and month (e.g., "Monday, March 15, 2026")
+ */
+function formatLongDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+/**
+ * Calculate next period prediction
+ */
+function calculateNextPeriod(lmpDate: Date, avgCycleLength: number) {
+  const nextPeriodDate = new Date(lmpDate);
+  nextPeriodDate.setDate(nextPeriodDate.getDate() + avgCycleLength);
+  
+  return {
+    predictedDate: nextPeriodDate,
+    formattedDate: formatLongDate(nextPeriodDate),
+  };
+}
+
+/**
+ * Calculate recalculation date (same as next period)
+ */
+function calculateRecalculationDate(lmpDate: Date, avgCycleLength: number) {
+  const recalcDate = new Date(lmpDate);
+  recalcDate.setDate(recalcDate.getDate() + avgCycleLength);
+  
+  return {
+    date: recalcDate,
+    formattedDate: formatLongDate(recalcDate),
+  };
+}
+
+/**
+ * Generate array of calendar dates for visual display
+ */
+function generateCalendarDates(
+  lmpDate: Date,
+  avgCycleLength: number,
+  earliestDay: number,
+  latestDay: number
+): CalendarDateData[] {
+  const calendarDates: CalendarDateData[] = [];
+  
+  for (let day = 1; day <= avgCycleLength; day++) {
+    const currentDate = new Date(lmpDate);
+    currentDate.setDate(currentDate.getDate() + day - 1);
+    
+    let type: 'safe' | 'fertile' | 'expected-period' = 'safe';
+    
+    // Determine type
+    if (day >= earliestDay && day <= latestDay) {
+      type = 'fertile';
+    } else if (day === avgCycleLength) {
+      type = 'expected-period';
+    }
+    
+    // Format as "Mon 15" or "Tue 16"
+    const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'short' });
+    const dayNum = currentDate.getDate();
+    
+    calendarDates.push({
+      date: currentDate,
+      formattedDate: `${dayName} ${dayNum}`,
+      type,
+      dayNumber: day,
+    });
+  }
+  
+  return calendarDates;
+}
+
+/**
+ * Build educational message with WHO/CDC effectiveness data
  */
 function buildEducationalMessage(): string {
   return 'Fertility awareness methods require consistent tracking and correct use.\n\n' +
-    'Typical-use effectiveness is approximately 81%.\n\n' +
-    'Perfect-use effectiveness can reach up to 95%.\n\n' +
+    'Typical-use effectiveness: ~76–88%.\n\n' +
+    'Perfect-use effectiveness: up to ~95%.\n\n' +
     'Does not protect against sexually transmitted infections.';
 }
 
@@ -142,17 +233,19 @@ function buildEducationalMessage(): string {
  * Main evaluation function for Calendar Method eligibility
  */
 export function evaluateCalendarMethod(answers: CalendarMethodAnswers): CalendarMethodEligibilityResult {
-  const { shortest, longest } = getShortestAndLongestCycles(answers.cycleLengths);
+  const { shortest, longest, average } = getCycleStatistics(answers.cycleLengths);
   const cyclesRegular = areCyclesRegular(answers.cycleLengths);
   
   // Base result for incomplete data
-  if (shortest === null || longest === null) {
+  if (shortest === null || longest === null || average === null) {
     return {
       eligible: false,
       shortestCycle: null,
       longestCycle: null,
+      avgCycleLength: null,
       earliestFertileDay: null,
       latestFertileDay: null,
+      lmpDate: null,
       message: 'Please provide all 6 cycle lengths to calculate your fertile window.',
       educationalMessage: buildEducationalMessage(),
     };
@@ -164,8 +257,10 @@ export function evaluateCalendarMethod(answers: CalendarMethodAnswers): Calendar
       eligible: false,
       shortestCycle: shortest,
       longestCycle: longest,
+      avgCycleLength: average,
       earliestFertileDay: null,
       latestFertileDay: null,
+      lmpDate: answers.lmpDate,
       message: 'Your cycles may be irregular. Calendar-based methods may not be reliable.',
       educationalMessage: buildEducationalMessage(),
       warning: 'One or more of your cycles is outside the typical range (21-35 days).',
@@ -181,8 +276,10 @@ export function evaluateCalendarMethod(answers: CalendarMethodAnswers): Calendar
       eligible: false,
       shortestCycle: shortest,
       longestCycle: longest,
+      avgCycleLength: average,
       earliestFertileDay: earliestDay,
       latestFertileDay: latestDay,
+      lmpDate: answers.lmpDate,
       message: 'Cycle variability is high. Calendar method may not be reliable.',
       educationalMessage: buildEducationalMessage(),
       warning: 'The difference between your shortest and longest cycles is too large for accurate prediction.',
@@ -195,25 +292,35 @@ export function evaluateCalendarMethod(answers: CalendarMethodAnswers): Calendar
       eligible: true,
       shortestCycle: shortest,
       longestCycle: longest,
+      avgCycleLength: average,
       earliestFertileDay: earliestDay,
       latestFertileDay: latestDay,
+      lmpDate: null,
       message: `Based on your cycles (shortest: ${shortest} days, longest: ${longest} days), you are eligible for the Calendar Method!`,
       educationalMessage: buildEducationalMessage(),
     };
   }
   
-  // Calculate fertile and safe windows with calendar dates
+  // Calculate all date-specific values
   const fertileWindow = calculateFertileDates(answers.lmpDate, earliestDay, latestDay);
-  const safeWindow = calculateSafeWindow(answers.lmpDate, earliestDay, latestDay);
+  const safeWindow = calculateSafeWindow(answers.lmpDate, earliestDay, latestDay, average);
+  const nextPeriod = calculateNextPeriod(answers.lmpDate, average);
+  const recalculationDate = calculateRecalculationDate(answers.lmpDate, average);
+  const calendarDates = generateCalendarDates(answers.lmpDate, average, earliestDay, latestDay);
   
   return {
     eligible: true,
     shortestCycle: shortest,
     longestCycle: longest,
+    avgCycleLength: average,
     earliestFertileDay: earliestDay,
     latestFertileDay: latestDay,
+    lmpDate: answers.lmpDate,
     fertileWindow,
     safeWindow,
+    nextPeriod,
+    recalculationDate,
+    calendarDates,
     message: `Based on your cycles, your fertile window is from Day ${earliestDay} to Day ${latestDay} of your cycle.`,
     educationalMessage: buildEducationalMessage(),
   };
