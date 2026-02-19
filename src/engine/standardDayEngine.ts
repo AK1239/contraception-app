@@ -6,7 +6,7 @@
 import { SDMAnswers, SDMEligibilityResult } from '../types/standardDayMethod';
 
 /**
- * Calculate average cycle length from 6 cycles
+ * Calculate average cycle length from 6 cycles (rounded to nearest integer)
  */
 function calculateAverageCycleLength(cycleLengths: (number | null)[]): number | null {
   const validCycles = cycleLengths.filter((length): length is number => length !== null);
@@ -16,7 +16,8 @@ function calculateAverageCycleLength(cycleLengths: (number | null)[]): number | 
   }
   
   const sum = validCycles.reduce((total, length) => total + length, 0);
-  return sum / 6;
+  const average = sum / 6;
+  return Math.round(average); // Round to nearest integer per WHO guidelines
 }
 
 /**
@@ -58,13 +59,22 @@ function calculateFertileWindow(lmpDate: Date): {
 
 /**
  * Calculate safe window periods
+ * Safe before: Day 1-7
+ * Safe after: Day 20 until day before next period
  */
-function calculateSafeWindow(lmpDate: Date) {
+function calculateSafeWindow(lmpDate: Date, avgCycleLength: number) {
   const safeBeforeEnd = new Date(lmpDate);
   safeBeforeEnd.setDate(safeBeforeEnd.getDate() + 6); // Day 7
   
   const afterFertileStart = new Date(lmpDate);
   afterFertileStart.setDate(afterFertileStart.getDate() + 19); // Day 20
+  
+  // Calculate safe days end (day before next predicted cycle)
+  const nextCycleStart = new Date(lmpDate);
+  nextCycleStart.setDate(nextCycleStart.getDate() + avgCycleLength);
+  
+  const safeAfterEnd = new Date(nextCycleStart);
+  safeAfterEnd.setDate(safeAfterEnd.getDate() - 1); // Day before next cycle
   
   return {
     beforeFertile: {
@@ -76,10 +86,80 @@ function calculateSafeWindow(lmpDate: Date) {
       },
     },
     afterFertile: {
-      start: afterFertileStart, // Day 20 onward
-      calendarDate: formatDate(afterFertileStart),
+      start: afterFertileStart, // Day 20
+      end: safeAfterEnd, // Day before next cycle
+      calendarDates: {
+        start: formatDate(afterFertileStart),
+        end: formatDate(safeAfterEnd),
+      },
     },
   };
+}
+
+/**
+ * Calculate next predicted period
+ */
+function calculateNextPeriod(lmpDate: Date, avgCycleLength: number) {
+  const predictedDate = new Date(lmpDate);
+  predictedDate.setDate(predictedDate.getDate() + avgCycleLength);
+  
+  return {
+    predictedDate,
+    formattedDate: formatDate(predictedDate),
+  };
+}
+
+/**
+ * Calculate recalculation reminder date (same as next period date)
+ */
+function calculateRecalculationDate(lmpDate: Date, avgCycleLength: number) {
+  const date = new Date(lmpDate);
+  date.setDate(date.getDate() + avgCycleLength);
+  
+  return {
+    date,
+    formattedDate: formatDate(date),
+  };
+}
+
+/**
+ * Generate calendar dates for visualization
+ */
+function generateCalendarDates(
+  lmpDate: Date,
+  avgCycleLength: number
+): Array<{
+  date: Date;
+  formattedDate: string;
+  type: 'safe' | 'fertile' | 'expected-period';
+  dayNumber: number;
+}> {
+  const calendarDates = [];
+  
+  // Generate dates for the entire cycle plus a few days to show next period
+  for (let day = 0; day < avgCycleLength + 7; day++) {
+    const currentDate = new Date(lmpDate);
+    currentDate.setDate(currentDate.getDate() + day);
+    
+    let type: 'safe' | 'fertile' | 'expected-period';
+    
+    if (day === avgCycleLength) {
+      type = 'expected-period';
+    } else if (day >= 7 && day <= 18) { // Day 8-19 (0-indexed: 7-18)
+      type = 'fertile';
+    } else {
+      type = 'safe';
+    }
+    
+    calendarDates.push({
+      date: currentDate,
+      formattedDate: formatDate(currentDate),
+      type,
+      dayNumber: day + 1,
+    });
+  }
+  
+  return calendarDates;
 }
 
 /**
@@ -96,12 +176,12 @@ function formatDate(date: Date): string {
  * Build educational message based on eligibility
  */
 function buildEducationalMessage(eligible: boolean): string {
-  const baseMessage = 'Standard Days Method requires consistent tracking and cycles 26–32 days long.\n\n';
-  const effectiveness = 'Typical-use effectiveness is approximately 87%.\n\n';
+  const baseMessage = 'Standard Days Method requires cycles consistently 26–32 days long.\n\n';
+  const effectiveness = 'Typical-use effectiveness ≈ 88%.\n\n';
   const protection = 'Does not protect against sexually transmitted infections.';
   
   if (!eligible) {
-    return baseMessage + 'You may want to consider other contraceptive methods that are more suitable for irregular cycles. ' + protection;
+    return baseMessage + 'You may want to consider other contraceptive methods that are more suitable for irregular cycles.\n\n' + protection;
   }
   
   return baseMessage + effectiveness + protection;
@@ -121,7 +201,7 @@ export function evaluateSDM(answers: SDMAnswers): SDMEligibilityResult {
       avgCycleLength,
       message: avgCycleLength === null 
         ? 'Please provide all 6 cycle lengths to determine eligibility.'
-        : `Your average cycle length is ${avgCycleLength.toFixed(1)} days. The Standard Days Method is validated only for women with cycles between 26 and 32 days.`,
+        : `Your average cycle length is ${avgCycleLength} days. The Standard Days Method is validated only for women with cycles between 26 and 32 days.`,
       educationalMessage: buildEducationalMessage(false),
     };
   }
@@ -131,21 +211,28 @@ export function evaluateSDM(answers: SDMAnswers): SDMEligibilityResult {
     return {
       eligible: true,
       avgCycleLength,
-      message: `Your average cycle length is ${avgCycleLength.toFixed(1)} days. You are eligible for the Standard Days Method!`,
+      message: `Your average cycle length is ${avgCycleLength} days. You are eligible for the Standard Days Method! Please select your last menstrual period date to continue.`,
       educationalMessage: buildEducationalMessage(true),
     };
   }
   
-  // Calculate fertile and safe windows
+  // Calculate all date-based information
   const fertileWindow = calculateFertileWindow(answers.lmpDate);
-  const safeWindow = calculateSafeWindow(answers.lmpDate);
+  const safeWindow = calculateSafeWindow(answers.lmpDate, avgCycleLength);
+  const nextPeriod = calculateNextPeriod(answers.lmpDate, avgCycleLength);
+  const recalculationDate = calculateRecalculationDate(answers.lmpDate, avgCycleLength);
+  const calendarDates = generateCalendarDates(answers.lmpDate, avgCycleLength);
   
   return {
     eligible: true,
     avgCycleLength,
+    lmpDate: answers.lmpDate,
     fertileWindow,
     safeWindow,
-    message: `Based on your average cycle length of ${avgCycleLength.toFixed(1)} days and your last menstrual period, your fertile window has been calculated.`,
+    nextPeriod,
+    recalculationDate,
+    calendarDates,
+    message: `Based on your average cycle length of ${avgCycleLength} days and your last menstrual period, your fertile and safe days have been calculated.`,
     educationalMessage: buildEducationalMessage(true),
   };
 }

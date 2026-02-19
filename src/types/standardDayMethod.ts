@@ -19,6 +19,7 @@ export interface SDMAnswers {
 export interface SDMEligibilityResult {
   eligible: boolean;
   avgCycleLength: number | null;
+  lmpDate?: Date;
   fertileWindow?: {
     start: Date;
     end: Date;
@@ -38,9 +39,27 @@ export interface SDMEligibilityResult {
     };
     afterFertile: {
       start: Date;
-      calendarDate: string;
+      end: Date;
+      calendarDates: {
+        start: string;
+        end: string;
+      };
     };
   };
+  nextPeriod?: {
+    predictedDate: Date;
+    formattedDate: string;
+  };
+  recalculationDate?: {
+    date: Date;
+    formattedDate: string;
+  };
+  calendarDates?: Array<{
+    date: Date;
+    formattedDate: string;
+    type: 'safe' | 'fertile' | 'expected-period';
+    dayNumber: number;
+  }>;
   message: string;
   educationalMessage: string;
 }

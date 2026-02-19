@@ -1,13 +1,15 @@
 /**
  * Standard Days Method Results Component
+ * Updated with complete date calculations, visual calendar, and safety alerts
  */
 
-import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Text, Card, Button, Divider } from 'react-native-paper';
 // @ts-ignore - Expo vector icons types
 import { Ionicons } from '@expo/vector-icons';
 import { SDMEligibilityResult } from '../../types/standardDayMethod';
+import SDMCalendar from './SDMCalendar';
 
 interface StandardDayResultsProps {
   result: SDMEligibilityResult;
@@ -15,44 +17,69 @@ interface StandardDayResultsProps {
 }
 
 export default function StandardDayResults({ result, onReset }: StandardDayResultsProps) {
+  const [showPeriodAlert, setShowPeriodAlert] = useState(false);
+
+  useEffect(() => {
+    // Check if predicted period date has passed
+    if (result.nextPeriod && result.lmpDate) {
+      const today = new Date();
+      const predictedDate = new Date(result.nextPeriod.predictedDate);
+      
+      if (today > predictedDate && !showPeriodAlert) {
+        setShowPeriodAlert(true);
+        Alert.alert(
+          'Period Date Passed',
+          'Your expected period date has passed. Please enter the first day of your new period to generate accurate safe days.',
+          [
+            { text: 'Recalculate', onPress: onReset, style: 'default' },
+            { text: 'Later', style: 'cancel' },
+          ]
+        );
+      }
+    }
+  }, [result.nextPeriod, result.lmpDate, showPeriodAlert, onReset]);
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       {/* Header */}
       <View style={styles.header}>
-        <Ionicons name="calendar" size={48} color="#059669" />
+        <Ionicons name="calendar" size={48} color="#6D28D9" />
         <Text style={styles.headerTitle}>Standard Days Method</Text>
-        <Text style={styles.headerSubtitle}>Your Results</Text>
+        <Text style={styles.headerSubtitle}>Your Fertility Calendar</Text>
       </View>
 
-      {/* Average Cycle Length */}
-      {result.avgCycleLength !== null && (
-        <Card style={styles.card}>
+      {/* Summary Card */}
+      <Card style={[styles.card, styles.summaryCard]}>
+        <Card.Content>
+          <View style={styles.cardHeader}>
+            <Ionicons name="information-circle" size={24} color="#6D28D9" />
+            <Text style={styles.cardTitle}>📊 YOUR RESULTS</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Average cycle length:</Text>
+            <Text style={styles.summaryValue}>{result.avgCycleLength} days</Text>
+          </View>
+          <View style={styles.summaryRow}>
+            <Text style={styles.summaryLabel}>Eligibility:</Text>
+            <Text style={[styles.summaryValue, result.eligible ? styles.eligible : styles.notEligible]}>
+              {result.eligible ? 'Eligible ✓' : 'Not Eligible ✗'}
+            </Text>
+          </View>
+        </Card.Content>
+      </Card>
+
+      {/* Eligibility Status */}
+      {!result.eligible && (
+        <Card style={[styles.card, styles.notEligibleCard]}>
           <Card.Content>
             <View style={styles.cardHeader}>
-              <Ionicons name="stats-chart" size={24} color="#059669" />
-              <Text style={styles.cardTitle}>Average Cycle Length</Text>
+              <Ionicons name="close-circle" size={24} color="#DC2626" />
+              <Text style={styles.cardTitle}>Not Eligible for SDM</Text>
             </View>
-            <Text style={styles.avgCycleText}>{result.avgCycleLength.toFixed(1)} days</Text>
+            <Text style={styles.messageText}>{result.message}</Text>
           </Card.Content>
         </Card>
       )}
-
-      {/* Eligibility Status */}
-      <Card style={[styles.card, result.eligible ? styles.eligibleCard : styles.notEligibleCard]}>
-        <Card.Content>
-          <View style={styles.cardHeader}>
-            <Ionicons
-              name={result.eligible ? 'checkmark-circle' : 'close-circle'}
-              size={24}
-              color={result.eligible ? '#059669' : '#DC2626'}
-            />
-            <Text style={styles.cardTitle}>
-              {result.eligible ? 'Eligible for SDM' : 'Not Eligible for SDM'}
-            </Text>
-          </View>
-          <Text style={styles.messageText}>{result.message}</Text>
-        </Card.Content>
-      </Card>
 
       {/* Fertile Window (only if eligible and calculated) */}
       {result.eligible && result.fertileWindow && (
@@ -61,17 +88,23 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
             <Card.Content>
               <View style={styles.cardHeader}>
                 <Ionicons name="warning" size={24} color="#DC2626" />
-                <Text style={styles.cardTitle}>Fertile Window (Day 8-19)</Text>
+                <Text style={styles.cardTitle}>🔴 Fertile (Unsafe) Days</Text>
               </View>
-              <Text style={styles.windowSubtitle}>Pregnancy risk is high during these days</Text>
+              <Text style={styles.windowSubtitle}>Pregnancy Possible — Avoid Unprotected Intercourse</Text>
               <Divider style={styles.divider} />
               <View style={styles.dateRow}>
-                <Text style={styles.dateLabel}>Start Date:</Text>
+                <Text style={styles.dateLabel}>From:</Text>
                 <Text style={styles.dateValue}>{result.fertileWindow.calendarDates.fertileStart}</Text>
               </View>
               <View style={styles.dateRow}>
-                <Text style={styles.dateLabel}>End Date:</Text>
+                <Text style={styles.dateLabel}>To:</Text>
                 <Text style={styles.dateValue}>{result.fertileWindow.calendarDates.fertileEnd}</Text>
+              </View>
+              <View style={styles.warningBox}>
+                <Ionicons name="alert-circle" size={16} color="#DC2626" />
+                <Text style={styles.warningText}>
+                  Avoid unprotected intercourse during these dates.
+                </Text>
               </View>
             </Card.Content>
           </Card>
@@ -82,20 +115,87 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="shield-checkmark" size={24} color="#059669" />
-                  <Text style={styles.cardTitle}>Safe Days</Text>
+                  <Text style={styles.cardTitle}>🟢 Safe Days</Text>
                 </View>
-                <Text style={styles.windowSubtitle}>Lower pregnancy risk during these periods</Text>
+                <Text style={styles.windowSubtitle}>Low Pregnancy Probability</Text>
                 <Divider style={styles.divider} />
-                <Text style={styles.safeDayText}>• Day 1-7 (before fertile window)</Text>
+                
+                <Text style={styles.safeSectionHeader}>Before Fertile Window</Text>
                 <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>  {result.safeWindow.beforeFertile.calendarDates.start}</Text>
-                  <Text style={styles.dateLabel}> to </Text>
-                  <Text style={styles.dateLabel}>{result.safeWindow.beforeFertile.calendarDates.end}</Text>
+                  <Text style={styles.dateLabel}>From:</Text>
+                  <Text style={styles.dateValue}>{result.safeWindow.beforeFertile.calendarDates.start}</Text>
                 </View>
-                <Text style={styles.safeDayText}>• Day 20 onward (after fertile window)</Text>
                 <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>  From {result.safeWindow.afterFertile.calendarDate} onwards</Text>
+                  <Text style={styles.dateLabel}>To:</Text>
+                  <Text style={styles.dateValue}>{result.safeWindow.beforeFertile.calendarDates.end}</Text>
                 </View>
+                
+                <Divider style={styles.divider} />
+                
+                <Text style={styles.safeSectionHeader}>After Fertile Window</Text>
+                <View style={styles.dateRow}>
+                  <Text style={styles.dateLabel}>From:</Text>
+                  <Text style={styles.dateValue}>{result.safeWindow.afterFertile.calendarDates.start}</Text>
+                </View>
+                <View style={styles.dateRow}>
+                  <Text style={styles.dateLabel}>To:</Text>
+                  <Text style={styles.dateValue}>{result.safeWindow.afterFertile.calendarDates.end}</Text>
+                </View>
+                
+                <View style={styles.infoBox}>
+                  <Ionicons name="information-circle" size={16} color="#059669" />
+                  <Text style={styles.infoText}>
+                    Safe days END on: {result.safeWindow.afterFertile.calendarDates.end}
+                  </Text>
+                </View>
+              </Card.Content>
+            </Card>
+          )}
+
+          {/* Predicted Next Period */}
+          {result.nextPeriod && (
+            <Card style={[styles.card, styles.periodCard]}>
+              <Card.Content>
+                <View style={styles.cardHeader}>
+                  <Ionicons name="water" size={24} color="#2563EB" />
+                  <Text style={styles.cardTitle}>🩸 Predicted Next Period</Text>
+                </View>
+                <View style={styles.dateRow}>
+                  <Text style={styles.dateLabel}>Expected on or around:</Text>
+                  <Text style={[styles.dateValue, styles.periodDate]}>
+                    {result.nextPeriod.formattedDate}
+                  </Text>
+                </View>
+              </Card.Content>
+            </Card>
+          )}
+
+          {/* Recalculation Reminder */}
+          {result.recalculationDate && (
+            <Card style={[styles.card, styles.recalculationCard]}>
+              <Card.Content>
+                <View style={styles.cardHeader}>
+                  <Ionicons name="sync" size={24} color="#F59E0B" />
+                  <Text style={styles.cardTitle}>🔁 Recalculation Reminder</Text>
+                </View>
+                <Text style={styles.recalculationText}>
+                  Return on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
+                </Text>
+                <Text style={styles.recalculationWarning}>
+                  If bleeding starts earlier or later, previous safe days are no longer reliable.
+                </Text>
+              </Card.Content>
+            </Card>
+          )}
+
+          {/* Visual Calendar */}
+          {result.calendarDates && (
+            <Card style={styles.card}>
+              <Card.Content>
+                <SDMCalendar 
+                  calendarDates={result.calendarDates} 
+                  avgCycleLength={result.avgCycleLength || 28}
+                />
               </Card.Content>
             </Card>
           )}
@@ -106,7 +206,7 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
       <Card style={styles.card}>
         <Card.Content>
           <View style={styles.cardHeader}>
-            <Ionicons name="information-circle" size={24} color="#3B82F6" />
+            <Ionicons name="book" size={24} color="#3B82F6" />
             <Text style={styles.cardTitle}>Important Information</Text>
           </View>
           <Text style={styles.educationalText}>{result.educationalMessage}</Text>
@@ -160,6 +260,11 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 12,
     elevation: 2,
+    backgroundColor: '#FFFFFF',
+  },
+  summaryCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#6D28D9',
   },
   cardHeader: {
     flexDirection: 'row',
@@ -173,17 +278,28 @@ const styles = StyleSheet.create({
     color: '#111827',
     fontFamily: 'PlusJakartaSans_700Bold',
   },
-  avgCycleText: {
-    fontSize: 32,
+  summaryRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  summaryLabel: {
+    fontSize: 15,
+    color: '#4A5568',
+    fontFamily: 'PlusJakartaSans_500Medium',
+  },
+  summaryValue: {
+    fontSize: 16,
     fontWeight: 'bold',
-    color: '#059669',
-    textAlign: 'center',
-    marginTop: 8,
+    color: '#111827',
     fontFamily: 'PlusJakartaSans_700Bold',
   },
-  eligibleCard: {
-    borderLeftWidth: 4,
-    borderLeftColor: '#059669',
+  eligible: {
+    color: '#059669',
+  },
+  notEligible: {
+    color: '#DC2626',
   },
   notEligibleCard: {
     borderLeftWidth: 4,
@@ -198,6 +314,14 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderLeftColor: '#059669',
     backgroundColor: '#F0FDF4',
+  },
+  periodCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#2563EB',
+  },
+  recalculationCard: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#F59E0B',
   },
   messageText: {
     fontSize: 16,
@@ -230,11 +354,65 @@ const styles = StyleSheet.create({
     color: '#111827',
     fontFamily: 'PlusJakartaSans_700Bold',
   },
-  safeDayText: {
-    fontSize: 16,
+  periodDate: {
+    color: '#2563EB',
+  },
+  safeSectionHeader: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#059669',
+    marginBottom: 8,
+    fontFamily: 'PlusJakartaSans_700Bold',
+  },
+  warningBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FEE2E2',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  warningText: {
+    fontSize: 14,
+    color: '#991B1B',
+    marginLeft: 8,
+    flex: 1,
+    fontFamily: 'PlusJakartaSans_500Medium',
+  },
+  infoBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#D1FAE5',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#065F46',
+    marginLeft: 8,
+    flex: 1,
+    fontFamily: 'PlusJakartaSans_500Medium',
+  },
+  recalculationText: {
+    fontSize: 15,
     color: '#374151',
-    marginBottom: 6,
+    lineHeight: 22,
+    marginBottom: 12,
     fontFamily: 'PlusJakartaSans_400Regular',
+  },
+  recalculationWarning: {
+    fontSize: 14,
+    color: '#DC2626',
+    fontWeight: '600',
+    backgroundColor: '#FEE2E2',
+    padding: 12,
+    borderRadius: 8,
+    fontFamily: 'PlusJakartaSans_600SemiBold',
+  },
+  bold: {
+    fontWeight: 'bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
   educationalText: {
     fontSize: 14,
