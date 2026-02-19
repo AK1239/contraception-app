@@ -56,8 +56,8 @@ export function SectionPage({
         const currentQuestion = visibleQuestions[currentIndex];
         const nextQuestion = visibleQuestions[currentIndex + 1];
         
-        // Don't auto-scroll for numeric/date inputs - let user finish typing/selecting
-        if (currentQuestion.type === "numeric" || currentQuestion.type === "date") {
+        // Don't auto-scroll for numeric/date/cycle inputs - let user finish typing/selecting
+        if (currentQuestion.type === "numeric" || currentQuestion.type === "date" || currentQuestion.type === "cycle-durations") {
           return;
         }
         
