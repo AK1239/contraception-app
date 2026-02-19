@@ -53,7 +53,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
         <Card.Content>
           <View style={styles.cardHeader}>
             <Ionicons name="information-circle" size={24} color="#8B5CF6" />
-            <Text style={styles.cardTitle}>📊 YOUR RESULTS</Text>
+            <Text style={styles.cardTitle}>YOUR RESULTS</Text>
           </View>
           {result.shortestCycle !== null && result.longestCycle !== null && (
             <>
@@ -108,7 +108,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
             <Card.Content>
               <View style={styles.cardHeader}>
                 <Ionicons name="warning" size={24} color="#DC2626" />
-                <Text style={styles.cardTitle}>🔴 Fertile (Unsafe) Days</Text>
+                <Text style={styles.cardTitle}>Fertile (Unsafe) Days</Text>
               </View>
               <Text style={styles.windowSubtitle}>Pregnancy Possible — Avoid Unprotected Intercourse</Text>
               <Divider style={styles.divider} />
@@ -142,7 +142,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="shield-checkmark" size={24} color="#059669" />
-                  <Text style={styles.cardTitle}>🟢 Safe Days</Text>
+                  <Text style={styles.cardTitle}>Safe Days</Text>
                 </View>
                 <Text style={styles.windowSubtitle}>Low Pregnancy Probability</Text>
                 <Divider style={styles.divider} />
@@ -179,24 +179,6 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
             </Card>
           )}
 
-          {/* Predicted Next Period */}
-          {result.nextPeriod && (
-            <Card style={[styles.card, styles.periodCard]}>
-              <Card.Content>
-                <View style={styles.cardHeader}>
-                  <Ionicons name="water" size={24} color="#2563EB" />
-                  <Text style={styles.cardTitle}>🩸 Predicted Next Period</Text>
-                </View>
-                <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>Expected on or around:</Text>
-                  <Text style={[styles.dateValue, styles.periodDate]}>
-                    {result.nextPeriod.formattedDate}
-                  </Text>
-                </View>
-              </Card.Content>
-            </Card>
-          )}
-
           {/* Recalculation Reminder */}
           {result.recalculationDate && (
             <Card style={[styles.card, styles.recalculationCard]}>
@@ -222,6 +204,10 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
                 <SDMCalendar 
                   calendarDates={result.calendarDates} 
                   avgCycleLength={result.avgCycleLength}
+                  fertileRange={result.earliestFertileDay !== null && result.latestFertileDay !== null 
+                    ? `Day ${result.earliestFertileDay}-${result.latestFertileDay}` 
+                    : undefined
+                  }
                 />
               </Card.Content>
             </Card>

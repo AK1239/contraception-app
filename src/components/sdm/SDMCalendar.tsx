@@ -18,14 +18,32 @@ interface CalendarDateData {
 interface SDMCalendarProps {
   calendarDates: CalendarDateData[];
   avgCycleLength: number;
+  fertileRange?: string; // e.g., "Day 5-16" for dynamic display
 }
 
-export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLength }: SDMCalendarProps) {
+export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLength, fertileRange }: SDMCalendarProps) {
   // Group dates by week (7 days)
   const weeks: CalendarDateData[][] = [];
   for (let i = 0; i < calendarDates.length; i += 7) {
     weeks.push(calendarDates.slice(i, i + 7));
   }
+
+  // Calculate the actual fertile day range from the data if not provided
+  const calculateFertileDayRange = (): string => {
+    if (fertileRange) return fertileRange;
+    
+    const fertileDays = calendarDates
+      .filter(d => d.type === 'fertile')
+      .map(d => d.dayNumber);
+    
+    if (fertileDays.length > 0) {
+      const minDay = Math.min(...fertileDays);
+      const maxDay = Math.max(...fertileDays);
+      return `Day ${minDay}-${maxDay}`;
+    }
+    
+    return 'Day 8-19'; // Default fallback for SDM
+  };
 
   const getColorByType = (type: 'safe' | 'fertile' | 'expected-period') => {
     switch (type) {
@@ -60,7 +78,7 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
       <View style={styles.legend}>
         <View style={styles.legendItem}>
           <View style={[styles.legendDot, { backgroundColor: '#DC2626' }]} />
-          <Text style={styles.legendText}>Fertile (Day 8-19)</Text>
+          <Text style={styles.legendText}>Fertile ({calculateFertileDayRange()})</Text>
         </View>
         <View style={styles.legendItem}>
           <View style={[styles.legendDot, { backgroundColor: '#059669' }]} />

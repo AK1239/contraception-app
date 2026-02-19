@@ -53,7 +53,7 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
         <Card.Content>
           <View style={styles.cardHeader}>
             <Ionicons name="information-circle" size={24} color="#6D28D9" />
-            <Text style={styles.cardTitle}>📊 YOUR RESULTS</Text>
+            <Text style={styles.cardTitle}>YOUR RESULTS</Text>
           </View>
           <View style={styles.summaryRow}>
             <Text style={styles.summaryLabel}>Average cycle length:</Text>
@@ -88,7 +88,7 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
             <Card.Content>
               <View style={styles.cardHeader}>
                 <Ionicons name="warning" size={24} color="#DC2626" />
-                <Text style={styles.cardTitle}>🔴 Fertile (Unsafe) Days</Text>
+                <Text style={styles.cardTitle}>Fertile (Unsafe) Days</Text>
               </View>
               <Text style={styles.windowSubtitle}>Pregnancy Possible — Avoid Unprotected Intercourse</Text>
               <Divider style={styles.divider} />
@@ -115,7 +115,7 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="shield-checkmark" size={24} color="#059669" />
-                  <Text style={styles.cardTitle}>🟢 Safe Days</Text>
+                  <Text style={styles.cardTitle}>Safe Days</Text>
                 </View>
                 <Text style={styles.windowSubtitle}>Low Pregnancy Probability</Text>
                 <Divider style={styles.divider} />
@@ -158,7 +158,7 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="water" size={24} color="#2563EB" />
-                  <Text style={styles.cardTitle}>🩸 Predicted Next Period</Text>
+                  <Text style={styles.cardTitle}>Predicted Next Period</Text>
                 </View>
                 <View style={styles.dateRow}>
                   <Text style={styles.dateLabel}>Expected on or around:</Text>
@@ -176,7 +176,7 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="sync" size={24} color="#F59E0B" />
-                  <Text style={styles.cardTitle}>🔁 Recalculation Reminder</Text>
+                  <Text style={styles.cardTitle}>Recalculation Reminder</Text>
                 </View>
                 <Text style={styles.recalculationText}>
                   Return on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
