@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 interface CycleInputFormProps {
@@ -9,10 +9,8 @@ interface CycleInputFormProps {
 export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) {
   const [cycles, setCycles] = useState<string[]>(['', '', '', '', '', '']);
   const [additionalCycles, setAdditionalCycles] = useState<string[]>([]);
-
-  const addCycleField = () => {
-    setAdditionalCycles(prev => [...prev, '']);
-  };
+  const scrollViewRef = useRef<ScrollView>(null);
+  const inputRefs = useRef<(TextInput | null)[]>([]);
 
   const updateCycle = (index: number, value: string, isAdditional: boolean = false) => {
     const numericValue = value.replace(/[^0-9]/g, '');
@@ -21,11 +19,32 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
       const newAdditional = [...additionalCycles];
       newAdditional[index] = numericValue;
       setAdditionalCycles(newAdditional);
+      
+      // Auto-focus next input if current is filled (2 digits)
+      if (numericValue.length === 2) {
+        const nextIndex = cycles.length + index + 1;
+        const nextInput = inputRefs.current[nextIndex];
+        if (nextInput) {
+          setTimeout(() => nextInput.focus(), 100);
+        }
+      }
     } else {
       const newCycles = [...cycles];
       newCycles[index] = numericValue;
       setCycles(newCycles);
+      
+      // Auto-focus next input if current is filled (2 digits)
+      if (numericValue.length === 2) {
+        const nextInput = inputRefs.current[index + 1];
+        if (nextInput) {
+          setTimeout(() => nextInput.focus(), 100);
+        }
+      }
     }
+  };
+
+  const addCycleField = () => {
+    setAdditionalCycles(prev => [...prev, '']);
   };
 
   const validateAndSubmit = () => {
@@ -47,11 +66,13 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
       return;
     }
 
-    onCyclesSubmit(cycleNumbers);
-  };
-
-  return (
-    <View style={styles.container}>
+    oScrollView
+      ref={scrollViewRef}
+      style={styles.scrollContainer}
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.card}>
         <View style={styles.headerIcon}>
           <Ionicons name="create-outline" size={32} color="#6D28D9" />
@@ -76,6 +97,7 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
               <View key={index} style={styles.inputWrapper}>
                 <View style={styles.inputContainer}>
                   <TextInput
+                    ref={(ref) => (inputRefs.current[index] = ref)}
                     style={[styles.input, cycle && styles.inputFilled]}
                     value={cycle}
                     onChangeText={(value) => updateCycle(index, value)}
@@ -107,6 +129,7 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
                 <View key={`additional-${index}`} style={styles.inputWrapper}>
                   <View style={styles.inputContainer}>
                     <TextInput
+                      ref={(ref) => (inputRefs.current[cycles.length + index] = ref)}
                       style={[styles.input, cycle && styles.inputFilled]}
                       value={cycle}
                       onChangeText={(value) => updateCycle(index, value, true)}
@@ -136,6 +159,13 @@ export default function CycleInputForm({ onCyclesSubmit }: CycleInputFormProps) 
           onPress={validateAndSubmit}
         >
           <Text style={styles.submitButtonText}>Next: Select Date</Text>
+  scrollContainer: {
+    flex: 1,
+  },
+          <Ionicons name="arrow-forward" size={20} color="#fff" />
+        </TouchableOpacity>
+      </View>
+    </Scroll    <Text style={styles.submitButtonText}>Next: Select Date</Text>
           <Ionicons name="arrow-forward" size={20} color="#fff" />
         </TouchableOpacity>
       </View>

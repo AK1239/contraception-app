@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useCallback } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text } from "react-native-paper";
 import type { SectionQuestion } from "../../types/sections";
@@ -32,9 +32,47 @@ export function SectionPage({
   errors = {},
 }: SectionPageProps) {
   const visibleQuestions = getVisibleSectionQuestions(section.questions, answers);
+  const scrollViewRef = useRef<ScrollView>(null);
+  const questionViewRefs = useRef<Map<string, View>>(new Map());
+
+  // Auto-scroll to next question after answering
+  const handleAnswerChange = useCallback(
+    (questionId: string, value: AnswerValue) => {
+      onAnswerChange(questionId, value);
+
+      // Find the current question index
+      const currentIndex = visibleQuestions.findIndex((q) => q.id === questionId);
+      
+      // If there's a next question, scroll to it after a brief delay
+      if (currentIndex >= 0 && currentIndex < visibleQuestions.length - 1) {
+        const nextQuestion = visibleQuestions[currentIndex + 1];
+        setTimeout(() => {
+          const nextView = questionViewRefs.current.get(nextQuestion.id);
+          if (nextView && scrollViewRef.current) {
+            nextView.measureLayout(
+              // @ts-ignore - measureLayout types are incomplete
+              scrollViewRef.current.getNativeScrollRef?.() || scrollViewRef.current,
+              (_x, y) => {
+                scrollViewRef.current?.scrollTo({
+                  y: y - 20, // Scroll with 20px offset from top
+                  animated: true,
+                });
+              },
+              () => {
+                // Fallback if measureLayout fails
+                console.warn("Could not measure question layout for auto-scroll");
+              }
+            );
+          }
+        }, 150); // Small delay to allow state update
+      }
+    },
+    [onAnswerChange, visibleQuestions]
+  );
 
   return (
     <ScrollView
+      ref={scrollViewRef}
       style={styles.container}
       contentContainerStyle={styles.content}
       showsVerticalScrollIndicator={false}
@@ -53,11 +91,20 @@ export function SectionPage({
 
       <View style={styles.questionsContainer}>
         {visibleQuestions.map((question) => (
-          <View key={question.id}>
+          <View 
+            key={question.id}
+            ref={(ref) => {
+              if (ref) {
+                questionViewRefs.current.set(question.id, ref);
+              } else {
+                questionViewRefs.current.delete(question.id);
+              }
+            }}
+          >
             <SectionQuestionInput
               question={question}
               value={answers[question.id] as AnswerValue | undefined}
-              onValueChange={(value) => onAnswerChange(question.id, value)}
+              onValueChange={(value) => handleAnswerChange(question.id, value)}
               error={errors[question.id]}
             />
           </View>
