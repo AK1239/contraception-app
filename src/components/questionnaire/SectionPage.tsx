@@ -48,48 +48,59 @@ export function SectionPage({
     (questionId: string, value: AnswerValue) => {
       onAnswerChange(questionId, value);
 
-      // Find the current question index
+      // Find the current question index in the CURRENT visible questions
       const currentIndex = visibleQuestions.findIndex((q) => q.id === questionId);
       
-      // If there's a next question, scroll to it after a brief delay
-      if (currentIndex >= 0 && currentIndex < visibleQuestions.length - 1) {
+      if (currentIndex >= 0) {
         const currentQuestion = visibleQuestions[currentIndex];
-        const nextQuestion = visibleQuestions[currentIndex + 1];
         
         // Don't auto-scroll for numeric/date/cycle inputs - let user finish typing/selecting
         if (currentQuestion.type === "numeric" || currentQuestion.type === "date" || currentQuestion.type === "cycle-durations") {
           return;
         }
         
-        setTimeout(() => {
-          const nextView = questionViewRefs.current.get(nextQuestion.id);
-          if (nextView && scrollViewRef.current) {
-            nextView.measureLayout(
-              // @ts-ignore - measureLayout types are incomplete
-              scrollViewRef.current.getNativeScrollRef?.() || scrollViewRef.current,
-              (_x, y) => {
-                // Only scroll if next question is in the bottom portion of the viewport or below it
-                // This prevents unnecessary scrolling when the next question is already visible at the top/middle
-                const scrollThreshold = viewportInfo.scrollY + viewportInfo.height * 0.6; // Bottom 40% of screen
-                
-                // Scroll only if the next question is below the threshold (not already visible in top/middle)
-                if (y > scrollThreshold) {
-                  scrollViewRef.current?.scrollTo({
-                    y: y - 20, // Scroll with 20px offset from top
-                    animated: true,
-                  });
+        // Calculate what the NEW visible questions will be after this answer is applied
+        // This is crucial for detecting follow-up questions that appear due to this answer
+        const updatedAnswers = { ...answers, [questionId]: value };
+        const newVisibleQuestions = getVisibleSectionQuestions(section.questions, updatedAnswers);
+        
+        // Find the current question in the NEW visible questions list
+        const newCurrentIndex = newVisibleQuestions.findIndex((q) => q.id === questionId);
+        
+        // If there's a next question in the NEW list, scroll to it
+        if (newCurrentIndex >= 0 && newCurrentIndex < newVisibleQuestions.length - 1) {
+          const nextQuestion = newVisibleQuestions[newCurrentIndex + 1];
+          
+          setTimeout(() => {
+            const nextView = questionViewRefs.current.get(nextQuestion.id);
+            if (nextView && scrollViewRef.current) {
+              nextView.measureLayout(
+                // @ts-ignore - measureLayout types are incomplete
+                scrollViewRef.current.getNativeScrollRef?.() || scrollViewRef.current,
+                (_x, y) => {
+                  // Only scroll if next question is in the bottom portion of the viewport or below it
+                  // This prevents unnecessary scrolling when the next question is already visible at the top/middle
+                  const scrollThreshold = viewportInfo.scrollY + viewportInfo.height * 0.6; // Bottom 40% of screen
+                  
+                  // Scroll only if the next question is below the threshold (not already visible in top/middle)
+                  if (y > scrollThreshold) {
+                    scrollViewRef.current?.scrollTo({
+                      y: y - 20, // Scroll with 20px offset from top
+                      animated: true,
+                    });
+                  }
+                },
+                () => {
+                  // Fallback if measureLayout fails
+                  console.warn("Could not measure question layout for auto-scroll");
                 }
-              },
-              () => {
-                // Fallback if measureLayout fails
-                console.warn("Could not measure question layout for auto-scroll");
-              }
-            );
-          }
-        }, 150); // Small delay to allow state update
+              );
+            }
+          }, 150); // Small delay to allow state update and DOM rendering
+        }
       }
     },
-    [onAnswerChange, visibleQuestions, viewportInfo]
+    [onAnswerChange, visibleQuestions, viewportInfo, answers, section.questions]
   );
 
   return (
