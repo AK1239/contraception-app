@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Button, ProgressBar } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import type { FABSectionKey } from "../../types/fabEligibility";
 import { theme } from "../../utils/theme";
 
@@ -23,6 +24,7 @@ export function FABSectionNavigator({
   isFirstSection,
   isLastSection,
 }: FABSectionNavigatorProps) {
+  const { t } = useTranslation();
   const currentIndex = currentSection ? sectionOrder.indexOf(currentSection) : 0;
   const progress =
     sectionOrder.length > 0 ? (currentIndex + 1) / sectionOrder.length : 0;
@@ -39,7 +41,10 @@ export function FABSectionNavigator({
     <View style={styles.container}>
       <View style={styles.progressSection}>
         <Text style={styles.progressText}>
-          Step {currentIndex + 1} of {sectionOrder.length}
+          {t("fab.navigator.stepOf", {
+            current: currentIndex + 1,
+            total: sectionOrder.length,
+          })}
         </Text>
         <ProgressBar
           progress={progress}
@@ -55,7 +60,7 @@ export function FABSectionNavigator({
           style={[styles.button, styles.buttonPrevious]}
           labelStyle={styles.buttonLabel}
         >
-          Previous
+          {t("fab.navigator.previous")}
         </Button>
         <Button
           mode="contained"
@@ -64,7 +69,7 @@ export function FABSectionNavigator({
           labelStyle={styles.buttonLabel}
           buttonColor="#6D28D9"
         >
-          {isLastSection ? "See Results" : "Next"}
+          {isLastSection ? t("fab.navigator.seeResults") : t("fab.navigator.next")}
         </Button>
       </View>
     </View>

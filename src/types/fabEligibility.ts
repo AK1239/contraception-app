@@ -14,6 +14,8 @@ export type FABMethod = "SYM" | "CAL";
 /** Contributing factor that led to C or D category */
 export interface FABContributingFactor {
   condition: string;
+  /** Translation key for condition (e.g. fab.conditions.postpartum-l6-bf) */
+  conditionKey?: string;
   category: FABCategory;
 }
 
@@ -21,10 +23,14 @@ export interface FABContributingFactor {
 export interface FABMethodResult {
   method: FABMethod;
   methodName: string;
+  methodNameKey?: string;
   category: FABCategory;
   categoryLabel: string;
+  categoryLabelKey?: string;
   explanation: string;
+  explanationKey?: string;
   actionRequired?: string;
+  actionRequiredKey?: string;
   /** List of conditions that contributed to C or D category (empty for A) */
   contributingFactors?: FABContributingFactor[];
 }
@@ -34,6 +40,8 @@ export interface FABAdvisory {
   id: string;
   type: "sti" | "high-risk-pregnancy" | "medication-evaluation";
   message: string;
+  /** Translation key for message (e.g. fab.advisories.sti) */
+  messageKey?: string;
 }
 
 /** Full FAB eligibility evaluation result */
@@ -41,6 +49,7 @@ export interface FABEligibilityResult {
   /** Not applicable when client is pregnant */
   notApplicable: boolean;
   notApplicableMessage?: string;
+  notApplicableMessageKey?: string;
   /** SYM (Symptoms-Based Method) result */
   sym: FABMethodResult | null;
   /** CAL (Calendar-Based Method) result */

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Divider, Button } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import type { FABEligibilityResult, FABMethodResult } from "../../types/fabEligibility";
 import { theme } from "../../utils/theme";
 
@@ -9,7 +10,13 @@ interface FABResultsProps {
   onStartOver?: () => void;
 }
 
-function MethodResultCard({ methodResult }: { methodResult: FABMethodResult }) {
+function MethodResultCard({
+  methodResult,
+  t,
+}: {
+  methodResult: FABMethodResult;
+  t: (key: string) => string;
+}) {
   const categoryColors = {
     A: theme.colors.success,
     C: theme.colors.warning,
@@ -22,7 +29,9 @@ function MethodResultCard({ methodResult }: { methodResult: FABMethodResult }) {
       <Card.Content style={styles.cardContent}>
         <View style={styles.methodHeader}>
           <Text variant="titleSmall" style={styles.methodName}>
-            {methodResult.methodName}
+            {methodResult.methodNameKey
+              ? t(methodResult.methodNameKey)
+              : methodResult.methodName}
           </Text>
           <View style={[styles.categoryBadge, { backgroundColor: borderColor + "25" }]}>
             <Text variant="labelMedium" style={[styles.categoryBadgeText, { color: borderColor }]}>
@@ -31,23 +40,27 @@ function MethodResultCard({ methodResult }: { methodResult: FABMethodResult }) {
           </View>
         </View>
         <Text variant="bodySmall" style={styles.categoryLabel}>
-          {methodResult.categoryLabel}
+          {methodResult.categoryLabelKey
+            ? t(methodResult.categoryLabelKey)
+            : methodResult.categoryLabel}
         </Text>
         <Text variant="bodyMedium" style={styles.explanation}>
-          {methodResult.explanation}
+          {methodResult.explanationKey
+            ? t(methodResult.explanationKey)
+            : methodResult.explanation}
         </Text>
         
         {/* Show contributing factors for C or D categories */}
         {methodResult.contributingFactors && methodResult.contributingFactors.length > 0 && (
           <View style={styles.contributingFactorsSection}>
             <Text variant="labelSmall" style={styles.contributingFactorsTitle}>
-              Contributing factors:
+              {t("fab.results.contributingFactors")}
             </Text>
             {methodResult.contributingFactors.map((factor, index) => (
               <View key={index} style={styles.factorItem}>
                 <Text variant="bodySmall" style={styles.factorBullet}>•</Text>
                 <Text variant="bodySmall" style={styles.factorText}>
-                  {factor.condition}
+                  {factor.conditionKey ? t(factor.conditionKey) : factor.condition}
                 </Text>
               </View>
             ))}
@@ -56,7 +69,10 @@ function MethodResultCard({ methodResult }: { methodResult: FABMethodResult }) {
         
         {methodResult.actionRequired && (
           <Text variant="bodySmall" style={styles.actionRequired}>
-            Action: {methodResult.actionRequired}
+            {t("fab.results.action")}{" "}
+            {methodResult.actionRequiredKey
+              ? t(methodResult.actionRequiredKey)
+              : methodResult.actionRequired}
           </Text>
         )}
       </Card.Content>
@@ -82,6 +98,8 @@ function AdvisoryCard({
 }
 
 export function FABResults({ result, onStartOver }: FABResultsProps) {
+  const { t } = useTranslation();
+
   if (result.notApplicable) {
     return (
       <ScrollView
@@ -91,10 +109,12 @@ export function FABResults({ result, onStartOver }: FABResultsProps) {
       >
         <View style={styles.notApplicableSection}>
           <Text variant="titleMedium" style={styles.notApplicableTitle}>
-            FAB Methods Not Applicable
+            {t("fab.results.notApplicableTitle")}
           </Text>
           <Text variant="bodyLarge" style={styles.notApplicableMessage}>
-            {result.notApplicableMessage}
+            {result.notApplicableMessageKey
+              ? t(result.notApplicableMessageKey)
+              : result.notApplicableMessage}
           </Text>
           {onStartOver && (
             <Button
@@ -104,7 +124,7 @@ export function FABResults({ result, onStartOver }: FABResultsProps) {
               style={styles.startOverButton}
               labelStyle={styles.buttonLabel}
             >
-              Start Over
+              {t("fab.results.startOver")}
             </Button>
           )}
         </View>
@@ -119,21 +139,21 @@ export function FABResults({ result, onStartOver }: FABResultsProps) {
       showsVerticalScrollIndicator={false}
     >
       <Text variant="titleLarge" style={styles.mainTitle}>
-        FAB Eligibility Result
+        {t("fab.results.mainTitle")}
       </Text>
       <Text variant="bodySmall" style={styles.subtitle}>
-        Fertility Awareness-Based (FAB) methods include Symptoms-Based (SYM) and Calendar-Based (CAL) methods.
+        {t("fab.results.subtitle")}
       </Text>
 
       {result.sym && (
         <View style={styles.section}>
-          <MethodResultCard methodResult={result.sym} />
+          <MethodResultCard methodResult={result.sym} t={t} />
         </View>
       )}
 
       {result.cal && (
         <View style={styles.section}>
-          <MethodResultCard methodResult={result.cal} />
+          <MethodResultCard methodResult={result.cal} t={t} />
         </View>
       )}
 
@@ -142,10 +162,14 @@ export function FABResults({ result, onStartOver }: FABResultsProps) {
           <Divider style={styles.divider} />
           <View style={styles.advisoriesSection}>
             <Text variant="titleMedium" style={styles.advisoriesTitle}>
-              Advisories
+              {t("fab.results.advisories")}
             </Text>
             {result.advisories.map((adv) => (
-              <AdvisoryCard key={adv.id} message={adv.message} type={adv.type} />
+              <AdvisoryCard
+                key={adv.id}
+                message={adv.messageKey ? t(adv.messageKey) : adv.message}
+                type={adv.type}
+              />
             ))}
           </View>
         </>
@@ -153,16 +177,16 @@ export function FABResults({ result, onStartOver }: FABResultsProps) {
 
       <View style={styles.definitionsSection}>
         <Text variant="labelMedium" style={styles.definitionsTitle}>
-          Category Definitions
+          {t("fab.results.categoryDefinitions")}
         </Text>
         <Text variant="bodySmall" style={styles.definitionItem}>
-          • <Text style={styles.definitionBold}>A (Accept)</Text> – No restriction
+          • {t("fab.results.defA")}
         </Text>
         <Text variant="bodySmall" style={styles.definitionItem}>
-          • <Text style={styles.definitionBold}>C (Caution)</Text> – Enhanced counselling required
+          • {t("fab.results.defC")}
         </Text>
         <Text variant="bodySmall" style={styles.definitionItem}>
-          • <Text style={styles.definitionBold}>D (Delay)</Text> – Temporary method recommended until condition resolved
+          • {t("fab.results.defD")}
         </Text>
       </View>
 
@@ -175,7 +199,7 @@ export function FABResults({ result, onStartOver }: FABResultsProps) {
             style={styles.startOverButton}
             labelStyle={styles.buttonLabel}
           >
-            Start Over
+            {t("fab.results.startOver")}
           </Button>
         </View>
       )}

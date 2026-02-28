@@ -6,6 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Text, Card, Button, Divider } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 // @ts-ignore - Expo vector icons types
 import { Ionicons } from '@expo/vector-icons';
 import { CalendarMethodEligibilityResult } from '../../types/calendarMethod';
@@ -17,6 +18,7 @@ interface CalendarMethodResultsProps {
 }
 
 export default function CalendarMethodResults({ result, onReset }: CalendarMethodResultsProps) {
+  const { t } = useTranslation();
   const [showPeriodAlert, setShowPeriodAlert] = useState(false);
 
   useEffect(() => {
@@ -28,11 +30,11 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
       if (today > predictedDate && !showPeriodAlert) {
         setShowPeriodAlert(true);
         Alert.alert(
-          'Period Date Passed',
-          'Your expected period date has passed. Please enter the first day of your new period to generate accurate safe days.',
+          t('calendar.results.periodDatePassed'),
+          t('calendar.results.periodDatePassedMessage'),
           [
-            { text: 'Recalculate', onPress: onReset, style: 'default' },
-            { text: 'Later', style: 'cancel' },
+            { text: t('calendar.results.recalculate'), onPress: onReset, style: 'default' },
+            { text: t('calendar.results.later'), style: 'cancel' },
           ]
         );
       }
@@ -44,8 +46,8 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
       {/* Header */}
       <View style={styles.header}>
         <Ionicons name="calendar" size={48} color="#6D28D9" />
-        <Text style={styles.headerTitle}>Calendar Method</Text>
-        <Text style={styles.headerSubtitle}>Your Fertility Calendar</Text>
+        <Text style={styles.headerTitle}>{t('calendar.results.headerTitle')}</Text>
+        <Text style={styles.headerSubtitle}>{t('calendar.results.headerSubtitle')}</Text>
       </View>
 
       {/* Summary Card */}
@@ -53,30 +55,30 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
         <Card.Content>
           <View style={styles.cardHeader}>
             <Ionicons name="information-circle" size={24} color="#6D28D9" />
-            <Text style={styles.cardTitle}>YOUR RESULTS</Text>
+            <Text style={styles.cardTitle}>{t('calendar.results.yourResults')}</Text>
           </View>
           {result.shortestCycle !== null && result.longestCycle !== null && (
             <>
               <View style={styles.summaryRow}>
-                <Text style={styles.summaryLabel}>Shortest cycle:</Text>
+                <Text style={styles.summaryLabel}>{t('calendar.results.shortestCycle')}</Text>
                 <Text style={styles.summaryValue}>{result.shortestCycle} days</Text>
               </View>
               <View style={styles.summaryRow}>
-                <Text style={styles.summaryLabel}>Longest cycle:</Text>
+                <Text style={styles.summaryLabel}>{t('calendar.results.longestCycle')}</Text>
                 <Text style={styles.summaryValue}>{result.longestCycle} days</Text>
               </View>
               {result.avgCycleLength !== null && (
                 <View style={styles.summaryRow}>
-                  <Text style={styles.summaryLabel}>Average cycle:</Text>
+                  <Text style={styles.summaryLabel}>{t('calendar.results.averageCycle')}</Text>
                   <Text style={styles.summaryValue}>{result.avgCycleLength} days</Text>
                 </View>
               )}
             </>
           )}
           <View style={styles.summaryRow}>
-            <Text style={styles.summaryLabel}>Eligibility:</Text>
+            <Text style={styles.summaryLabel}>{t('calendar.results.eligibility')}</Text>
             <Text style={[styles.summaryValue, result.eligible ? styles.eligible : styles.notEligible]}>
-              {result.eligible ? 'Eligible ✓' : 'Not Eligible ✗'}
+              {result.eligible ? t('calendar.results.eligible') : t('calendar.results.notEligible')}
             </Text>
           </View>
         </Card.Content>
@@ -88,7 +90,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
           <Card.Content>
             <View style={styles.cardHeader}>
               <Ionicons name="close-circle" size={24} color="#DC2626" />
-              <Text style={styles.cardTitle}>Not Recommended</Text>
+              <Text style={styles.cardTitle}>{t('calendar.results.notRecommended')}</Text>
             </View>
             <Text style={styles.messageText}>{result.message}</Text>
             {result.warning && (
@@ -108,22 +110,22 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
             <Card.Content>
               <View style={styles.cardHeader}>
                 <Ionicons name="warning" size={24} color="#DC2626" />
-                <Text style={styles.cardTitle}>Fertile (Unsafe) Days</Text>
+                <Text style={styles.cardTitle}>{t('calendar.results.fertileDays')}</Text>
               </View>
-              <Text style={styles.windowSubtitle}>Pregnancy Possible — Avoid Unprotected Intercourse</Text>
+              <Text style={styles.windowSubtitle}>{t('calendar.results.fertileSubtitle')}</Text>
               <Divider style={styles.divider} />
               <View style={styles.dateRow}>
-                <Text style={styles.dateLabel}>From:</Text>
+                <Text style={styles.dateLabel}>{t('calendar.results.from')}</Text>
                 <Text style={styles.dateValue}>{result.fertileWindow.calendarDates.fertileStart}</Text>
               </View>
               <View style={styles.dateRow}>
-                <Text style={styles.dateLabel}>To:</Text>
+                <Text style={styles.dateLabel}>{t('calendar.results.to')}</Text>
                 <Text style={styles.dateValue}>{result.fertileWindow.calendarDates.fertileEnd}</Text>
               </View>
               <View style={styles.warningBox}>
                 <Ionicons name="alert-circle" size={16} color="#DC2626" />
                 <Text style={styles.warningText}>
-                  Avoid unprotected intercourse during these dates.
+                  {t('calendar.results.avoidUnprotected')}
                 </Text>
               </View>
             </Card.Content>
@@ -135,37 +137,37 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="shield-checkmark" size={24} color="#059669" />
-                  <Text style={styles.cardTitle}>Safe Days</Text>
+                  <Text style={styles.cardTitle}>{t('calendar.results.safeDays')}</Text>
                 </View>
-                <Text style={styles.windowSubtitle}>Low Pregnancy Probability</Text>
+                <Text style={styles.windowSubtitle}>{t('calendar.results.safeSubtitle')}</Text>
                 <Divider style={styles.divider} />
                 
-                <Text style={styles.safeSectionHeader}>Before Fertile Window</Text>
+                <Text style={styles.safeSectionHeader}>{t('calendar.results.beforeFertile')}</Text>
                 <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>From:</Text>
+                  <Text style={styles.dateLabel}>{t('calendar.results.from')}</Text>
                   <Text style={styles.dateValue}>{result.safeWindow.beforeFertile.calendarDates.start}</Text>
                 </View>
                 <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>To:</Text>
+                  <Text style={styles.dateLabel}>{t('calendar.results.to')}</Text>
                   <Text style={styles.dateValue}>{result.safeWindow.beforeFertile.calendarDates.end}</Text>
                 </View>
                 
                 <Divider style={styles.divider} />
                 
-                <Text style={styles.safeSectionHeader}>After Fertile Window</Text>
+                <Text style={styles.safeSectionHeader}>{t('calendar.results.afterFertile')}</Text>
                 <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>From:</Text>
+                  <Text style={styles.dateLabel}>{t('calendar.results.from')}</Text>
                   <Text style={styles.dateValue}>{result.safeWindow.afterFertile.calendarDates.start}</Text>
                 </View>
                 <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>To:</Text>
+                  <Text style={styles.dateLabel}>{t('calendar.results.to')}</Text>
                   <Text style={styles.dateValue}>{result.safeWindow.afterFertile.calendarDates.end}</Text>
                 </View>
                 
                 <View style={styles.infoBox}>
                   <Ionicons name="information-circle" size={16} color="#059669" />
                   <Text style={styles.infoText}>
-                    Safe days END on: {result.safeWindow.afterFertile.calendarDates.end}
+                    {t('calendar.results.safeDaysEnd')} {result.safeWindow.afterFertile.calendarDates.end}
                   </Text>
                 </View>
               </Card.Content>
@@ -178,10 +180,10 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="water" size={24} color="#2563EB" />
-                  <Text style={styles.cardTitle}>Predicted Next Period</Text>
+                  <Text style={styles.cardTitle}>{t('calendar.results.predictedNextPeriod')}</Text>
                 </View>
                 <View style={styles.dateRow}>
-                  <Text style={styles.dateLabel}>Expected on or around:</Text>
+                  <Text style={styles.dateLabel}>{t('calendar.results.expectedOn')}</Text>
                   <Text style={[styles.dateValue, styles.periodDate]}>
                     {result.nextPeriod.formattedDate}
                   </Text>
@@ -196,13 +198,13 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="sync" size={24} color="#F59E0B" />
-                  <Text style={styles.cardTitle}>Recalculation Reminder</Text>
+                  <Text style={styles.cardTitle}>{t('calendar.results.recalculationReminder')}</Text>
                 </View>
                 <Text style={styles.recalculationText}>
-                  Return on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
+                  {t('calendar.results.returnOn')} <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
                 </Text>
                 <Text style={styles.recalculationWarning}>
-                  If bleeding starts earlier or later, previous safe days are no longer reliable.
+                  {t('calendar.results.recalculationWarning')}
                 </Text>
               </Card.Content>
             </Card>
@@ -231,7 +233,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
         <Card.Content>
           <View style={styles.cardHeader}>
             <Ionicons name="book" size={24} color="#3B82F6" />
-            <Text style={styles.cardTitle}>Important Information</Text>
+            <Text style={styles.cardTitle}>{t('calendar.results.importantInfo')}</Text>
           </View>
           <Text style={styles.educationalText}>{result.educationalMessage}</Text>
         </Card.Content>
@@ -246,7 +248,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
           labelStyle={styles.buttonLabel}
           icon="refresh"
         >
-          Calculate Again
+          {t('calendar.results.calculateAgain')}
         </Button>
       </View>
     </ScrollView>

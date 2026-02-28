@@ -5,6 +5,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button, ProgressBar } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { CalendarMethodSectionKey } from '../../types/calendarMethod';
 
 interface CalendarMethodSectionNavigatorProps {
@@ -28,6 +29,7 @@ export function CalendarMethodSectionNavigator({
   isLastSection,
   canProceed,
 }: CalendarMethodSectionNavigatorProps) {
+  const { t } = useTranslation();
   const handleNext = () => {
     if (isLastSection && onComplete) {
       onComplete();
@@ -39,13 +41,13 @@ export function CalendarMethodSectionNavigator({
   const getSectionLabel = (key: CalendarMethodSectionKey | null): string => {
     switch (key) {
       case 'eligibility-info':
-        return 'Step 1: Eligibility Information';
+        return t('calendar.navigator.step1');
       case 'cycle-lengths':
-        return 'Step 2: Enter Cycle Lengths';
+        return t('calendar.navigator.step2');
       case 'lmp-date':
-        return 'Step 3: Last Menstrual Period';
+        return t('calendar.navigator.step3');
       default:
-        return 'Calendar Method Calculator';
+        return t('calendar.navigator.default');
     }
   };
 
@@ -54,7 +56,7 @@ export function CalendarMethodSectionNavigator({
       <View style={styles.progressSection}>
         <Text style={styles.progressText}>{getSectionLabel(currentSection)}</Text>
         <ProgressBar progress={progress / 100} color="#8B5CF6" style={styles.progressBar} />
-        <Text style={styles.progressPercentage}>{progress}% complete</Text>
+        <Text style={styles.progressPercentage}>{t('calendar.navigator.progressComplete', { progress })}</Text>
       </View>
       <View style={styles.buttons}>
         <Button
@@ -64,7 +66,7 @@ export function CalendarMethodSectionNavigator({
           style={[styles.button, styles.buttonPrevious]}
           labelStyle={styles.buttonLabel}
         >
-          Previous
+          {t('calendar.navigator.previous')}
         </Button>
         <Button
           mode="contained"
@@ -74,7 +76,7 @@ export function CalendarMethodSectionNavigator({
           labelStyle={styles.buttonLabel}
           buttonColor="#8B5CF6"
         >
-          {isLastSection ? 'See Results' : 'Next'}
+          {isLastSection ? t('calendar.navigator.seeResults') : t('calendar.navigator.next')}
         </Button>
       </View>
     </View>

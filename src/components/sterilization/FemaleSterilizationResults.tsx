@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Divider, Button } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import type { SterilizationEligibilityResult } from "../../types/sterilizationEligibility";
 import { theme } from "../../utils/theme";
 
@@ -13,6 +14,7 @@ export function FemaleSterilizationResults({
   result,
   onStartOver,
 }: FemaleSterilizationResultsProps) {
+  const { t } = useTranslation();
   const categoryColors = {
     A: theme.colors.success,
     C: theme.colors.warning,
@@ -29,7 +31,7 @@ export function FemaleSterilizationResults({
       showsVerticalScrollIndicator={false}
     >
       <Text variant="titleLarge" style={styles.mainTitle}>
-        Female Sterilization Eligibility Result
+        {t("sterilization.female.resultTitle")}
       </Text>
 
       <Card
@@ -60,7 +62,7 @@ export function FemaleSterilizationResults({
           <Divider style={styles.sectionDivider} />
 
           <Text variant="labelLarge" style={styles.sectionTitle}>
-            Clinical Action
+            {t("sterilization.female.clinicalAction")}
           </Text>
           <Text variant="bodyMedium" style={styles.actionText}>
             {result.clinicalAction}
@@ -70,7 +72,7 @@ export function FemaleSterilizationResults({
             <>
               <Divider style={styles.sectionDivider} />
               <Text variant="labelLarge" style={styles.sectionTitle}>
-                Conditions Identified
+                {t("sterilization.female.conditionsIdentified")}
               </Text>
               {result.reasons.map((reason, index) => (
                 <View key={index} style={styles.reasonItem}>
@@ -87,7 +89,7 @@ export function FemaleSterilizationResults({
 
           <Divider style={styles.sectionDivider} />
           <Text variant="labelLarge" style={styles.sectionTitle}>
-            Detailed Explanation
+            {t("sterilization.female.detailedExplanation")}
           </Text>
           <Text variant="bodyMedium" style={styles.explanation}>
             {result.explanation}
@@ -99,7 +101,7 @@ export function FemaleSterilizationResults({
         <>
           <View style={styles.advisorySection}>
             <Text variant="titleMedium" style={styles.advisoryTitle}>
-              Important Advisory
+              {t("sterilization.female.importantAdvisory")}
             </Text>
             <View style={styles.advisoryBox}>
               <Text variant="bodyMedium" style={styles.advisoryText}>
@@ -113,8 +115,7 @@ export function FemaleSterilizationResults({
       {!result.counsellingConfirmed && (
         <View style={styles.warningBox}>
           <Text variant="bodySmall" style={styles.warningText}>
-            ⚠️ Counselling confirmation incomplete. Please ensure all counselling
-            requirements are met before proceeding.
+            {t("sterilization.female.counsellingWarning")}
           </Text>
         </View>
       )}
@@ -149,7 +150,7 @@ export function FemaleSterilizationResults({
           style={styles.startOverButton}
           labelStyle={styles.buttonLabel}
         >
-          Start Over
+          {t("sterilization.female.startOver")}
         </Button>
       )}
     </ScrollView>

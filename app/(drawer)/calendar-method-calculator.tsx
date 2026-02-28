@@ -15,7 +15,7 @@ import {
   initializeCalendarMethod,
   resetCalendarMethod,
 } from '../../src/store/slices/calendarMethod';
-import { getCalendarMethodSection } from '../../src/config/calendarMethodSections';
+import { useTranslatedCalendarSections } from '../../src/hooks/useTranslatedCalendarSections';
 import { SectionPage } from '../../src/components/questionnaire';
 import { CalendarMethodResults, CalendarMethodSectionNavigator } from '../../src/components/calendar-method';
 import { evaluateCalendarMethod } from '../../src/engine/calendarMethodEngine';
@@ -31,6 +31,7 @@ import type { AnswerValue } from '../../src/types/questionnaire';
 export default function CalendarMethodCalculatorPage() {
   const dispatch = useDispatch();
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const translatedSections = useTranslatedCalendarSections();
 
   const { answers, currentSection, evaluationResult, isComplete } = useSelector(
     (state: RootState) => state.calendarMethod
@@ -47,7 +48,7 @@ export default function CalendarMethodCalculatorPage() {
   const currentResult = evaluateCalendarMethod(answers);
   const eligible = currentResult.eligible;
 
-  const currentSectionConfig = currentSection ? getCalendarMethodSection(currentSection) : null;
+  const currentSectionConfig = currentSection ? translatedSections[currentSection] : null;
 
   const currentIndex = currentSection
     ? ['eligibility-info', 'cycle-lengths', 'lmp-date'].indexOf(currentSection)

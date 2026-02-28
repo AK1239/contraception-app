@@ -25,6 +25,26 @@ const METHOD_NAMES = {
   CAL: "Calendar-Based Method (CAL)",
 };
 
+/** Condition translation keys for i18n */
+const CONDITION_KEYS: Record<string, string> = {
+  "Postpartum": "fab.conditions.postpartum",
+  "Postpartum (<6 weeks, breastfeeding)": "fab.conditions.postpartum-l6-bf",
+  "Postpartum (≥6 weeks, breastfeeding, menses not resumed)": "fab.conditions.postpartum-g6-no-menses",
+  "Postpartum (breastfeeding, menses resumed)": "fab.conditions.postpartum-bf-menses",
+  "Postpartum (breastfeeding)": "fab.conditions.postpartum-bf",
+  "Postpartum (<4 weeks, not breastfeeding)": "fab.conditions.postpartum-l4-nobf",
+  "Postpartum (≥4 weeks, not breastfeeding)": "fab.conditions.postpartum-g4-nobf",
+  "Postpartum (not breastfeeding)": "fab.conditions.postpartum-nobf",
+  "Recent abortion (<4 weeks)": "fab.conditions.recent-abortion",
+  "≤2 years since menarche": "fab.conditions.years-since-menarche",
+  "Perimenopausal symptoms": "fab.conditions.perimenopausal",
+  "Irregular vaginal bleeding": "fab.conditions.irregular-bleeding",
+  "Abnormal vaginal discharge": "fab.conditions.abnormal-discharge",
+  "Medications affecting cycle/fertility signs": "fab.conditions.medications-cycle",
+  "Chronic elevated temperature": "fab.conditions.chronic-elevated-temp",
+  "Acute febrile illness": "fab.conditions.acute-febrile",
+};
+
 /** Priority: D > C > A (higher index = more restrictive) */
 const CATEGORY_PRIORITY: Record<FABCategory, number> = {
   D: 3,
@@ -110,6 +130,7 @@ function evaluateFABEligibility(answers: FABAnswerState): FABEligibilityResult {
       notApplicable: true,
       notApplicableMessage:
         "FAB methods are not relevant during pregnancy.",
+      notApplicableMessageKey: "fab.results.notApplicableMessage",
       sym: null,
       cal: null,
       advisories: [],
@@ -148,61 +169,70 @@ function evaluateFABEligibility(answers: FABAnswerState): FABEligibilityResult {
       }
     }
     
-    symFactors.push({ condition, category: postpartumResult.sym });
-    calFactors.push({ condition, category: postpartumResult.cal });
+    symFactors.push({ condition, conditionKey: CONDITION_KEYS[condition], category: postpartumResult.sym });
+    calFactors.push({ condition, conditionKey: CONDITION_KEYS[condition], category: postpartumResult.cal });
   }
 
   // Section 3: Recent abortion
   const abortionRecent = getValue<boolean>(answers, "fab-abortion-last-4-weeks");
   if (abortionRecent === true) {
-    symFactors.push({ condition: "Recent abortion (<4 weeks)", category: "C" });
-    calFactors.push({ condition: "Recent abortion (<4 weeks)", category: "D" });
+    const cond = "Recent abortion (<4 weeks)";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "D" });
   }
 
   // Section 4: Life stage
   const yearsSinceMenarche = getValue<number>(answers, "fab-years-since-menarche");
   if (yearsSinceMenarche !== undefined && yearsSinceMenarche <= 2) {
-    symFactors.push({ condition: "≤2 years since menarche", category: "C" });
-    calFactors.push({ condition: "≤2 years since menarche", category: "C" });
+    const cond = "≤2 years since menarche";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
   }
   const perimenopausal = getValue<boolean>(answers, "fab-perimenopausal-symptoms");
   if (perimenopausal === true) {
-    symFactors.push({ condition: "Perimenopausal symptoms", category: "C" });
-    calFactors.push({ condition: "Perimenopausal symptoms", category: "C" });
+    const cond = "Perimenopausal symptoms";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
   }
 
   // Section 5: Menstrual & infection
   const irregularBleeding = getValue<boolean>(answers, "fab-irregular-vaginal-bleeding");
   if (irregularBleeding === true) {
-    symFactors.push({ condition: "Irregular vaginal bleeding", category: "D" });
-    calFactors.push({ condition: "Irregular vaginal bleeding", category: "D" });
+    const cond = "Irregular vaginal bleeding";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "D" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "D" });
   }
   const abnormalDischarge = getValue<boolean>(answers, "fab-abnormal-vaginal-discharge");
   if (abnormalDischarge === true) {
-    symFactors.push({ condition: "Abnormal vaginal discharge", category: "D" });
-    calFactors.push({ condition: "Abnormal vaginal discharge", category: "A" });
+    const cond = "Abnormal vaginal discharge";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "D" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "A" });
   }
 
   // Section 6: Drugs & medical
   const medsAffectCycle = getValue<boolean>(answers, "fab-medications-affect-cycle");
   if (medsAffectCycle === true) {
-    symFactors.push({ condition: "Medications affecting cycle/fertility signs", category: "C" });
-    calFactors.push({ condition: "Medications affecting cycle/fertility signs", category: "C" });
+    const cond = "Medications affecting cycle/fertility signs";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
     advisories.push({
       id: "medication-evaluation",
       type: "medication-evaluation",
       message: "Further evaluation of cycle stability required.",
+      messageKey: "fab.advisories.medication-evaluation",
     });
   }
   const chronicElevatedTemp = getValue<boolean>(answers, "fab-chronic-elevated-temperature");
   if (chronicElevatedTemp === true) {
-    symFactors.push({ condition: "Chronic elevated temperature", category: "C" });
-    calFactors.push({ condition: "Chronic elevated temperature", category: "A" });
+    const cond = "Chronic elevated temperature";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "C" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "A" });
   }
   const acuteFebrile = getValue<boolean>(answers, "fab-acute-febrile-illness");
   if (acuteFebrile === true) {
-    symFactors.push({ condition: "Acute febrile illness", category: "D" });
-    calFactors.push({ condition: "Acute febrile illness", category: "A" });
+    const cond = "Acute febrile illness";
+    symFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "D" });
+    calFactors.push({ condition: cond, conditionKey: CONDITION_KEYS[cond], category: "A" });
   }
 
   // Section 7: STI/HIV advisory (does not change A/C/D)
@@ -213,6 +243,7 @@ function evaluateFABEligibility(answers: FABAnswerState): FABEligibilityResult {
       type: "sti",
       message:
         "FAB methods do NOT protect against STIs/HIV. Recommend correct and consistent condom use.",
+      messageKey: "fab.advisories.sti",
     });
   }
 
@@ -224,6 +255,7 @@ function evaluateFABEligibility(answers: FABAnswerState): FABEligibilityResult {
       type: "high-risk-pregnancy",
       message:
         "FAB methods may not be appropriate due to relatively higher typical-use failure rates.",
+      messageKey: "fab.advisories.high-risk-pregnancy",
     });
   }
 
@@ -274,14 +306,19 @@ function buildMethodResult(
       : category === "D"
         ? "Recommend temporary method until condition resolved."
         : undefined;
+  const actionRequiredKey = category === "C" ? "fab.actions.C" : category === "D" ? "fab.actions.D" : undefined;
 
   return {
     method,
     methodName: METHOD_NAMES[method],
+    methodNameKey: `fab.methods.${method}`,
     category,
     categoryLabel: CATEGORY_LABELS[category],
+    categoryLabelKey: `fab.categories.${category}`,
     explanation,
+    explanationKey: `fab.explanations.${method}.${category}`,
     actionRequired,
+    actionRequiredKey,
     contributingFactors: contributingFactors.length > 0 ? contributingFactors : undefined,
   };
 }

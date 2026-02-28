@@ -1,4 +1,5 @@
 import { questionnaireSw } from "./questionnaire-sw";
+import { fabSw } from "./fab-sw";
 import { methodsSw } from "./methods-sw";
 
 const sw = {
@@ -336,6 +337,29 @@ const sw = {
     maleDescription:
       "Amua ustahili wa kufungwa kwa upasuaji kwa mwanaume (vasectomy) kwa kutumia Vigezo vya Ustahili wa Kimatibabu vya WHO. Inatathmini hali ikiwemo hali ya HIV, magonjwa ya homoni, maambukizi ya viungo vya uzazi, na uharibifu wa muundo wa mende ili kutoa mapendekezo ya Kubali, Tahadhari, Ahirisha, au Mazingira Maalum.",
     maleCta: "Tathmini Ustahili wa Mwanaume",
+    navigator: {
+      sectionOf: "Sehemu {{current}} ya {{total}}",
+      previous: "Iliyotangulia",
+      next: "Inayofuata",
+      seeResults: "Tazama Matokeo",
+    },
+    female: {
+      resultTitle: "Matokeo ya Ustahili wa Kufungwa kwa Mwanamke",
+      clinicalAction: "Hatua ya Kliniki",
+      conditionsIdentified: "Hali Zilizotambuliwa",
+      detailedExplanation: "Maelezo ya Kina",
+      importantAdvisory: "Onyo Muhimu",
+      counsellingWarning:
+        "⚠️ Uthibitishaji wa ushauri haujakamilika. Tafadhali hakikisha mahitaji yote ya ushauri yametimizwa kabla ya kuendelea.",
+      startOver: "Anza Upya",
+    },
+    male: {
+      resultTitle: "Matokeo ya Ustahili wa Kufungwa kwa Mwanaume (Vasektomi)",
+      clinicalRecommendation: "Mapendekezo ya Kliniki",
+      conditionsIdentified: "Hali Zilizotambuliwa",
+      detailedExplanation: "Maelezo ya Kina",
+      startOver: "Anza Upya",
+    },
   },
 
   // ─── Personalize ──────────────────────────────────────────────────────────────
@@ -422,6 +446,75 @@ const sw = {
 
   // ─── Contraceptive Methods (detail pages, MEC names) ────────────────────────────
   methods: methodsSw,
+
+  // ─── FAB Eligibility ────────────────────────────────────────────────────────────
+  fab: fabSw,
+
+  // ─── Calendar Method Calculator ─────────────────────────────────────────────────
+  calendar: {
+    navigator: {
+      step1: "Hatua 1: Taarifa ya Ustahili",
+      step2: "Hatua 2: Ingiza Urefu wa Mizunguko",
+      step3: "Hatua 3: Hedhi ya Mwisho",
+      default: "Kihesabu cha Njia ya Kalenda",
+      progressComplete: "{{progress}}% imekamilika",
+      previous: "Iliyotangulia",
+      next: "Inayofuata",
+      seeResults: "Tazama Matokeo",
+    },
+    results: {
+      headerTitle: "Njia ya Kalenda",
+      headerSubtitle: "Kalenda Yako ya Uzazi",
+      yourResults: "MATOKEO YAKO",
+      shortestCycle: "Mzunguko mfupi zaidi:",
+      longestCycle: "Mzunguko mrefu zaidi:",
+      averageCycle: "Mzunguko wa wastani:",
+      eligibility: "Ustahili:",
+      eligible: "Unastahili ✓",
+      notEligible: "Hustahili ✗",
+      notRecommended: "Haipendekezwi",
+      fertileDays: "Siku za Uzazi (Zisizo Salama)",
+      fertileSubtitle: "Mimba Inawezekana — Epuka Ngono Isiyo na Kinga",
+      from: "Kutoka:",
+      to: "Hadi:",
+      avoidUnprotected: "Epuka ngono isiyo na kinga wakati wa tarehe hizi.",
+      safeDays: "Siku Salama",
+      safeSubtitle: "Uwezekano Mdogo wa Mimba",
+      beforeFertile: "Kabla ya Kipindi cha Uzazi",
+      afterFertile: "Baada ya Kipindi cha Uzazi",
+      safeDaysEnd: "Siku salama zinamalizia:",
+      predictedNextPeriod: "Hedhi Inayotabiriwa Inayofuata",
+      expectedOn: "Inatarajiwa karibu na:",
+      recalculationReminder: "Ukumbusho wa Kuhesabu Upya",
+      returnOn: "Rudi siku ya kwanza ya hedhi yako inayofuata:",
+      recalculationWarning:
+        "Ikiwa uvujaji unaanza mapema au baadaye, siku salama za awali haziamini tena.",
+      importantInfo: "Taarifa Muhimu",
+      calculateAgain: "Hesabu Tena",
+      periodDatePassed: "Tarehe ya Hedhi Imepita",
+      periodDatePassedMessage:
+        "Tarehe ya hedhi yako inayotarajiwa imepita. Tafadhali ingiza siku ya kwanza ya hedhi yako mpya ili kupata siku salama sahihi.",
+      recalculate: "Hesabu Upya",
+      later: "Baadaye",
+    },
+    sections: {
+      "eligibility-info": "Taarifa ya Ustahili",
+      "cycle-lengths": "Ingiza Mizunguko 6 ya Mwisho ya Hedhi",
+      "lmp-date": "Hedhi ya Mwisho",
+    },
+    questions: {
+      "info-text":
+        "Kabla tuanza:\n\nNjia hii inahitaji mizunguko ya hedhi iliyo sawa. Ikiwa mizunguko yako ni mifupi kuliko siku 21 au mirefu kuliko siku 35, njia za kalenda zinaweza kuwa zisiamini.\n\nUtaulizwa kuingiza urefu wa mizunguko 6 yako ya mwisho ya hedhi.\n\nUrefu wa mzunguko ni idadi ya siku kutoka siku ya kwanza ya hedhi moja hadi siku ya kwanza ya hedhi inayofuata.",
+      "cycle-durations":
+        "Ingiza muda wa mizunguko 6 yako ya mwisho ya hedhi (kwa siku)",
+      "lmp-date": "Chagua siku ya kwanza ya hedhi yako ya mwisho (LMP)",
+    },
+    placeholders: {
+      "cycle-durations":
+        "Ingiza urefu wa mizunguko kutoka ya hivi karibuni hadi ya zamani. Kila mzunguko lazima uwe kati ya siku 21 na 35.",
+      "lmp-date": "Chagua siku ya kwanza ya hedhi yako ya mwisho",
+    },
+  },
 } as const;
 
 export default sw;

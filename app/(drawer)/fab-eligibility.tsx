@@ -8,7 +8,7 @@ import {
   setFABEvaluationResult,
   resetFABEligibility,
 } from "../../src/store/slices/fabEligibility";
-import { FAB_SECTIONS } from "../../src/config/fabSections";
+import { useTranslatedFabSections } from "../../src/hooks/useTranslatedFabSections";
 import { SectionPage } from "../../src/components/questionnaire";
 import { FABResults, FABSectionNavigator } from "../../src/components/fab";
 import { evaluateFAB } from "../../src/engine/fabEligibilityEngine";
@@ -26,6 +26,7 @@ export default function FABEligibilityScreen() {
   const dispatch = useDispatch();
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const { validateSection } = useSectionValidation();
+  const fabSections = useTranslatedFabSections();
 
   const { answers, currentSection, evaluationResult } = useSelector(
     (state: RootState) => state.fabEligibility
@@ -40,7 +41,7 @@ export default function FABEligibilityScreen() {
   }, [currentSection, evaluationResult, dispatch]);
 
   const currentSectionConfig = currentSection
-    ? FAB_SECTIONS.find((s) => s.key === currentSection)
+    ? fabSections.find((s) => s.key === currentSection)
     : null;
 
   const sectionOrder = getFABSectionOrderForAnswers(fabAnswers);

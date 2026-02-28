@@ -1,5 +1,6 @@
 import { questionnaireEn } from "./questionnaire-en";
 import { methodsEn } from "./methods-en";
+import { fabEn } from "./fab-en";
 
 const en = {
   // ─── Common ──────────────────────────────────────────────────────────────────
@@ -337,6 +338,29 @@ const en = {
     maleDescription:
       "Determine eligibility for male surgical sterilization (vasectomy) using WHO Medical Eligibility Criteria. Evaluates conditions including HIV status, endocrine disorders, genital infections, and scrotal structural abnormalities to provide Accept, Caution, Delay, or Special Setting recommendations.",
     maleCta: "Assess Male Eligibility",
+    navigator: {
+      sectionOf: "Section {{current}} of {{total}}",
+      previous: "Previous",
+      next: "Next",
+      seeResults: "See Results",
+    },
+    female: {
+      resultTitle: "Female Sterilization Eligibility Result",
+      clinicalAction: "Clinical Action",
+      conditionsIdentified: "Conditions Identified",
+      detailedExplanation: "Detailed Explanation",
+      importantAdvisory: "Important Advisory",
+      counsellingWarning:
+        "⚠️ Counselling confirmation incomplete. Please ensure all counselling requirements are met before proceeding.",
+      startOver: "Start Over",
+    },
+    male: {
+      resultTitle: "Male Sterilization (Vasectomy) Eligibility Result",
+      clinicalRecommendation: "Clinical Recommendation",
+      conditionsIdentified: "Conditions Identified",
+      detailedExplanation: "Detailed Explanation",
+      startOver: "Start Over",
+    },
   },
 
   // ─── Personalize ──────────────────────────────────────────────────────────────
@@ -423,6 +447,75 @@ const en = {
 
   // ─── Contraceptive Methods (detail pages, MEC names) ────────────────────────────
   methods: methodsEn,
+
+  // ─── FAB Eligibility ────────────────────────────────────────────────────────────
+  fab: fabEn,
+
+  // ─── Calendar Method Calculator ─────────────────────────────────────────────────
+  calendar: {
+    navigator: {
+      step1: "Step 1: Eligibility Information",
+      step2: "Step 2: Enter Cycle Lengths",
+      step3: "Step 3: Last Menstrual Period",
+      default: "Calendar Method Calculator",
+      progressComplete: "{{progress}}% complete",
+      previous: "Previous",
+      next: "Next",
+      seeResults: "See Results",
+    },
+    results: {
+      headerTitle: "Calendar Method",
+      headerSubtitle: "Your Fertility Calendar",
+      yourResults: "YOUR RESULTS",
+      shortestCycle: "Shortest cycle:",
+      longestCycle: "Longest cycle:",
+      averageCycle: "Average cycle:",
+      eligibility: "Eligibility:",
+      eligible: "Eligible ✓",
+      notEligible: "Not Eligible ✗",
+      notRecommended: "Not Recommended",
+      fertileDays: "Fertile (Unsafe) Days",
+      fertileSubtitle: "Pregnancy Possible — Avoid Unprotected Intercourse",
+      from: "From:",
+      to: "To:",
+      avoidUnprotected: "Avoid unprotected intercourse during these dates.",
+      safeDays: "Safe Days",
+      safeSubtitle: "Low Pregnancy Probability",
+      beforeFertile: "Before Fertile Window",
+      afterFertile: "After Fertile Window",
+      safeDaysEnd: "Safe days END on:",
+      predictedNextPeriod: "Predicted Next Period",
+      expectedOn: "Expected on or around:",
+      recalculationReminder: "Recalculation Reminder",
+      returnOn: "Return on the first day of your next period:",
+      recalculationWarning:
+        "If bleeding starts earlier or later, previous safe days are no longer reliable.",
+      importantInfo: "Important Information",
+      calculateAgain: "Calculate Again",
+      periodDatePassed: "Period Date Passed",
+      periodDatePassedMessage:
+        "Your expected period date has passed. Please enter the first day of your new period to generate accurate safe days.",
+      recalculate: "Recalculate",
+      later: "Later",
+    },
+    sections: {
+      "eligibility-info": "Eligibility Information",
+      "cycle-lengths": "Enter Your Last 6 Menstrual Cycles",
+      "lmp-date": "Last Menstrual Period",
+    },
+    questions: {
+      "info-text":
+        "Before we begin:\n\nThis method requires relatively regular menstrual cycles. If your cycles are consistently shorter than 21 days or longer than 35 days, calendar-based methods may be unreliable.\n\nYou will be asked to enter the length of your last 6 menstrual cycles.\n\nCycle length is the number of days from the first day of one period to the first day of the next period.",
+      "cycle-durations":
+        "Enter the duration of your last 6 menstrual cycles (in days)",
+      "lmp-date": "Select the first day of your last menstrual period (LMP)",
+    },
+    placeholders: {
+      "cycle-durations":
+        "Enter cycle lengths from most recent to oldest. Each cycle must be between 21 and 35 days.",
+      "lmp-date": "Select the first day of your last period",
+    },
+  },
 } as const;
 
 export default en;

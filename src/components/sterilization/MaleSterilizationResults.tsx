@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Divider, Button, Chip } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import type { MaleSterilizationEligibilityResult } from "../../types/maleSterilizationEligibility";
 import { theme } from "../../utils/theme";
 
@@ -13,6 +14,7 @@ export function MaleSterilizationResults({
   result,
   onStartOver,
 }: MaleSterilizationResultsProps) {
+  const { t } = useTranslation();
   const categoryColors = {
     A: theme.colors.success,
     C: theme.colors.warning,
@@ -29,7 +31,7 @@ export function MaleSterilizationResults({
       showsVerticalScrollIndicator={false}
     >
       <Text variant="titleLarge" style={styles.mainTitle}>
-        Male Sterilization (Vasectomy) Eligibility Result
+        {t("sterilization.male.resultTitle")}
       </Text>
 
       <Card
@@ -60,7 +62,7 @@ export function MaleSterilizationResults({
           <Divider style={styles.sectionDivider} />
 
           <Text variant="labelLarge" style={styles.sectionTitle}>
-            Clinical Recommendation
+            {t("sterilization.male.clinicalRecommendation")}
           </Text>
           <Text variant="bodyMedium" style={styles.recommendationText}>
             {result.clinicalRecommendation}
@@ -70,7 +72,7 @@ export function MaleSterilizationResults({
             <>
               <Divider style={styles.sectionDivider} />
               <Text variant="labelLarge" style={styles.sectionTitle}>
-                Conditions Identified
+                {t("sterilization.male.conditionsIdentified")}
               </Text>
               {result.reasons.map((reason, index) => (
                 <View key={index} style={styles.reasonItem}>
@@ -87,7 +89,7 @@ export function MaleSterilizationResults({
 
           <Divider style={styles.sectionDivider} />
           <Text variant="labelLarge" style={styles.sectionTitle}>
-            Detailed Explanation
+            {t("sterilization.male.detailedExplanation")}
           </Text>
           <Text variant="bodyMedium" style={styles.explanation}>
             {result.explanation}
@@ -180,7 +182,7 @@ export function MaleSterilizationResults({
           style={styles.startOverButton}
           labelStyle={styles.buttonLabel}
         >
-          Start Over
+          {t("sterilization.male.startOver")}
         </Button>
       )}
     </ScrollView>
