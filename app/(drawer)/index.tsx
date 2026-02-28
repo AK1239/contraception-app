@@ -74,15 +74,6 @@ export default function HomePage() {
         buttonColor="#22C55E"
       />
 
-      <HomeSectionCard
-        leadingEmoji="🩺"
-        title="Natural Method Eligibility (FAB)"
-        description="Check eligibility for Symptoms-Based (SYM) and Calendar-Based (CAL) fertility awareness methods. Get Accept, Caution, or Delay recommendations with clinical explanations."
-        ctaLabel="Check FAB Eligibility"
-        onPress={() => router.push("/(drawer)/fab-eligibility")}
-        buttonColor="#EF4444"
-      />
-
     </ScrollView>
   );
 }
