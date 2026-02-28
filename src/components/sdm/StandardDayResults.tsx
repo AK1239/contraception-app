@@ -184,7 +184,7 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
                   <Ionicons name="water" size={24} color="#2563EB" />
                   <Text style={styles.cardTitle}>Predicted Next Period</Text>
                 </View>
-                <View style={styles.dateRow}>
+                <View style={styles.dateRowStacked}>
                   <Text style={styles.dateLabel}>Expected on or around:</Text>
                   <Text style={[styles.dateValue, styles.periodDate]}>
                     {result.nextPeriod.formattedDate}
@@ -202,9 +202,14 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
                   <Ionicons name="sync" size={24} color="#F59E0B" />
                   <Text style={styles.cardTitle}>Recalculation Reminder</Text>
                 </View>
-                <Text style={styles.recalculationText}>
-                  Recalculate on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
-                </Text>
+                <View style={styles.recalculationDateBlock}>
+                  <Text style={styles.recalculationText}>
+                    Recalculate on the first day of your next period:
+                  </Text>
+                  <Text style={[styles.recalculationText, styles.bold]}>
+                    {result.recalculationDate.formattedDate}
+                  </Text>
+                </View>
                 <Text style={styles.recalculationWarning}>
                   If your period comes earlier or later, results are no longer reliable.
                 </Text>
@@ -383,6 +388,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 8,
   },
+  dateRowStacked: {
+    flexDirection: 'column',
+    marginBottom: 8,
+    gap: 4,
+  },
   dateLabel: {
     fontSize: 16,
     color: '#6B7280',
@@ -434,11 +444,14 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'PlusJakartaSans_500Medium',
   },
+  recalculationDateBlock: {
+    marginBottom: 12,
+    gap: 4,
+  },
   recalculationText: {
     fontSize: 15,
     color: '#374151',
     lineHeight: 22,
-    marginBottom: 12,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   recalculationWarning: {

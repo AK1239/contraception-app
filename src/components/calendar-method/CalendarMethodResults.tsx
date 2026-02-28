@@ -204,7 +204,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
                   <Ionicons name="water" size={24} color="#2563EB" />
                   <Text style={styles.cardTitle}>{t('calendar.results.predictedNextPeriod')}</Text>
                 </View>
-                <View style={styles.dateRow}>
+                <View style={styles.dateRowStacked}>
                   <Text style={styles.dateLabel}>{t('calendar.results.expectedOn')}</Text>
                   <Text style={[styles.dateValue, styles.periodDate]}>
                     {result.nextPeriod.formattedDate}
@@ -222,9 +222,14 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
                   <Ionicons name="sync" size={24} color="#F59E0B" />
                   <Text style={styles.cardTitle}>{t('calendar.results.recalculationReminder')}</Text>
                 </View>
-                <Text style={styles.recalculationText}>
-                  {t('calendar.results.recalculateOn')} <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
-                </Text>
+                <View style={styles.recalculationDateBlock}>
+                  <Text style={styles.recalculationText}>
+                    {t('calendar.results.recalculateOn')}
+                  </Text>
+                  <Text style={[styles.recalculationText, styles.bold]}>
+                    {result.recalculationDate.formattedDate}
+                  </Text>
+                </View>
                 <Text style={styles.recalculationWarning}>
                   {t('calendar.results.recalculationWarning')}
                 </Text>
@@ -437,6 +442,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 8,
   },
+  dateRowStacked: {
+    flexDirection: 'column',
+    marginBottom: 8,
+    gap: 4,
+  },
   dateLabel: {
     fontSize: 16,
     color: '#6B7280',
@@ -473,11 +483,14 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'PlusJakartaSans_500Medium',
   },
+  recalculationDateBlock: {
+    marginBottom: 12,
+    gap: 4,
+  },
   recalculationText: {
     fontSize: 15,
     color: '#374151',
     lineHeight: 22,
-    marginBottom: 12,
     fontFamily: 'PlusJakartaSans_400Regular',
   },
   recalculationWarning: {
