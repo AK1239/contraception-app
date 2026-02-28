@@ -18,23 +18,29 @@ interface StandardDayResultsProps {
 
 export default function StandardDayResults({ result, onReset }: StandardDayResultsProps) {
   const [showPeriodAlert, setShowPeriodAlert] = useState(false);
+  const [periodDatePassed, setPeriodDatePassed] = useState(false);
 
   useEffect(() => {
-    // Check if predicted period date has passed
+    // Section 8: When user opens app AFTER predicted next period date and has not logged menstruation
     if (result.nextPeriod && result.lmpDate) {
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
       const predictedDate = new Date(result.nextPeriod.predictedDate);
-      
-      if (today > predictedDate && !showPeriodAlert) {
-        setShowPeriodAlert(true);
-        Alert.alert(
-          'Period Date Passed',
-          'Your expected period date has passed. Please enter the first day of your new period to generate accurate safe days.',
-          [
-            { text: 'Recalculate', onPress: onReset, style: 'default' },
-            { text: 'Later', style: 'cancel' },
-          ]
-        );
+      predictedDate.setHours(0, 0, 0, 0);
+
+      if (today > predictedDate) {
+        setPeriodDatePassed(true);
+        if (!showPeriodAlert) {
+          setShowPeriodAlert(true);
+          Alert.alert(
+            'Period Date Passed',
+            'Your expected period has passed. Please enter the first day of your new period to generate accurate safe days.',
+            [
+              { text: 'Recalculate', onPress: onReset, style: 'default' },
+              { text: 'Later', style: 'cancel' },
+            ]
+          );
+        }
       }
     }
   }, [result.nextPeriod, result.lmpDate, showPeriodAlert, onReset]);
@@ -47,6 +53,24 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
         <Text style={styles.headerTitle}>Standard Days Method</Text>
         <Text style={styles.headerSubtitle}>Your Fertility Calendar</Text>
       </View>
+
+      {/* Section 8: Period date passed banner - disable old predictions until recalculated */}
+      {periodDatePassed && (
+        <Card style={[styles.card, styles.periodPassedBanner]}>
+          <Card.Content>
+            <View style={styles.cardHeader}>
+              <Ionicons name="alert-circle" size={24} color="#DC2626" />
+              <Text style={styles.cardTitle}>Period Date Passed</Text>
+            </View>
+            <Text style={styles.periodPassedText}>
+              Your expected period has passed. Please enter the first day of your new period to generate accurate safe days.
+            </Text>
+            <Button mode="contained" onPress={onReset} style={styles.recalculateButton} icon="refresh">
+              Recalculate
+            </Button>
+          </Card.Content>
+        </Card>
+      )}
 
       {/* Summary Card */}
       <Card style={[styles.card, styles.summaryCard]}>
@@ -81,8 +105,8 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
         </Card>
       )}
 
-      {/* Fertile Window (only if eligible and calculated) */}
-      {result.eligible && result.fertileWindow && (
+      {/* Fertile Window (only if eligible, calculated, and period not passed) */}
+      {result.eligible && result.fertileWindow && !periodDatePassed && (
         <>
           <Card style={[styles.card, styles.fertileCard]}>
             <Card.Content>
@@ -179,10 +203,10 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
                   <Text style={styles.cardTitle}>Recalculation Reminder</Text>
                 </View>
                 <Text style={styles.recalculationText}>
-                  Return on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
+                  Recalculate on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
                 </Text>
                 <Text style={styles.recalculationWarning}>
-                  If bleeding starts earlier or later, previous safe days are no longer reliable.
+                  If your period comes earlier or later, results are no longer reliable.
                 </Text>
               </Card.Content>
             </Card>
@@ -265,6 +289,22 @@ const styles = StyleSheet.create({
   summaryCard: {
     borderLeftWidth: 4,
     borderLeftColor: '#6D28D9',
+  },
+  periodPassedBanner: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#DC2626',
+    backgroundColor: '#FEF2F2',
+  },
+  periodPassedText: {
+    fontSize: 15,
+    color: '#374151',
+    lineHeight: 22,
+    marginBottom: 16,
+    fontFamily: 'PlusJakartaSans_400Regular',
+  },
+  recalculateButton: {
+    borderRadius: 8,
+    backgroundColor: '#DC2626',
   },
   cardHeader: {
     flexDirection: 'row',

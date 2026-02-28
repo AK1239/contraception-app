@@ -1,10 +1,13 @@
 /**
  * SDM Visual Calendar Component
  * Color-coded calendar showing fertile, safe, and expected period dates
+ * RED = Fertile (unsafe), GREEN = Safe, GREY = Past dates
+ * Tap a day to show label: "Safe day", "Fertile day — pregnancy possible", "Expected menstruation"
  */
 
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 // @ts-ignore - Expo vector icons types
 import { Ionicons } from '@expo/vector-icons';
 
@@ -21,7 +24,27 @@ interface SDMCalendarProps {
   fertileRange?: string; // e.g., "Day 5-16" for dynamic display
 }
 
+function isDatePast(date: Date): boolean {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const d = new Date(date);
+  d.setHours(0, 0, 0, 0);
+  return d < today;
+}
+
 export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLength, fertileRange }: SDMCalendarProps) {
+  const { t } = useTranslation();
+
+  const getTapLabel = (type: 'safe' | 'fertile' | 'expected-period'): string => {
+    switch (type) {
+      case 'fertile':
+        return t('calendar.calendarLabels.fertileDay');
+      case 'safe':
+        return t('calendar.calendarLabels.safeDay');
+      case 'expected-period':
+        return t('calendar.calendarLabels.expectedMenstruation');
+    }
+  };
   // Group dates by week (7 days)
   const weeks: CalendarDateData[][] = [];
   for (let i = 0; i < calendarDates.length; i += 7) {
@@ -45,7 +68,10 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
     return 'Day 8-19'; // Default fallback for SDM
   };
 
-  const getColorByType = (type: 'safe' | 'fertile' | 'expected-period') => {
+  const getColorByType = (type: 'safe' | 'fertile' | 'expected-period', past: boolean) => {
+    if (past) {
+      return { bg: '#E5E7EB', border: '#9CA3AF', text: '#6B7280' };
+    }
     switch (type) {
       case 'fertile':
         return { bg: '#FEE2E2', border: '#DC2626', text: '#991B1B' };
@@ -65,6 +91,14 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
       case 'expected-period':
         return 'Period';
     }
+  };
+
+  const handleDayPress = (dayData: CalendarDateData) => {
+    Alert.alert(
+      dayData.formattedDate,
+      getTapLabel(dayData.type),
+      [{ text: 'OK', style: 'default' }]
+    );
   };
 
   return (
@@ -88,6 +122,10 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
           <View style={[styles.legendDot, { backgroundColor: '#2563EB' }]} />
           <Text style={styles.legendText}>Period</Text>
         </View>
+        <View style={styles.legendItem}>
+          <View style={[styles.legendDot, { backgroundColor: '#9CA3AF' }]} />
+          <Text style={styles.legendText}>Past</Text>
+        </View>
       </View>
 
       {/* Calendar Grid */}
@@ -96,13 +134,14 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
           {weeks.map((week, weekIndex) => (
             <View key={weekIndex} style={styles.weekRow}>
               {week.map((dayData) => {
-                const colors = getColorByType(dayData.type);
+                const past = isDatePast(dayData.date);
+                const colors = getColorByType(dayData.type, past);
                 const dateObj = new Date(dayData.date);
                 const dayOfMonth = dateObj.getDate();
                 const month = dateObj.toLocaleDateString('en-US', { month: 'short' });
                 
                 return (
-                  <View
+                  <TouchableOpacity
                     key={dayData.formattedDate}
                     style={[
                       styles.dayCell,
@@ -111,6 +150,8 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
                         borderColor: colors.border,
                       },
                     ]}
+                    onPress={() => handleDayPress(dayData)}
+                    activeOpacity={0.7}
                   >
                     <Text style={[styles.dayNumber, { color: colors.text }]}>
                       {dayData.dayNumber}
@@ -121,7 +162,7 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
                     <Text style={[styles.typeLabel, { color: colors.text }]}>
                       {getLabel(dayData.type)}
                     </Text>
-                  </View>
+                  </TouchableOpacity>
                 );
               })}
             </View>
@@ -131,7 +172,7 @@ export default function SDMCalendar({ calendarDates, avgCycleLength: _avgCycleLe
 
       {/* Tap instruction */}
       <Text style={styles.instruction}>
-        Scroll horizontally to view your complete cycle
+        {t('calendar.calendarLabels.tapInstruction')}
       </Text>
     </View>
   );

@@ -468,6 +468,7 @@ const sw = {
       headerTitle: "Njia ya Kalenda",
       headerSubtitle: "Kalenda Yako ya Uzazi",
       yourResults: "MATOKEO YAKO",
+      cycleCharacteristics: "Sifa za Mzunguko",
       shortestCycle: "Mzunguko mfupi zaidi:",
       longestCycle: "Mzunguko mrefu zaidi:",
       averageCycle: "Mzunguko wa wastani:",
@@ -489,8 +490,9 @@ const sw = {
       expectedOn: "Inatarajiwa karibu na:",
       recalculationReminder: "Ukumbusho wa Kuhesabu Upya",
       returnOn: "Rudi siku ya kwanza ya hedhi yako inayofuata:",
+      recalculateOn: "Hesabu upya siku ya kwanza ya hedhi yako inayofuata:",
       recalculationWarning:
-        "Ikiwa uvujaji unaanza mapema au baadaye, siku salama za awali haziamini tena.",
+        "Ikiwa hedhi yako inakuja mapema au baadaye, matokeo hayakuaminiki tena.",
       importantInfo: "Taarifa Muhimu",
       calculateAgain: "Hesabu Tena",
       periodDatePassed: "Tarehe ya Hedhi Imepita",
@@ -506,15 +508,21 @@ const sw = {
     },
     questions: {
       "info-text":
-        "Kabla tuanza:\n\nNjia hii inahitaji mizunguko ya hedhi iliyo sawa. Ikiwa mizunguko yako ni mifupi kuliko siku 21 au mirefu kuliko siku 35, njia za kalenda zinaweza kuwa zisiamini.\n\nUtaulizwa kuingiza urefu wa mizunguko 6 yako ya mwisho ya hedhi.\n\nUrefu wa mzunguko ni idadi ya siku kutoka siku ya kwanza ya hedhi moja hadi siku ya kwanza ya hedhi inayofuata.",
+        "Njia hii inahitaji mizunguko ya hedhi iliyo sawa. Ikiwa mizunguko yako ni mifupi kuliko siku 21 au mirefu kuliko siku 35, njia za kalenda zinaweza kuwa zisiamini.",
       "cycle-durations":
-        "Ingiza muda wa mizunguko 6 yako ya mwisho ya hedhi (kwa siku)",
+        "Ingiza urefu (kwa siku) wa mizunguko 6 yako ya mwisho ya hedhi:\n\nUrefu wa mzunguko = Idadi ya siku kutoka siku ya kwanza ya hedhi moja hadi siku ya kwanza ya hedhi inayofuata.",
       "lmp-date": "Chagua siku ya kwanza ya hedhi yako ya mwisho (LMP)",
     },
     placeholders: {
       "cycle-durations":
-        "Ingiza urefu wa mizunguko kutoka ya hivi karibuni hadi ya zamani. Kila mzunguko lazima uwe kati ya siku 21 na 35.",
+        "Kila ingizo lazima kiwe nambari kamili kati ya siku 21 na 35. Ikiwa mzunguko wowote ni mfupi kuliko 21 au mrefu kuliko 35, njia za kalenda zinaweza kuwa zisiamini.",
       "lmp-date": "Chagua siku ya kwanza ya hedhi yako ya mwisho",
+    },
+    calendarLabels: {
+      safeDay: "Siku salama",
+      fertileDay: "Siku ya uzazi — mimba inawezekana",
+      expectedMenstruation: "Hedhi inayotarajiwa",
+      tapInstruction: "Gusa siku kuona lebo yake. Sogeza usawa kuona mzunguko wako kamili.",
     },
   },
 } as const;

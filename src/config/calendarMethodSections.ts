@@ -13,7 +13,7 @@ export const calendarMethodSections: Record<CalendarMethodSectionKey, Section> =
     questions: [
       {
         id: 'info-text',
-        text: 'Before we begin:\n\nThis method requires relatively regular menstrual cycles. If your cycles are consistently shorter than 21 days or longer than 35 days, calendar-based methods may be unreliable.\n\nYou will be asked to enter the length of your last 6 menstrual cycles.\n\nCycle length is the number of days from the first day of one period to the first day of the next period.',
+        text: 'This method requires relatively regular menstrual cycles. If your cycles are consistently shorter than 21 days or longer than 35 days, calendar-based methods may be unreliable.',
         type: 'select-one' as any,
         required: false,
         metadata: {
@@ -28,7 +28,7 @@ export const calendarMethodSections: Record<CalendarMethodSectionKey, Section> =
     questions: [
       {
         id: 'cycle-durations',
-        text: 'Enter the duration of your last 6 menstrual cycles (in days)',
+        text: 'Enter the length (in days) of your last 6 menstrual cycles:\n\nCycle length = Number of days from the first day of one period to the first day of the next period.',
         type: 'cycle-durations',
         required: true,
         validation: {
@@ -37,7 +37,7 @@ export const calendarMethodSections: Record<CalendarMethodSectionKey, Section> =
         },
         metadata: {
           unit: 'days',
-          helpText: 'Enter cycle lengths from most recent to oldest. Each cycle must be between 21 and 35 days.',
+          helpText: 'Each entry must be an integer between 21 and 35 days. If any cycle is shorter than 21 or longer than 35 days, calendar-based methods may not be reliable.',
           minCycles: 6,
           maxCycles: 6,
         },

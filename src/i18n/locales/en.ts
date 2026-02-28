@@ -469,6 +469,7 @@ const en = {
       headerTitle: "Calendar Method",
       headerSubtitle: "Your Fertility Calendar",
       yourResults: "YOUR RESULTS",
+      cycleCharacteristics: "Cycle Characteristics",
       shortestCycle: "Shortest cycle:",
       longestCycle: "Longest cycle:",
       averageCycle: "Average cycle:",
@@ -490,8 +491,9 @@ const en = {
       expectedOn: "Expected on or around:",
       recalculationReminder: "Recalculation Reminder",
       returnOn: "Return on the first day of your next period:",
+      recalculateOn: "Recalculate on the first day of your next period:",
       recalculationWarning:
-        "If bleeding starts earlier or later, previous safe days are no longer reliable.",
+        "If your period comes earlier or later, results are no longer reliable.",
       importantInfo: "Important Information",
       calculateAgain: "Calculate Again",
       periodDatePassed: "Period Date Passed",
@@ -507,15 +509,21 @@ const en = {
     },
     questions: {
       "info-text":
-        "Before we begin:\n\nThis method requires relatively regular menstrual cycles. If your cycles are consistently shorter than 21 days or longer than 35 days, calendar-based methods may be unreliable.\n\nYou will be asked to enter the length of your last 6 menstrual cycles.\n\nCycle length is the number of days from the first day of one period to the first day of the next period.",
+        "This method requires relatively regular menstrual cycles. If your cycles are consistently shorter than 21 days or longer than 35 days, calendar-based methods may be unreliable.",
       "cycle-durations":
-        "Enter the duration of your last 6 menstrual cycles (in days)",
+        "Enter the length (in days) of your last 6 menstrual cycles:\n\nCycle length = Number of days from the first day of one period to the first day of the next period.",
       "lmp-date": "Select the first day of your last menstrual period (LMP)",
     },
     placeholders: {
       "cycle-durations":
-        "Enter cycle lengths from most recent to oldest. Each cycle must be between 21 and 35 days.",
+        "Each entry must be an integer between 21 and 35 days. If any cycle is shorter than 21 or longer than 35 days, calendar-based methods may not be reliable.",
       "lmp-date": "Select the first day of your last period",
+    },
+    calendarLabels: {
+      safeDay: "Safe day",
+      fertileDay: "Fertile day — pregnancy possible",
+      expectedMenstruation: "Expected menstruation",
+      tapInstruction: "Tap a day to see its label. Scroll horizontally to view your complete cycle.",
     },
   },
 } as const;

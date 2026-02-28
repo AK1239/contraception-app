@@ -97,6 +97,18 @@ function calculateSafeWindow(lmpDate: Date, avgCycleLength: number) {
 }
 
 /**
+ * Format date with full day name and month (e.g., "Monday, March 15, 2026")
+ */
+function formatLongDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+/**
  * Calculate next predicted period
  */
 function calculateNextPeriod(lmpDate: Date, avgCycleLength: number) {
@@ -105,7 +117,7 @@ function calculateNextPeriod(lmpDate: Date, avgCycleLength: number) {
   
   return {
     predictedDate,
-    formattedDate: formatDate(predictedDate),
+    formattedDate: formatLongDate(predictedDate),
   };
 }
 
@@ -118,7 +130,7 @@ function calculateRecalculationDate(lmpDate: Date, avgCycleLength: number) {
   
   return {
     date,
-    formattedDate: formatDate(date),
+    formattedDate: formatLongDate(date),
   };
 }
 
@@ -174,17 +186,19 @@ function formatDate(date: Date): string {
 
 /**
  * Build educational message based on eligibility
+ * Section 7: Fertility awareness methods require consistent tracking and correct use.
  */
 function buildEducationalMessage(eligible: boolean): string {
-  const baseMessage = 'Standard Days Method requires cycles consistently 26–32 days long.\n\n';
-  const effectiveness = 'Typical-use effectiveness ≈ 88%.\n\n';
+  const baseMessage = 'Fertility awareness methods require consistent tracking and correct use.\n\n';
+  const sdmNote = 'Standard Days Method requires cycles consistently 26–32 days long.\n\n';
+  const effectiveness = 'Typical-use effectiveness: ~88%.\n\nPerfect-use effectiveness: up to ~95%.\n\n';
   const protection = 'Does not protect against sexually transmitted infections.';
   
   if (!eligible) {
-    return baseMessage + 'You may want to consider other contraceptive methods that are more suitable for irregular cycles.\n\n' + protection;
+    return baseMessage + sdmNote + 'You may want to consider other contraceptive methods that are more suitable for irregular cycles.\n\n' + protection;
   }
   
-  return baseMessage + effectiveness + protection;
+  return baseMessage + sdmNote + effectiveness + protection;
 }
 
 /**

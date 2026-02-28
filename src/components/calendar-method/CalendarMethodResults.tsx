@@ -20,26 +20,32 @@ interface CalendarMethodResultsProps {
 export default function CalendarMethodResults({ result, onReset }: CalendarMethodResultsProps) {
   const { t } = useTranslation();
   const [showPeriodAlert, setShowPeriodAlert] = useState(false);
+  const [periodDatePassed, setPeriodDatePassed] = useState(false);
 
   useEffect(() => {
-    // Check if predicted period date has passed
+    // Section 8: When user opens app AFTER predicted next period date and has not logged menstruation
     if (result.nextPeriod && result.lmpDate) {
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
       const predictedDate = new Date(result.nextPeriod.predictedDate);
-      
-      if (today > predictedDate && !showPeriodAlert) {
-        setShowPeriodAlert(true);
-        Alert.alert(
-          t('calendar.results.periodDatePassed'),
-          t('calendar.results.periodDatePassedMessage'),
-          [
-            { text: t('calendar.results.recalculate'), onPress: onReset, style: 'default' },
-            { text: t('calendar.results.later'), style: 'cancel' },
-          ]
-        );
+      predictedDate.setHours(0, 0, 0, 0);
+
+      if (today > predictedDate) {
+        setPeriodDatePassed(true);
+        if (!showPeriodAlert) {
+          setShowPeriodAlert(true);
+          Alert.alert(
+            t('calendar.results.periodDatePassed'),
+            t('calendar.results.periodDatePassedMessage'),
+            [
+              { text: t('calendar.results.recalculate'), onPress: onReset, style: 'default' },
+              { text: t('calendar.results.later'), style: 'cancel' },
+            ]
+          );
+        }
       }
     }
-  }, [result.nextPeriod, result.lmpDate, showPeriodAlert, onReset]);
+  }, [result.nextPeriod, result.lmpDate, showPeriodAlert, onReset, t]);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -50,12 +56,28 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
         <Text style={styles.headerSubtitle}>{t('calendar.results.headerSubtitle')}</Text>
       </View>
 
-      {/* Summary Card */}
+      {/* Section 8: Period date passed banner - disable old predictions until recalculated */}
+      {periodDatePassed && (
+        <Card style={[styles.card, styles.periodPassedBanner]}>
+          <Card.Content>
+            <View style={styles.cardHeader}>
+              <Ionicons name="alert-circle" size={24} color="#DC2626" />
+              <Text style={styles.cardTitle}>{t('calendar.results.periodDatePassed')}</Text>
+            </View>
+            <Text style={styles.periodPassedText}>{t('calendar.results.periodDatePassedMessage')}</Text>
+            <Button mode="contained" onPress={onReset} style={styles.recalculateButton} icon="refresh">
+              {t('calendar.results.recalculate')}
+            </Button>
+          </Card.Content>
+        </Card>
+      )}
+
+      {/* Cycle Characteristics */}
       <Card style={[styles.card, styles.summaryCard]}>
         <Card.Content>
           <View style={styles.cardHeader}>
             <Ionicons name="information-circle" size={24} color="#6D28D9" />
-            <Text style={styles.cardTitle}>{t('calendar.results.yourResults')}</Text>
+            <Text style={styles.cardTitle}>{t('calendar.results.cycleCharacteristics')}</Text>
           </View>
           {result.shortestCycle !== null && result.longestCycle !== null && (
             <>
@@ -103,8 +125,8 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
         </Card>
       )}
 
-      {/* Fertile Window (only if eligible and calculated) */}
-      {result.eligible && result.fertileWindow && (
+      {/* Fertile Window (only if eligible, calculated, and period not passed) */}
+      {result.eligible && result.fertileWindow && !periodDatePassed && (
         <>
           <Card style={[styles.card, styles.fertileCard]}>
             <Card.Content>
@@ -201,7 +223,7 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
                   <Text style={styles.cardTitle}>{t('calendar.results.recalculationReminder')}</Text>
                 </View>
                 <Text style={styles.recalculationText}>
-                  {t('calendar.results.returnOn')} <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
+                  {t('calendar.results.recalculateOn')} <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
                 </Text>
                 <Text style={styles.recalculationWarning}>
                   {t('calendar.results.recalculationWarning')}
@@ -291,6 +313,22 @@ const styles = StyleSheet.create({
   summaryCard: {
     borderLeftWidth: 4,
     borderLeftColor: '#6D28D9',
+  },
+  periodPassedBanner: {
+    borderLeftWidth: 4,
+    borderLeftColor: '#DC2626',
+    backgroundColor: '#FEF2F2',
+  },
+  periodPassedText: {
+    fontSize: 15,
+    color: '#374151',
+    lineHeight: 22,
+    marginBottom: 16,
+    fontFamily: 'PlusJakartaSans_400Regular',
+  },
+  recalculateButton: {
+    borderRadius: 8,
+    backgroundColor: '#DC2626',
   },
   cardHeader: {
     flexDirection: 'row',
