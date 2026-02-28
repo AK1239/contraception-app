@@ -145,21 +145,24 @@ export const FEMALE_STERILIZATION_SECTIONS: FemaleSterilizationSection[] = [
       },
       {
         id: "fs-vascular-disease",
-        text: "Does the client have vascular disease?",
+        text: "Vascular disease",
         type: "yes-no",
         required: true,
+        metadata: { group: "fs-cvs-conditions", groupTitle: "Do you have / have you had any of the following conditions?" },
       },
       {
         id: "fs-ischemic-heart-disease",
-        text: "Does the client have current ischemic heart disease?",
+        text: "Ischemic heart disease",
         type: "yes-no",
         required: true,
+        metadata: { group: "fs-cvs-conditions" },
       },
       {
         id: "fs-history-of-stroke",
-        text: "Does the client have a history of stroke?",
+        text: "Stroke",
         type: "yes-no",
         required: true,
+        metadata: { group: "fs-cvs-conditions" },
       },
       {
         id: "fs-valvular-disease",

@@ -49,9 +49,9 @@ export const questionnaireEn = {
     "diabetes-years-ago": "How long ago?",
     "diabetes-complications":
       "Have you ever had diabetes complications (neuropathy/nephropathy/retinopathy)?",
-    "vascular-disease": "Do you have a history of vascular disease?",
-    "ischemic-heart-disease": "Do you have a history of ischemic heart disease?",
-    "had-stroke": "Have you ever had a stroke?",
+    "vascular-disease": "Vascular disease",
+    "ischemic-heart-disease": "Ischemic heart disease",
+    "had-stroke": "Stroke",
     "has-dyslipidemia": "Have you ever been diagnosed with dyslipidemia?",
     "knows-lipid-profile": "Do you know your latest lipid profile?",
     "lipid-profile": "Enter your lipid profile (mg/dL)",

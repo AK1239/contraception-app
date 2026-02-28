@@ -49,9 +49,9 @@ export const questionnaireSw = {
     "diabetes-years-ago": "Ni muda gani uliopita?",
     "diabetes-complications":
       "Je, umewahi kuwa na matatizo ya ugonjwa wa sukari (neuropathy/nephropathy/retinopathy)?",
-    "vascular-disease": "Je, una historia ya ugonjwa wa mishipa?",
-    "ischemic-heart-disease": "Je, una historia ya ugonjwa wa moyo?",
-    "had-stroke": "Je, umewahi kuwa na kiharusi?",
+    "vascular-disease": "Vascular disease",
+    "ischemic-heart-disease": "Ischemic heart disease",
+    "had-stroke": "Stroke",
     "has-dyslipidemia": "Je, umewahi kuwa na ugonjwa wa mafuta ya damu?",
     "knows-lipid-profile": "Je, unajua matokeo yako ya mafuta ya damu?",
     "lipid-profile": "Ingiza matokeo ya mafuta ya damu (mg/dL)",
