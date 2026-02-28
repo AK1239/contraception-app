@@ -4,6 +4,8 @@
 
 import React, { useEffect, useCallback, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../src/store';
 import {
@@ -31,19 +33,22 @@ import type { AnswerValue } from '../../src/types/questionnaire';
 
 export default function CalendarMethodCalculatorPage() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+  const [showInfoCard, setShowInfoCard] = useState(true);
   const translatedSections = useTranslatedCalendarSections();
 
   const { answers, currentSection, evaluationResult, isComplete } = useSelector(
     (state: RootState) => state.calendarMethod
   );
 
-  // Initialize on mount
+  // Initialize on mount (skip while showing info card)
   useEffect(() => {
+    if (showInfoCard) return;
     if (!currentSection && !isComplete) {
       dispatch(initializeCalendarMethod());
     }
-  }, [currentSection, isComplete, dispatch]);
+  }, [showInfoCard, currentSection, isComplete, dispatch]);
 
   // Evaluate to get eligibility status
   const currentResult = evaluateCalendarMethod(answers);
@@ -125,6 +130,11 @@ export default function CalendarMethodCalculatorPage() {
     dispatch(initializeCalendarMethod());
   }, [dispatch]);
 
+  const handleGetStarted = useCallback(() => {
+    setShowInfoCard(false);
+    dispatch(initializeCalendarMethod());
+  }, [dispatch]);
+
   // Convert answers to format expected by SectionPage
   const convertedAnswers: Record<string, AnswerValue | undefined> = {};
   
@@ -141,11 +151,30 @@ export default function CalendarMethodCalculatorPage() {
     return <CalendarMethodResults result={evaluationResult} onReset={handleReset} />;
   }
 
-  // Show questionnaire
+  // Show info card only initially
+  if (showInfoCard) {
+    return (
+      <View style={styles.container}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+          <NaturalMethodsInfoCard />
+          <Button
+            mode="contained"
+            onPress={handleGetStarted}
+            style={styles.getStartedButton}
+            labelStyle={styles.getStartedLabel}
+            buttonColor="#6D28D9"
+          >
+            {t('naturalCalculators.getStarted')}
+          </Button>
+        </ScrollView>
+      </View>
+    );
+  }
+
+  // Show questionnaire (info card removed after user clicks Next)
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        <NaturalMethodsInfoCard />
         {currentSectionConfig && (
           <SectionPage
             section={currentSectionConfig}
@@ -183,5 +212,16 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingTop: 16,
     paddingBottom: 20,
+  },
+  getStartedButton: {
+    marginHorizontal: 16,
+    marginTop: 8,
+    borderRadius: 12,
+    paddingVertical: 6,
+  },
+  getStartedLabel: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
   },
 });

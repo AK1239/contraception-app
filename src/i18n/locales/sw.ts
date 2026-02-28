@@ -319,6 +319,7 @@ const sw = {
       "Njia ya Kalenda (Rhythm) inaweza kutumika na wanawake wenye urefu wa mzunguko kati ya siku 21–35. Inahitaji kufuatilia mizunguko iliyopita kukadiria siku za uzazi, inahitaji usimamizi zaidi wa kumbukumbu, na kwa ujumla haiamini katika matumizi ya kawaida, lakini inaruhusu hesabu ya uzazi iliyobinafsishwa zaidi.",
     infoCardDisclaimer:
       "Njia zote mbili husaidia kuzuia mimba kwa kuepuka siku za uzazi, lakini hazilindi dhidi ya maambukizi ya ngono (STI).",
+    getStarted: "Anza",
     fabTitle: "Ustahili wa Njia za Asili (FAB)",
     fabDescription:
       "Tathmini ustahili wa njia za ufahamu wa uzazi zinazotegemea Dalili (SYM) na Kalenda (CAL). Pata mapendekezo ya Kubali, Tahadhari, au Ahirisha pamoja na maelezo ya STI/HIV na ujauzito wenye hatari kubwa.",
