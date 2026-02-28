@@ -43,16 +43,16 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       {/* Header */}
       <View style={styles.header}>
-        <Ionicons name="calendar-outline" size={48} color="#8B5CF6" />
+        <Ionicons name="calendar" size={48} color="#6D28D9" />
         <Text style={styles.headerTitle}>Calendar Method</Text>
-        <Text style={styles.headerSubtitle}>Rhythm Method Results</Text>
+        <Text style={styles.headerSubtitle}>Your Fertility Calendar</Text>
       </View>
 
       {/* Summary Card */}
       <Card style={[styles.card, styles.summaryCard]}>
         <Card.Content>
           <View style={styles.cardHeader}>
-            <Ionicons name="information-circle" size={24} color="#8B5CF6" />
+            <Ionicons name="information-circle" size={24} color="#6D28D9" />
             <Text style={styles.cardTitle}>YOUR RESULTS</Text>
           </View>
           {result.shortestCycle !== null && result.longestCycle !== null && (
@@ -92,9 +92,9 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
             </View>
             <Text style={styles.messageText}>{result.message}</Text>
             {result.warning && (
-              <View style={styles.warningBox}>
+              <View style={styles.warningBoxAmber}>
                 <Ionicons name="warning" size={20} color="#F59E0B" />
-                <Text style={styles.warningText}>{result.warning}</Text>
+                <Text style={styles.warningTextAmber}>{result.warning}</Text>
               </View>
             )}
           </Card.Content>
@@ -113,13 +113,6 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
               <Text style={styles.windowSubtitle}>Pregnancy Possible — Avoid Unprotected Intercourse</Text>
               <Divider style={styles.divider} />
               <View style={styles.dateRow}>
-                <Text style={styles.dateLabel}>Cycle Days:</Text>
-                <Text style={styles.dateValue}>
-                  Day {result.earliestFertileDay} to Day {result.latestFertileDay}
-                </Text>
-              </View>
-              <Divider style={styles.divider} />
-              <View style={styles.dateRow}>
                 <Text style={styles.dateLabel}>From:</Text>
                 <Text style={styles.dateValue}>{result.fertileWindow.calendarDates.fertileStart}</Text>
               </View>
@@ -127,9 +120,9 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
                 <Text style={styles.dateLabel}>To:</Text>
                 <Text style={styles.dateValue}>{result.fertileWindow.calendarDates.fertileEnd}</Text>
               </View>
-              <View style={styles.warningBox2}>
+              <View style={styles.warningBox}>
                 <Ionicons name="alert-circle" size={16} color="#DC2626" />
-                <Text style={styles.warningText2}>
+                <Text style={styles.warningText}>
                   Avoid unprotected intercourse during these dates.
                 </Text>
               </View>
@@ -179,19 +172,37 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
             </Card>
           )}
 
+          {/* Predicted Next Period */}
+          {result.nextPeriod && (
+            <Card style={[styles.card, styles.periodCard]}>
+              <Card.Content>
+                <View style={styles.cardHeader}>
+                  <Ionicons name="water" size={24} color="#2563EB" />
+                  <Text style={styles.cardTitle}>Predicted Next Period</Text>
+                </View>
+                <View style={styles.dateRow}>
+                  <Text style={styles.dateLabel}>Expected on or around:</Text>
+                  <Text style={[styles.dateValue, styles.periodDate]}>
+                    {result.nextPeriod.formattedDate}
+                  </Text>
+                </View>
+              </Card.Content>
+            </Card>
+          )}
+
           {/* Recalculation Reminder */}
           {result.recalculationDate && (
             <Card style={[styles.card, styles.recalculationCard]}>
               <Card.Content>
                 <View style={styles.cardHeader}>
                   <Ionicons name="sync" size={24} color="#F59E0B" />
-                  <Text style={styles.cardTitle}>🔁 Recalculation Reminder</Text>
+                  <Text style={styles.cardTitle}>Recalculation Reminder</Text>
                 </View>
                 <Text style={styles.recalculationText}>
-                  Recalculate on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
+                  Return on the first day of your next period: <Text style={styles.bold}>{result.recalculationDate.formattedDate}</Text>
                 </Text>
                 <Text style={styles.recalculationWarning}>
-                  If your period comes earlier or later, results are no longer reliable.
+                  If bleeding starts earlier or later, previous safe days are no longer reliable.
                 </Text>
               </Card.Content>
             </Card>
@@ -277,7 +288,7 @@ const styles = StyleSheet.create({
   },
   summaryCard: {
     borderLeftWidth: 4,
-    borderLeftColor: '#8B5CF6',
+    borderLeftColor: '#6D28D9',
   },
   cardHeader: {
     flexDirection: 'row',
@@ -344,6 +355,21 @@ const styles = StyleSheet.create({
   },
   warningBox: {
     flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FEE2E2',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 12,
+  },
+  warningText: {
+    fontSize: 14,
+    color: '#991B1B',
+    marginLeft: 8,
+    flex: 1,
+    fontFamily: 'PlusJakartaSans_500Medium',
+  },
+  warningBoxAmber: {
+    flexDirection: 'row',
     alignItems: 'flex-start',
     marginTop: 12,
     padding: 12,
@@ -351,26 +377,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     gap: 8,
   },
-  warningText: {
+  warningTextAmber: {
     flex: 1,
     fontSize: 14,
     color: '#92400E',
     fontFamily: 'PlusJakartaSans_400Regular',
-  },
-  warningBox2: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FEE2E2',
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 12,
-  },
-  warningText2: {
-    fontSize: 14,
-    color: '#991B1B',
-    marginLeft: 8,
-    flex: 1,
-    fontFamily: 'PlusJakartaSans_500Medium',
   },
   windowSubtitle: {
     fontSize: 14,
@@ -454,7 +465,7 @@ const styles = StyleSheet.create({
   resetButton: {
     borderRadius: 12,
     paddingVertical: 6,
-    backgroundColor: '#8B5CF6',
+    backgroundColor: '#059669',
   },
   buttonLabel: {
     fontSize: 16,
