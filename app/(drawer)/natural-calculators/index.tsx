@@ -4,13 +4,11 @@ import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import HomeSectionCard from '../../../src/components/HomeSectionCard';
-import { useIsHealthcareProvider } from '../../../src/hooks/useUserRole';
 
 export default function NaturalCalculatorsIndexScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const isHealthcareProvider = useIsHealthcareProvider();
 
   const handleStandardDayCalculator = () => {
     router.push('/(drawer)/standard-day-calculator-page');
@@ -20,28 +18,12 @@ export default function NaturalCalculatorsIndexScreen() {
     router.push('/(drawer)/standard-day-calculator');
   };
 
-  const handleFABEligibility = () => {
-    router.push('/(drawer)/fab-eligibility');
-  };
-
   return (
     <ScrollView 
       style={styles.content}
       contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
     >
       <View style={styles.calculatorsContainer}>
-        {isHealthcareProvider && (
-          <HomeSectionCard
-            leadingEmoji="🎯"
-            title={t("naturalCalculators.fabTitle")}
-            description={t("naturalCalculators.fabDescription")}
-            ctaLabel={t("naturalCalculators.fabCta")}
-            onPress={handleFABEligibility}
-            backgroundColor="#ECFDF5"
-            buttonColor="#10B981"
-          />
-        )}
-
         <HomeSectionCard
           leadingEmoji="📅"
           title={t("naturalCalculators.standardDayTitle")}
