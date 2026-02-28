@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Pressable, Dimensions } from "react-native";
 import { Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import type { UserRole } from "../../constants/userRole";
 
@@ -19,10 +20,14 @@ export default function RoleSelectionSlide({
   color = "#6D28D9",
 }: RoleSelectionSlideProps) {
   const { t } = useTranslation();
+
+  const isHealthcareSelected = selectedRole === "healthcare-provider";
+  const isPublicSelected = selectedRole === "general-public";
+
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={["#fafafa", "#ffffff"]}
+        colors={["#f8f6ff", "#ffffff"]}
         style={styles.gradientBackground}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -30,91 +35,223 @@ export default function RoleSelectionSlide({
 
       <View style={styles.contentContainer}>
         <View style={styles.iconSection}>
-          <View style={[styles.iconCircleOuter, { backgroundColor: color + "15" }]}>
-            <View style={[styles.iconCircle, { backgroundColor: color + "25" }]}>
-              <Text style={styles.icon}>👤</Text>
-            </View>
-          </View>
+          <LinearGradient
+            colors={[color + "30", color + "15"]}
+            style={styles.iconCircleOuter}
+          >
+            <LinearGradient
+              colors={[color + "50", color + "30"]}
+              style={styles.iconCircle}
+            >
+              <Ionicons name="people" size={36} color={color} />
+            </LinearGradient>
+          </LinearGradient>
         </View>
 
         <View style={styles.titleSection}>
-          <Text variant="displaySmall" style={[styles.title, { color }]}>
+          <Text style={[styles.title, { color }]}>
             {t("onboarding.roleSelectionTitle")}
           </Text>
-          <Text variant="titleMedium" style={styles.subtitle}>
+          <Text style={styles.subtitle}>
             {t("onboarding.roleSelectionSubtitle")}
           </Text>
         </View>
 
         <View style={styles.optionsContainer}>
+          {/* Healthcare Provider Card */}
           <Pressable
-            style={[
+            style={({ pressed }) => [
               styles.optionCard,
-              selectedRole === "healthcare-provider" && styles.optionCardSelected,
-              selectedRole === "healthcare-provider" && { borderColor: color },
+              isHealthcareSelected && [
+                styles.optionCardSelected,
+                { borderColor: color },
+              ],
+              pressed && styles.optionCardPressed,
             ]}
             onPress={() => onRoleSelect("healthcare-provider")}
           >
-            <View style={styles.optionContent}>
+            {isHealthcareSelected && (
+              <LinearGradient
+                colors={[color + "12", color + "06"]}
+                style={StyleSheet.absoluteFill}
+                borderRadius={20}
+              />
+            )}
+            <View style={styles.cardRow}>
               <View
                 style={[
-                  styles.checkbox,
-                  selectedRole === "healthcare-provider" && {
+                  styles.roleIconContainer,
+                  {
+                    backgroundColor: isHealthcareSelected
+                      ? color + "20"
+                      : "#F1F5F9",
+                  },
+                ]}
+              >
+                <Ionicons
+                  name="medkit"
+                  size={28}
+                  color={isHealthcareSelected ? color : "#94A3B8"}
+                />
+              </View>
+              <View style={styles.cardText}>
+                <Text
+                  style={[
+                    styles.optionLabel,
+                    isHealthcareSelected && { color, fontWeight: "700" },
+                  ]}
+                >
+                  {t("onboarding.roleHealthcareTitle")}
+                </Text>
+                <Text style={styles.optionHint}>
+                  {t("onboarding.roleHealthcareHint")}
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.selectionIndicator,
+                  isHealthcareSelected && {
                     backgroundColor: color,
                     borderColor: color,
                   },
                 ]}
               >
-                {selectedRole === "healthcare-provider" && (
-                  <Text style={styles.checkmark}>✓</Text>
+                {isHealthcareSelected && (
+                  <Ionicons name="checkmark" size={16} color="#fff" />
                 )}
               </View>
-              <Text
-                style={[
-                  styles.optionLabel,
-                  selectedRole === "healthcare-provider" && { color, fontWeight: "600" },
-                ]}
-              >
-                {t("onboarding.roleHealthcareTitle")}
-              </Text>
             </View>
-            <Text style={styles.optionHint}>{t("onboarding.roleHealthcareHint")}</Text>
+
+            <View style={styles.featuresRow}>
+              {["Clinical tools", "Eligibility check", "All features"].map(
+                (feat) => (
+                  <View
+                    key={feat}
+                    style={[
+                      styles.featureChip,
+                      {
+                        backgroundColor: isHealthcareSelected
+                          ? color + "15"
+                          : "#F1F5F9",
+                      },
+                    ]}
+                  >
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={12}
+                      color={isHealthcareSelected ? color : "#94A3B8"}
+                      style={{ marginRight: 4 }}
+                    />
+                    <Text
+                      style={[
+                        styles.featureChipText,
+                        { color: isHealthcareSelected ? color : "#94A3B8" },
+                      ]}
+                    >
+                      {feat}
+                    </Text>
+                  </View>
+                )
+              )}
+            </View>
           </Pressable>
 
+          {/* General Public Card */}
           <Pressable
-            style={[
+            style={({ pressed }) => [
               styles.optionCard,
-              selectedRole === "general-public" && styles.optionCardSelected,
-              selectedRole === "general-public" && { borderColor: color },
+              isPublicSelected && [
+                styles.optionCardSelected,
+                { borderColor: color },
+              ],
+              pressed && styles.optionCardPressed,
             ]}
             onPress={() => onRoleSelect("general-public")}
           >
-            <View style={styles.optionContent}>
+            {isPublicSelected && (
+              <LinearGradient
+                colors={[color + "12", color + "06"]}
+                style={StyleSheet.absoluteFill}
+                borderRadius={20}
+              />
+            )}
+            <View style={styles.cardRow}>
               <View
                 style={[
-                  styles.checkbox,
-                  selectedRole === "general-public" && {
+                  styles.roleIconContainer,
+                  {
+                    backgroundColor: isPublicSelected
+                      ? color + "20"
+                      : "#F1F5F9",
+                  },
+                ]}
+              >
+                <Ionicons
+                  name="person"
+                  size={28}
+                  color={isPublicSelected ? color : "#94A3B8"}
+                />
+              </View>
+              <View style={styles.cardText}>
+                <Text
+                  style={[
+                    styles.optionLabel,
+                    isPublicSelected && { color, fontWeight: "700" },
+                  ]}
+                >
+                  {t("onboarding.rolePublicTitle")}
+                </Text>
+                <Text style={styles.optionHint}>
+                  {t("onboarding.rolePublicHintShort")}
+                </Text>
+              </View>
+              <View
+                style={[
+                  styles.selectionIndicator,
+                  isPublicSelected && {
                     backgroundColor: color,
                     borderColor: color,
                   },
                 ]}
               >
-                {selectedRole === "general-public" && (
-                  <Text style={styles.checkmark}>✓</Text>
+                {isPublicSelected && (
+                  <Ionicons name="checkmark" size={16} color="#fff" />
                 )}
               </View>
-              <Text
-                style={[
-                  styles.optionLabel,
-                  selectedRole === "general-public" && { color, fontWeight: "600" },
-                ]}
-              >
-                {t("onboarding.rolePublicTitle")}
-              </Text>
             </View>
-            <Text style={styles.optionHint}>
-              {t("onboarding.rolePublicHint")}
-            </Text>
+
+            <View style={styles.featuresRow}>
+              {["Contraceptive info", "Guided experience", "Easy to use"].map(
+                (feat) => (
+                  <View
+                    key={feat}
+                    style={[
+                      styles.featureChip,
+                      {
+                        backgroundColor: isPublicSelected
+                          ? color + "15"
+                          : "#F1F5F9",
+                      },
+                    ]}
+                  >
+                    <Ionicons
+                      name="checkmark-circle"
+                      size={12}
+                      color={isPublicSelected ? color : "#94A3B8"}
+                      style={{ marginRight: 4 }}
+                    />
+                    <Text
+                      style={[
+                        styles.featureChipText,
+                        { color: isPublicSelected ? color : "#94A3B8" },
+                      ]}
+                    >
+                      {feat}
+                    </Text>
+                  </View>
+                )
+              )}
+            </View>
           </Pressable>
         </View>
       </View>
@@ -145,21 +282,18 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   iconCircleOuter: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
     alignItems: "center",
     justifyContent: "center",
   },
   iconCircle: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     alignItems: "center",
     justifyContent: "center",
-  },
-  icon: {
-    fontSize: 32,
   },
   titleSection: {
     alignItems: "center",
@@ -175,51 +309,86 @@ const styles = StyleSheet.create({
   subtitle: {
     textAlign: "center",
     color: "#64748b",
-    fontWeight: "600",
-    fontSize: 16,
+    fontWeight: "500",
+    fontSize: 15,
   },
   optionsContainer: {
     gap: 16,
   },
   optionCard: {
     backgroundColor: "#ffffff",
-    borderRadius: 16,
+    borderRadius: 20,
     padding: 20,
     borderWidth: 2,
     borderColor: "#E2E8F0",
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    elevation: 3,
   },
   optionCardSelected: {
-    backgroundColor: "#F5F3FF",
+    borderWidth: 2,
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 6,
   },
-  optionContent: {
+  optionCardPressed: {
+    opacity: 0.92,
+    transform: [{ scale: 0.98 }],
+  },
+  cardRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 8,
+    marginBottom: 16,
   },
-  checkbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 6,
-    borderWidth: 2,
-    borderColor: "#CBD5E1",
+  roleIconContainer: {
+    width: 56,
+    height: 56,
+    borderRadius: 16,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 14,
   },
-  checkmark: {
-    color: "#fff",
-    fontSize: 14,
-    fontWeight: "bold",
+  cardText: {
+    flex: 1,
   },
   optionLabel: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: "#334155",
-    flex: 1,
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#1E293B",
+    marginBottom: 3,
   },
   optionHint: {
     fontSize: 13,
     color: "#64748b",
-    marginLeft: 38,
+    lineHeight: 18,
+  },
+  selectionIndicator: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    borderWidth: 2,
+    borderColor: "#CBD5E1",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 8,
+  },
+  featuresRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 8,
+  },
+  featureChip: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 20,
+  },
+  featureChipText: {
+    fontSize: 11,
+    fontWeight: "600",
   },
 });

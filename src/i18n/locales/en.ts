@@ -126,6 +126,7 @@ const en = {
     roleHealthcareHint: "Full access to all features",
     rolePublicTitle: "General public",
     rolePublicHint: "Simplified experience, eligibility tools hidden",
+    rolePublicHintShort: "Simplified, personalized experience",
     roleSelectionWhoAreYou: "Who are you?",
     roleSelectionSubtitleAlt: "Select your role so we can personalize your experience.",
     roleHealthcareDescription:

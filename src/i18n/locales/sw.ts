@@ -126,6 +126,7 @@ const sw = {
     roleHealthcareHint: "Ufikiaji kamili wa vipengele vyote",
     rolePublicTitle: "Umma",
     rolePublicHint: "Uzoefu rahisi, zana za ustahili zimefichwa",
+    rolePublicHintShort: "Uzoefu rahisi uliobinafsishwa",
     roleSelectionWhoAreYou: "Wewe ni nani?",
     roleSelectionSubtitleAlt: "Chagua jukumu lako ili tubinafsishe uzoefu wako.",
     roleHealthcareDescription:
