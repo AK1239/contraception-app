@@ -81,7 +81,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                     <RNTextInput
                       style={[
                         styles.cycleInput,
-                        durations[i] && durations[i] > 0 && styles.cycleInputFilled,
+                        durations[i] && durations[i] > 0 ? styles.cycleInputFilled : undefined,
                       ]}
                       value={durations[i] && durations[i] > 0 ? String(durations[i]) : ""}
                       onChangeText={(text) => {
@@ -140,7 +140,9 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                     styles.selectOption,
                     value === option.value && styles.selectOptionActive,
                   ]}
-                  onTouchEnd={() => onValueChange(option.value)}
+                  onTouchEnd={() =>
+                    onValueChange(option.value)
+                  }
                 >
                   <View style={styles.selectOptionContent}>
                     <Text

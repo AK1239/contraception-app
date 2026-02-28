@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../src/store";
 import {
   setAnswer,
+  clearAnswer,
   setMECCurrentSection,
   setMECSectionComplete,
   setMECEvaluationResult,
@@ -50,8 +51,47 @@ export default function ChooseContraceptiveScreen() {
   const handleAnswerChange = useCallback(
     (questionId: string, value: AnswerValue) => {
       dispatch(setAnswer({ questionId, value }));
+
+      // Clear answers for questions that become hidden due to this change (cascade)
+      if (currentSection) {
+        const updatedAnswers = { ...answers, [questionId]: value };
+        const questionsToClear: string[] = [];
+
+        // Find direct dependents of the changed question that now become hidden
+        for (const q of currentSection.questions) {
+          if (
+            q.conditional &&
+            q.conditional.dependsOn === questionId &&
+            updatedAnswers[questionId] !== q.conditional.expectedValue
+          ) {
+            questionsToClear.push(q.id);
+          }
+        }
+
+        // Transitively find further dependents of any cleared question
+        let i = 0;
+        while (i < questionsToClear.length) {
+          const clearedId = questionsToClear[i];
+          for (const q of currentSection.questions) {
+            if (
+              q.conditional &&
+              q.conditional.dependsOn === clearedId &&
+              !questionsToClear.includes(q.id)
+            ) {
+              questionsToClear.push(q.id);
+            }
+          }
+          i++;
+        }
+
+        for (const qId of questionsToClear) {
+          if (answers[qId] !== undefined) {
+            dispatch(clearAnswer(qId));
+          }
+        }
+      }
     },
-    [dispatch]
+    [dispatch, currentSection, answers]
   );
 
   const handleNext = useCallback(() => {
