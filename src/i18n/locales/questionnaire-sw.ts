@@ -85,9 +85,8 @@ export const questionnaireSw = {
     "breast-diagnosis": "Tathmini ni/ilikuwa nini?",
     "breast-cancer-present":
       "Je, ipo sasa au ilikuwa zaidi ya miaka 5 iliyopita?",
-    "endometrial-cancer":
-      "Je, umewahi kuwa na kansa ya endometrial?",
-    "ovarian-cancer": "Je, umewahi kuwa na kansa ya ovari?",
+    "endometrial-cancer": "Endometrial cancer",
+    "ovarian-cancer": "Ovarian cancer",
     "uterine-fibroids":
       "Je, umewahi kuwa na fibroids za tumbo na haujatibiwa kwa upasuaji?",
     "fibroids-distort-uterus":

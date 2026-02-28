@@ -85,9 +85,8 @@ export const questionnaireEn = {
     "breast-diagnosis": "What is/was the diagnosis?",
     "breast-cancer-present":
       "Is it currently present or was it present more than 5 years ago?",
-    "endometrial-cancer":
-      "Have you ever been diagnosed with endometrial cancer?",
-    "ovarian-cancer": "Have you ever been diagnosed with ovarian cancer?",
+    "endometrial-cancer": "Endometrial cancer",
+    "ovarian-cancer": "Ovarian cancer",
     "uterine-fibroids":
       "Have you ever been diagnosed with uterine fibroids and not surgically treated?",
     "fibroids-distort-uterus":
