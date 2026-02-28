@@ -1,7 +1,36 @@
 import { Drawer } from "expo-router/drawer";
-import { useColorScheme, View, Image } from "react-native";
+import { useColorScheme, View, Image, TouchableOpacity, Text } from "react-native";
+import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
 import CustomDrawerContent from "../../src/components/CustomDrawerContent";
 import { StartOverHeaderButton } from "../../src/components/StartOverHeaderButton";
+
+function HomeHeaderTitle() {
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+      <Text style={{ color: "#fff", fontSize: 20, fontWeight: "bold", fontFamily: "PlusJakartaSans_600SemiBold" }}>
+        ContraSafe
+      </Text>
+      <Image
+        source={require("../../assets/logo.png")}
+        style={{ width: 32, height: 32, borderRadius: 16 }}
+        resizeMode="cover"
+      />
+    </View>
+  );
+}
+
+function HomeHeaderRight() {
+  const router = useRouter();
+  return (
+    <TouchableOpacity
+      onPress={() => router.push("/(drawer)/settings")}
+      style={{ marginRight: 16, padding: 4 }}
+    >
+      <Ionicons name="settings-outline" size={24} color="#fff" />
+    </TouchableOpacity>
+  );
+}
 
 export default function DrawerLayout() {
   const colorScheme = useColorScheme();
@@ -31,15 +60,9 @@ export default function DrawerLayout() {
         options={{
           drawerLabel: "Home",
           title: "ContraSafe",
-          headerRight: () => (
-            <View style={{ marginRight: 16 }}>
-              <Image
-                source={require("../../assets/logo.png")}
-                style={{ width: 40, height: 40, borderRadius: 20 }}
-                resizeMode="cover"
-              />
-            </View>
-          ),
+          headerTitleAlign: "left",
+          headerTitle: () => <HomeHeaderTitle />,
+          headerRight: () => <HomeHeaderRight />,
         }}
       />
       
