@@ -17,6 +17,10 @@ export interface QuestionMetadata {
   placeholder?: string;
   helpText?: string;
   options?: Array<{ value: string; label: string }>;
+  /** Group key — questions sharing a group key are rendered together as a checkbox group */
+  group?: string;
+  /** Title shown at the top of the grouped card (only needed on the first question of the group) */
+  groupTitle?: string;
 }
 
 /** Base question definition for section config */

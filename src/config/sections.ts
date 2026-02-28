@@ -235,21 +235,24 @@ export const SECTIONS: Section[] = [
       },
       {
         id: "vascular-disease",
-        text: "Do you have a history of vascular disease?",
+        text: "Vascular disease",
         type: "yes-no",
         required: true,
+        metadata: { group: "cvs-conditions", groupTitle: "Do you have / have you had any of the following conditions?" },
       },
       {
         id: "ischemic-heart-disease",
-        text: "Do you have a history of ischemic heart disease?",
+        text: "Ischemic heart disease",
         type: "yes-no",
         required: true,
+        metadata: { group: "cvs-conditions" },
       },
       {
         id: "had-stroke",
-        text: "Have you ever had a stroke?",
+        text: "Stroke",
         type: "yes-no",
         required: true,
+        metadata: { group: "cvs-conditions" },
       },
       {
         id: "has-dyslipidemia",
@@ -468,15 +471,17 @@ export const SECTIONS: Section[] = [
       },
       {
         id: "endometrial-cancer",
-        text: "Have you ever been diagnosed with endometrial cancer?",
+        text: "Endometrial cancer",
         type: "yes-no",
         required: true,
+        metadata: { group: "gyn-cancers", groupTitle: "Have you ever been diagnosed with any of the following?" },
       },
       {
         id: "ovarian-cancer",
-        text: "Have you ever been diagnosed with ovarian cancer?",
+        text: "Ovarian cancer",
         type: "yes-no",
         required: true,
+        metadata: { group: "gyn-cancers" },
       },
       {
         id: "uterine-fibroids",

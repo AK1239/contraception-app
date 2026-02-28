@@ -7,7 +7,41 @@ import type { AnswerState } from "../../types/rules";
 import type { AnswerValue } from "../../types/questionnaire";
 import { getVisibleSectionQuestions } from "../../utils/sectionQuestionVisibility";
 import { SectionQuestionInput } from "./SectionQuestionInput";
+import { CheckboxGroup } from "./CheckboxGroup";
 import { theme } from "../../utils/theme";
+
+/**
+ * Collapses a flat list of visible questions into renderable "rows":
+ * - Questions sharing the same metadata.group become one grouped row
+ * - All other questions are individual rows
+ */
+type QuestionRow =
+  | { kind: "single"; question: SectionQuestion }
+  | { kind: "group"; groupKey: string; questions: SectionQuestion[] };
+
+function buildRows(questions: SectionQuestion[]): QuestionRow[] {
+  const rows: QuestionRow[] = [];
+  const seenGroups = new Set<string>();
+
+  for (const q of questions) {
+    const group = q.metadata?.group;
+    if (group) {
+      if (!seenGroups.has(group)) {
+        seenGroups.add(group);
+        rows.push({
+          kind: "group",
+          groupKey: group,
+          questions: questions.filter((x) => x.metadata?.group === group),
+        });
+      }
+      // subsequent questions in the same group are already included above
+    } else {
+      rows.push({ kind: "single", question: q });
+    }
+  }
+
+  return rows;
+}
 
 /** Section-like shape for questionnaire pages (supports both MEC and FAB sections) */
 export interface SectionPageSection {
@@ -133,25 +167,54 @@ export function SectionPage({
       </View>
 
       <View style={styles.questionsContainer}>
-        {visibleQuestions.map((question) => (
-          <View 
-            key={question.id}
-            ref={(ref) => {
-              if (ref) {
-                questionViewRefs.current.set(question.id, ref);
-              } else {
-                questionViewRefs.current.delete(question.id);
-              }
-            }}
-          >
-            <SectionQuestionInput
-              question={question}
-              value={answers[question.id] as AnswerValue | undefined}
-              onValueChange={(value) => handleAnswerChange(question.id, value)}
-              error={errors[question.id]}
-            />
-          </View>
-        ))}
+        {buildRows(visibleQuestions).map((row) => {
+          if (row.kind === "group") {
+            return (
+              <View
+                key={row.groupKey}
+                ref={(ref) => {
+                  // Register the first question of the group so auto-scroll works
+                  const firstId = row.questions[0]?.id;
+                  if (firstId) {
+                    if (ref) {
+                      questionViewRefs.current.set(firstId, ref);
+                    } else {
+                      questionViewRefs.current.delete(firstId);
+                    }
+                  }
+                }}
+              >
+                <CheckboxGroup
+                  questions={row.questions}
+                  answers={answers}
+                  onAnswerChange={(qId, value) => handleAnswerChange(qId, value)}
+                  errors={errors}
+                />
+              </View>
+            );
+          }
+
+          const question = row.question;
+          return (
+            <View
+              key={question.id}
+              ref={(ref) => {
+                if (ref) {
+                  questionViewRefs.current.set(question.id, ref);
+                } else {
+                  questionViewRefs.current.delete(question.id);
+                }
+              }}
+            >
+              <SectionQuestionInput
+                question={question}
+                value={answers[question.id] as AnswerValue | undefined}
+                onValueChange={(value) => handleAnswerChange(question.id, value)}
+                error={errors[question.id]}
+              />
+            </View>
+          );
+        })}
       </View>
     </ScrollView>
   );
