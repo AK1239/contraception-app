@@ -3,23 +3,26 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 import questionnaireReducer from "./slices/questionnaire";
 import resultsReducer from "./slices/results";
 import userRoleReducer from "./slices/userRole";
+import languageReducer from "./slices/language";
 import fabEligibilityReducer from "./slices/fabEligibility";
 import femaleSterilizationEligibilityReducer from "./slices/femaleSterilizationEligibility";
 import maleSterilizationEligibilityReducer from "./slices/maleSterilizationEligibility";
 import standardDayMethodReducer from "./slices/standardDayMethod";
 import calendarMethodReducer from "./slices/calendarMethod";
-import { questionnairePersistConfig, resultsPersistConfig, userRolePersistConfig } from "./persistConfig";
+import { questionnairePersistConfig, resultsPersistConfig, userRolePersistConfig, languagePersistConfig } from "./persistConfig";
 
 // Create persisted reducers with nested configuration for granular control
 const persistedQuestionnaireReducer = persistReducer(questionnairePersistConfig, questionnaireReducer);
 const persistedResultsReducer = persistReducer(resultsPersistConfig, resultsReducer);
 const persistedUserRoleReducer = persistReducer(userRolePersistConfig, userRoleReducer);
+const persistedLanguageReducer = persistReducer(languagePersistConfig, languageReducer);
 
 // Combine reducers
 const rootReducer = combineReducers({
   questionnaire: persistedQuestionnaireReducer,
   results: persistedResultsReducer,
   userRole: persistedUserRoleReducer,
+  language: persistedLanguageReducer,
   fabEligibility: fabEligibilityReducer,
   femaleSterilizationEligibility: femaleSterilizationEligibilityReducer,
   maleSterilizationEligibility: maleSterilizationEligibilityReducer,

@@ -3,113 +3,108 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { useIsHealthcareProvider } from '../hooks/useUserRole';
+
+interface DrawerSubsection {
+  id: string;
+  labelKey: string;
+  route: string;
+}
 
 interface DrawerSection {
   id: string;
-  title: string;
+  labelKey: string;
   icon: string;
   hasSubsections?: boolean;
   subsections?: DrawerSubsection[];
   route?: string;
 }
 
-interface DrawerSubsection {
-  id: string;
-  title: string;
-  route: string;
-}
-
 const drawerSections: DrawerSection[] = [
   {
     id: 'home',
-    title: 'Home',
+    labelKey: 'nav.home',
     icon: 'home-outline',
     route: '/(drawer)',
   },
   {
     id: 'know-contraceptive',
-    title: 'Know Your Contraceptive',
+    labelKey: 'nav.knowYourContraceptive',
     icon: 'information-circle-outline',
     hasSubsections: true,
     subsections: [
       {
         id: 'natural-methods',
-        title: 'Natural Methods',
+        labelKey: 'nav.naturalMethods',
         route: '/(drawer)/know-contraceptive/natural-methods',
       },
       {
         id: 'modern-methods',
-        title: 'Modern Methods',
+        labelKey: 'nav.modernMethods',
         route: '/(drawer)/know-contraceptive/modern-methods',
       },
     ],
   },
   {
     id: 'personalize',
-    title: 'Personalize Your Contraceptive',
+    labelKey: 'nav.personalizeYourContraceptive',
     icon: 'heart-outline',
     route: '/(drawer)/personalize',
   },
   {
     id: 'choose-contraceptive',
-    title: 'Choose Your Contraceptive',
+    labelKey: 'nav.chooseYourContraceptive',
     icon: 'checkmark-circle-outline',
     route: '/(drawer)/choose-contraceptive',
   },
   {
     id: 'compare-methods',
-    title: 'Compare Contraceptive Methods',
+    labelKey: 'nav.compareMethods',
     icon: 'git-compare-outline',
     route: '/(drawer)/compare-methods',
   },
   {
     id: 'natural-method-calculators',
-    title: 'Natural Method Calculators',
+    labelKey: 'nav.naturalMethodCalculators',
     icon: 'calculator-outline',
     hasSubsections: true,
     subsections: [
       {
         id: 'standard-day-calculator',
-        title: 'Standard Day Method Calculator',
+        labelKey: 'nav.standardDayCalculator',
         route: '/(drawer)/standard-day-calculator-page',
       },
       {
         id: 'calendar-method-calculator',
-        title: 'Calendar Method Calculator',
+        labelKey: 'nav.calendarMethodCalculator',
         route: '/(drawer)/calendar-method-calculator',
       },
     ],
   },
   {
     id: 'natural-method-eligibility',
-    title: 'Natural Method Eligibility (FAB)',
+    labelKey: 'nav.naturalMethodEligibility',
     icon: 'leaf-outline',
     route: '/(drawer)/fab-eligibility',
   },
   {
     id: 'sterilization-eligibility',
-    title: 'Sterilization Eligibility',
+    labelKey: 'nav.sterilizationEligibility',
     icon: 'medical-outline',
     hasSubsections: true,
     subsections: [
       {
         id: 'female-sterilization',
-        title: 'Female Sterilization Eligibility',
+        labelKey: 'nav.femaleSterilization',
         route: '/(drawer)/female-sterilization-eligibility',
       },
       {
         id: 'male-sterilization',
-        title: 'Male Sterilization Eligibility',
+        labelKey: 'nav.maleSterilization',
         route: '/(drawer)/male-sterilization-eligibility',
       },
     ],
-  },
-  {
-    id: 'settings',
-    title: 'Settings',
-    icon: 'settings-outline',
-    route: '/(drawer)/settings',
   },
 ];
 
@@ -121,6 +116,7 @@ const GENERAL_PUBLIC_HIDDEN_IDS = [
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
+  const { t } = useTranslation();
   const isHealthcareProvider = useIsHealthcareProvider();
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
 
@@ -132,8 +128,8 @@ export default function CustomDrawerContent(props: any) {
   }, [isHealthcareProvider]);
 
   const toggleSection = (sectionId: string) => {
-    setExpandedSections(prev => 
-      prev.includes(sectionId) 
+    setExpandedSections(prev =>
+      prev.includes(sectionId)
         ? prev.filter(id => id !== sectionId)
         : [...prev, sectionId]
     );
@@ -146,7 +142,7 @@ export default function CustomDrawerContent(props: any) {
 
   const renderSection = (section: DrawerSection) => {
     const isExpanded = expandedSections.includes(section.id);
-    
+
     return (
       <View key={section.id} style={styles.sectionContainer}>
         <TouchableOpacity
@@ -160,13 +156,13 @@ export default function CustomDrawerContent(props: any) {
           }}
         >
           <View style={styles.sectionTitleContainer}>
-            <Ionicons 
-              name={section.icon as any} 
-              size={20} 
-              color="#6D28D9" 
+            <Ionicons
+              name={section.icon as any}
+              size={20}
+              color="#6D28D9"
               style={styles.sectionIcon}
             />
-            <Text style={styles.sectionTitle}>{section.title}</Text>
+            <Text style={styles.sectionTitle}>{t(section.labelKey)}</Text>
           </View>
           {section.hasSubsections && (
             <Ionicons
@@ -176,7 +172,7 @@ export default function CustomDrawerContent(props: any) {
             />
           )}
         </TouchableOpacity>
-        
+
         {section.hasSubsections && isExpanded && (
           <View style={styles.subsectionsContainer}>
             {section.subsections?.map((subsection) => (
@@ -187,7 +183,7 @@ export default function CustomDrawerContent(props: any) {
               >
                 <View style={styles.subsectionContent}>
                   <Text style={styles.subsectionBullet}>●</Text>
-                  <Text style={styles.subsectionText}>{subsection.title}</Text>
+                  <Text style={styles.subsectionText}>{t(subsection.labelKey)}</Text>
                 </View>
               </TouchableOpacity>
             ))}
@@ -198,13 +194,29 @@ export default function CustomDrawerContent(props: any) {
   };
 
   return (
-    <DrawerContentScrollView {...props} style={styles.container}>
+    <DrawerContentScrollView
+      {...props}
+      style={styles.container}
+      contentContainerStyle={styles.scrollContent}
+    >
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>ContraSafe</Text>
+        <Text style={styles.headerTitle}>{t('common.appName')}</Text>
       </View>
-      
+
       <View style={styles.sectionsContainer}>
         {visibleSections.map(renderSection)}
+      </View>
+
+      {/* ── Settings pinned at the bottom ───────────────────────────── */}
+      <View style={styles.footer}>
+        <View style={styles.footerDivider} />
+        <TouchableOpacity
+          style={styles.settingsButton}
+          onPress={() => handleNavigation('/(drawer)/settings')}
+        >
+          <Ionicons name="settings-outline" size={20} color="#6D28D9" style={styles.sectionIcon} />
+          <Text style={styles.settingsLabel}>{t('nav.settings')}</Text>
+        </TouchableOpacity>
       </View>
     </DrawerContentScrollView>
   );
@@ -215,9 +227,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  scrollContent: {
+    flexGrow: 1,
+  },
   header: {
     padding: 20,
-    paddingTop:20,
+    paddingTop: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
@@ -229,6 +244,7 @@ const styles = StyleSheet.create({
   },
   sectionsContainer: {
     paddingTop: 20,
+    flex: 1,
   },
   sectionContainer: {
     marginBottom: 8,
@@ -285,5 +301,31 @@ const styles = StyleSheet.create({
     color: '#666',
     fontFamily: 'PlusJakartaSans_400Regular',
     flex: 1,
+  },
+  // ── Footer / Settings ─────────────────────────────────────────────────────
+  footer: {
+    paddingBottom: 20,
+    paddingTop: 8,
+  },
+  footerDivider: {
+    height: 1,
+    backgroundColor: '#f0f0f0',
+    marginHorizontal: 10,
+    marginBottom: 8,
+  },
+  settingsButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 15,
+    backgroundColor: '#f8f9fa',
+    marginHorizontal: 10,
+    borderRadius: 8,
+  },
+  settingsLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
 });

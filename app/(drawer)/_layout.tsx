@@ -161,7 +161,7 @@ export default function DrawerLayout() {
       <Drawer.Screen
         name="settings"
         options={{
-          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
+          drawerItemStyle: { display: 'none' },
           drawerLabel: "Settings",
           title: "Settings",
         }}

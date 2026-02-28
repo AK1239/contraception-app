@@ -4,7 +4,10 @@ import { StyleSheet, Text, TextInput } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { MD3LightTheme, Provider as PaperProvider } from "react-native-paper";
 import { Provider as ReduxProvider } from "react-redux";
+import { I18nextProvider } from "react-i18next";
 import { store } from "../src/store";
+import i18n from "../src/i18n/config";
+import LanguageSyncProvider from "../src/i18n/LanguageSyncProvider";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { ErrorBoundary } from "../src/components/ErrorBoundary";
@@ -73,21 +76,23 @@ export default function RootLayout() {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
-        // Log error to our logging service
         logger.error('Root Error Boundary caught an error', error, {
           componentStack: errorInfo.componentStack,
         });
       }}
     >
       <ReduxProvider store={store}>
-        <PaperProvider theme={theme}>
-          <GestureHandlerRootView style={styles.container}>
-            <StatusBar style="auto" />
-            <ErrorBoundary>
-              <Slot />
-            </ErrorBoundary>
-          </GestureHandlerRootView>
-        </PaperProvider>
+        <I18nextProvider i18n={i18n}>
+          <LanguageSyncProvider />
+          <PaperProvider theme={theme}>
+            <GestureHandlerRootView style={styles.container}>
+              <StatusBar style="auto" />
+              <ErrorBoundary>
+                <Slot />
+              </ErrorBoundary>
+            </GestureHandlerRootView>
+          </PaperProvider>
+        </I18nextProvider>
       </ReduxProvider>
     </ErrorBoundary>
   );

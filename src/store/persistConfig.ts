@@ -44,3 +44,12 @@ export const userRolePersistConfig: PersistConfig<any> = {
   whitelist: ["role"],
 };
 
+/**
+ * Persistence configuration for the selected UI language
+ */
+export const languagePersistConfig: PersistConfig<any> = {
+  key: "language",
+  storage: persistStorage,
+  whitelist: ["code"],
+};
+

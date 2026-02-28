@@ -2,8 +2,11 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Card, Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "react-i18next";
 
 export default function WelcomeCard() {
+  const { t } = useTranslation();
+
   return (
     <Card style={styles.card} mode="elevated">
       <LinearGradient
@@ -15,10 +18,10 @@ export default function WelcomeCard() {
         <Card.Content style={styles.cardContent}>
           <View style={styles.textContainer}>
             <Text variant="headlineMedium" style={styles.title}>
-              Welcome Back!
+              {t("welcome.greeting")}
             </Text>
             <Text variant="bodyMedium" style={styles.description}>
-              Your trusted companion for making informed contraceptive choices.
+              {t("welcome.subtitle")}
             </Text>
           </View>
 

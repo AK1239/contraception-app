@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import HomeSectionCard from "../../src/components/HomeSectionCard";
 import WelcomeCard from "../../src/components/WelcomeCard";
 import { useIsHealthcareProvider } from "../../src/hooks/useUserRole";
@@ -11,67 +12,66 @@ export default function HomePage() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const isHealthcareProvider = useIsHealthcareProvider();
+  const { t } = useTranslation();
 
   return (
-    <ScrollView 
-      style={styles.container} 
+    <ScrollView
+      style={styles.container}
       contentContainerStyle={[styles.contentContainer, { paddingBottom: Math.max(40, insets.bottom + 40) }]}
       showsVerticalScrollIndicator={false}
     >
-      {/* Welcome Hero Card */}
       <View style={styles.welcomeContainer}>
         <WelcomeCard />
       </View>
 
-      {/* Section Divider */}
       <View style={styles.sectionHeader}>
         <Text variant="titleMedium" style={styles.sectionTitle}>
-          Explore Features
+          {t("home.exploreFeatures")}
         </Text>
         <View style={styles.dividerLine} />
       </View>
 
       <HomeSectionCard
         leadingEmoji="🎯"
-        title="Choose Your Contraceptive"
-        description="Answer health-related questions to get WHO-based recommendations on safe contraceptive methods for you."
-        ctaLabel="Choose Your Contraceptive"
+        title={t("home.chooseTitle")}
+        description={t("home.chooseDescription")}
+        ctaLabel={t("home.chooseCta")}
         onPress={() => router.push("/(drawer)/choose-contraceptive")}
         buttonColor="#6D28D9"
       />
 
       <HomeSectionCard
         leadingEmoji="📚"
-        title="For Women Seeking Information"
-        description="If you'd like to learn more about different contraceptives, explore the Natural Methods or Modern Methods sections."
-        ctaLabel="View Methods"
+        title={t("home.knowTitle")}
+        description={t("home.knowDescription")}
+        ctaLabel={t("home.knowCta")}
         onPress={() => router.push("/(drawer)/know-contraceptive")}
         buttonColor="#3B82F6"
       />
 
       <HomeSectionCard
         leadingEmoji="⚖️"
-        title="Compare Methods"
-        description="Compare methods side by side with our Contraceptive Comparison Tool to see how they differ and decide what works best for you."
-        ctaLabel="Compare Methods"
+        title={t("home.compareTitle")}
+        description={t("home.compareDescription")}
+        ctaLabel={t("home.compareCta")}
         onPress={() => router.push("/(drawer)/compare-methods")}
         buttonColor="#EAB308"
       />
 
       <HomeSectionCard
         leadingEmoji="✨"
-        title="Personalized Guidance"
-        description="Not sure which method suits your needs? Visit the Personalize Your Contraceptive section for tailored recommendations."
-        ctaLabel="Personalize Your Choice"
+        title={t("home.personalizeTitle")}
+        description={t("home.personalizeDescription")}
+        ctaLabel={t("home.personalizeCta")}
         onPress={() => router.push("/(drawer)/personalize")}
         buttonColor="#EC4899"
       />
 
       <HomeSectionCard
         leadingEmoji="🌿"
-        title="Natural Methods"
-        description="Prefer non-modern methods? Try our Calendar Method Calculator to identify your fertile days and avoid unprotected intercourse during those times."
-        ctaLabel="Natural Method Calculators"
+        title={t("home.naturalTitle")}
+        description={t("home.naturalDescription")}
+        ctaLabel={t("home.naturalCta")}
         onPress={() => router.push("/(drawer)/natural-calculators")}
         buttonColor="#22C55E"
       />
@@ -79,9 +79,9 @@ export default function HomePage() {
       {isHealthcareProvider && (
         <HomeSectionCard
           leadingEmoji="✂️"
-          title="Sterilization Eligibility"
-          description="Check eligibility for permanent contraception. Assess female surgical sterilization or male sterilization (vasectomy) using WHO Medical Eligibility Criteria."
-          ctaLabel="Sterilization Eligibility"
+          title={t("home.sterilizationTitle")}
+          description={t("home.sterilizationDescription")}
+          ctaLabel={t("home.sterilizationCta")}
           onPress={() => router.push("/(drawer)/sterilization-eligibility")}
           buttonColor="#8B5CF6"
         />
@@ -89,14 +89,14 @@ export default function HomePage() {
 
       <HomeSectionCard
         leadingEmoji="⚙️"
-        title="Settings"
-        description="Switch between Healthcare provider and General public experience."
-        ctaLabel="Settings"
+        title={t("home.settingsTitle")}
+        description={t("home.settingsDescription")}
+        ctaLabel={t("home.settingsCta")}
         onPress={() => router.push("/(drawer)/settings")}
         buttonColor="#64748B"
       />
 
-      <Text style={styles.footerText}>@med.tutor.tz</Text>
+      <Text style={styles.footerText}>{t("home.footer")}</Text>
     </ScrollView>
   );
 }
