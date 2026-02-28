@@ -101,9 +101,7 @@ export default function SettingsScreen() {
                 <Text style={styles.radioLabel}>
                   {t("settings.healthcareProvider")}
                 </Text>
-                <Text style={styles.radioHint}>
-                  {t("settings.healthcareProviderHint")}
-                </Text>
+              
               </View>
             </View>
 
@@ -121,9 +119,7 @@ export default function SettingsScreen() {
                 <Text style={styles.radioLabel}>
                   {t("settings.generalPublic")}
                 </Text>
-                <Text style={styles.radioHint}>
-                  {t("settings.generalPublicHint")}
-                </Text>
+              
               </View>
             </View>
           </View>
@@ -202,7 +198,7 @@ const styles = StyleSheet.create({
   },
   radioItem: {
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#F3F4F6",

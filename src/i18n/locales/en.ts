@@ -87,11 +87,7 @@ const en = {
     appExperienceDescription:
       "Choose your role to personalize which features are displayed.",
     healthcareProvider: "Healthcare provider",
-    healthcareProviderHint:
-      "Full access to all features including eligibility tools",
     generalPublic: "General public",
-    generalPublicHint:
-      "Simplified experience. Natural Method Eligibility and Sterilization Eligibility are hidden.",
     language: "Language",
     languageDescription: "Choose your preferred language for the app.",
     languageEnglish: "English",

@@ -87,11 +87,9 @@ const sw = {
     appExperienceDescription:
       "Chagua jukumu lako ili kubinafsisha vipengele vinavyoonyeshwa.",
     healthcareProvider: "Mtoa Huduma za Afya",
-    healthcareProviderHint:
-      "Ufikiaji kamili wa vipengele vyote ikiwemo zana za ustahili",
+  
     generalPublic: "Umma",
-    generalPublicHint:
-      "Uzoefu rahisi. Ustahili wa Njia za Asili na Ustahili wa Kufungwa umefichwa.",
+  
     language: "Lugha",
     languageDescription: "Chagua lugha unayoipendelea kwa programu.",
     languageEnglish: "English",
