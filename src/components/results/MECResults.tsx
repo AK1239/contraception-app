@@ -1,9 +1,10 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, Card, Divider, Button } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import type { EvaluationResult } from "../../types/rules";
 import type { ContraceptiveMethodKey } from "../../types/contraceptive";
-import { MEC_METHOD_NAMES } from "../../constants/mecMethodNames";
+import { useTranslatedMethodData } from "../../hooks/useTranslatedMethodData";
 import { theme } from "../../utils/theme";
 
 interface MECResultsProps {
@@ -18,13 +19,17 @@ function MethodCard({
   mecScore,
   reasons,
   category,
+  getTranslatedMecMethodName,
+  whyMecLabel,
 }: {
   methodKey: ContraceptiveMethodKey;
   mecScore: number;
   reasons: string[];
   category: "suggested" | "greaterBenefit" | "avoid";
+  getTranslatedMecMethodName: (key: ContraceptiveMethodKey) => string;
+  whyMecLabel: string;
 }) {
-  const name = MEC_METHOD_NAMES[methodKey] ?? methodKey;
+  const name = getTranslatedMecMethodName(methodKey);
 
   const cardStyle =
     category === "suggested"
@@ -49,7 +54,7 @@ function MethodCard({
         {mecScore > 1 && reasons.length > 0 && (
           <View style={styles.reasonsContainer}>
             <Text variant="labelSmall" style={styles.reasonsLabel}>
-              Why MEC {mecScore}:
+              {whyMecLabel}
             </Text>
             {reasons.map((reason, idx) => (
               <Text key={idx} variant="bodySmall" style={styles.reasonText}>
@@ -64,6 +69,8 @@ function MethodCard({
 }
 
 export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestions }: MECResultsProps) {
+  const { t } = useTranslation();
+  const { getTranslatedMecMethodName } = useTranslatedMethodData();
   const getMecResult = (key: ContraceptiveMethodKey) => {
     return result.mecResults.find((r) => r.methodKey === key);
   };
@@ -77,10 +84,10 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
       {/* Suggested safe contraceptives (MEC 1) */}
       <View style={styles.section}>
         <Text variant="titleMedium" style={[styles.sectionTitle, styles.sectionTitleSuggested]}>
-          Suggested safe contraceptives (MEC 1)
+          {t("mec.results.suggestedTitle")}
         </Text>
         <Text variant="bodySmall" style={styles.sectionDescription}>
-          These methods have no restrictions based on your answers.
+          {t("mec.results.suggestedDescription")}
         </Text>
         {result.suggested.length > 0 ? (
           <View style={styles.methodList}>
@@ -91,12 +98,14 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
                 mecScore={getMecResult(key)?.score ?? 1}
                 reasons={[]}
                 category="suggested"
+                getTranslatedMecMethodName={getTranslatedMecMethodName}
+                whyMecLabel={t("mec.results.whyMec", { score: getMecResult(key)?.score ?? 1 })}
               />
             ))}
           </View>
         ) : (
           <Text variant="bodySmall" style={styles.emptyText}>
-            No methods in this category based on your answers.
+            {t("mec.results.suggestedEmpty")}
           </Text>
         )}
       </View>
@@ -106,10 +115,10 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
       {/* Greater benefit than risk (MEC 2) */}
       <View style={styles.section}>
         <Text variant="titleMedium" style={[styles.sectionTitle, styles.sectionTitleGreaterBenefit]}>
-          Greater benefit than risk (MEC 2)
+          {t("mec.results.greaterBenefitTitle")}
         </Text>
         <Text variant="bodySmall" style={styles.sectionDescription}>
-          Advantages generally outweigh risks. Consider with your healthcare provider.
+          {t("mec.results.greaterBenefitDescription")}
         </Text>
         {result.greaterBenefit.length > 0 ? (
           <View style={styles.methodList}>
@@ -122,13 +131,15 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
                   mecScore={mec?.score ?? 2}
                   reasons={mec?.reasons ?? []}
                   category="greaterBenefit"
+                  getTranslatedMecMethodName={getTranslatedMecMethodName}
+                  whyMecLabel={t("mec.results.whyMec", { score: mec?.score ?? 2 })}
                 />
               );
             })}
           </View>
         ) : (
           <Text variant="bodySmall" style={styles.emptyText}>
-            No methods in this category.
+            {t("mec.results.greaterBenefitEmpty")}
           </Text>
         )}
       </View>
@@ -138,10 +149,10 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
       {/* Avoid these contraceptives (MEC 3/4) */}
       <View style={styles.section}>
         <Text variant="titleMedium" style={[styles.sectionTitle, styles.sectionTitleAvoid]}>
-          Avoid these contraceptives (MEC 3/4)
+          {t("mec.results.avoidTitle")}
         </Text>
         <Text variant="bodySmall" style={styles.sectionDescription}>
-          Risks usually outweigh advantages or represent unacceptable health risk.
+          {t("mec.results.avoidDescription")}
         </Text>
         {result.avoid.length > 0 ? (
           <View style={styles.methodList}>
@@ -156,13 +167,15 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
                   mecScore={mec?.score ?? 3}
                   reasons={mec?.reasons ?? []}
                   category="avoid"
+                  getTranslatedMecMethodName={getTranslatedMecMethodName}
+                  whyMecLabel={t("mec.results.whyMec", { score: mec?.score ?? 3 })}
                 />
               );
             })}
           </View>
         ) : (
           <Text variant="bodySmall" style={styles.emptyText}>
-            No methods to avoid based on your answers.
+            {t("mec.results.avoidEmpty")}
           </Text>
         )}
       </View>
@@ -177,10 +190,10 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
               contentStyle={styles.personalizeButtonContent}
               labelStyle={styles.buttonLabel}
             >
-              Personalize your choice
+              {t("mec.results.personalizeButton")}
             </Button>
             <Text variant="bodySmall" style={styles.personalizeHint}>
-              Refine your options based on preferences (frequency, future pregnancy, etc.)
+              {t("mec.results.personalizeHint")}
             </Text>
           </>
         )}
@@ -192,7 +205,7 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
             style={styles.backToQuestionsButton}
             labelStyle={styles.buttonLabel}
           >
-            Back to Questions
+            {t("mec.results.backToQuestions")}
           </Button>
         )}
         {onStartOver && (
@@ -203,7 +216,7 @@ export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestio
             style={styles.startOverButton}
             labelStyle={styles.buttonLabel}
           >
-            Start Over
+            {t("mec.results.startOver")}
           </Button>
         )}
       </View>

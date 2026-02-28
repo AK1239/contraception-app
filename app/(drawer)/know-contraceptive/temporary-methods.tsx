@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import { useSearchableMethodList } from '../../../src/hooks/useSearchableMethodList';
+import { useTranslatedMethodsData } from '../../../src/hooks/useTranslatedMethodsData';
 import SearchResultsView from '../../../src/components/shared/SearchResultsView';
-import { getTemporaryMethodsData } from '../../../src/data/methodsData';
 
 // T-shaped icon component for IUD
 const TShapeIcon = () => (
@@ -16,10 +15,9 @@ const TShapeIcon = () => (
 );
 
 export default function TemporaryMethodsScreen() {
-  const router = useRouter();
   const insets = useSafeAreaInsets();
-  
-  const { categories, specificMethods } = getTemporaryMethodsData(router, <TShapeIcon />);
+  const { getTemporaryMethodsData, searchTemporaryPlaceholder, noResultsTemporary } = useTranslatedMethodsData();
+  const { categories, specificMethods } = getTemporaryMethodsData(<TShapeIcon />);
   
   const {
     filteredCategories,
@@ -37,7 +35,7 @@ export default function TemporaryMethodsScreen() {
       {/* Search Bar */}
       <View style={styles.searchContainer}>
         <Searchbar
-          placeholder="Search temporary methods..."
+          placeholder={searchTemporaryPlaceholder}
           onChangeText={setSearchQuery}
           value={searchQuery}
           style={styles.searchBar}
@@ -52,7 +50,7 @@ export default function TemporaryMethodsScreen() {
         specificMethods={filteredSpecificMethods}
         showGrouping={showGrouping}
         searchQuery={searchQuery}
-        noResultsText='Try searching for "barrier", "hormonal", "IUD", "condom", or "pills"'
+        noResultsText={noResultsTemporary}
         categoryCardType="temporary"
       />
     </ScrollView>

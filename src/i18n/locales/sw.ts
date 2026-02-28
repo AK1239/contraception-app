@@ -1,4 +1,5 @@
 import { questionnaireSw } from "./questionnaire-sw";
+import { methodsSw } from "./methods-sw";
 
 const sw = {
   // ─── Common ──────────────────────────────────────────────────────────────────
@@ -148,6 +149,8 @@ const sw = {
     backToSelection: "Rudi kwa Chaguo",
     fieldDescription: "Maelezo",
     fieldEfficacy: "Ufanisi",
+    efficacyTypicalUse: "Matumizi ya Kawaida",
+    efficacyPerfectUse: "Matumizi Bora",
     fieldAdvantages: "Faida",
     fieldDisadvantages: "Hasara",
     fieldHowToUse: "Jinsi ya Kutumia",
@@ -188,6 +191,123 @@ const sw = {
     sdmTitle: "Njia ya Siku za Kawaida",
     sdmDescription:
       "Njia inayotegemea ufahamu wa uzazi kwa wanawake wenye mizunguko ya kawaida ya siku 26–32. Siku 8–19 zinachukuliwa kuwa za uzazi na zinahitaji kuepuka tendo la ndoa bila kinga. Inafaa zaidi inapochanganywa na viashiria vya ziada vya uzazi.",
+    methodsData: {
+      categories: {
+        temporary: {
+          title: "Njia za Muda",
+          description:
+            "Njia za uzazi wa mpango zinazoweza kusitishwa unapotaka kupata mimba. Zinajumuisha chaguzi za homoni na zisizo za homoni zenye ufanisi na muda tofauti.",
+        },
+        permanent: {
+          title: "Njia za Kudumu",
+          description:
+            "Suluhu za muda mrefu za uzazi wa mpango zinazotoa ulinzi wa kudumu dhidi ya mimba. Njia hizi kwa kawaida haziwezi kubadilishwa na zinakufaa wale ambao wamekamilisha mpango wao wa familia.",
+        },
+        barrier: {
+          title: "Njia za Kizuizi",
+          description:
+            "Vizuizi vya kimwili vinavyozuia mbegu kufikia yai. Zinajumuisha kondomu, diafragma, na kofia za kizazi. Njia hizi pia zinatoa ulinzi dhidi ya maambukizi ya ngono.",
+        },
+        hormonal: {
+          title: "Njia za Homoni",
+          description:
+            "Njia za uzazi wa mpango zinazotumia homoni kuzuia mimba. Zinajumuisha vidonge vya uzazi wa mpango, bandeji, pete, na sindano. Zinafanikiwa sana zinapotumika kwa usahihi.",
+        },
+        iud: {
+          title: "Njia za Kifaa cha Ndani ya Uterasi",
+          description:
+            "Vifaa vya ndani ya uterasi vinavyowekwa ndani ya uterasi. Zinajumuisha IUD za homoni na za shaba. Chaguzi za muda mrefu, zenye ufanisi mkubwa, na zinazoweza kubadilishwa.",
+        },
+      },
+      specificMethods: {
+        "male-condom": {
+          title: "Kondomu ya Kiume",
+          description:
+            "Kifuniko chembamba kinachowekwa juu ya mboo. Inatoa ulinzi wa kizuizi cha kimwili dhidi ya mimba na magonjwa ya ngono.",
+          breadcrumbModern: "Njia za Muda > Njia za Kizuizi",
+          breadcrumbTemporary: "Njia za Kizuizi",
+        },
+        "female-condom": {
+          title: "Kondomu ya Kike",
+          description:
+            "Njia ya kizuizi inayovaliwa na mwanamke. Inatoa ulinzi dhidi ya mimba na inaweza kuingizwa masaa kabla ya ngono.",
+          breadcrumbModern: "Njia za Muda > Njia za Kizuizi",
+          breadcrumbTemporary: "Njia za Kizuizi",
+        },
+        coc: {
+          title: "Vidonge vya Mchanganyiko (COC)",
+          description:
+            "Vidonge vyenye homoni za estrogen na progestin. Inatoa ulinzi bora na hedhi za kawaida.",
+          breadcrumbModern: "Njia za Muda > Njia za Homoni",
+          breadcrumbTemporary: "Njia za Homoni",
+        },
+        pop: {
+          title: "Vidonge vya Progestin Pekee (POP)",
+          description:
+            "Vidonge vyenye homoni ya progestin pekee. Ulinzi bora bila athari za estrogen nyingi.",
+          breadcrumbModern: "Njia za Muda > Njia za Homoni",
+          breadcrumbTemporary: "Njia za Homoni",
+        },
+        injection: {
+          title: "Sindano za Uzazi wa Mpango",
+          description:
+            "Sindano za DMPA zinazotoa ulinzi wa miezi 3. Zinaweza kutumika wakati wa kunyonyesha.",
+          breadcrumbModern: "Njia za Muda > Njia za Homoni",
+          breadcrumbTemporary: "Njia za Homoni",
+        },
+        implants: {
+          title: "Vipandikizo",
+          description:
+            "Fimbo laini inayowekwa chini ya ngozi. Inatoa ulinzi kamili kwa miaka 3-5.",
+          breadcrumbModern: "Njia za Muda > Njia za Homoni",
+          breadcrumbTemporary: "Njia za Homoni",
+        },
+        patch: {
+          title: "Bandeji ya Mchanganyiko ya Uzazi wa Mpango",
+          description:
+            "Bandeji ya ngozi inayotoa estrogen na progestin. Inafanya kazi kwa muda mrefu kuliko vidonge.",
+          breadcrumbModern: "Njia za Muda > Njia za Homoni",
+          breadcrumbTemporary: "Njia za Homoni",
+        },
+        ring: {
+          title: "Pete ya Uzazi wa Mpango ya Uke",
+          description:
+            "Pete laini inayoingizwa ukeni kila mwezi. Inatoa homoni zinazoendelea.",
+          breadcrumbModern: "Njia za Muda > Njia za Homoni",
+          breadcrumbTemporary: "Njia za Homoni",
+        },
+        "copper-iucd": {
+          title: "IUD ya Shaba",
+          description:
+            "Kifaa cha umbo la T chenye shaba kinachowekwa uterasi. Inatoa ulinzi kamili kwa miaka 5-12.",
+          breadcrumbModern: "Njia za Muda > Njia za IUD",
+          breadcrumbTemporary: "Njia za IUD",
+        },
+        "lng-ius": {
+          title: "LNG-IUS",
+          description:
+            "IUD ya homoni inayotoa levonorgestrel. Inatoa ulinzi kamili kwa miaka 3-5.",
+          breadcrumbModern: "Njia za Muda > Njia za IUD",
+          breadcrumbTemporary: "Njia za IUD",
+        },
+        "tubal-ligation": {
+          title: "Kufunga Mijiko ya Fallopian",
+          description:
+            "Utaratibu wa upasuaji ambapo mijiko ya fallopian inafungwa. Inatoa uzazi wa mpango wa kudumu kwa wanawake.",
+          breadcrumbModern: "Njia za Kudumu",
+          breadcrumbTemporary: "Njia za Kudumu",
+        },
+        vasectomy: {
+          title: "Vasektomi",
+          description:
+            "Kutupwa kwa kiume kwa kudumu ambapo mishipa ya mbegu inakatwa au kufungwa. Inatoa ufanisi kamili.",
+          breadcrumbModern: "Njia za Kudumu",
+          breadcrumbTemporary: "Njia za Kudumu",
+        },
+      },
+      searchTemporary: "Tafuta njia za muda...",
+      noResultsTemporary: 'Jaribu kutafuta "kizuizi", "homoni", "IUD", "kondomu", au "vidonge"',
+    },
   },
 
   // ─── Natural Calculators ──────────────────────────────────────────────────────
@@ -251,6 +371,22 @@ const sw = {
     previous: "Iliyotangulia",
     next: "Inayofuata",
     seeResults: "Tazama Matokeo",
+    results: {
+      suggestedTitle: "Njia za uzazi wa mpango zinazopendekezwa salama (MEC 1)",
+      suggestedDescription: "Njia hizi hazina vikwazo kulingana na majibu yako.",
+      suggestedEmpty: "Hakuna njia katika kategoria hii kulingana na majibu yako.",
+      greaterBenefitTitle: "Faida kubwa kuliko hatari (MEC 2)",
+      greaterBenefitDescription: "Faida kwa ujumla zinazidi hatari. Fikiria na mhudumu wako wa afya.",
+      greaterBenefitEmpty: "Hakuna njia katika kategoria hii.",
+      avoidTitle: "Epuka njia hizi za uzazi wa mpango (MEC 3/4)",
+      avoidDescription: "Hatari kwa kawaida zinazidi faida au zinawakilisha hatari isiyokubalika ya afya.",
+      avoidEmpty: "Hakuna njia za kuepuka kulingana na majibu yako.",
+      whyMec: "Kwa nini MEC {{score}}:",
+      personalizeButton: "Binafsisha chaguo lako",
+      personalizeHint: "Boresha chaguzi zako kulingana na mapendeleo (mzunguko, mimba ya baadaye, n.k.)",
+      backToQuestions: "Rudi kwa Maswali",
+      startOver: "Anza Upya",
+    },
   },
 
   // ─── Final Recommendation ────────────────────────────────────────────────────
@@ -283,6 +419,9 @@ const sw = {
 
   // ─── Questionnaire (WHO MEC) ──────────────────────────────────────────────────
   questionnaire: questionnaireSw,
+
+  // ─── Contraceptive Methods (detail pages, MEC names) ────────────────────────────
+  methods: methodsSw,
 } as const;
 
 export default sw;

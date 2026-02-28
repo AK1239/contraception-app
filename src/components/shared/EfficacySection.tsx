@@ -5,6 +5,7 @@ import { getEfficacyBadgeColor, getEfficacyTextColor } from '../../utils/theme';
 
 interface EfficacyData {
   label: string;
+  displayLabel?: string;
   typicalUse: string;
   perfectUse?: string;
 }
@@ -39,7 +40,7 @@ export default function EfficacySection({ efficacy }: EfficacySectionProps) {
     <View>
       <View style={[styles.efficacyBadge, { backgroundColor: getEfficacyBadgeColor(efficacy.label) }]}>
         <Text style={[styles.efficacyLabel, { color: getEfficacyTextColor(efficacy.label) }]}>
-          {efficacy.label}
+          {efficacy.displayLabel ?? efficacy.label}
         </Text>
       </View>
       <Text variant="bodyMedium" style={styles.sectionText}>

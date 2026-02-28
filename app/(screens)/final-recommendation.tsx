@@ -5,7 +5,7 @@ import { useRouter, useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { getMethodByKey } from "../../src/constants";
+import { useTranslatedMethodData } from "../../src/hooks/useTranslatedMethodData";
 import { ContraceptiveMethodKey } from "../../src/types";
 import { resetQuestionnaire, resetPersonalization } from "../../src/store/slices/questionnaire";
 import { logger } from "../../src/services/logger";
@@ -26,12 +26,14 @@ const RecommendationMethodCard = memo(({
   methodKey, 
   isRecommended,
   t,
+  getTranslatedMethodByKey,
 }: { 
   methodKey: ContraceptiveMethodKey; 
   isRecommended: boolean;
   t: (key: string) => string;
+  getTranslatedMethodByKey: (key: ContraceptiveMethodKey) => { name: string; description?: string; category?: string } | undefined;
 }) => {
-  const method = useMemo(() => getMethodByKey(methodKey), [methodKey]);
+  const method = useMemo(() => getTranslatedMethodByKey(methodKey), [methodKey, getTranslatedMethodByKey]);
   const chipColor = useMemo(() => isRecommended ? "#4CAF50" : "#FF9800", [isRecommended]);
   const chipLabel = useMemo(() => isRecommended ? t("recommendation.recommended") : t("recommendation.alternative"), [isRecommended, t]);
 
@@ -58,7 +60,7 @@ const RecommendationMethodCard = memo(({
         </Text>
         {method.category && (
           <Text variant="bodySmall" style={styles.methodCategory}>
-            {t("recommendation.category")}: {method.category.charAt(0).toUpperCase() + method.category.slice(1)}
+            {t("recommendation.category")}: {t(`methods.categories.${method.category}`) !== `methods.categories.${method.category}` ? t(`methods.categories.${method.category}`) : method.category.charAt(0).toUpperCase() + method.category.slice(1)}
           </Text>
         )}
       </Card.Content>
@@ -75,12 +77,14 @@ const EliminatedMethodItem = memo(({
   method, 
   reason,
   t,
+  getTranslatedMethodByKey,
 }: { 
   method: ContraceptiveMethodKey; 
   reason: string;
   t: (key: string) => string;
+  getTranslatedMethodByKey: (key: ContraceptiveMethodKey) => { name: string; description?: string; category?: string } | undefined;
 }) => {
-  const methodInfo = useMemo(() => getMethodByKey(method), [method]);
+  const methodInfo = useMemo(() => getTranslatedMethodByKey(method), [method, getTranslatedMethodByKey]);
 
   if (!methodInfo) return null;
 
@@ -102,6 +106,7 @@ export default function FinalRecommendationPage() {
   const router = useRouter();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { getTranslatedMethodByKey } = useTranslatedMethodData();
   const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
 
@@ -206,6 +211,7 @@ export default function FinalRecommendationPage() {
               methodKey={methodKey} 
               isRecommended={true}
               t={t}
+              getTranslatedMethodByKey={getTranslatedMethodByKey}
             />
           ))}
           <View style={styles.actionLinks}>
@@ -261,11 +267,12 @@ export default function FinalRecommendationPage() {
             </Text>
             <Divider style={styles.divider} />
             {eliminated.map(({ method, reason }, index) => (
-              <EliminatedMethodItem 
+              <EliminatedMethodItem
                 key={`eliminated-${method}-${index}`}
-                method={method} 
+                method={method}
                 reason={reason}
                 t={t}
+                getTranslatedMethodByKey={getTranslatedMethodByKey}
               />
             ))}
           </Card.Content>

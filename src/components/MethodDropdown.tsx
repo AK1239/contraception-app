@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, TouchableOpacity, Modal, FlatList, Dimensions } from 'react-native';
 import { Text, Chip, Searchbar } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import { CONTRACEPTIVE_METHODS_DATA, ContraceptiveMethodData } from '../utils/contraceptiveMethodsData';
+import { ContraceptiveMethodData } from '../utils/contraceptiveMethodsData';
+import { useTranslatedMethodData } from '../hooks/useTranslatedMethodData';
 import { getCategoryColor } from '../utils/theme';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -21,10 +22,11 @@ export default function MethodDropdown({
   excludeMethodKey,
 }: MethodDropdownProps) {
   const { t } = useTranslation();
+  const { translatedMethodsData } = useTranslatedMethodData();
   const [visible, setVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
-  const availableMethods = CONTRACEPTIVE_METHODS_DATA.filter(
+  const availableMethods = translatedMethodsData.filter(
     method => method.id !== excludeMethodKey
   );
 
@@ -42,7 +44,7 @@ export default function MethodDropdown({
     );
   }, [searchQuery, availableMethods]);
   
-  const selectedMethod = CONTRACEPTIVE_METHODS_DATA.find(m => m.id === selectedMethodKey);
+  const selectedMethod = translatedMethodsData.find(m => m.id === selectedMethodKey);
 
 
   const handleSelect = (methodKey: string) => {

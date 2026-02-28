@@ -1,4 +1,5 @@
 import { questionnaireEn } from "./questionnaire-en";
+import { methodsEn } from "./methods-en";
 
 const en = {
   // ─── Common ──────────────────────────────────────────────────────────────────
@@ -148,6 +149,8 @@ const en = {
     backToSelection: "Back to Selection",
     fieldDescription: "Description",
     fieldEfficacy: "Efficacy",
+    efficacyTypicalUse: "Typical Use",
+    efficacyPerfectUse: "Perfect Use",
     fieldAdvantages: "Advantages",
     fieldDisadvantages: "Disadvantages",
     fieldHowToUse: "How to Use",
@@ -188,6 +191,124 @@ const en = {
     sdmTitle: "Standard Days Method",
     sdmDescription:
       "A fertility awareness-based method for women with regular cycles of 26–32 days. Days 8–19 are considered fertile and require avoiding unprotected sex. Most effective when combined with additional fertility indicators.",
+    // Methods data (modern/temporary screens)
+    methodsData: {
+      categories: {
+        temporary: {
+          title: "Temporary Methods",
+          description:
+            "Reversible contraceptive methods that can be stopped when you want to conceive. Includes hormonal and non-hormonal options with varying effectiveness and duration.",
+        },
+        permanent: {
+          title: "Permanent Methods",
+          description:
+            "Long-term contraceptive solutions that provide permanent protection against pregnancy. These methods are typically irreversible and suitable for those who have completed their family planning.",
+        },
+        barrier: {
+          title: "Barrier Methods",
+          description:
+            "Physical barriers that prevent sperm from reaching the egg. Includes condoms, diaphragms, and cervical caps. These methods also provide protection against STIs.",
+        },
+        hormonal: {
+          title: "Hormonal Methods",
+          description:
+            "Contraceptive methods that use hormones to prevent pregnancy. Includes birth control pills, patches, rings, and injections. Highly effective when used correctly.",
+        },
+        iud: {
+          title: "Intrauterine Device Methods",
+          description:
+            "Intrauterine devices that are inserted into the uterus. Includes hormonal and copper IUDs. Long-lasting, highly effective, and reversible contraceptive options.",
+        },
+      },
+      specificMethods: {
+        "male-condom": {
+          title: "Male Condom",
+          description:
+            "A thin sheath placed over the penis. Provides physical barrier protection against pregnancy and STDs.",
+          breadcrumbModern: "Temporary > Barrier Methods",
+          breadcrumbTemporary: "Barrier Methods",
+        },
+        "female-condom": {
+          title: "Female Condom",
+          description:
+            "A barrier method worn by the female. Provides protection against pregnancy and can be inserted hours before sex.",
+          breadcrumbModern: "Temporary > Barrier Methods",
+          breadcrumbTemporary: "Barrier Methods",
+        },
+        coc: {
+          title: "Combined Oral Contraceptives (COC)",
+          description:
+            "Pills containing both estrogen and progesterone hormones. Provides excellent protection with regular menses.",
+          breadcrumbModern: "Temporary > Hormonal Methods",
+          breadcrumbTemporary: "Hormonal Methods",
+        },
+        pop: {
+          title: "Progestin Only Pills (POP)",
+          description:
+            "Pills containing only progesterone hormone. Excellent protection with no high estrogen side effects.",
+          breadcrumbModern: "Temporary > Hormonal Methods",
+          breadcrumbTemporary: "Hormonal Methods",
+        },
+        injection: {
+          title: "Contraceptive Injections",
+          description:
+            "DMPA injections providing 3 months of protection. Can be used during breastfeeding.",
+          breadcrumbModern: "Temporary > Hormonal Methods",
+          breadcrumbTemporary: "Hormonal Methods",
+        },
+        implants: {
+          title: "Implants",
+          description:
+            "Flexible rod placed under the skin. Provides perfect protection for 3-5 years.",
+          breadcrumbModern: "Temporary > Hormonal Methods",
+          breadcrumbTemporary: "Hormonal Methods",
+        },
+        patch: {
+          title: "Combination Patch Contraceptive",
+          description:
+            "Transdermal patch releasing estrogen and progesterone. Works longer than pills.",
+          breadcrumbModern: "Temporary > Hormonal Methods",
+          breadcrumbTemporary: "Hormonal Methods",
+        },
+        ring: {
+          title: "Contraceptive Vaginal Ring",
+          description:
+            "Flexible ring inserted into vagina monthly. Releases hormones continuously.",
+          breadcrumbModern: "Temporary > Hormonal Methods",
+          breadcrumbTemporary: "Hormonal Methods",
+        },
+        "copper-iucd": {
+          title: "Copper IUCD",
+          description:
+            "T-shaped device with copper placed in uterus. Provides perfect protection for 5-12 years.",
+          breadcrumbModern: "Temporary > IUD Methods",
+          breadcrumbTemporary: "IUD Methods",
+        },
+        "lng-ius": {
+          title: "LNG-IUS",
+          description:
+            "Hormonal IUD releasing levonorgestrel. Provides perfect protection for 3-5 years.",
+          breadcrumbModern: "Temporary > IUD Methods",
+          breadcrumbTemporary: "IUD Methods",
+        },
+        "tubal-ligation": {
+          title: "Tubal Ligation",
+          description:
+            "Surgical procedure where fallopian tubes are tied. Provides permanent contraception for women.",
+          breadcrumbModern: "Permanent Methods",
+          breadcrumbTemporary: "Permanent Methods",
+        },
+        vasectomy: {
+          title: "Vasectomy",
+          description:
+            "Permanent male sterilization where vas deferens are cut or sealed. Provides perfect efficacy.",
+          breadcrumbModern: "Permanent Methods",
+          breadcrumbTemporary: "Permanent Methods",
+        },
+      },
+      searchTemporary: "Search temporary methods...",
+      noResultsTemporary: 'Try searching for "barrier", "hormonal", "IUD", "condom", or "pills"',
+    },
   },
 
   // ─── Natural Calculators ──────────────────────────────────────────────────────
@@ -251,6 +372,22 @@ const en = {
     previous: "Previous",
     next: "Next",
     seeResults: "See Results",
+    results: {
+      suggestedTitle: "Suggested safe contraceptives (MEC 1)",
+      suggestedDescription: "These methods have no restrictions based on your answers.",
+      suggestedEmpty: "No methods in this category based on your answers.",
+      greaterBenefitTitle: "Greater benefit than risk (MEC 2)",
+      greaterBenefitDescription: "Advantages generally outweigh risks. Consider with your healthcare provider.",
+      greaterBenefitEmpty: "No methods in this category.",
+      avoidTitle: "Avoid these contraceptives (MEC 3/4)",
+      avoidDescription: "Risks usually outweigh advantages or represent unacceptable health risk.",
+      avoidEmpty: "No methods to avoid based on your answers.",
+      whyMec: "Why MEC {{score}}:",
+      personalizeButton: "Personalize your choice",
+      personalizeHint: "Refine your options based on preferences (frequency, future pregnancy, etc.)",
+      backToQuestions: "Back to Questions",
+      startOver: "Start Over",
+    },
   },
 
   // ─── Final Recommendation ────────────────────────────────────────────────────
@@ -283,6 +420,9 @@ const en = {
 
   // ─── Questionnaire (WHO MEC) ──────────────────────────────────────────────────
   questionnaire: questionnaireEn,
+
+  // ─── Contraceptive Methods (detail pages, MEC names) ────────────────────────────
+  methods: methodsEn,
 } as const;
 
 export default en;

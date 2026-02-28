@@ -1,19 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useSearchableMethodList } from '../../../src/hooks/useSearchableMethodList';
+import { useTranslatedMethodsData } from '../../../src/hooks/useTranslatedMethodsData';
 import SearchResultsView from '../../../src/components/shared/SearchResultsView';
-import { getModernMethodsData } from '../../../src/data/methodsData';
 
 export default function ModernMethodsScreen() {
-  const router = useRouter();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  
-  const { categories, specificMethods } = getModernMethodsData(router);
+  const { getModernMethodsData } = useTranslatedMethodsData();
+  const { categories, specificMethods } = getModernMethodsData();
   
   const {
     filteredCategories,

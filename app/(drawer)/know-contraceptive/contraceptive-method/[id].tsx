@@ -3,8 +3,9 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import ExpandableSection from '../../../../src/components/ExpandableSection';
-import { getContraceptiveMethodById } from '../../../../src/utils/contraceptiveMethodsData';
+import { useTranslatedMethodData } from '../../../../src/hooks/useTranslatedMethodData';
 import MethodHeader from '../../../../src/components/shared/MethodHeader';
 import EfficacySection from '../../../../src/components/shared/EfficacySection';
 import ListSection from '../../../../src/components/shared/ListSection';
@@ -14,9 +15,11 @@ import WarningBox from '../../../../src/components/shared/WarningBox';
 export default function ContraceptiveMethodDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const insets = useSafeAreaInsets();
+  const { t } = useTranslation();
+  const { getTranslatedMethodById } = useTranslatedMethodData();
   
-  // Get method data by ID
-  const method = id ? getContraceptiveMethodById(id) : undefined;
+  // Get translated method data by ID
+  const method = id ? getTranslatedMethodById(id) : undefined;
 
   // If method not found, show error
   if (!method) {
@@ -24,10 +27,10 @@ export default function ContraceptiveMethodDetailPage() {
       // <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
           <Text variant="headlineMedium" style={styles.errorTitle}>
-            Method Not Found
+            {t("methods.methodNotFound")}
           </Text>
           <Text variant="bodyMedium" style={styles.errorText}>
-            The contraceptive method you're looking for doesn't exist.
+            {t("methods.methodNotFoundDescription")}
           </Text>
         </View>
       // </SafeAreaView>
@@ -50,26 +53,26 @@ export default function ContraceptiveMethodDetailPage() {
         />
 
         <View style={styles.sectionsContainer}>
-          <ExpandableSection title="Description" icon="📝">
+          <ExpandableSection title={t("methods.sections.description")} icon="📝">
             {method.image && <MethodImageSection image={method.image} variant="description" />}
             <Text variant="bodyMedium" style={[styles.sectionText, method.image && styles.textAfterImage]}>
               {method.description}
             </Text>
           </ExpandableSection>
 
-          <ExpandableSection title="Efficacy" icon="📊">
+          <ExpandableSection title={t("methods.sections.efficacy")} icon="📊">
             <EfficacySection efficacy={method.efficacy} />
           </ExpandableSection>
 
-          <ExpandableSection title="Advantages" icon="✅">
+          <ExpandableSection title={t("methods.sections.advantages")} icon="✅">
             <ListSection items={method.advantages} />
           </ExpandableSection>
 
-          <ExpandableSection title="Disadvantages" icon="⚠️">
+          <ExpandableSection title={t("methods.sections.disadvantages")} icon="⚠️">
             <ListSection items={method.disadvantages} variant="warning" />
           </ExpandableSection>
 
-          <ExpandableSection title="How to Use" icon="📋">
+          <ExpandableSection title={t("methods.sections.howToUse")} icon="📋">
             <Text variant="bodyMedium" style={[styles.sectionText, method.howToUseImage && styles.textBeforeImage]}>
               {method.howToUse}
             </Text>
@@ -77,13 +80,13 @@ export default function ContraceptiveMethodDetailPage() {
           </ExpandableSection>
 
           {method.additionalInfo?.timeOfOnset ? (
-            <ExpandableSection title="Time of Onset of Action" icon="⏰">
+            <ExpandableSection title={t("methods.sections.timeOfOnset")} icon="⏰">
               <Text variant="bodyMedium" style={styles.sectionText}>
                 {method.additionalInfo.timeOfOnset}
               </Text>
             </ExpandableSection>
           ) : (
-            <ExpandableSection title="Time to Work" icon="⏰">
+            <ExpandableSection title={t("methods.sections.timeToWork")} icon="⏰">
               <Text variant="bodyMedium" style={styles.sectionText}>
                 {method.timeToWork}
               </Text>
@@ -91,19 +94,19 @@ export default function ContraceptiveMethodDetailPage() {
           )}
 
           {method.conditionsRequired && method.conditionsRequired.length > 0 && (
-            <ExpandableSection title="Conditions Required" icon="📋">
+            <ExpandableSection title={t("methods.sections.conditionsRequired")} icon="📋">
               <ListSection items={method.conditionsRequired} />
             </ExpandableSection>
           )}
 
           {method.sideNotes && method.sideNotes !== 'None' && (
-            <ExpandableSection title="Side Notes" icon="📌">
+            <ExpandableSection title={t("methods.sections.sideNotes")} icon="📌">
               <WarningBox message={method.sideNotes} variant="note" />
             </ExpandableSection>
           )}
 
           {method.commonErrors && method.commonErrors.length > 0 && (
-            <ExpandableSection title="Common Errors" icon="❌">
+            <ExpandableSection title={t("methods.sections.commonErrors")} icon="❌">
               <ListSection items={method.commonErrors} variant="warning" />
               {method.additionalInfo?.warning && (
                 <WarningBox message={method.additionalInfo.warning} />
@@ -112,7 +115,7 @@ export default function ContraceptiveMethodDetailPage() {
           )}
 
           {method.additionalInfo?.additionalMethods && method.additionalInfo.additionalMethods.length > 0 && (
-            <ExpandableSection title="Additional Methods" icon="📚">
+            <ExpandableSection title={t("methods.sections.additionalMethods")} icon="📚">
               {method.additionalInfo.additionalMethods.map((additionalMethod, index) => (
                 <View key={index} style={styles.additionalMethodContainer}>
                   <Text variant="titleMedium" style={styles.additionalMethodTitle}>

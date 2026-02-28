@@ -16,7 +16,7 @@ const FIELD_KEYS: Record<ComparisonField, string> = {
   sideNotes: "compare.fieldSideNotes",
   commonErrors: "compare.fieldCommonErrors",
 };
-import { getContraceptiveMethodById } from '../utils/contraceptiveMethodsData';
+import { useTranslatedMethodData } from '../hooks/useTranslatedMethodData';
 import { getCategoryColor } from '../utils/theme';
 import { getFieldValue } from '../utils/comparisonUtils';
 import ComparisonProgressIndicator from './shared/ComparisonProgressIndicator';
@@ -44,14 +44,15 @@ export default function SequentialComparisonView({
   onBackToSelection,
 }: SequentialComparisonViewProps) {
   const { t } = useTranslation();
+  const { getTranslatedMethodById } = useTranslatedMethodData();
   const insets = useSafeAreaInsets();
   const currentField = selectedFields[currentFieldIndex];
   const isFirstField = currentFieldIndex === 0;
   const isLastField = currentFieldIndex === selectedFields.length - 1;
 
-  // Get method data from contraceptiveMethodsData
-  const firstMethodData = getContraceptiveMethodById(firstMethodKey);
-  const secondMethodData = getContraceptiveMethodById(secondMethodKey);
+  // Get translated method data
+  const firstMethodData = getTranslatedMethodById(firstMethodKey);
+  const secondMethodData = getTranslatedMethodById(secondMethodKey);
 
   // Fallback to ALL_COMPARISON_METHODS if not found
   const firstMethod = firstMethodData 

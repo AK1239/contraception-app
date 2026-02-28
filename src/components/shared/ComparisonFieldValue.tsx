@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Image, ImageSourcePropType } from 'react-native';
 import { Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { ComparisonField } from '../../services/methodDetailsService';
 import { getEfficacyBadgeColor, getEfficacyTextColor } from '../../utils/theme';
 
@@ -21,6 +22,7 @@ export default function ComparisonFieldValue({
   methodName,
   categoryColor,
 }: ComparisonFieldValueProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.methodSection}>
       <View style={[styles.methodHeader, { backgroundColor: categoryColor + '80' }]}>
@@ -48,13 +50,13 @@ export default function ComparisonFieldValue({
             />
           </View>
         )}
-        {renderFieldValue(value, field)}
+        {renderFieldValue(value, field, t)}
       </View>
     </View>
   );
 }
 
-function renderFieldValue(value: any, field: ComparisonField): React.ReactNode {
+function renderFieldValue(value: any, field: ComparisonField, t?: (key: string) => string): React.ReactNode {
   if (!value || (typeof value === 'string' && value.trim() === '') || (Array.isArray(value) && value.length === 0)) {
     return (
       <View style={styles.noDataContainer}>
@@ -89,14 +91,14 @@ function renderFieldValue(value: any, field: ComparisonField): React.ReactNode {
           {value.label && (
             <View style={[styles.efficacyBadge, { backgroundColor: getEfficacyBadgeColor(value.label) }]}>
               <Text style={[styles.efficacyLabel, { color: getEfficacyTextColor(value.label) }]}>
-                {value.label}
+                {value.displayLabel ?? value.label}
               </Text>
             </View>
           )}
           {value.typicalUse && (
             <View style={styles.efficacyTextContainer}>
               <Text variant="labelSmall" style={styles.efficacyLabelText}>
-                Typical Use:
+                {t ? t("compare.efficacyTypicalUse") : "Typical Use"}:
               </Text>
               <Text variant="bodySmall" style={styles.efficacyText}>
                 {value.typicalUse}
@@ -106,7 +108,7 @@ function renderFieldValue(value: any, field: ComparisonField): React.ReactNode {
           {value.perfectUse && (
             <View style={styles.efficacyTextContainer}>
               <Text variant="labelSmall" style={styles.efficacyLabelText}>
-                Perfect Use:
+                {t ? t("compare.efficacyPerfectUse") : "Perfect Use"}:
               </Text>
               <Text variant="bodySmall" style={styles.efficacyText}>
                 {value.perfectUse}

@@ -15,6 +15,7 @@ export interface ContraceptiveMethodData {
   howToUseImage?: any; // Image source from require() - React Native image resource
   efficacy: {
     label: 'Good' | 'Excellent' | 'Perfect';
+    displayLabel?: string;
     typicalUse: string;
     perfectUse?: string;
   };
