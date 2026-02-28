@@ -31,14 +31,16 @@ export default function HomePage() {
         <View style={styles.dividerLine} />
       </View>
 
-      <HomeSectionCard
-        leadingEmoji="🎯"
-        title={t("home.chooseTitle")}
-        description={t("home.chooseDescription")}
-        ctaLabel={t("home.chooseCta")}
-        onPress={() => router.push("/(drawer)/choose-contraceptive")}
-        buttonColor="#6D28D9"
-      />
+      {isHealthcareProvider && (
+        <HomeSectionCard
+          leadingEmoji="🎯"
+          title={t("home.chooseTitle")}
+          description={t("home.chooseDescription")}
+          ctaLabel={t("home.chooseCta")}
+          onPress={() => router.push("/(drawer)/choose-contraceptive")}
+          buttonColor="#6D28D9"
+        />
+      )}
 
       <HomeSectionCard
         leadingEmoji="📚"

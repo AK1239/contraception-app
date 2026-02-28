@@ -110,6 +110,7 @@ const drawerSections: DrawerSection[] = [
 
 /** Section IDs hidden for general public */
 const GENERAL_PUBLIC_HIDDEN_IDS = [
+  'choose-contraceptive',
   'natural-method-eligibility',
   'sterilization-eligibility',
 ];
