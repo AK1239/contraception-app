@@ -63,8 +63,9 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
         );
 
       case "cycle-durations": {
-        const MIN_CYCLES = 2;
-        const MAX_CYCLES = 6;
+        const q = question as import("../types/questionnaire").CycleDurationsQuestion;
+        const MIN_CYCLES = q.minCycles ?? 2;
+        const MAX_CYCLES = q.maxCycles ?? 6;
         const raw = Array.isArray(value) ? value : [];
         const durations: number[] = raw.filter((n): n is number => typeof n === "number");
         const visibleCount = Math.min(MAX_CYCLES, Math.max(MIN_CYCLES, durations.length));
@@ -85,12 +86,14 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
           }
         };
 
+        const canAddMore = MIN_CYCLES < MAX_CYCLES;
+
         return (
           <View style={styles.cycleDurationsContainer}>
             <View style={styles.cycleHeader}>
               <Text style={styles.cycleHeaderText}>Required cycles</Text>
               <View style={styles.cycleBadge}>
-                <Text style={styles.cycleBadgeText}>Min. 2</Text>
+                <Text style={styles.cycleBadgeText}>Min. {MIN_CYCLES}</Text>
               </View>
             </View>
             <View style={styles.cyclesGrid}>
@@ -129,9 +132,9 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                 </View>
               ))}
             </View>
-            {visibleCount < MAX_CYCLES && (
+            {canAddMore && visibleCount < MAX_CYCLES && (
               <RNText style={styles.addMoreBtn} onPress={handleAddMore}>
-                + Add more cycles (optional, up to 6)
+                + Add more cycles (optional, up to {MAX_CYCLES})
               </RNText>
             )}
           </View>

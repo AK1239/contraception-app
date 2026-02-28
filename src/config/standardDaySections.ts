@@ -24,11 +24,11 @@ export const standardDaySections: Record<SDMSectionKey, Section> = {
   },
   'cycle-lengths': {
     key: 'cycle-lengths' as any,
-    title: 'Enter Your Last 6 Menstrual Cycles',
+    title: 'Enter Your Menstrual Cycles',
     questions: [
       {
         id: 'cycle-durations',
-        text: 'Enter the duration of your last 6 menstrual cycles (in days)',
+        text: 'Enter the duration of your menstrual cycles (in days)',
         type: 'cycle-durations',
         required: true,
         validation: {
@@ -38,6 +38,8 @@ export const standardDaySections: Record<SDMSectionKey, Section> = {
         metadata: {
           unit: 'days',
           helpText: 'Enter cycle lengths from most recent to oldest. Each cycle must be between 21 and 35 days.',
+          minCycles: 2,
+          maxCycles: 6,
         },
       },
     ],

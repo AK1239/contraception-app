@@ -21,13 +21,15 @@ export const SECTIONS: Section[] = [
       },
       {
         id: "cycle-durations",
-        text: "Duration of your menstrual cycles (days between period starts). Enter at least 2, optionally up to 6.",
+        text: "Duration of your menstrual cycles (days between period starts)",
         type: "cycle-durations",
         required: true,
         validation: { min: 21, max: 45 },
         metadata: {
           unit: "days",
           helpText: "Enter the length of each cycle from start of one period to the start of the next. Irregularity is auto-calculated (variation > 7 days).",
+          minCycles: 2,
+          maxCycles: 6,
         },
       },
       {

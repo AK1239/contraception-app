@@ -57,6 +57,8 @@ function toQuestionFormat(sq: SectionQuestion): Question {
         min: sq.validation?.min,
         max: sq.validation?.max,
         unit: sq.metadata?.unit,
+        minCycles: sq.metadata?.minCycles,
+        maxCycles: sq.metadata?.maxCycles,
       };
     default:
       return { ...base, type: sq.type };

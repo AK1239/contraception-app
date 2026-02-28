@@ -38,6 +38,8 @@ export const calendarMethodSections: Record<CalendarMethodSectionKey, Section> =
         metadata: {
           unit: 'days',
           helpText: 'Enter cycle lengths from most recent to oldest. Each cycle must be between 21 and 35 days.',
+          minCycles: 6,
+          maxCycles: 6,
         },
       },
     ],

@@ -21,6 +21,10 @@ export interface QuestionMetadata {
   group?: string;
   /** Title shown at the top of the grouped card (only needed on the first question of the group) */
   groupTitle?: string;
+  /** Minimum number of cycle entries required (for cycle-durations questions, default 2) */
+  minCycles?: number;
+  /** Maximum number of cycle entries allowed (for cycle-durations questions, default 6) */
+  maxCycles?: number;
 }
 
 /** Base question definition for section config */

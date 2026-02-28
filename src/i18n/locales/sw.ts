@@ -58,7 +58,7 @@ const sw = {
     personalizeDescription:
       "Hujui njia inayokufaa? Tembelea sehemu ya Kubinafsisha Uzazi wa Mpango wako kwa mapendekezo yaliyoundwa mahususi kwako.",
     personalizeCta: "Binafsisha Chaguo Lako",
-    naturalTitle: "Njia za Asili",
+    naturalTitle: "Vihesabu vya Njia za Asili",
     naturalDescription:
       "Unapendelea njia zisizo za kisasa? Jaribu Kihesabu cha Njia ya Kalenda au Kihesabu cha Njia ya Siku za Kawaida kutambua siku zako za uzazi na kuepuka tendo la ndoa bila kinga wakati huo.",
     naturalCta: "Vihesabu vya Njia za Asili",

@@ -65,10 +65,16 @@ export interface LipidProfileQuestion extends BaseQuestion {
 
 export interface CycleDurationsQuestion extends BaseQuestion {
   type: "cycle-durations";
+  /** Min value per cycle (days) */
   min?: number;
+  /** Max value per cycle (days) */
   max?: number;
   count?: number;
   unit?: string;
+  /** Minimum number of cycle entries required (default 2) */
+  minCycles?: number;
+  /** Maximum number of cycle entries allowed (default 6) */
+  maxCycles?: number;
 }
 
 // Union type for all question types

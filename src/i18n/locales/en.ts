@@ -58,7 +58,7 @@ const en = {
     personalizeDescription:
       "Not sure which method suits your needs? Visit the Personalize Your Contraceptive section for tailored recommendations.",
     personalizeCta: "Personalize Your Choice",
-    naturalTitle: "Natural Methods",
+    naturalTitle: "Natural Method Calculators",
     naturalDescription:
       "Prefer non-modern methods? Try our Calendar Method Calculator or Standard Days Method Calculator to identify your fertile days and avoid unprotected intercourse during those times.",
     naturalCta: "Natural Method Calculators",

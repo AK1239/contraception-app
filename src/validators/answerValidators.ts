@@ -99,12 +99,14 @@ export function validateAnswer(
     case "cycle-durations": {
       const arr = Array.isArray(value) ? value : [];
       const { min = 21, max = 45 } = question.validation ?? {};
+      const minCycles = question.metadata?.minCycles ?? 2;
+      const maxCycles = question.metadata?.maxCycles ?? 6;
       const valid = arr.filter((n) => typeof n === "number" && n > 0);
-      if (valid.length < 2) {
-        return { valid: false, error: "Please enter at least 2 cycle durations" };
+      if (valid.length < minCycles) {
+        return { valid: false, error: `Please enter at least ${minCycles} cycle duration${minCycles === 1 ? "" : "s"}` };
       }
-      if (valid.length > 6) {
-        return { valid: false, error: "Maximum 6 cycle durations allowed" };
+      if (valid.length > maxCycles) {
+        return { valid: false, error: `Maximum ${maxCycles} cycle durations allowed` };
       }
       for (let i = 0; i < valid.length; i++) {
         const n = valid[i];
