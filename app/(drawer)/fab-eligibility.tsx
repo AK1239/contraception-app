@@ -106,11 +106,20 @@ export default function FABEligibilityScreen() {
     dispatch(resetFABEligibility());
   }, [dispatch]);
 
+  const handleGoBack = useCallback(() => {
+    const order = getFABSectionOrderForAnswers(fabAnswers);
+    const lastSection = order.length > 0 ? order[order.length - 1] : null;
+    if (lastSection) {
+      dispatch(setFABEvaluationResult(null));
+      dispatch(setFABCurrentSection(lastSection));
+    }
+  }, [dispatch, fabAnswers]);
+
   // Show results if evaluation is complete
   if (evaluationResult) {
     return (
       <View style={styles.container}>
-        <FABResults result={evaluationResult} onStartOver={handleStartOver} />
+        <FABResults result={evaluationResult} onStartOver={handleStartOver} onGoBack={handleGoBack} />
       </View>
     );
   }

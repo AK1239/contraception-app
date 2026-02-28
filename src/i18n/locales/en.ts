@@ -357,6 +357,7 @@ const en = {
       importantAdvisory: "Important Advisory",
       counsellingWarning:
         "⚠️ Counselling confirmation incomplete. Please ensure all counselling requirements are met before proceeding.",
+      goBack: "Go Back",
       startOver: "Start Over",
     },
     male: {
@@ -364,6 +365,7 @@ const en = {
       clinicalRecommendation: "Clinical Recommendation",
       conditionsIdentified: "Conditions Identified",
       detailedExplanation: "Detailed Explanation",
+      goBack: "Go Back",
       startOver: "Start Over",
     },
   },
@@ -499,6 +501,7 @@ const en = {
       recalculationWarning:
         "If your period comes earlier or later, results are no longer reliable.",
       importantInfo: "Important Information",
+      goBack: "Go Back",
       calculateAgain: "Calculate Again",
       periodDatePassed: "Period Date Passed",
       periodDatePassedMessage:

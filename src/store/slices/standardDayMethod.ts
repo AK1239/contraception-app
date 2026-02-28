@@ -3,7 +3,7 @@
  */
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SDMState, SDMSectionKey, SDMEligibilityResult } from '../../types/standardDayMethod';
+import type { SDMState, SDMSectionKey, SDMEligibilityResult } from '../../types/standardDayMethod';
 import { getFirstSDMSection } from '../../utils/standardDayNavigation';
 
 const initialState: SDMState = {
@@ -70,6 +70,15 @@ const standardDayMethodSlice = createSlice({
      * Reset all state
      */
     resetSDM: () => initialState,
+
+    /**
+     * Go back to edit previous inputs (keeps answers, returns to last section)
+     */
+    goBackToEdit: (state, action: PayloadAction<SDMSectionKey>) => {
+      state.isComplete = false;
+      state.evaluationResult = null;
+      state.currentSection = action.payload;
+    },
   },
 });
 
@@ -81,6 +90,7 @@ export const {
   setComplete,
   initializeSDM,
   resetSDM,
+  goBackToEdit,
 } = standardDayMethodSlice.actions;
 
 export default standardDayMethodSlice.reducer;

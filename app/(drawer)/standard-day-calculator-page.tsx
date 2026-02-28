@@ -16,6 +16,7 @@ import {
   setComplete,
   initializeSDM,
   resetSDM,
+  goBackToEdit,
 } from '../../src/store/slices/standardDayMethod';
 import { getSDMSection } from '../../src/config/standardDaySections';
 import { SectionPage } from '../../src/components/questionnaire';
@@ -129,6 +130,11 @@ export default function StandardDayCalculatorPage() {
     dispatch(initializeSDM());
   }, [dispatch]);
 
+  const handleGoBack = useCallback(() => {
+    const lastSection = evaluationResult?.lmpDate ? 'lmp-date' : 'cycle-lengths';
+    dispatch(goBackToEdit(lastSection));
+  }, [dispatch, evaluationResult?.lmpDate]);
+
   const handleGetStarted = useCallback(() => {
     setShowInfoCard(false);
     dispatch(initializeSDM());
@@ -147,7 +153,7 @@ export default function StandardDayCalculatorPage() {
 
   // Show results if complete
   if (isComplete && evaluationResult) {
-    return <StandardDayResults result={evaluationResult} onReset={handleReset} />;
+    return <StandardDayResults result={evaluationResult} onReset={handleReset} onGoBack={handleGoBack} />;
   }
 
   // Show info card only initially

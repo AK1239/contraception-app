@@ -129,12 +129,22 @@ export default function FemaleSterilizationEligibilityScreen() {
     setValidationErrors({});
   }, [dispatch]);
 
+  const handleGoBack = useCallback(() => {
+    const order = getFemaleSterilizationSectionOrderForAnswers(sterilizationAnswers);
+    const lastSection = order.length > 0 ? order[order.length - 1] : null;
+    if (lastSection) {
+      dispatch(setFemaleSterilizationEvaluationResult(null));
+      dispatch(setFemaleSterilizationCurrentSection(lastSection));
+    }
+  }, [dispatch, sterilizationAnswers]);
+
   // Show results if evaluation is complete
   if (evaluationResult) {
     return (
       <FemaleSterilizationResults
         result={evaluationResult}
         onStartOver={handleStartOver}
+        onGoBack={handleGoBack}
       />
     );
   }

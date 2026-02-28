@@ -15,9 +15,10 @@ import SDMCalendar from '../sdm/SDMCalendar';
 interface CalendarMethodResultsProps {
   result: CalendarMethodEligibilityResult;
   onReset: () => void;
+  onGoBack?: () => void;
 }
 
-export default function CalendarMethodResults({ result, onReset }: CalendarMethodResultsProps) {
+export default function CalendarMethodResults({ result, onReset, onGoBack }: CalendarMethodResultsProps) {
   const { t } = useTranslation();
   const [showPeriodAlert, setShowPeriodAlert] = useState(false);
   const [periodDatePassed, setPeriodDatePassed] = useState(false);
@@ -268,6 +269,17 @@ export default function CalendarMethodResults({ result, onReset }: CalendarMetho
 
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
+        {onGoBack && (
+          <Button
+            mode="outlined"
+            onPress={onGoBack}
+            style={styles.goBackButton}
+            labelStyle={styles.buttonLabel}
+            icon="arrow-left"
+          >
+            {t('calendar.results.goBack')}
+          </Button>
+        )}
         <Button
           mode="contained"
           onPress={onReset}
@@ -514,8 +526,16 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 8,
+    flexDirection: 'row',
+    gap: 12,
+  },
+  goBackButton: {
+    flex: 1,
+    borderRadius: 12,
+    borderColor: '#6D28D9',
   },
   resetButton: {
+    flex: 1,
     borderRadius: 12,
     paddingVertical: 6,
     backgroundColor: '#059669',

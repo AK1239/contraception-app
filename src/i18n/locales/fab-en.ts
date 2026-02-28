@@ -64,6 +64,7 @@ export const fabEn = {
     defA: "A (Accept) – No restriction",
     defC: "C (Caution) – Enhanced counselling required",
     defD: "D (Delay) – Temporary method recommended until condition resolved",
+    goBack: "Go Back",
     startOver: "Start Over",
   },
   methods: {

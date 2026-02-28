@@ -8,6 +8,7 @@ import { theme } from "../../utils/theme";
 interface FABResultsProps {
   result: FABEligibilityResult;
   onStartOver?: () => void;
+  onGoBack?: () => void;
 }
 
 function MethodResultCard({
@@ -97,7 +98,7 @@ function AdvisoryCard({
   );
 }
 
-export function FABResults({ result, onStartOver }: FABResultsProps) {
+export function FABResults({ result, onStartOver, onGoBack }: FABResultsProps) {
   const { t } = useTranslation();
 
   if (result.notApplicable) {
@@ -190,17 +191,30 @@ export function FABResults({ result, onStartOver }: FABResultsProps) {
         </Text>
       </View>
 
-      {onStartOver && (
+      {(onGoBack || onStartOver) && (
         <View style={styles.buttonSection}>
-          <Button
-            mode="outlined"
-            onPress={onStartOver}
-            icon="refresh"
-            style={styles.startOverButton}
-            labelStyle={styles.buttonLabel}
-          >
-            {t("fab.results.startOver")}
-          </Button>
+          {onGoBack && (
+            <Button
+              mode="outlined"
+              onPress={onGoBack}
+              icon="arrow-left"
+              style={styles.goBackButton}
+              labelStyle={styles.buttonLabel}
+            >
+              {t("fab.results.goBack")}
+            </Button>
+          )}
+          {onStartOver && (
+            <Button
+              mode="outlined"
+              onPress={onStartOver}
+              icon="refresh"
+              style={styles.startOverButton}
+              labelStyle={styles.buttonLabel}
+            >
+              {t("fab.results.startOver")}
+            </Button>
+          )}
         </View>
       )}
     </ScrollView>
@@ -375,8 +389,16 @@ const styles = StyleSheet.create({
   },
   buttonSection: {
     marginTop: 8,
+    flexDirection: "row",
+    gap: 12,
+  },
+  goBackButton: {
+    flex: 1,
+    borderRadius: 10,
+    borderColor: "#6D28D9",
   },
   startOverButton: {
+    flex: 1,
     borderRadius: 10,
     borderColor: "#D1D5DB",
   },

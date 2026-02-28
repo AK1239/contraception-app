@@ -8,11 +8,13 @@ import { theme } from "../../utils/theme";
 interface MaleSterilizationResultsProps {
   result: MaleSterilizationEligibilityResult;
   onStartOver?: () => void;
+  onGoBack?: () => void;
 }
 
 export function MaleSterilizationResults({
   result,
   onStartOver,
+  onGoBack,
 }: MaleSterilizationResultsProps) {
   const { t } = useTranslation();
   const categoryColors = {
@@ -174,16 +176,31 @@ export function MaleSterilizationResults({
         </Text>
       </View>
 
-      {onStartOver && (
-        <Button
-          mode="outlined"
-          onPress={onStartOver}
-          icon="refresh"
-          style={styles.startOverButton}
-          labelStyle={styles.buttonLabel}
-        >
-          {t("sterilization.male.startOver")}
-        </Button>
+      {(onGoBack || onStartOver) && (
+        <View style={styles.buttonRow}>
+          {onGoBack && (
+            <Button
+              mode="outlined"
+              onPress={onGoBack}
+              icon="arrow-left"
+              style={styles.goBackButton}
+              labelStyle={styles.buttonLabel}
+            >
+              {t("sterilization.male.goBack")}
+            </Button>
+          )}
+          {onStartOver && (
+            <Button
+              mode="outlined"
+              onPress={onStartOver}
+              icon="refresh"
+              style={styles.startOverButton}
+              labelStyle={styles.buttonLabel}
+            >
+              {t("sterilization.male.startOver")}
+            </Button>
+          )}
+        </View>
       )}
     </ScrollView>
   );
@@ -345,8 +362,17 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#333",
   },
-  startOverButton: {
+  buttonRow: {
+    flexDirection: "row",
+    gap: 12,
     marginTop: 8,
+  },
+  goBackButton: {
+    flex: 1,
+    borderColor: "#4C1D95",
+  },
+  startOverButton: {
+    flex: 1,
     borderColor: "#4C1D95",
   },
   buttonLabel: {

@@ -64,6 +64,7 @@ export const fabSw = {
     defA: "A (Kubali) – Hakuna kikwazo",
     defC: "C (Tahadhari) – Ushauri wa ziada unahitajika",
     defD: "D (Ahirisha) – Njia ya muda inapendekezwa hadi hali itatuliwe",
+    goBack: "Rudi",
     startOver: "Anza Upya",
   },
   methods: {

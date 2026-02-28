@@ -16,6 +16,7 @@ import {
   setComplete,
   initializeCalendarMethod,
   resetCalendarMethod,
+  goBackToEdit,
 } from '../../src/store/slices/calendarMethod';
 import { useTranslatedCalendarSections } from '../../src/hooks/useTranslatedCalendarSections';
 import { SectionPage } from '../../src/components/questionnaire';
@@ -130,6 +131,11 @@ export default function CalendarMethodCalculatorPage() {
     dispatch(initializeCalendarMethod());
   }, [dispatch]);
 
+  const handleGoBack = useCallback(() => {
+    const lastSection = evaluationResult?.lmpDate ? 'lmp-date' : 'cycle-lengths';
+    dispatch(goBackToEdit(lastSection));
+  }, [dispatch, evaluationResult?.lmpDate]);
+
   const handleGetStarted = useCallback(() => {
     setShowInfoCard(false);
     dispatch(initializeCalendarMethod());
@@ -148,7 +154,7 @@ export default function CalendarMethodCalculatorPage() {
 
   // Show results if complete
   if (isComplete && evaluationResult) {
-    return <CalendarMethodResults result={evaluationResult} onReset={handleReset} />;
+    return <CalendarMethodResults result={evaluationResult} onReset={handleReset} onGoBack={handleGoBack} />;
   }
 
   // Show info card only initially

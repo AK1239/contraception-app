@@ -14,9 +14,10 @@ import SDMCalendar from './SDMCalendar';
 interface StandardDayResultsProps {
   result: SDMEligibilityResult;
   onReset: () => void;
+  onGoBack?: () => void;
 }
 
-export default function StandardDayResults({ result, onReset }: StandardDayResultsProps) {
+export default function StandardDayResults({ result, onReset, onGoBack }: StandardDayResultsProps) {
   const [showPeriodAlert, setShowPeriodAlert] = useState(false);
   const [periodDatePassed, setPeriodDatePassed] = useState(false);
 
@@ -244,6 +245,17 @@ export default function StandardDayResults({ result, onReset }: StandardDayResul
 
       {/* Action Buttons */}
       <View style={styles.buttonContainer}>
+        {onGoBack && (
+          <Button
+            mode="outlined"
+            onPress={onGoBack}
+            style={styles.goBackButton}
+            labelStyle={styles.buttonLabel}
+            icon="arrow-left"
+          >
+            Go Back
+          </Button>
+        )}
         <Button
           mode="contained"
           onPress={onReset}
@@ -475,8 +487,16 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 8,
+    flexDirection: 'row',
+    gap: 12,
+  },
+  goBackButton: {
+    flex: 1,
+    borderRadius: 12,
+    borderColor: '#059669',
   },
   resetButton: {
+    flex: 1,
     borderRadius: 12,
     paddingVertical: 6,
     backgroundColor: '#059669',

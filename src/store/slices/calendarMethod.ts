@@ -70,6 +70,15 @@ const calendarMethodSlice = createSlice({
      * Reset all state
      */
     resetCalendarMethod: () => initialState,
+
+    /**
+     * Go back to edit previous inputs (keeps answers, returns to last section)
+     */
+    goBackToEdit: (state, action: PayloadAction<CalendarMethodSectionKey>) => {
+      state.isComplete = false;
+      state.evaluationResult = null;
+      state.currentSection = action.payload;
+    },
   },
 });
 
@@ -81,6 +90,7 @@ export const {
   setComplete,
   initializeCalendarMethod,
   resetCalendarMethod,
+  goBackToEdit,
 } = calendarMethodSlice.actions;
 
 export default calendarMethodSlice.reducer;

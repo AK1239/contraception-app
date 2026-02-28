@@ -358,6 +358,7 @@ const sw = {
       importantAdvisory: "Onyo Muhimu",
       counsellingWarning:
         "⚠️ Uthibitishaji wa ushauri haujakamilika. Tafadhali hakikisha mahitaji yote ya ushauri yametimizwa kabla ya kuendelea.",
+      goBack: "Rudi",
       startOver: "Anza Upya",
     },
     male: {
@@ -365,6 +366,7 @@ const sw = {
       clinicalRecommendation: "Mapendekezo ya Kliniki",
       conditionsIdentified: "Hali Zilizotambuliwa",
       detailedExplanation: "Maelezo ya Kina",
+      goBack: "Rudi",
       startOver: "Anza Upya",
     },
   },
@@ -500,6 +502,7 @@ const sw = {
       recalculationWarning:
         "Ikiwa hedhi yako inakuja mapema au baadaye, matokeo hayakuaminiki tena.",
       importantInfo: "Taarifa Muhimu",
+      goBack: "Rudi",
       calculateAgain: "Hesabu Tena",
       periodDatePassed: "Tarehe ya Hedhi Imepita",
       periodDatePassedMessage:
