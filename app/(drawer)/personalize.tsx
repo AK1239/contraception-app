@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { RootState } from "../../src/store";
 import { useEligibleMethods } from "../../src/hooks/useEligibleMethods";
 import { usePersonalizationQuestions } from "../../src/hooks/usePersonalizationQuestions";
@@ -14,6 +15,7 @@ import {
 } from "../../src/components/personalization";
 
 export default function PersonalizePage() {
+  const { t } = useTranslation();
   const { personalization } = useSelector((state: RootState) => state.questionnaire);
   
   // Check eligible methods and handle redirects
@@ -51,7 +53,7 @@ export default function PersonalizePage() {
     return (
       <View style={styles.container}>
         <LoadingSpinner
-          message="Loading personalization questions..."
+          message={t("personalize.loadingQuestions")}
           centered
         />
       </View>
@@ -63,7 +65,7 @@ export default function PersonalizePage() {
     return (
       <View style={styles.container}>
         <LoadingSpinner
-          message="Preparing questions..."
+          message={t("personalize.preparingQuestions")}
           centered
         />
       </View>
@@ -74,7 +76,7 @@ export default function PersonalizePage() {
     <>
       <LoadingOverlay
         visible={isGeneratingResults}
-        message="Generating your personalized recommendations..."
+        message={t("personalize.generatingResults")}
       />
       <View style={styles.container}>
         <ScrollView 

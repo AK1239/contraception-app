@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, Pressable, Dimensions } from "react-native";
 import { Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
+import { useTranslation } from "react-i18next";
 import type { UserRole } from "../../constants/userRole";
 
 const { height } = Dimensions.get("window");
@@ -17,6 +18,7 @@ export default function RoleSelectionSlide({
   onRoleSelect,
   color = "#6D28D9",
 }: RoleSelectionSlideProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -37,10 +39,10 @@ export default function RoleSelectionSlide({
 
         <View style={styles.titleSection}>
           <Text variant="displaySmall" style={[styles.title, { color }]}>
-            Personalize Your Experience
+            {t("onboarding.roleSelectionTitle")}
           </Text>
           <Text variant="titleMedium" style={styles.subtitle}>
-            Please select your role
+            {t("onboarding.roleSelectionSubtitle")}
           </Text>
         </View>
 
@@ -73,10 +75,10 @@ export default function RoleSelectionSlide({
                   selectedRole === "healthcare-provider" && { color, fontWeight: "600" },
                 ]}
               >
-                Healthcare provider
+                {t("onboarding.roleHealthcareTitle")}
               </Text>
             </View>
-            <Text style={styles.optionHint}>Full access to all features</Text>
+            <Text style={styles.optionHint}>{t("onboarding.roleHealthcareHint")}</Text>
           </Pressable>
 
           <Pressable
@@ -107,11 +109,11 @@ export default function RoleSelectionSlide({
                   selectedRole === "general-public" && { color, fontWeight: "600" },
                 ]}
               >
-                General public
+                {t("onboarding.rolePublicTitle")}
               </Text>
             </View>
             <Text style={styles.optionHint}>
-              Simplified experience, eligibility tools hidden
+              {t("onboarding.rolePublicHint")}
             </Text>
           </Pressable>
         </View>

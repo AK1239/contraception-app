@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Button } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import MethodDropdown from '../../src/components/MethodDropdown';
 import ComparisonFieldsCheckbox from '../../src/components/ComparisonFieldsCheckbox';
 import SequentialComparisonView from '../../src/components/SequentialComparisonView';
@@ -13,6 +14,7 @@ const getAllComparisonFields = (): ComparisonField[] => {
 };
 
 export default function CompareMethodsPage() {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [firstMethodKey, setFirstMethodKey] = useState<string | null>(null);
   const [secondMethodKey, setSecondMethodKey] = useState<string | null>(null);
@@ -83,10 +85,10 @@ export default function CompareMethodsPage() {
             <Text style={styles.headerIcon}>⚖️</Text>
           </View>
           <Text variant="headlineSmall" style={styles.title}>
-            Compare Contraceptive Methods
+            {t("compare.title")}
           </Text>
           <Text variant="bodyMedium" style={styles.subtitle}>
-            Select two methods and choose what you want to compare. See side-by-side differences to help you make an informed decision.
+            {t("compare.subtitle")}
           </Text>
         </Card.Content>
       </Card>
@@ -95,14 +97,14 @@ export default function CompareMethodsPage() {
       <Card style={styles.selectionCard}>
         <Card.Content>
           <MethodDropdown
-            label="First Contraceptive"
+            label={t("compare.firstMethod")}
             selectedMethodKey={firstMethodKey}
             onSelect={setFirstMethodKey}
             excludeMethodKey={secondMethodKey}
           />
 
           <MethodDropdown
-            label="Second Contraceptive"
+            label={t("compare.secondMethod")}
             selectedMethodKey={secondMethodKey}
             onSelect={setSecondMethodKey}
             excludeMethodKey={firstMethodKey}
@@ -130,7 +132,7 @@ export default function CompareMethodsPage() {
             disabled={!canCompare}
             onPress={handleCompare}
           >
-            Compare
+            {t("compare.compareButton")}
           </Button>
         </Card.Content>
       </Card>

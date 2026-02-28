@@ -1,7 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Checkbox } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { COMPARISON_FIELDS, ComparisonField } from '../services/methodDetailsService';
+
+const FIELD_KEYS: Record<ComparisonField, string> = {
+  description: "compare.fieldDescription",
+  efficacy: "compare.fieldEfficacy",
+  advantages: "compare.fieldAdvantages",
+  disadvantages: "compare.fieldDisadvantages",
+  howToUse: "compare.fieldHowToUse",
+  timeToWork: "compare.fieldTimeToWork",
+  sideNotes: "compare.fieldSideNotes",
+  commonErrors: "compare.fieldCommonErrors",
+};
 
 interface ComparisonFieldsCheckboxProps {
   selectedFields: ComparisonField[];
@@ -12,10 +24,11 @@ export default function ComparisonFieldsCheckbox({
   selectedFields,
   onToggleField,
 }: ComparisonFieldsCheckboxProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <Text variant="labelLarge" style={styles.label}>
-        What do you want to compare?
+        {t("compare.whatToCompare")}
       </Text>
       <View style={styles.fieldsContainer}>
         {COMPARISON_FIELDS.map((field) => {
@@ -42,7 +55,7 @@ export default function ComparisonFieldsCheckbox({
                   isSelected && styles.fieldLabelSelected,
                 ]}
               >
-                {field.label}
+                {t(FIELD_KEYS[field.key])}
               </Text>
             </TouchableOpacity>
           );

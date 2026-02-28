@@ -2,8 +2,20 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, Divider } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ComparisonField, getFieldLabel } from '../services/methodDetailsService';
+import { useTranslation } from 'react-i18next';
+import { ComparisonField } from '../services/methodDetailsService';
 import { ALL_COMPARISON_METHODS } from '../constants/contraceptiveMethods';
+
+const FIELD_KEYS: Record<ComparisonField, string> = {
+  description: "compare.fieldDescription",
+  efficacy: "compare.fieldEfficacy",
+  advantages: "compare.fieldAdvantages",
+  disadvantages: "compare.fieldDisadvantages",
+  howToUse: "compare.fieldHowToUse",
+  timeToWork: "compare.fieldTimeToWork",
+  sideNotes: "compare.fieldSideNotes",
+  commonErrors: "compare.fieldCommonErrors",
+};
 import { getContraceptiveMethodById } from '../utils/contraceptiveMethodsData';
 import { getCategoryColor } from '../utils/theme';
 import { getFieldValue } from '../utils/comparisonUtils';
@@ -31,6 +43,7 @@ export default function SequentialComparisonView({
   onNext,
   onBackToSelection,
 }: SequentialComparisonViewProps) {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const currentField = selectedFields[currentFieldIndex];
   const isFirstField = currentFieldIndex === 0;
@@ -78,7 +91,7 @@ export default function SequentialComparisonView({
       <Card style={styles.comparisonCard}>
         <Card.Content>
           <Text variant="titleLarge" style={styles.fieldTitle}>
-            {getFieldLabel(currentField)}
+            {t(FIELD_KEYS[currentField])}
           </Text>
           <Divider style={styles.divider} />
           

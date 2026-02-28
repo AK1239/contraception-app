@@ -2,6 +2,7 @@ import React from "react";
 import { View, StyleSheet, useWindowDimensions, StatusBar, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import Animated, { useSharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,6 +21,7 @@ const ONBOARDING_COMPLETED_KEY = "@onboarding_completed";
 export default function OnboardingScreen() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const scrollX = useSharedValue(0);
@@ -29,30 +31,30 @@ export default function OnboardingScreen() {
 
   const infoSlides = [
     {
-      title: "Welcome to\nContraSafe",
-      subtitle: "Your Personalized Guide to Safer Family Planning",
-      body: "Whether you're a healthcare provider or a woman seeking reliable contraceptives, ContraSafe simplifies family planning with a safe digital solution",
+      title: t("onboarding.slide1Title"),
+      subtitle: t("onboarding.slide1Subtitle"),
+      body: t("onboarding.slide1Body"),
       logo: require("../assets/logo.png"),
       color: "#6366f1",
     },
     {
-      title: "Evidence-Based\nGuidance",
-      subtitle: "Powered by WHO Standards",
-      body: "Built on the WHO Medical Eligibility Criteria for Contraceptive Use (2015), providing safe, evidence-based recommendations you can trust.",
+      title: t("onboarding.slide2Title"),
+      subtitle: t("onboarding.slide2Subtitle"),
+      body: t("onboarding.slide2Body"),
       icon: "🧠",
       color: "#8b5cf6",
     },
     {
-      title: "Personalized\nGuide",
-      subtitle: "Tailored to Your Health Profile",
-      body: "Get a personalized list of safe options based on your medical history, with expert guidance on modern and natural methods—all in one place.",
+      title: t("onboarding.slide3Title"),
+      subtitle: t("onboarding.slide3Subtitle"),
+      body: t("onboarding.slide3Body"),
       icon: "💡",
       color: "#ec4899",
     },
     {
-      title: "Natural Family\nPlanning",
-      subtitle: "Calendar Method Calculator",
-      body: "Take control of your fertility with our Calendar Method calculator for those who prefer a natural approach",
+      title: t("onboarding.slide4Title"),
+      subtitle: t("onboarding.slide4Subtitle"),
+      body: t("onboarding.slide4Body"),
       icon: "🌱",
       color: "#10b981",
     },

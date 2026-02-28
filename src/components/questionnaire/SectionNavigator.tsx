@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Button, ProgressBar } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import type { SectionKey } from "../../types/rules";
 import { SECTION_ORDER } from "../../utils/sectionNavigation";
 import { theme } from "../../utils/theme";
@@ -24,6 +25,7 @@ export function SectionNavigator({
   isLastSection,
   isSubmitting = false,
 }: SectionNavigatorProps) {
+  const { t } = useTranslation();
   const currentIndex = currentSection ? SECTION_ORDER.indexOf(currentSection) : 0;
   const progress = SECTION_ORDER.length > 0 ? (currentIndex + 1) / SECTION_ORDER.length : 0;
 
@@ -39,7 +41,7 @@ export function SectionNavigator({
     <View style={styles.container}>
       <View style={styles.progressSection}>
         <Text style={styles.progressText}>
-          Step {currentIndex + 1} of {SECTION_ORDER.length}
+          {t("mec.stepOf", { current: currentIndex + 1, total: SECTION_ORDER.length })}
         </Text>
         <ProgressBar
           progress={progress}
@@ -55,7 +57,7 @@ export function SectionNavigator({
           style={[styles.button, styles.buttonPrevious]}
           labelStyle={styles.buttonLabel}
         >
-          Previous
+          {t("mec.previous")}
         </Button>
         <Button
           mode="contained"
@@ -66,7 +68,7 @@ export function SectionNavigator({
           labelStyle={styles.buttonLabel}
           buttonColor="#6D28D9"
         >
-          {isLastSection ? "See Results" : "Next"}
+          {isLastSection ? t("mec.seeResults") : t("mec.next")}
         </Button>
       </View>
     </View>

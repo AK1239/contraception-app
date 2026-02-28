@@ -3,10 +3,12 @@ import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import HomeSectionCard from '../../../src/components/HomeSectionCard';
 
 export default function KnowContraceptiveIndexScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -23,9 +25,9 @@ export default function KnowContraceptiveIndexScreen() {
     {
       id: 'natural-methods',
       emoji: '🌿',
-      title: 'Natural Methods',
-      description: 'Explore natural family planning methods including Lactational Amenorrhea, Calendar Method, and Standard Days Method. These methods work with your body\'s natural fertility cycle.',
-      ctaLabel: 'View Natural Methods',
+      title: t("knowContraceptive.naturalMethodsTitle"),
+      description: t("knowContraceptive.naturalMethodsDescription"),
+      ctaLabel: t("knowContraceptive.naturalMethodsCta"),
       onPress: handleNaturalMethods,
       backgroundColor: '#F0FDF4',
       buttonColor: '#10B981',
@@ -34,9 +36,9 @@ export default function KnowContraceptiveIndexScreen() {
     {
       id: 'modern-methods',
       emoji: '💊',
-      title: 'Modern Methods',
-      description: 'Discover modern contraceptive options including temporary and permanent methods. These include hormonal and non-hormonal options with varying effectiveness and duration.',
-      ctaLabel: 'View Modern Methods',
+      title: t("knowContraceptive.modernMethodsTitle"),
+      description: t("knowContraceptive.modernMethodsDescription"),
+      ctaLabel: t("knowContraceptive.modernMethodsCta"),
       onPress: handleModernMethods,
       backgroundColor: '#F0F9FF',
       buttonColor: '#0EA5E9',
@@ -65,7 +67,7 @@ export default function KnowContraceptiveIndexScreen() {
       {/* Search Bar */}
       <View style={styles.searchContainer}>
         <Searchbar
-          placeholder="Search contraceptive methods..."
+          placeholder={t("knowContraceptive.searchPlaceholder")}
           onChangeText={setSearchQuery}
           value={searchQuery}
           style={styles.searchBar}
@@ -90,7 +92,7 @@ export default function KnowContraceptiveIndexScreen() {
           ))
         ) : (
           <View style={styles.noResultsContainer}>
-            <Text style={styles.noResultsText}>No methods found matching "{searchQuery}"</Text>
+            <Text style={styles.noResultsText}>{t("knowContraceptive.noResults", { query: searchQuery })}</Text>
           </View>
         )}
       </View>

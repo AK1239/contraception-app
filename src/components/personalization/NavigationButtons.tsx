@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import { Button, ProgressBar } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import { theme } from "../../utils/theme";
 
 interface NavigationButtonsProps {
@@ -24,11 +25,12 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
   totalQuestions,
   progress,
 }) => {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <View style={styles.progressSection}>
         <Text style={styles.progressText}>
-          Step {currentQuestionIndex + 1} of {totalQuestions}
+          {t("personalize.stepOf", { current: currentQuestionIndex + 1, total: totalQuestions })}
         </Text>
         <ProgressBar
           progress={progress}
@@ -44,7 +46,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
           style={[styles.button, styles.buttonPrevious]}
           labelStyle={styles.buttonLabel}
         >
-          Previous
+          {t("personalize.previous")}
         </Button>
         <Button
           mode="contained"
@@ -55,7 +57,7 @@ export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
           labelStyle={styles.buttonLabel}
           buttonColor="#6D28D9"
         >
-          {isLastQuestion ? "Get Results" : "Next"}
+          {isLastQuestion ? t("personalize.getResults") : t("personalize.next")}
         </Button>
       </View>
     </View>

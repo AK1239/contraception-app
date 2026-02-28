@@ -98,16 +98,185 @@ const en = {
   onboarding: {
     skip: "Skip",
     getStarted: "Get Started",
-    roleSelectionTitle: "Who are you?",
-    roleSelectionSubtitle:
-      "Select your role so we can personalize your experience.",
-    roleHealthcareTitle: "Healthcare Provider",
+    tapToGetStarted: "Tap to get started",
+    next: "Next",
+    slide1Title: "Welcome to\nContraSafe",
+    slide1Subtitle: "Your Personalized Guide to Safer Family Planning",
+    slide1Body:
+      "Whether you're a healthcare provider or a woman seeking reliable contraceptives, ContraSafe simplifies family planning with a safe digital solution",
+    slide2Title: "Evidence-Based\nGuidance",
+    slide2Subtitle: "Powered by WHO Standards",
+    slide2Body:
+      "Built on the WHO Medical Eligibility Criteria for Contraceptive Use (2015), providing safe, evidence-based recommendations you can trust.",
+    slide3Title: "Personalized\nGuide",
+    slide3Subtitle: "Tailored to Your Health Profile",
+    slide3Body:
+      "Get a personalized list of safe options based on your medical history, with expert guidance on modern and natural methods—all in one place.",
+    slide4Title: "Natural Family\nPlanning",
+    slide4Subtitle: "Calendar Method Calculator",
+    slide4Body:
+      "Take control of your fertility with our Calendar Method calculator for those who prefer a natural approach",
+    roleSelectionTitle: "Personalize Your Experience",
+    roleSelectionSubtitle: "Please select your role",
+    roleHealthcareTitle: "Healthcare provider",
+    roleHealthcareHint: "Full access to all features",
+    rolePublicTitle: "General public",
+    rolePublicHint: "Simplified experience, eligibility tools hidden",
+    roleSelectionWhoAreYou: "Who are you?",
+    roleSelectionSubtitleAlt: "Select your role so we can personalize your experience.",
     roleHealthcareDescription:
       "Access all clinical tools including eligibility assessments and advanced features.",
-    rolePublicTitle: "General Public",
     rolePublicDescription:
       "Access essential contraceptive information and guidance tailored for everyday use.",
     continueButton: "Continue",
+  },
+
+  // ─── Compare Methods ─────────────────────────────────────────────────────────
+  compare: {
+    title: "Compare Contraceptive Methods",
+    subtitle:
+      "Select two methods and choose what you want to compare. See side-by-side differences to help you make an informed decision.",
+    firstMethod: "First Contraceptive",
+    secondMethod: "Second Contraceptive",
+    whatToCompare: "What do you want to compare?",
+    compareButton: "Compare",
+    previous: "Previous",
+    next: "Next",
+    done: "Done",
+    backToSelection: "Back to Selection",
+    fieldDescription: "Description",
+    fieldEfficacy: "Efficacy",
+    fieldAdvantages: "Advantages",
+    fieldDisadvantages: "Disadvantages",
+    fieldHowToUse: "How to Use",
+    fieldTimeToWork: "Time to Work",
+    fieldSideNotes: "Side Notes",
+    fieldCommonErrors: "Common Errors",
+    searchPlaceholder: "Search contraceptive methods...",
+    selectMethod: "Select a method...",
+    noMethodsFound: "No methods found matching your search",
+    noMethodsAvailable: "No methods available",
+    progressOf: "Comparison {{current}} of {{total}}",
+  },
+
+  // ─── Know Contraceptive ──────────────────────────────────────────────────────
+  knowContraceptive: {
+    searchPlaceholder: "Search contraceptive methods...",
+    noResults: 'No methods found matching "{{query}}"',
+    naturalMethodsTitle: "Natural Methods",
+    naturalMethodsDescription:
+      "Explore natural family planning methods including Lactational Amenorrhea, Calendar Method, and Standard Days Method. These methods work with your body's natural fertility cycle.",
+    naturalMethodsCta: "View Natural Methods",
+    modernMethodsTitle: "Modern Methods",
+    modernMethodsDescription:
+      "Discover modern contraceptive options including temporary and permanent methods. These include hormonal and non-hormonal options with varying effectiveness and duration.",
+    modernMethodsCta: "View Modern Methods",
+    searchNatural: "Search natural methods...",
+    searchModern: "Search modern methods...",
+    noMethodsFound: "No methods found",
+    noMethodsHint: 'Try searching for "lactational", "calendar", or "standard days"',
+    knowMore: "Know More",
+    noMethodsHintModern: 'Try searching for "temporary", "permanent", "condom", "pills", or "IUD"',
+    lamTitle: "Lactational Amenorrhea",
+    lamDescription:
+      "A natural contraceptive method for breastfeeding women. When practiced correctly, exclusive breastfeeding can provide up to 98% protection against pregnancy for the first 6 months postpartum.",
+    calendarTitle: "Calendar Method",
+    calendarDescription:
+      "A natural family planning method that identifies the 12 fertile days in a woman's cycle. Most effective for women with cycles between 26-32 days.",
+    sdmTitle: "Standard Days Method",
+    sdmDescription:
+      "A fertility awareness-based method for women with regular cycles of 26–32 days. Days 8–19 are considered fertile and require avoiding unprotected sex. Most effective when combined with additional fertility indicators.",
+  },
+
+  // ─── Natural Calculators ──────────────────────────────────────────────────────
+  naturalCalculators: {
+    fabTitle: "Natural Method Eligibility (FAB)",
+    fabDescription:
+      "Assess eligibility for Symptoms-Based (SYM) and Calendar-Based (CAL) fertility awareness methods. Get Accept, Caution, or Delay recommendations with STI/HIV and high-risk pregnancy advisories.",
+    fabCta: "Check FAB Eligibility",
+    standardDayTitle: "Standard Days Method Calculator",
+    standardDayDescription:
+      "Calculate your fertile days using the Standard Days Method. This method is suitable for women with regular cycles between 26-32 days. It identifies days 8-19 as potentially fertile days.",
+    standardDayCta: "Use Standard Days Calculator",
+    calendarTitle: "Calendar Method Calculator",
+    calendarDescription:
+      "Track your menstrual cycles to identify your fertile window. Enter your cycle lengths to calculate personalized fertile periods based on your unique cycle pattern.",
+    calendarCta: "Use Calendar Method Calculator",
+  },
+
+  // ─── Sterilization Eligibility ─────────────────────────────────────────────────
+  sterilization: {
+    femaleTitle: "Female Sterilization Eligibility",
+    femaleDescription:
+      "Determine eligibility for female surgical sterilization using structured clinical logic. Evaluates conditions across multiple categories including cardiovascular, endocrine, gynecologic, and more to provide Accept, Caution, Delay, or Specialist Referral recommendations.",
+    femaleCta: "Assess Female Eligibility",
+    maleTitle: "Male Sterilization Eligibility",
+    maleDescription:
+      "Determine eligibility for male surgical sterilization (vasectomy) using WHO Medical Eligibility Criteria. Evaluates conditions including HIV status, endocrine disorders, genital infections, and scrotal structural abnormalities to provide Accept, Caution, Delay, or Special Setting recommendations.",
+    maleCta: "Assess Male Eligibility",
+  },
+
+  // ─── Personalize ──────────────────────────────────────────────────────────────
+  personalize: {
+    title: "Personalize Your Choice",
+    questionsCount: "{{count}} question",
+    questionsCountPlural: "{{count}} questions",
+    loadingQuestions: "Loading personalization questions...",
+    preparingQuestions: "Preparing questions...",
+    generatingResults: "Generating your personalized recommendations...",
+    stepOf: "Step {{current}} of {{total}}",
+    previous: "Previous",
+    next: "Next",
+    getResults: "Get Results",
+  },
+
+  // ─── MEC / Choose Contraceptive ───────────────────────────────────────────────
+  mec: {
+    howToUse: "How to use this feature",
+    howToUseBody:
+      "Take a thorough history from your client guided by the questions that will be displayed.",
+    labTests: "Lab tests which may be required to answer some questions",
+    labTestsBody: "RBG • UPT • FBC • Lipid profile • Pelvic USS",
+    onceAnswered: "Once all questions are answered",
+    onceAnsweredBody:
+      "A list of contraceptives will be displayed with their safety level (MEC grade) based on your client's condition(s).",
+    interpretation: "Interpretation",
+    mec1: "MEC 1 = safe",
+    mec2: "MEC 2 = benefits outweigh risk",
+    mec3: "MEC 3 = risks outweigh benefits",
+    mec4: "MEC 4 = unsafe",
+    stepOf: "Step {{current}} of {{total}}",
+    previous: "Previous",
+    next: "Next",
+    seeResults: "See Results",
+  },
+
+  // ─── Final Recommendation ────────────────────────────────────────────────────
+  recommendation: {
+    title: "Your Personalized Recommendation",
+    noRecommendations: "No recommendations available",
+    completeFirst: "Please complete the personalization questionnaire first.",
+    bestMatch: "Your Best Match",
+    bestMatchPlural: "Your Best Matches",
+    bestMatchDescription:
+      "This method perfectly aligns with your health profile and lifestyle preferences.",
+    bestMatchDescriptionPlural:
+      "These methods align well with your health profile and lifestyle preferences.",
+    knowContraceptive: "Know Your Contraceptive",
+    compareMethods: "Compare Contraceptive Methods",
+    importantInfo: "Important Information",
+    stiProtection: "STI Protection",
+    stiProtectionBody:
+      "None of the below methods provide protection against STIs, so if you think you're at an increased risk of STI, barrier methods should be used either alone acting both as a contraceptive and a protector for STI or you can use barrier methods along with your chosen contraceptive.",
+    notRecommended: "Methods Not Recommended for You",
+    notRecommendedDescription: "These methods were filtered out based on your preferences:",
+    reason: "Reason",
+    category: "Category",
+    recommended: "Recommended",
+    alternative: "Alternative",
+    medicalDisclaimer: "Medical Disclaimer: ",
+    medicalDisclaimerBody:
+      "Recommendations are based on WHO guidelines and the details you shared. Please consult a healthcare provider before starting any contraceptive.",
   },
 } as const;
 

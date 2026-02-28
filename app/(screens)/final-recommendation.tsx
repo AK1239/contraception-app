@@ -4,6 +4,7 @@ import { Text, Card, Button, Chip, Divider, IconButton } from "react-native-pape
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { getMethodByKey } from "../../src/constants";
 import { ContraceptiveMethodKey } from "../../src/types";
 import { resetQuestionnaire, resetPersonalization } from "../../src/store/slices/questionnaire";
@@ -23,14 +24,16 @@ interface RecommendationData {
  */
 const RecommendationMethodCard = memo(({ 
   methodKey, 
-  isRecommended 
+  isRecommended,
+  t,
 }: { 
   methodKey: ContraceptiveMethodKey; 
   isRecommended: boolean;
+  t: (key: string) => string;
 }) => {
   const method = useMemo(() => getMethodByKey(methodKey), [methodKey]);
   const chipColor = useMemo(() => isRecommended ? "#4CAF50" : "#FF9800", [isRecommended]);
-  const chipLabel = useMemo(() => isRecommended ? "Recommended" : "Alternative", [isRecommended]);
+  const chipLabel = useMemo(() => isRecommended ? t("recommendation.recommended") : t("recommendation.alternative"), [isRecommended, t]);
 
   if (!method) return null;
 
@@ -55,7 +58,7 @@ const RecommendationMethodCard = memo(({
         </Text>
         {method.category && (
           <Text variant="bodySmall" style={styles.methodCategory}>
-            Category: {method.category.charAt(0).toUpperCase() + method.category.slice(1)}
+            {t("recommendation.category")}: {method.category.charAt(0).toUpperCase() + method.category.slice(1)}
           </Text>
         )}
       </Card.Content>
@@ -70,10 +73,12 @@ RecommendationMethodCard.displayName = 'RecommendationMethodCard';
  */
 const EliminatedMethodItem = memo(({ 
   method, 
-  reason 
+  reason,
+  t,
 }: { 
   method: ContraceptiveMethodKey; 
   reason: string;
+  t: (key: string) => string;
 }) => {
   const methodInfo = useMemo(() => getMethodByKey(method), [method]);
 
@@ -85,7 +90,7 @@ const EliminatedMethodItem = memo(({
         {methodInfo.name}
       </Text>
       <Text variant="bodySmall" style={styles.eliminatedReason}>
-        Reason: {reason}
+        {t("recommendation.reason")}: {reason}
       </Text>
     </View>
   );
@@ -96,6 +101,7 @@ EliminatedMethodItem.displayName = 'EliminatedMethodItem';
 export default function FinalRecommendationPage() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
 
@@ -138,12 +144,12 @@ export default function FinalRecommendationPage() {
       <View style={styles.container}>
         <Card style={styles.errorCard}>
           <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
-            <Text variant="titleMedium" style={{ fontSize: 16, fontWeight: "700", marginBottom: 8 }}>No recommendations available</Text>
+            <Text variant="titleMedium" style={{ fontSize: 16, fontWeight: "700", marginBottom: 8 }}>{t("recommendation.noRecommendations")}</Text>
             <Text variant="bodySmall" style={styles.errorText}>
-              Please complete the personalization questionnaire first.
+              {t("recommendation.completeFirst")}
             </Text>
             <Button mode="contained" onPress={handleStartOver} labelStyle={{ fontSize: 13, fontWeight: "600" }}>
-              Start Over
+              {t("common.startOver")}
             </Button>
           </Card.Content>
         </Card>
@@ -170,7 +176,7 @@ export default function FinalRecommendationPage() {
           style={styles.appBarButton}
         />
         <Text variant="titleMedium" style={styles.appBarTitle}>
-          Your Personalized Recommendation
+          {t("recommendation.title")}
         </Text>
         <IconButton
           icon="refresh"
@@ -187,26 +193,27 @@ export default function FinalRecommendationPage() {
       {recommended.length > 0 && (
         <View style={styles.categoryCard}>
           <Text variant="titleMedium" style={[styles.categoryTitle, { color: "#4CAF50" }]}>
-            ✅ Your Best Match{recommended.length > 1 ? "es" : ""}
+            ✅ {recommended.length > 1 ? t("recommendation.bestMatchPlural") : t("recommendation.bestMatch")}
           </Text>
           <Text variant="bodySmall" style={styles.categoryDescription}>
             {recommended.length === 1
-              ? "This method perfectly aligns with your health profile and lifestyle preferences."
-              : "These methods align well with your health profile and lifestyle preferences."}
+              ? t("recommendation.bestMatchDescription")
+              : t("recommendation.bestMatchDescriptionPlural")}
           </Text>
           {recommended.map((methodKey) => (
             <RecommendationMethodCard 
               key={methodKey} 
               methodKey={methodKey} 
-              isRecommended={true} 
+              isRecommended={true}
+              t={t}
             />
           ))}
           <View style={styles.actionLinks}>
             <Button mode="outlined" onPress={handleKnowContraceptive} style={styles.linkButton} labelStyle={{ fontSize: 13, fontWeight: "600" }}>
-              Know Your Contraceptive
+              {t("recommendation.knowContraceptive")}
             </Button>
             <Button mode="outlined" onPress={handleCompareMethods} style={styles.linkButton} labelStyle={{ fontSize: 13, fontWeight: "600" }}>
-              Compare Contraceptive Methods
+              {t("recommendation.compareMethods")}
             </Button>
           </View>
         </View>
@@ -217,7 +224,7 @@ export default function FinalRecommendationPage() {
         <Card style={styles.noticeCard}>
           <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
             <Text variant="titleMedium" style={styles.noticeTitle}>
-              ⚠️ Important Information
+              ⚠️ {t("recommendation.importantInfo")}
             </Text>
             {notices.map((notice, index) => (
               <View key={`notice-${index}`} style={styles.noticeItem}>
@@ -234,10 +241,10 @@ export default function FinalRecommendationPage() {
       <Card style={styles.stiCard}>
         <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
           <Text variant="titleMedium" style={styles.stiTitle}>
-            🛡️ STI Protection
+            🛡️ {t("recommendation.stiProtection")}
           </Text>
           <Text variant="bodySmall" style={styles.stiText}>
-          None of the below methods provide protection against STIs, so if you think you're at an increased risk of STI, barrier methods should be used either alone acting both as a contraceptive and a protector for STI or you can use barrier methods along with your chosen contraceptive.
+          {t("recommendation.stiProtectionBody")}
           </Text>
         </Card.Content>
       </Card>
@@ -247,17 +254,18 @@ export default function FinalRecommendationPage() {
         <Card style={styles.eliminatedCard}>
           <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
             <Text variant="titleMedium" style={styles.eliminatedTitle}>
-              ❌ Methods Not Recommended for You
+              ❌ {t("recommendation.notRecommended")}
             </Text>
             <Text variant="bodySmall" style={styles.eliminatedDescription}>
-              These methods were filtered out based on your preferences:
+              {t("recommendation.notRecommendedDescription")}
             </Text>
             <Divider style={styles.divider} />
             {eliminated.map(({ method, reason }, index) => (
               <EliminatedMethodItem 
                 key={`eliminated-${method}-${index}`}
                 method={method} 
-                reason={reason} 
+                reason={reason}
+                t={t}
               />
             ))}
           </Card.Content>
@@ -270,8 +278,8 @@ export default function FinalRecommendationPage() {
       <Card style={styles.disclaimerCard}>
         <Card.Content style={{ paddingVertical: 12, paddingHorizontal: 14 }}>
           <Text variant="bodySmall" style={styles.disclaimerText}>
-            <Text style={{ fontWeight: "700" }}>Medical Disclaimer: </Text>
-            Recommendations are based on WHO guidelines and the details you shared. Please consult a healthcare provider before starting any contraceptive. 
+            <Text style={{ fontWeight: "700" }}>{t("recommendation.medicalDisclaimer")}</Text>
+            {t("recommendation.medicalDisclaimerBody")}
           </Text>
         </Card.Content>
       </Card>
@@ -285,7 +293,7 @@ export default function FinalRecommendationPage() {
           style={styles.startOverButton}
           labelStyle={{ fontSize: 14, fontWeight: "600" }}
         >
-          Start Over
+          {t("common.startOver")}
         </Button>
       </View>
     </ScrollView>

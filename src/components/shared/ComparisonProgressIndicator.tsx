@@ -1,7 +1,19 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Card } from 'react-native-paper';
-import { ComparisonField, getFieldLabel } from '../../services/methodDetailsService';
+import { useTranslation } from 'react-i18next';
+import { ComparisonField } from '../../services/methodDetailsService';
+
+const FIELD_KEYS: Record<ComparisonField, string> = {
+  description: "compare.fieldDescription",
+  efficacy: "compare.fieldEfficacy",
+  advantages: "compare.fieldAdvantages",
+  disadvantages: "compare.fieldDisadvantages",
+  howToUse: "compare.fieldHowToUse",
+  timeToWork: "compare.fieldTimeToWork",
+  sideNotes: "compare.fieldSideNotes",
+  commonErrors: "compare.fieldCommonErrors",
+};
 
 interface ComparisonProgressIndicatorProps {
   currentIndex: number;
@@ -14,6 +26,7 @@ export default function ComparisonProgressIndicator({
   totalFields,
   currentField,
 }: ComparisonProgressIndicatorProps) {
+  const { t } = useTranslation();
   const progressPercentage = ((currentIndex + 1) / totalFields) * 100;
 
   return (
@@ -21,10 +34,10 @@ export default function ComparisonProgressIndicator({
       <Card.Content>
         <View style={styles.progressHeader}>
           <Text variant="labelMedium" style={styles.progressText}>
-            Comparison {currentIndex + 1} of {totalFields}
+            {t("compare.progressOf", { current: currentIndex + 1, total: totalFields })}
           </Text>
           <Text variant="labelSmall" style={styles.fieldNameText}>
-            {getFieldLabel(currentField)}
+            {t(FIELD_KEYS[currentField])}
           </Text>
         </View>
         <View style={styles.progressBarContainer}>

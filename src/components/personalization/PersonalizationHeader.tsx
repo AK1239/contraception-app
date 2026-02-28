@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import { theme } from "../../utils/theme";
 
 interface PersonalizationHeaderProps {
@@ -12,14 +13,17 @@ interface PersonalizationHeaderProps {
 export const PersonalizationHeader: React.FC<PersonalizationHeaderProps> = ({
   totalQuestions,
 }) => {
+  const { t } = useTranslation();
   return (
     <View style={styles.header}>
       <Text variant="titleLarge" style={styles.title}>
-        Personalize Your Choice
+        {t("personalize.title")}
       </Text>
       <View style={styles.questionCountBadge}>
         <Text variant="labelSmall" style={styles.questionCountText}>
-          {totalQuestions} question{totalQuestions !== 1 ? "s" : ""}
+          {totalQuestions === 1
+            ? t("personalize.questionsCount", { count: totalQuestions })
+            : t("personalize.questionsCountPlural", { count: totalQuestions })}
         </Text>
       </View>
     </View>

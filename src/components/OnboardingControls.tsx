@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 
 type OnboardingControlsProps = {
   isLast: boolean;
@@ -10,6 +11,7 @@ type OnboardingControlsProps = {
 };
 
 export default function OnboardingControls({ isLast, onNext, onDone, isDoneDisabled }: OnboardingControlsProps) {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
       <Button
@@ -19,7 +21,7 @@ export default function OnboardingControls({ isLast, onNext, onDone, isDoneDisab
         style={styles.primaryButton}
         contentStyle={styles.buttonContent}
       >
-        {isLast ? "Tap to get started" : "Next"}
+        {isLast ? t("onboarding.tapToGetStarted") : t("onboarding.next")}
       </Button>
     </View>
   );

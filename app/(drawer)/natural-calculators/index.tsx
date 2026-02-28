@@ -2,11 +2,13 @@ import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import HomeSectionCard from '../../../src/components/HomeSectionCard';
 import { useIsHealthcareProvider } from '../../../src/hooks/useUserRole';
 
 export default function NaturalCalculatorsIndexScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const isHealthcareProvider = useIsHealthcareProvider();
 
@@ -31,9 +33,9 @@ export default function NaturalCalculatorsIndexScreen() {
         {isHealthcareProvider && (
           <HomeSectionCard
             leadingEmoji="🎯"
-            title="Natural Method Eligibility (FAB)"
-            description="Assess eligibility for Symptoms-Based (SYM) and Calendar-Based (CAL) fertility awareness methods. Get Accept, Caution, or Delay recommendations with STI/HIV and high-risk pregnancy advisories."
-            ctaLabel="Check FAB Eligibility"
+            title={t("naturalCalculators.fabTitle")}
+            description={t("naturalCalculators.fabDescription")}
+            ctaLabel={t("naturalCalculators.fabCta")}
             onPress={handleFABEligibility}
             backgroundColor="#ECFDF5"
             buttonColor="#10B981"
@@ -42,9 +44,9 @@ export default function NaturalCalculatorsIndexScreen() {
 
         <HomeSectionCard
           leadingEmoji="📅"
-          title="Standard Days Method Calculator"
-          description="Calculate your fertile days using the Standard Days Method. This method is suitable for women with regular cycles between 26-32 days. It identifies days 8-19 as potentially fertile days."
-          ctaLabel="Use Standard Days Calculator"
+          title={t("naturalCalculators.standardDayTitle")}
+          description={t("naturalCalculators.standardDayDescription")}
+          ctaLabel={t("naturalCalculators.standardDayCta")}
           onPress={handleStandardDayCalculator}
           backgroundColor="#FFFBEB"
           buttonColor="#EAB308"
@@ -52,9 +54,9 @@ export default function NaturalCalculatorsIndexScreen() {
 
         <HomeSectionCard
           leadingEmoji="📆"
-          title="Calendar Method Calculator"
-          description="Track your menstrual cycles to identify your fertile window. Enter your cycle lengths to calculate personalized fertile periods based on your unique cycle pattern."
-          ctaLabel="Use Calendar Method Calculator"
+          title={t("naturalCalculators.calendarTitle")}
+          description={t("naturalCalculators.calendarDescription")}
+          ctaLabel={t("naturalCalculators.calendarCta")}
           onPress={handleCalendarMethodCalculator}
           backgroundColor="#E0E7FF"
           buttonColor="#6366F1"

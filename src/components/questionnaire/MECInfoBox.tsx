@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Text, Card } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import { theme } from "../../utils/theme";
 
 /**
@@ -8,45 +9,46 @@ import { theme } from "../../utils/theme";
  * Explains how to use the feature, required lab tests, and MEC interpretation.
  */
 export function MECInfoBox() {
+  const { t } = useTranslation();
   return (
     <Card style={styles.card}>
       <Card.Content>
         <Text variant="titleSmall" style={styles.sectionTitle}>
-          How to use this feature
+          {t("mec.howToUse")}
         </Text>
         <Text variant="bodySmall" style={styles.bodyText}>
-          Take a thorough history from your client guided by the questions that will be displayed.
+          {t("mec.howToUseBody")}
         </Text>
 
         <Text variant="titleSmall" style={[styles.sectionTitle, styles.sectionTitleSpaced]}>
-          Lab tests which may be required to answer some questions
+          {t("mec.labTests")}
         </Text>
         <Text variant="bodySmall" style={styles.bodyText}>
-          RBG • UPT • FBC • Lipid profile • Pelvic USS
+          {t("mec.labTestsBody")}
         </Text>
 
         <Text variant="titleSmall" style={[styles.sectionTitle, styles.sectionTitleSpaced]}>
-          Once all questions are answered
+          {t("mec.onceAnswered")}
         </Text>
         <Text variant="bodySmall" style={styles.bodyText}>
-          A list of contraceptives will be displayed with their safety level (MEC grade) based on your client's condition(s).
+          {t("mec.onceAnsweredBody")}
         </Text>
 
         <Text variant="titleSmall" style={[styles.sectionTitle, styles.sectionTitleSpaced]}>
-          Interpretation
+          {t("mec.interpretation")}
         </Text>
         <View style={styles.interpretationList}>
           <Text variant="bodySmall" style={styles.interpretationItem}>
-            • MEC 1 = safe
+            • {t("mec.mec1")}
           </Text>
           <Text variant="bodySmall" style={styles.interpretationItem}>
-            • MEC 2 = benefits outweigh risk
+            • {t("mec.mec2")}
           </Text>
           <Text variant="bodySmall" style={styles.interpretationItem}>
-            • MEC 3 = risks outweigh benefits
+            • {t("mec.mec3")}
           </Text>
           <Text variant="bodySmall" style={styles.interpretationItem}>
-            • MEC 4 = unsafe
+            • {t("mec.mec4")}
           </Text>
         </View>
       </Card.Content>

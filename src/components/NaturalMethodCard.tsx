@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Pressable } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 interface NaturalMethodCardProps {
   title: string;
@@ -19,6 +20,7 @@ export default function NaturalMethodCard({
   backgroundColor = "#FFFFFF",
   buttonColor = "#6D28D9"
 }: NaturalMethodCardProps) {
+  const { t } = useTranslation();
   return (
     <Pressable 
       onPress={onKnowMorePress}
@@ -54,7 +56,7 @@ export default function NaturalMethodCard({
             labelStyle={styles.buttonLabel}
             elevation={2}
           >
-            Know More
+            {t("knowContraceptive.knowMore")}
           </Button>
         </Card.Content>
       </Card>

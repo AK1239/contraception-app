@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, TouchableOpacity, Modal, FlatList, Dimensions } from 'react-native';
 import { Text, Chip, Searchbar } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { CONTRACEPTIVE_METHODS_DATA, ContraceptiveMethodData } from '../utils/contraceptiveMethodsData';
 import { getCategoryColor } from '../utils/theme';
 
@@ -19,6 +20,7 @@ export default function MethodDropdown({
   onSelect,
   excludeMethodKey,
 }: MethodDropdownProps) {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -130,7 +132,7 @@ export default function MethodDropdown({
             </View>
           ) : (
             <Text variant="bodyMedium" style={styles.placeholder}>
-              Select a method...
+              {t("compare.selectMethod")}
             </Text>
           )}
         </View>
@@ -157,7 +159,7 @@ export default function MethodDropdown({
             </View>
             <View style={styles.searchContainer}>
               <Searchbar
-                placeholder="Search contraceptive methods..."
+                placeholder={t("compare.searchPlaceholder")}
                 onChangeText={setSearchQuery}
                 value={searchQuery}
                 style={styles.searchBar}
@@ -176,7 +178,7 @@ export default function MethodDropdown({
               ListEmptyComponent={
                 <View style={styles.emptyContainer}>
                   <Text variant="bodyMedium" style={styles.emptyText}>
-                    {searchQuery ? 'No methods found matching your search' : 'No methods available'}
+                    {searchQuery ? t("compare.noMethodsFound") : t("compare.noMethodsAvailable")}
                   </Text>
                 </View>
               }

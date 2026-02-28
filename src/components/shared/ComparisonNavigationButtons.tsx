@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button, Card } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
 interface ComparisonNavigationButtonsProps {
   isFirstField: boolean;
@@ -17,6 +18,7 @@ export default function ComparisonNavigationButtons({
   onNext,
   onBackToSelection,
 }: ComparisonNavigationButtonsProps) {
+  const { t } = useTranslation();
   return (
     <Card style={styles.navigationCard}>
       <Card.Content>
@@ -29,7 +31,7 @@ export default function ComparisonNavigationButtons({
                 style={styles.navButton}
                 labelStyle={styles.navButtonLabel}
               >
-                Previous
+                {t("compare.previous")}
               </Button>
               <View style={styles.spacer} />
               {isLastField ? (
@@ -39,7 +41,7 @@ export default function ComparisonNavigationButtons({
                   style={[styles.navButton, styles.primaryButton]}
                   labelStyle={styles.navButtonLabel}
                 >
-                  Done
+                  {t("compare.done")}
                 </Button>
               ) : (
                 <Button
@@ -48,7 +50,7 @@ export default function ComparisonNavigationButtons({
                   style={[styles.navButton, styles.primaryButton]}
                   labelStyle={styles.navButtonLabel}
                 >
-                  Next
+                  {t("compare.next")}
                 </Button>
               )}
             </>
@@ -60,7 +62,7 @@ export default function ComparisonNavigationButtons({
                 style={[styles.navButton, styles.primaryButton, styles.navButtonFullWidth]}
                 labelStyle={styles.navButtonLabel}
               >
-                Back to Selection
+                {t("compare.backToSelection")}
               </Button>
             ) : (
               <>
@@ -71,7 +73,7 @@ export default function ComparisonNavigationButtons({
                   style={[styles.navButton, styles.primaryButton, styles.navButtonRightAligned]}
                   labelStyle={styles.navButtonLabel}
                 >
-                  Next
+                  {t("compare.next")}
                 </Button>
               </>
             )

@@ -3,11 +3,13 @@ import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import NaturalMethodCard from '../../../src/components/NaturalMethodCard';
 import { useSearchableMethodList } from '../../../src/hooks/useSearchableMethodList';
 
 export default function NaturalMethodsScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
   // Define all natural methods
@@ -15,8 +17,8 @@ export default function NaturalMethodsScreen() {
     {
       id: 'lam',
       type: 'category' as const,
-      title: "Lactational Amenorrhea",
-      description: "A natural contraceptive method for breastfeeding women. When practiced correctly, exclusive breastfeeding can provide up to 98% protection against pregnancy for the first 6 months postpartum.",
+      title: t("knowContraceptive.lamTitle"),
+      description: t("knowContraceptive.lamDescription"),
       icon: "🤱",
       onPress: () => router.push('/(drawer)/know-contraceptive/contraceptive-method/lactational-amenorrhea'),
       backgroundColor: "#F0F9FF",
@@ -25,8 +27,8 @@ export default function NaturalMethodsScreen() {
     {
       id: 'calendar',
       type: 'category' as const,
-      title: "Calendar Method",
-      description: "A natural family planning method that identifies the 12 fertile days in a woman's cycle. Most effective for women with cycles between 26-32 days.",
+      title: t("knowContraceptive.calendarTitle"),
+      description: t("knowContraceptive.calendarDescription"),
       icon: "📅",
       onPress: () => router.push('/(drawer)/know-contraceptive/contraceptive-method/standard-days-method'),
       backgroundColor: "#F0FDF4",
@@ -35,8 +37,8 @@ export default function NaturalMethodsScreen() {
     {
       id: 'sdm',
       type: 'category' as const,
-      title: "Standard Days Method",
-      description: "A fertility awareness-based method for women with regular cycles of 26–32 days. Days 8–19 are considered fertile and require avoiding unprotected sex. Most effective when combined with additional fertility indicators.",
+      title: t("knowContraceptive.sdmTitle"),
+      description: t("knowContraceptive.sdmDescription"),
       icon: "📅",
       onPress: () => router.push('/(drawer)/know-contraceptive/contraceptive-method/standard-days-method-sdm'),
       backgroundColor: "#FEF3C7",
@@ -58,7 +60,7 @@ export default function NaturalMethodsScreen() {
       {/* Search Bar */}
       <View style={styles.searchContainer}>
         <Searchbar
-          placeholder="Search natural methods..."
+          placeholder={t("knowContraceptive.searchNatural")}
           onChangeText={setSearchQuery}
           value={searchQuery}
           style={styles.searchBar}
@@ -75,7 +77,7 @@ export default function NaturalMethodsScreen() {
               key={method.id}
               title={method.title}
               description={method.description}
-              icon={method.icon}
+              icon={typeof method.icon === "string" ? method.icon : "📋"}
               onKnowMorePress={method.onPress}
               backgroundColor={method.backgroundColor}
               buttonColor={method.buttonColor}
@@ -84,8 +86,8 @@ export default function NaturalMethodsScreen() {
         ) : (
           searchQuery.trim() && (
             <View style={styles.noResultsContainer}>
-              <Text style={styles.noResultsText}>No methods found</Text>
-              <Text style={styles.noResultsSubtext}>Try searching for "lactational", "calendar", or "standard days"</Text>
+              <Text style={styles.noResultsText}>{t("knowContraceptive.noMethodsFound")}</Text>
+              <Text style={styles.noResultsSubtext}>{t("knowContraceptive.noMethodsHint")}</Text>
             </View>
           )
         )}
