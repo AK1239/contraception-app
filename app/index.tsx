@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, useWindowDimensions, StatusBar, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
+import { useDispatch } from "react-redux";
 import Animated, { useSharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -8,6 +9,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import OnboardingSlide from "../src/components/OnboardingSlide";
 import OnboardingDots from "../src/components/OnboardingDots";
 import OnboardingControls from "../src/components/OnboardingControls";
+import RoleSelectionSlide from "../src/components/onboarding/RoleSelectionSlide";
+import { setUserRole } from "../src/store/slices/userRole";
+import type { UserRole } from "../src/constants/userRole";
 import { logger } from "../src/services/logger";
 import { handleError, ErrorCode } from "../src/services/errorHandler";
 
@@ -15,13 +19,15 @@ const ONBOARDING_COMPLETED_KEY = "@onboarding_completed";
 
 export default function OnboardingScreen() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const scrollX = useSharedValue(0);
   const [isChecking, setIsChecking] = React.useState(true);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
+  const [selectedRole, setSelectedRole] = React.useState<UserRole | null>(null);
 
-  const slides = [
+  const infoSlides = [
     {
       title: "Welcome to\nContraSafe",
       subtitle: "Your Personalized Guide to Safer Family Planning",
@@ -51,6 +57,8 @@ export default function OnboardingScreen() {
       color: "#10b981",
     },
   ];
+
+  const slides = [...infoSlides, { type: "role-selection" as const }];
 
   const [index, setIndex] = React.useState(0);
 
@@ -96,15 +104,27 @@ export default function OnboardingScreen() {
   };
 
   const handleDone = async () => {
+    // On role selection slide (last slide), require a role to be selected
+    const isRoleSelectionSlide = index === slides.length - 1;
+    if (isRoleSelectionSlide) {
+      if (!selectedRole) return;
+      try {
+        dispatch(setUserRole(selectedRole));
+        await AsyncStorage.setItem(ONBOARDING_COMPLETED_KEY, "true");
+        router.replace("/(drawer)");
+      } catch (error) {
+        handleError(error, ErrorCode.DATA_SAVE_ERROR, "OnboardingScreen.handleDone");
+        logger.error("Error saving onboarding status", error);
+        router.replace("/(drawer)");
+      }
+      return;
+    }
     try {
-      // Save onboarding completion status
       await AsyncStorage.setItem(ONBOARDING_COMPLETED_KEY, "true");
-      // Navigate to home screen
       router.replace("/(drawer)");
     } catch (error) {
       handleError(error, ErrorCode.DATA_SAVE_ERROR, "OnboardingScreen.handleDone");
       logger.error("Error saving onboarding status", error);
-      // Navigate anyway even if saving fails
       router.replace("/(drawer)");
     }
   };
@@ -136,18 +156,32 @@ export default function OnboardingScreen() {
         ref={flatListRef}
         data={slides}
         keyExtractor={(_, i) => String(i)}
-        renderItem={({ item }) => (
-          <View style={{ width }}>
-            <OnboardingSlide 
-              title={item.title} 
-              subtitle={item.subtitle} 
-              body={item.body}
-              icon={item.icon}
-              logo={item.logo}
-              color={item.color}
-            />
-          </View>
-        )}
+        renderItem={({ item }) => {
+          if ("type" in item && item.type === "role-selection") {
+            return (
+              <View style={{ width }}>
+                <RoleSelectionSlide
+                  selectedRole={selectedRole}
+                  onRoleSelect={setSelectedRole}
+                  color="#6D28D9"
+                />
+              </View>
+            );
+          }
+          const slide = item as (typeof infoSlides)[number];
+          return (
+            <View style={{ width }}>
+              <OnboardingSlide
+                title={slide.title}
+                subtitle={slide.subtitle}
+                body={slide.body}
+                icon={slide.icon}
+                logo={slide.logo}
+                color={slide.color}
+              />
+            </View>
+          );
+        }}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
@@ -163,7 +197,12 @@ export default function OnboardingScreen() {
       <View style={styles.footer}>
         <View style={[styles.footerContent, { paddingBottom: Math.max(32, insets.bottom + 20) }]}>
           <OnboardingDots count={slides.length} activeIndex={index} />
-          <OnboardingControls isLast={index === slides.length - 1} onNext={handleNext} onDone={handleDone} />
+          <OnboardingControls
+            isLast={index === slides.length - 1}
+            onNext={handleNext}
+            onDone={handleDone}
+            isDoneDisabled={index === slides.length - 1 && !selectedRole}
+          />
         </View>
       </View>
     </View>

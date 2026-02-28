@@ -3,10 +3,12 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HomeSectionCard from '../../../src/components/HomeSectionCard';
+import { useIsHealthcareProvider } from '../../../src/hooks/useUserRole';
 
 export default function NaturalCalculatorsIndexScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const isHealthcareProvider = useIsHealthcareProvider();
 
   const handleStandardDayCalculator = () => {
     router.push('/(drawer)/standard-day-calculator-page');
@@ -26,15 +28,17 @@ export default function NaturalCalculatorsIndexScreen() {
       contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
     >
       <View style={styles.calculatorsContainer}>
-        <HomeSectionCard
-          leadingEmoji="🎯"
-          title="Natural Method Eligibility (FAB)"
-          description="Assess eligibility for Symptoms-Based (SYM) and Calendar-Based (CAL) fertility awareness methods. Get Accept, Caution, or Delay recommendations with STI/HIV and high-risk pregnancy advisories."
-          ctaLabel="Check FAB Eligibility"
-          onPress={handleFABEligibility}
-          backgroundColor="#ECFDF5"
-          buttonColor="#10B981"
-        />
+        {isHealthcareProvider && (
+          <HomeSectionCard
+            leadingEmoji="🎯"
+            title="Natural Method Eligibility (FAB)"
+            description="Assess eligibility for Symptoms-Based (SYM) and Calendar-Based (CAL) fertility awareness methods. Get Accept, Caution, or Delay recommendations with STI/HIV and high-risk pregnancy advisories."
+            ctaLabel="Check FAB Eligibility"
+            onPress={handleFABEligibility}
+            backgroundColor="#ECFDF5"
+            buttonColor="#10B981"
+          />
+        )}
 
         <HomeSectionCard
           leadingEmoji="📅"

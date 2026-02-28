@@ -35,3 +35,12 @@ export const resultsPersistConfig: PersistConfig<any> = {
   blacklist: ["isCalculating", "error"],
 };
 
+/**
+ * Persistence configuration for user role (healthcare-provider vs general-public)
+ */
+export const userRolePersistConfig: PersistConfig<any> = {
+  key: "userRole",
+  storage: persistStorage,
+  whitelist: ["role"],
+};
+

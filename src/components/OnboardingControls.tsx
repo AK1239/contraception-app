@@ -6,14 +6,16 @@ type OnboardingControlsProps = {
   isLast: boolean;
   onNext: () => void;
   onDone: () => void;
+  isDoneDisabled?: boolean;
 };
 
-export default function OnboardingControls({ isLast, onNext, onDone }: OnboardingControlsProps) {
+export default function OnboardingControls({ isLast, onNext, onDone, isDoneDisabled }: OnboardingControlsProps) {
   return (
     <View style={styles.container}>
       <Button
         mode="contained"
         onPress={isLast ? onDone : onNext}
+        disabled={isLast && isDoneDisabled}
         style={styles.primaryButton}
         contentStyle={styles.buttonContent}
       >

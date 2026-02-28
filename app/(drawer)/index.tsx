@@ -5,10 +5,12 @@ import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import HomeSectionCard from "../../src/components/HomeSectionCard";
 import WelcomeCard from "../../src/components/WelcomeCard";
+import { useIsHealthcareProvider } from "../../src/hooks/useUserRole";
 
 export default function HomePage() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const isHealthcareProvider = useIsHealthcareProvider();
 
   return (
     <ScrollView 
@@ -74,13 +76,24 @@ export default function HomePage() {
         buttonColor="#22C55E"
       />
 
+      {isHealthcareProvider && (
+        <HomeSectionCard
+          leadingEmoji="✂️"
+          title="Sterilization Eligibility"
+          description="Check eligibility for permanent contraception. Assess female surgical sterilization or male sterilization (vasectomy) using WHO Medical Eligibility Criteria."
+          ctaLabel="Sterilization Eligibility"
+          onPress={() => router.push("/(drawer)/sterilization-eligibility")}
+          buttonColor="#8B5CF6"
+        />
+      )}
+
       <HomeSectionCard
-        leadingEmoji="✂️"
-        title="Sterilization Eligibility"
-        description="Check eligibility for permanent contraception. Assess female surgical sterilization or male sterilization (vasectomy) using WHO Medical Eligibility Criteria."
-        ctaLabel="Sterilization Eligibility"
-        onPress={() => router.push("/(drawer)/sterilization-eligibility")}
-        buttonColor="#8B5CF6"
+        leadingEmoji="⚙️"
+        title="Settings"
+        description="Switch between Healthcare provider and General public experience."
+        ctaLabel="Settings"
+        onPress={() => router.push("/(drawer)/settings")}
+        buttonColor="#64748B"
       />
 
       <Text style={styles.footerText}>@med.tutor.tz</Text>

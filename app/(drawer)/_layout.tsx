@@ -156,6 +156,16 @@ export default function DrawerLayout() {
           headerRight: () => <StartOverHeaderButton sdmMode />,
         }}
       />
+
+      {/* Settings */}
+      <Drawer.Screen
+        name="settings"
+        options={{
+          drawerItemStyle: { display: 'none' }, // Controlled by CustomDrawerContent
+          drawerLabel: "Settings",
+          title: "Settings",
+        }}
+      />
     </Drawer>
   );
 }

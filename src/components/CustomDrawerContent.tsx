@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useIsHealthcareProvider } from '../hooks/useUserRole';
 
 interface DrawerSection {
   id: string;
@@ -104,11 +105,31 @@ const drawerSections: DrawerSection[] = [
       },
     ],
   },
+  {
+    id: 'settings',
+    title: 'Settings',
+    icon: 'settings-outline',
+    route: '/(drawer)/settings',
+  },
+];
+
+/** Section IDs hidden for general public */
+const GENERAL_PUBLIC_HIDDEN_IDS = [
+  'natural-method-eligibility',
+  'sterilization-eligibility',
 ];
 
 export default function CustomDrawerContent(props: any) {
   const router = useRouter();
+  const isHealthcareProvider = useIsHealthcareProvider();
   const [expandedSections, setExpandedSections] = useState<string[]>([]);
+
+  const visibleSections = useMemo(() => {
+    if (isHealthcareProvider) return drawerSections;
+    return drawerSections.filter(
+      (s) => !GENERAL_PUBLIC_HIDDEN_IDS.includes(s.id)
+    );
+  }, [isHealthcareProvider]);
 
   const toggleSection = (sectionId: string) => {
     setExpandedSections(prev => 
@@ -183,7 +204,7 @@ export default function CustomDrawerContent(props: any) {
       </View>
       
       <View style={styles.sectionsContainer}>
-        {drawerSections.map(renderSection)}
+        {visibleSections.map(renderSection)}
       </View>
     </DrawerContentScrollView>
   );

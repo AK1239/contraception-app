@@ -2,21 +2,24 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
 import questionnaireReducer from "./slices/questionnaire";
 import resultsReducer from "./slices/results";
+import userRoleReducer from "./slices/userRole";
 import fabEligibilityReducer from "./slices/fabEligibility";
 import femaleSterilizationEligibilityReducer from "./slices/femaleSterilizationEligibility";
 import maleSterilizationEligibilityReducer from "./slices/maleSterilizationEligibility";
 import standardDayMethodReducer from "./slices/standardDayMethod";
 import calendarMethodReducer from "./slices/calendarMethod";
-import { questionnairePersistConfig, resultsPersistConfig } from "./persistConfig";
+import { questionnairePersistConfig, resultsPersistConfig, userRolePersistConfig } from "./persistConfig";
 
 // Create persisted reducers with nested configuration for granular control
 const persistedQuestionnaireReducer = persistReducer(questionnairePersistConfig, questionnaireReducer);
 const persistedResultsReducer = persistReducer(resultsPersistConfig, resultsReducer);
+const persistedUserRoleReducer = persistReducer(userRolePersistConfig, userRoleReducer);
 
 // Combine reducers
 const rootReducer = combineReducers({
   questionnaire: persistedQuestionnaireReducer,
   results: persistedResultsReducer,
+  userRole: persistedUserRoleReducer,
   fabEligibility: fabEligibilityReducer,
   femaleSterilizationEligibility: femaleSterilizationEligibilityReducer,
   maleSterilizationEligibility: maleSterilizationEligibilityReducer,
