@@ -10,6 +10,7 @@ interface MECResultsProps {
   result: EvaluationResult;
   onPersonalize?: () => void;
   onStartOver?: () => void;
+  onBackToQuestions?: () => void;
 }
 
 function MethodCard({
@@ -62,7 +63,7 @@ function MethodCard({
   );
 }
 
-export function MECResults({ result, onPersonalize, onStartOver }: MECResultsProps) {
+export function MECResults({ result, onPersonalize, onStartOver, onBackToQuestions }: MECResultsProps) {
   const getMecResult = (key: ContraceptiveMethodKey) => {
     return result.mecResults.find((r) => r.methodKey === key);
   };
@@ -182,6 +183,17 @@ export function MECResults({ result, onPersonalize, onStartOver }: MECResultsPro
               Refine your options based on preferences (frequency, future pregnancy, etc.)
             </Text>
           </>
+        )}
+        {onBackToQuestions && (
+          <Button
+            mode="outlined"
+            onPress={onBackToQuestions}
+            icon="arrow-left"
+            style={styles.backToQuestionsButton}
+            labelStyle={styles.buttonLabel}
+          >
+            Back to Questions
+          </Button>
         )}
         {onStartOver && (
           <Button
@@ -334,8 +346,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 11,
   },
+  backToQuestionsButton: {
+    marginTop: 12,
+    borderRadius: 10,
+    borderColor: "#6D28D9",
+  },
   startOverButton: {
-    marginTop: 24,
+    marginTop: 12,
     borderRadius: 10,
     borderColor: "#D1D5DB",
   },

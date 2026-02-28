@@ -42,6 +42,14 @@ export function getFirstSection(_answers?: AnswerState): SectionKey {
 }
 
 /**
+ * Get the last section in the questionnaire.
+ */
+export function getLastSection(): SectionKey | null {
+  if (SECTION_ORDER.length === 0) return null;
+  return SECTION_ORDER[SECTION_ORDER.length - 1] ?? null;
+}
+
+/**
  * Check if we've completed all medical sections (at last section)
  */
 export function hasCompletedAllSections(

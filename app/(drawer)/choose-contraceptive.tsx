@@ -22,6 +22,7 @@ import {
   getNextSection,
   getPreviousSection,
   getFirstSection,
+  getLastSection,
   hasCompletedAllSections,
 } from "../../src/utils/sectionNavigation";
 import { useSectionValidation } from "../../src/hooks/useSectionValidation";
@@ -131,6 +132,14 @@ export default function ChooseContraceptiveScreen() {
     dispatch(resetPersonalization());
   }, [dispatch]);
 
+  const handleBackToQuestions = useCallback(() => {
+    dispatch(setMECEvaluationResult(null));
+    const lastSection = getLastSection();
+    if (lastSection) {
+      dispatch(setMECCurrentSection(lastSection));
+    }
+  }, [dispatch]);
+
   const handleComplete = useCallback(() => {
     if (!mecCurrentSection || !currentSection) return;
 
@@ -156,6 +165,7 @@ export default function ChooseContraceptiveScreen() {
         <MECResults
           result={mecEvaluationResult}
           onPersonalize={() => router.push("/(drawer)/personalize")}
+          onBackToQuestions={handleBackToQuestions}
           onStartOver={handleStartOver}
         />
       </View>

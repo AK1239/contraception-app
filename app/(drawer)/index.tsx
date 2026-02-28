@@ -74,6 +74,16 @@ export default function HomePage() {
         buttonColor="#22C55E"
       />
 
+      <HomeSectionCard
+        leadingEmoji="✂️"
+        title="Sterilization Eligibility"
+        description="Check eligibility for permanent contraception. Assess female surgical sterilization or male sterilization (vasectomy) using WHO Medical Eligibility Criteria."
+        ctaLabel="Sterilization Eligibility"
+        onPress={() => router.push("/(drawer)/sterilization-eligibility")}
+        buttonColor="#8B5CF6"
+      />
+
+      <Text style={styles.footerText}>@med.tutor.tz</Text>
     </ScrollView>
   );
 }
@@ -108,5 +118,13 @@ const styles = StyleSheet.create({
     width: 50,
     backgroundColor: "#6D28D9",
     borderRadius: 2,
+  },
+  footerText: {
+    fontSize: 10,
+    color: "#9CA3AF",
+    fontStyle: "italic",
+    textAlign: "center",
+    marginTop: 32,
+    marginBottom: 16,
   },
 });
