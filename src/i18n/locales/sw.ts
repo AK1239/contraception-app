@@ -314,6 +314,13 @@ const sw = {
 
   // ─── Natural Calculators ──────────────────────────────────────────────────────
   naturalCalculators: {
+    infoCardTitle: "Kuhusu Njia Hizi",
+    infoCardSdm:
+      "Njia ya Siku za Kawaida (SDM) ni rahisi na inafaa wanawake wenye mizunguko ya kawaida ya siku 26–32. Inatumia siku za uzazi zilizowekwa kila mwezi, ni rahisi kufuata, na ni yenye ufanisi zaidi inapotumika kwa usahihi.",
+    infoCardCalendar:
+      "Njia ya Kalenda (Rhythm) inaweza kutumika na wanawake wenye urefu wa mzunguko kati ya siku 21–35. Inahitaji kufuatilia mizunguko iliyopita kukadiria siku za uzazi, inahitaji usimamizi zaidi wa kumbukumbu, na kwa ujumla haiamini katika matumizi ya kawaida, lakini inaruhusu hesabu ya uzazi iliyobinafsishwa zaidi.",
+    infoCardDisclaimer:
+      "Njia zote mbili husaidia kuzuia mimba kwa kuepuka siku za uzazi, lakini hazilindi dhidi ya maambukizi ya ngono (STI).",
     fabTitle: "Ustahili wa Njia za Asili (FAB)",
     fabDescription:
       "Tathmini ustahili wa njia za ufahamu wa uzazi zinazotegemea Dalili (SYM) na Kalenda (CAL). Pata mapendekezo ya Kubali, Tahadhari, au Ahirisha pamoja na maelezo ya STI/HIV na ujauzito wenye hatari kubwa.",

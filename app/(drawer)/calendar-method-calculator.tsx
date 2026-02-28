@@ -18,6 +18,7 @@ import {
 import { useTranslatedCalendarSections } from '../../src/hooks/useTranslatedCalendarSections';
 import { SectionPage } from '../../src/components/questionnaire';
 import { CalendarMethodResults, CalendarMethodSectionNavigator } from '../../src/components/calendar-method';
+import NaturalMethodsInfoCard from '../../src/components/NaturalMethodsInfoCard';
 import { evaluateCalendarMethod } from '../../src/engine/calendarMethodEngine';
 import {
   getNextCalendarMethodSection,
@@ -144,6 +145,7 @@ export default function CalendarMethodCalculatorPage() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        <NaturalMethodsInfoCard />
         {currentSectionConfig && (
           <SectionPage
             section={currentSectionConfig}
@@ -179,6 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
+    paddingTop: 16,
     paddingBottom: 20,
   },
 });

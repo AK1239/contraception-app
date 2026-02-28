@@ -18,6 +18,7 @@ import {
 import { getSDMSection } from '../../src/config/standardDaySections';
 import { SectionPage } from '../../src/components/questionnaire';
 import { StandardDayResults, StandardDaySectionNavigator } from '../../src/components/sdm';
+import NaturalMethodsInfoCard from '../../src/components/NaturalMethodsInfoCard';
 import { evaluateSDM } from '../../src/engine/standardDayEngine';
 import {
   getNextSDMSection,
@@ -143,6 +144,7 @@ export default function StandardDayCalculatorPage() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+        <NaturalMethodsInfoCard />
         {currentSectionConfig && (
           <SectionPage
             section={currentSectionConfig}
@@ -178,6 +180,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
+    paddingTop: 16,
     paddingBottom: 20,
   },
 });

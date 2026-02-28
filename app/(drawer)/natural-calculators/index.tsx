@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import HomeSectionCard from '../../../src/components/HomeSectionCard';
+import NaturalMethodsInfoCard from '../../../src/components/NaturalMethodsInfoCard';
 
 export default function NaturalCalculatorsIndexScreen() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function NaturalCalculatorsIndexScreen() {
   };
 
   const handleCalendarMethodCalculator = () => {
-    router.push('/(drawer)/standard-day-calculator');
+    router.push('/(drawer)/calendar-method-calculator');
   };
 
   return (
@@ -24,6 +25,7 @@ export default function NaturalCalculatorsIndexScreen() {
       contentContainerStyle={{ paddingBottom: Math.max(40, insets.bottom + 40) }}
     >
       <View style={styles.calculatorsContainer}>
+        <NaturalMethodsInfoCard />
         <HomeSectionCard
           leadingEmoji="📅"
           title={t("naturalCalculators.standardDayTitle")}
