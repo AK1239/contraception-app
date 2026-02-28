@@ -87,15 +87,7 @@ export default function HomePage() {
         />
       )}
 
-      <HomeSectionCard
-        leadingEmoji="⚙️"
-        title={t("home.settingsTitle")}
-        description={t("home.settingsDescription")}
-        ctaLabel={t("home.settingsCta")}
-        onPress={() => router.push("/(drawer)/settings")}
-        buttonColor="#64748B"
-      />
-
+  
       <Text style={styles.footerText}>{t("home.footer")}</Text>
     </ScrollView>
   );
