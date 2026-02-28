@@ -56,7 +56,7 @@ const en = {
     personalizeCta: "Personalize Your Choice",
     naturalTitle: "Natural Methods",
     naturalDescription:
-      "Prefer non-modern methods? Try our Calendar Method Calculator to identify your fertile days and avoid unprotected intercourse during those times.",
+      "Prefer non-modern methods? Try our Calendar Method Calculator or Standard Days Method Calculator to identify your fertile days and avoid unprotected intercourse during those times.",
     naturalCta: "Natural Method Calculators",
     sterilizationTitle: "Sterilization Eligibility",
     sterilizationDescription:

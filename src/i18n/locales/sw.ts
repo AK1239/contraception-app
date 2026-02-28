@@ -56,7 +56,7 @@ const sw = {
     personalizeCta: "Binafsisha Chaguo Lako",
     naturalTitle: "Njia za Asili",
     naturalDescription:
-      "Unapendelea njia zisizo za kisasa? Jaribu Kihesabu cha Njia ya Kalenda kutambua siku zako za uzazi na kuepuka tendo la ndoa bila kinga wakati huo.",
+      "Unapendelea njia zisizo za kisasa? Jaribu Kihesabu cha Njia ya Kalenda au Kihesabu cha Njia ya Siku za Kawaida kutambua siku zako za uzazi na kuepuka tendo la ndoa bila kinga wakati huo.",
     naturalCta: "Vihesabu vya Njia za Asili",
     sterilizationTitle: "Ustahili wa Kufungwa",
     sterilizationDescription:
