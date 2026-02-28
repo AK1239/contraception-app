@@ -38,9 +38,9 @@ const en = {
   // ─── Home ─────────────────────────────────────────────────────────────────────
   home: {
     exploreFeatures: "Explore Features",
-    chooseTitle: "Choose Your Contraceptive",
+    chooseTitle: "WHO MEC Screen",
     chooseDescription:
-      "Answer health-related questions to get WHO-based recommendations on safe contraceptive methods for you.",
+      "Screen client medically to provide safe contraceptive options based on the WHO MEC 2025.",
     chooseCta: "Choose Your Contraceptive",
     knowTitle: "For Women Seeking Information",
     knowDescription:

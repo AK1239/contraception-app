@@ -38,9 +38,9 @@ const sw = {
   // ─── Home ─────────────────────────────────────────────────────────────────────
   home: {
     exploreFeatures: "Chunguza Vipengele",
-    chooseTitle: "Chagua Uzazi wa Mpango",
+    chooseTitle: "Skrini ya WHO MEC",
     chooseDescription:
-      "Jibu maswali ya kiafya ili upate mapendekezo ya WHO kuhusu njia salama za uzazi wa mpango zinazokufaa.",
+      "Skrini mteja kimatibabu ili kutoa chaguzi salama za uzazi wa mpango kulingana na WHO MEC 2025.",
     chooseCta: "Chagua Uzazi wa Mpango",
     knowTitle: "Kwa Wanawake Wanaotafuta Taarifa",
     knowDescription:
