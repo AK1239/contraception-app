@@ -45,7 +45,7 @@ const en = {
     chooseTitle: "WHO MEC Screen",
     chooseDescription:
       "Screen client medically to provide safe contraceptive options based on the WHO MEC 2025.",
-    chooseCta: "Choose Your Contraceptive",
+    chooseCta: "Filter Unsafe Contraceptives",
     knowTitle: "For Women Seeking Information",
     knowDescription:
       "If you'd like to learn more about different contraceptives, explore the Natural Methods or Modern Methods sections.",
