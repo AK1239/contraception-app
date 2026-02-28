@@ -85,7 +85,7 @@ export default function HomePage() {
           description={t("home.sterilizationDescription")}
           ctaLabel={t("home.sterilizationCta")}
           onPress={() => router.push("/(drawer)/sterilization-eligibility")}
-          buttonColor="#8B5CF6"
+          buttonColor="#E53935"       
         />
       )}
 
