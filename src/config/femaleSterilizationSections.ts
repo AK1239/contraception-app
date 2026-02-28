@@ -99,7 +99,7 @@ export const FEMALE_STERILIZATION_SECTIONS: FemaleSterilizationSection[] = [
     questions: [
       {
         id: "fs-is-post-abortion",
-        text: "Is this post-abortion?",
+        text: "Is the client post-abortion?",
         type: "yes-no",
         required: true,
       },
