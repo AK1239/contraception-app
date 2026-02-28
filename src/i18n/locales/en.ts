@@ -1,3 +1,5 @@
+import { questionnaireEn } from "./questionnaire-en";
+
 const en = {
   // ─── Common ──────────────────────────────────────────────────────────────────
   common: {
@@ -278,6 +280,9 @@ const en = {
     medicalDisclaimerBody:
       "Recommendations are based on WHO guidelines and the details you shared. Please consult a healthcare provider before starting any contraceptive.",
   },
+
+  // ─── Questionnaire (WHO MEC) ──────────────────────────────────────────────────
+  questionnaire: questionnaireEn,
 } as const;
 
 export default en;

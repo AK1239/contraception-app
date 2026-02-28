@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Platform, TextInput as RNTextInput, Text as RNText } from "react-native";
 import { TextInput, RadioButton, Text, Button } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { useTranslation } from "react-i18next";
 import { Question, AnswerValue } from "../types";
 import type { PersonalizationQuestion } from "../constants";
 
@@ -18,6 +19,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   onValueChange,
   error,
 }) => {
+  const { t } = useTranslation();
   const [datePickerOpen, setDatePickerOpen] = useState(false);
 
   const renderInput = () => {
@@ -38,7 +40,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                   value === true && styles.toggleTextActive,
                 ]}
               >
-                Yes
+                {t("common.yes")}
               </Text>
             </View>
             <View
@@ -54,7 +56,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                   value === false && styles.toggleTextActive,
                 ]}
               >
-                No
+                {t("common.no")}
               </Text>
             </View>
           </View>

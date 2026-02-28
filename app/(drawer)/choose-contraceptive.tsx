@@ -12,7 +12,8 @@ import {
   resetQuestionnaire,
   resetPersonalization,
 } from "../../src/store/slices/questionnaire";
-import { SECTIONS, MEDICAL_SECTIONS } from "../../src/config/sections";
+import { MEDICAL_SECTIONS } from "../../src/config/sections";
+import { useTranslatedSections } from "../../src/hooks/useTranslatedSections";
 import { SectionPage, MECInfoBox } from "../../src/components/questionnaire";
 import { SectionNavigator } from "../../src/components/questionnaire/SectionNavigator";
 import { MECResults } from "../../src/components/results";
@@ -38,6 +39,7 @@ export default function ChooseContraceptiveScreen() {
   const { answers, mecCurrentSection, mecEvaluationResult } = useSelector(
     (state: RootState) => state.questionnaire
   );
+  const translatedSections = useTranslatedSections();
 
   // Initialize to first section if not set
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function ChooseContraceptiveScreen() {
   }, [mecCurrentSection, mecEvaluationResult, dispatch]);
 
   const currentSection = mecCurrentSection
-    ? SECTIONS.find((s) => s.key === mecCurrentSection)
+    ? translatedSections.find((s) => s.key === mecCurrentSection)
     : null;
 
   const handleAnswerChange = useCallback(

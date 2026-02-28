@@ -1,3 +1,5 @@
+import { questionnaireSw } from "./questionnaire-sw";
+
 const sw = {
   // ─── Common ──────────────────────────────────────────────────────────────────
   common: {
@@ -278,6 +280,9 @@ const sw = {
     medicalDisclaimerBody:
       "Mapendekezo yanategemea miongozo ya WHO na maelezo uliyoshiriki. Tafadhali wasiliana na mtoa huduma za afya kabla ya kuanza uzazi wowote wa mpango.",
   },
+
+  // ─── Questionnaire (WHO MEC) ──────────────────────────────────────────────────
+  questionnaire: questionnaireSw,
 } as const;
 
 export default sw;

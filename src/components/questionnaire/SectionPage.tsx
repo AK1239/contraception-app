@@ -1,6 +1,7 @@
 import React, { useRef, useCallback, useState } from "react";
 import { View, StyleSheet, ScrollView, type NativeSyntheticEvent, type NativeScrollEvent } from "react-native";
 import { Text } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import type { SectionQuestion } from "../../types/sections";
 import type { AnswerState } from "../../types/rules";
 import type { AnswerValue } from "../../types/questionnaire";
@@ -34,6 +35,7 @@ export function SectionPage({
   errors = {},
   topContent,
 }: SectionPageProps) {
+  const { t } = useTranslation();
   const visibleQuestions = getVisibleSectionQuestions(section.questions, answers);
   const scrollViewRef = useRef<ScrollView>(null);
   const questionViewRefs = useRef<Map<string, View>>(new Map());
@@ -123,7 +125,9 @@ export function SectionPage({
         </Text>
         <View style={styles.questionCountBadge}>
           <Text variant="labelSmall" style={styles.questionCountText}>
-            {visibleQuestions.length} question{visibleQuestions.length !== 1 ? "s" : ""}
+            {visibleQuestions.length === 1
+              ? t("questionnaire.questionCount", { count: visibleQuestions.length })
+              : t("questionnaire.questionCountPlural", { count: visibleQuestions.length })}
           </Text>
         </View>
       </View>
