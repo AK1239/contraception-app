@@ -164,34 +164,46 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
           
           return (
             <View style={styles.selectGroup}>
-              {question.options.map((option) => (
-                <View
-                  key={option.value}
-                  style={[
-                    styles.selectOption,
-                    value === option.value && styles.selectOptionActive,
-                  ]}
-                  onTouchEnd={() =>
-                    onValueChange(option.value)
-                  }
-                >
-                  <View style={styles.selectOptionContent}>
-                    <Text
-                      style={[
-                        styles.selectOptionText,
-                        value === option.value && styles.selectOptionTextActive,
-                      ]}
-                    >
-                      {option.label}
-                    </Text>
-                    {value === option.value && (
-                      <View style={styles.checkmark}>
-                        <Text style={styles.checkmarkText}>✓</Text>
-                      </View>
-                    )}
+              {question.options.map((option) => {
+                const isSelected = value === option.value;
+                return (
+                  <View
+                    key={option.value}
+                    style={[
+                      styles.selectOption,
+                      isSelected && styles.selectOptionActive,
+                    ]}
+                    onTouchEnd={() => {
+                      // Tapping selected option again clears selection (unselect)
+                      onValueChange(isSelected ? (undefined as any) : option.value);
+                    }}
+                  >
+                    <View style={styles.selectOptionContent}>
+                      <Text
+                        style={[
+                          styles.selectOptionText,
+                          isSelected && styles.selectOptionTextActive,
+                        ]}
+                      >
+                        {option.label}
+                      </Text>
+                      {isSelected && (
+                        <View style={styles.checkmark}>
+                          <Text style={styles.checkmarkText}>✓</Text>
+                        </View>
+                      )}
+                    </View>
                   </View>
-                </View>
-              ))}
+                );
+              })}
+              {value != null && (
+                <Text
+                  style={styles.clearSelectionHint}
+                  onPress={() => onValueChange(undefined as any)}
+                >
+                  Clear selection
+                </Text>
+              )}
             </View>
           );
         }
@@ -680,6 +692,12 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 12,
     fontWeight: "bold",
+  },
+  clearSelectionHint: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#6B7280",
+    fontStyle: "italic",
   },
   radioGroup: {
     gap: 8,

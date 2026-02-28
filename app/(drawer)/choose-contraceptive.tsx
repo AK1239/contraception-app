@@ -26,6 +26,7 @@ import {
   hasCompletedAllSections,
 } from "../../src/utils/sectionNavigation";
 import { useSectionValidation } from "../../src/hooks/useSectionValidation";
+import { getVisibleSectionQuestions } from "../../src/utils/sectionQuestionVisibility";
 import type { AnswerValue } from "../../src/types/questionnaire";
 import type { AnswerState } from "../../src/types/rules";
 
@@ -54,40 +55,19 @@ export default function ChooseContraceptiveScreen() {
       dispatch(setAnswer({ questionId, value }));
 
       // Clear answers for questions that become hidden due to this change (cascade)
+      // Works for all conditional chains: liver tumor, breast swelling, etc.
       if (currentSection) {
         const updatedAnswers = { ...answers, [questionId]: value };
-        const questionsToClear: string[] = [];
+        const visibleQuestions = getVisibleSectionQuestions(
+          currentSection.questions,
+          updatedAnswers
+        );
+        const visibleIds = new Set(visibleQuestions.map((q) => q.id));
 
-        // Find direct dependents of the changed question that now become hidden
+        // Clear any question that has an answer but is no longer visible
         for (const q of currentSection.questions) {
-          if (
-            q.conditional &&
-            q.conditional.dependsOn === questionId &&
-            updatedAnswers[questionId] !== q.conditional.expectedValue
-          ) {
-            questionsToClear.push(q.id);
-          }
-        }
-
-        // Transitively find further dependents of any cleared question
-        let i = 0;
-        while (i < questionsToClear.length) {
-          const clearedId = questionsToClear[i];
-          for (const q of currentSection.questions) {
-            if (
-              q.conditional &&
-              q.conditional.dependsOn === clearedId &&
-              !questionsToClear.includes(q.id)
-            ) {
-              questionsToClear.push(q.id);
-            }
-          }
-          i++;
-        }
-
-        for (const qId of questionsToClear) {
-          if (answers[qId] !== undefined) {
-            dispatch(clearAnswer(qId));
+          if (!visibleIds.has(q.id) && answers[q.id] !== undefined) {
+            dispatch(clearAnswer(q.id));
           }
         }
       }
