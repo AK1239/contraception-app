@@ -313,11 +313,11 @@ const en = {
   naturalCalculators: {
     infoCardTitle: "About These Methods",
     infoCardSdm:
-      "The Standard Days Method (SDM) is simple and suitable for women with regular cycles lasting 26–32 days. It uses fixed fertile days each month, is easy to follow, and is more effective when used correctly.",
+      "Standard Days Method (SDM): For regular 26–32-day cycles; uses fixed fertile days and is more effective with correct use.",
     infoCardCalendar:
-      "The Calendar (Rhythm) Method can be used by women with cycle lengths between 21–35 days. It requires tracking past cycles to estimate fertile days, needs more record-keeping, and is generally less reliable in typical use, but it allows for a more individualized calculation of fertility.",
+      "Calendar (Rhythm) Method: For 21–35-day cycles; needs 6 months of tracking and is less reliable but more individualized.",
     infoCardDisclaimer:
-      "Both methods help prevent pregnancy by avoiding fertile days, but they do not protect against sexually transmitted infections (STIs).",
+      "Both prevent pregnancy by avoiding fertile days and do not protect against STIs.",
     getStarted: "Get Started",
     fabTitle: "Natural Method Eligibility (FAB)",
     fabDescription:
