@@ -397,6 +397,7 @@ const en = {
     previous: "Previous",
     next: "Next",
     seeResults: "See Results",
+    getStarted: "Get Started",
     results: {
       suggestedTitle: "Suggested safe contraceptives (MEC 1)",
       suggestedDescription: "These methods have no restrictions based on your answers.",

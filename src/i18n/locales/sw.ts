@@ -396,6 +396,7 @@ const sw = {
     previous: "Iliyotangulia",
     next: "Inayofuata",
     seeResults: "Tazama Matokeo",
+    getStarted: "Anza",
     results: {
       suggestedTitle: "Njia za uzazi wa mpango zinazopendekezwa salama (MEC 1)",
       suggestedDescription: "Njia hizi hazina vikwazo kulingana na majibu yako.",

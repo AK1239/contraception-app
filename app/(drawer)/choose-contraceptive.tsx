@@ -1,7 +1,9 @@
 import React, { useEffect, useCallback, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "react-native-paper";
+import { useTranslation } from "react-i18next";
 import { RootState } from "../../src/store";
 import {
   setAnswer,
@@ -12,7 +14,6 @@ import {
   resetQuestionnaire,
   resetPersonalization,
 } from "../../src/store/slices/questionnaire";
-import { MEDICAL_SECTIONS } from "../../src/config/sections";
 import { useTranslatedSections } from "../../src/hooks/useTranslatedSections";
 import { SectionPage, MECInfoBox } from "../../src/components/questionnaire";
 import { SectionNavigator } from "../../src/components/questionnaire/SectionNavigator";
@@ -34,6 +35,8 @@ import type { AnswerState } from "../../src/types/rules";
 export default function ChooseContraceptiveScreen() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const [showIntro, setShowIntro] = useState(true);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const { validateSection } = useSectionValidation();
   const { answers, mecCurrentSection, mecEvaluationResult } = useSelector(
@@ -106,6 +109,9 @@ export default function ChooseContraceptiveScreen() {
     const prevSection = getPreviousSection(mecCurrentSection);
     if (prevSection) {
       dispatch(setMECCurrentSection(prevSection));
+    } else {
+      // Back to intro screen when on first section
+      setShowIntro(true);
     }
   }, [mecCurrentSection, dispatch]);
 
@@ -154,6 +160,33 @@ export default function ChooseContraceptiveScreen() {
     );
   }
 
+  // Show intro screen before any sections
+  if (showIntro) {
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          contentContainerStyle={styles.introContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <MECInfoBox />
+        </ScrollView>
+        <View style={styles.introFooter}>
+          <Button
+            mode="contained"
+            onPress={() => setShowIntro(false)}
+            style={styles.getStartedButton}
+            labelStyle={styles.getStartedLabel}
+            buttonColor="#6D28D9"
+            icon="arrow-right"
+            contentStyle={{ flexDirection: "row-reverse" }}
+          >
+            {t("mec.getStarted")}
+          </Button>
+        </View>
+      </View>
+    );
+  }
+
   // Show section or empty state
   if (!currentSection) {
     return (
@@ -163,8 +196,6 @@ export default function ChooseContraceptiveScreen() {
     );
   }
 
-  const currentIndex = MEDICAL_SECTIONS.findIndex((s) => s.key === mecCurrentSection);
-  const isFirstSection = currentIndex <= 0;
   const isLastSection = hasCompletedAllSections(mecCurrentSection);
 
   return (
@@ -175,14 +206,13 @@ export default function ChooseContraceptiveScreen() {
         answers={answers as AnswerState}
         onAnswerChange={handleAnswerChange}
         errors={validationErrors}
-        topContent={<MECInfoBox />}
       />
       <SectionNavigator
         currentSection={mecCurrentSection}
         onPrevious={handlePrevious}
         onNext={handleNext}
         onComplete={handleComplete}
-        isFirstSection={isFirstSection}
+        isFirstSection={false}
         isLastSection={isLastSection}
       />
     </View>
@@ -193,5 +223,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F3F4F6",
+  },
+  introContent: {
+    padding: 16,
+    paddingBottom: 8,
+  },
+  introFooter: {
+    padding: 16,
+    paddingBottom: 24,
+    backgroundColor: "#FFFFFF",
+    borderTopWidth: 1,
+    borderTopColor: "#E5E7EB",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  getStartedButton: {
+    borderRadius: 10,
+    elevation: 0,
+  },
+  getStartedLabel: {
+    fontSize: 15,
+    fontWeight: "700",
+    paddingVertical: 4,
   },
 });
