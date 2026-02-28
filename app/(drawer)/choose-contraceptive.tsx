@@ -13,7 +13,7 @@ import {
   resetPersonalization,
 } from "../../src/store/slices/questionnaire";
 import { SECTIONS, MEDICAL_SECTIONS } from "../../src/config/sections";
-import { SectionPage } from "../../src/components/questionnaire";
+import { SectionPage, MECInfoBox } from "../../src/components/questionnaire";
 import { SectionNavigator } from "../../src/components/questionnaire/SectionNavigator";
 import { MECResults } from "../../src/components/results";
 import { createRulesEngine } from "../../src/engine/rulesEngine";
@@ -183,6 +183,7 @@ export default function ChooseContraceptiveScreen() {
         answers={answers as AnswerState}
         onAnswerChange={handleAnswerChange}
         errors={validationErrors}
+        topContent={<MECInfoBox />}
       />
       <SectionNavigator
         currentSection={mecCurrentSection}

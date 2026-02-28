@@ -19,6 +19,8 @@ interface SectionPageProps {
   answers: AnswerState;
   onAnswerChange: (questionId: string, value: AnswerValue) => void;
   errors?: Record<string, string>;
+  /** Optional content rendered above the section header (e.g. MEC info box) */
+  topContent?: React.ReactNode;
 }
 
 /**
@@ -30,6 +32,7 @@ export function SectionPage({
   answers,
   onAnswerChange,
   errors = {},
+  topContent,
 }: SectionPageProps) {
   const visibleQuestions = getVisibleSectionQuestions(section.questions, answers);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -113,6 +116,7 @@ export function SectionPage({
       onScroll={handleScroll}
       scrollEventThrottle={16}
     >
+      {topContent}
       <View style={styles.header}>
         <Text variant="titleLarge" style={styles.title}>
           {section.title}
