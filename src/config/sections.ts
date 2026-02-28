@@ -725,6 +725,7 @@ export const SECTIONS: Section[] = [
             { value: "carbamazepine", label: "Carbamazepine" },
             { value: "lamotrigine", label: "Lamotrigine" },
             { value: "rifampicin", label: "Rifampicin" },
+            { value: "none", label: "None of the above" },
           ],
         },
       },

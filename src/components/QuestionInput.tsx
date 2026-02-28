@@ -180,9 +180,17 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                       isSelected && styles.selectOptionActive,
                     ]}
                     onTouchEnd={() => {
-                      const newValues: string[] = isSelected
-                        ? selectedValues.filter((v) => v !== option.value)
-                        : [...selectedValues, option.value];
+                      let newValues: string[];
+                      if (option.value === "none") {
+                        // Selecting "None of the above" clears all other selections
+                        newValues = isSelected ? [] : ["none"];
+                      } else {
+                        // Selecting any real option removes "none" if present
+                        const withoutNone = selectedValues.filter((v) => v !== "none");
+                        newValues = isSelected
+                          ? withoutNone.filter((v) => v !== option.value)
+                          : [...withoutNone, option.value];
+                      }
                       onValueChange(newValues);
                     }}
                   >
