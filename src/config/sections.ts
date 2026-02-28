@@ -21,7 +21,7 @@ export const SECTIONS: Section[] = [
       },
       {
         id: "cycle-durations",
-        text: "Duration of your last 6 menstrual cycles (days between period starts)",
+        text: "Duration of your menstrual cycles (days between period starts). Enter at least 2, optionally up to 6.",
         type: "cycle-durations",
         required: true,
         validation: { min: 21, max: 45 },

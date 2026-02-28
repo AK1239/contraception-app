@@ -61,31 +61,48 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
         );
 
       case "cycle-durations": {
-        const CYCLE_COUNT = 6;
+        const MIN_CYCLES = 2;
+        const MAX_CYCLES = 6;
         const raw = Array.isArray(value) ? value : [];
         const durations: number[] = raw.filter((n): n is number => typeof n === "number");
-        while (durations.length < CYCLE_COUNT) durations.push(0);
+        const visibleCount = Math.min(MAX_CYCLES, Math.max(MIN_CYCLES, durations.length));
+        const padded = [...durations];
+        while (padded.length < visibleCount) padded.push(0);
+
+        const handleAddMore = () => {
+          if (visibleCount < MAX_CYCLES) {
+            const next = [...padded, 0];
+            onValueChange(next as AnswerValue);
+          }
+        };
+
+        const handleRemoveOptional = (index: number) => {
+          if (index >= MIN_CYCLES && visibleCount > MIN_CYCLES) {
+            const next = padded.filter((_, i) => i !== index);
+            onValueChange(next as AnswerValue);
+          }
+        };
 
         return (
           <View style={styles.cycleDurationsContainer}>
             <View style={styles.cycleHeader}>
               <Text style={styles.cycleHeaderText}>Required cycles</Text>
               <View style={styles.cycleBadge}>
-                <Text style={styles.cycleBadgeText}>Min. 6</Text>
+                <Text style={styles.cycleBadgeText}>Min. 2</Text>
               </View>
             </View>
             <View style={styles.cyclesGrid}>
-              {Array.from({ length: CYCLE_COUNT }, (_, i) => (
+              {Array.from({ length: visibleCount }, (_, i) => (
                 <View key={i} style={styles.cycleInputWrapper}>
                   <View style={styles.cycleInputContainer}>
                     <RNTextInput
                       style={[
                         styles.cycleInput,
-                        durations[i] && durations[i] > 0 ? styles.cycleInputFilled : undefined,
+                        padded[i] && padded[i] > 0 ? styles.cycleInputFilled : undefined,
                       ]}
-                      value={durations[i] && durations[i] > 0 ? String(durations[i]) : ""}
+                      value={padded[i] && padded[i] > 0 ? String(padded[i]) : ""}
                       onChangeText={(text) => {
-                        const arr: number[] = [...durations];
+                        const arr: number[] = [...padded];
                         const num = text === "" ? 0 : parseFloat(text);
                         arr[i] = !isNaN(num) ? num : 0;
                         onValueChange(arr as AnswerValue);
@@ -97,10 +114,24 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                     />
                     <RNText style={styles.cycleDaysLabel}>days</RNText>
                   </View>
-                  <RNText style={styles.cycleAsterisk}>*</RNText>
+                  {i < MIN_CYCLES ? (
+                    <RNText style={styles.cycleAsterisk}>*</RNText>
+                  ) : (
+                    <RNText
+                      style={styles.cycleRemoveBtn}
+                      onPress={() => handleRemoveOptional(i)}
+                    >
+                      ✕
+                    </RNText>
+                  )}
                 </View>
               ))}
             </View>
+            {visibleCount < MAX_CYCLES && (
+              <RNText style={styles.addMoreBtn} onPress={handleAddMore}>
+                + Add more cycles (optional, up to 6)
+              </RNText>
+            )}
           </View>
         );
       }
@@ -713,6 +744,20 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '600',
     color: '#6D28D9',
+  },
+  cycleRemoveBtn: {
+    color: '#9CA3AF',
+    fontSize: 14,
+    marginLeft: 4,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+  },
+  addMoreBtn: {
+    marginTop: 12,
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#6D28D9',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
   cyclesGrid: {
     flexDirection: 'row',

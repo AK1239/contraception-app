@@ -98,16 +98,16 @@ export function validateAnswer(
 
     case "cycle-durations": {
       const arr = Array.isArray(value) ? value : [];
-      if (arr.length < 6) {
-        return { valid: false, error: "Please enter all 6 cycle durations" };
-      }
       const { min = 21, max = 45 } = question.validation ?? {};
       const valid = arr.filter((n) => typeof n === "number" && n > 0);
-      if (valid.length < 6) {
-        return { valid: false, error: "Please enter all 6 cycle durations" };
+      if (valid.length < 2) {
+        return { valid: false, error: "Please enter at least 2 cycle durations" };
       }
-      for (let i = 0; i < 6; i++) {
-        const n = arr[i];
+      if (valid.length > 6) {
+        return { valid: false, error: "Maximum 6 cycle durations allowed" };
+      }
+      for (let i = 0; i < valid.length; i++) {
+        const n = valid[i];
         if (typeof n !== "number" || n < min || n > max) {
           return { valid: false, error: `Cycle ${i + 1} must be between ${min} and ${max} days` };
         }
