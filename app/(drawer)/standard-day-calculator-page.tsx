@@ -70,7 +70,8 @@ export default function StandardDayCalculatorPage() {
       if (questionId === 'cycle-durations') {
         if (Array.isArray(value)) {
           value.forEach((cycleValue, index) => {
-            const numValue = typeof cycleValue === 'number' ? cycleValue : null;
+            const numValue =
+              typeof cycleValue === 'number' && cycleValue > 0 ? cycleValue : null;
             dispatch(setCycleLength({ index, value: numValue }));
           });
         }

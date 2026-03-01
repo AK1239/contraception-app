@@ -6,17 +6,20 @@
 import { SDMAnswers, SDMEligibilityResult } from '../types/standardDayMethod';
 
 /**
- * Calculate average cycle length from 6 cycles (rounded to nearest integer)
+ * Calculate average cycle length from 2–6 cycles (rounded to nearest integer)
+ * Minimum 2 cycles required; more cycles (up to 6) are optional for better accuracy
  */
 function calculateAverageCycleLength(cycleLengths: (number | null)[]): number | null {
-  const validCycles = cycleLengths.filter((length): length is number => length !== null);
+  const validCycles = cycleLengths.filter(
+    (length): length is number => length !== null && length > 0
+  );
   
-  if (validCycles.length !== 6) {
+  if (validCycles.length < 2) {
     return null;
   }
   
   const sum = validCycles.reduce((total, length) => total + length, 0);
-  const average = sum / 6;
+  const average = sum / validCycles.length;
   return Math.round(average); // Round to nearest integer per WHO guidelines
 }
 
@@ -214,7 +217,7 @@ export function evaluateSDM(answers: SDMAnswers): SDMEligibilityResult {
       eligible: false,
       avgCycleLength,
       message: avgCycleLength === null 
-        ? 'Please provide all 6 cycle lengths to determine eligibility.'
+        ? 'Please provide at least 2 cycle lengths to determine eligibility.'
         : `Your average cycle length is ${avgCycleLength} days. The Standard Days Method is validated only for women with cycles between 26 and 32 days.`,
       educationalMessage: buildEducationalMessage(false),
     };

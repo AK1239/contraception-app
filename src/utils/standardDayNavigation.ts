@@ -93,8 +93,11 @@ export function isSDMSectionComplete(
       return true;
       
     case 'cycle-lengths':
-      // All 6 cycle lengths must be provided
-      return answers.cycleLengths.every(length => length !== null);
+      // Minimum 2 cycles required; adding more (up to 6) is optional
+      const validCycleCount = answers.cycleLengths.filter(
+        length => length !== null && length > 0
+      ).length;
+      return validCycleCount >= 2;
       
     case 'lmp-date':
       // LMP date must be provided
