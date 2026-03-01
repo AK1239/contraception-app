@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Image, ImageSourcePropType } from "react-native";
 import { Card, Text, Button } from "react-native-paper";
 
 type HomeSectionCardProps = {
@@ -8,12 +8,16 @@ type HomeSectionCardProps = {
   ctaLabel: string;
   onPress: () => void;
   leadingEmoji?: string;
+  leadingIcon?: React.ReactNode;
+  leadingImageSource?: ImageSourcePropType;
   backgroundColor?: string;
   buttonColor?: string;
   disabled?: boolean;
 };
 
-export default function HomeSectionCard({ title, description, ctaLabel, onPress, leadingEmoji, backgroundColor = "#FFFFFF", buttonColor = "#6D28D9", disabled = false }: HomeSectionCardProps) {
+export default function HomeSectionCard({ title, description, ctaLabel, onPress, leadingEmoji, leadingIcon, leadingImageSource, backgroundColor = "#FFFFFF", buttonColor = "#6D28D9", disabled = false }: HomeSectionCardProps) {
+  const hasLeadingContent = leadingEmoji || leadingIcon || leadingImageSource;
+
   return (
     <Pressable 
       onPress={disabled ? undefined : onPress}
@@ -27,9 +31,15 @@ export default function HomeSectionCard({ title, description, ctaLabel, onPress,
       <Card style={[styles.card, { backgroundColor }, disabled && styles.disabledCard]} mode="elevated">
         <Card.Content style={styles.cardContent}>
           {/* Icon Container */}
-          {leadingEmoji && (
+          {hasLeadingContent && (
             <View style={[styles.iconContainer, disabled && styles.disabledIcon]}>
-              <Text style={styles.emoji}>{leadingEmoji}</Text>
+              {leadingImageSource ? (
+                <Image source={leadingImageSource} style={styles.leadingImage} resizeMode="contain" />
+              ) : leadingIcon ? (
+                leadingIcon
+              ) : leadingEmoji ? (
+                <Text style={styles.emoji}>{leadingEmoji}</Text>
+              ) : null}
             </View>
           )}
 
@@ -102,6 +112,10 @@ const styles = StyleSheet.create({
   },
   emoji: {
     fontSize: 30,
+  },
+  leadingImage: {
+    width: 36,
+    height: 36,
   },
   textContainer: {
     gap: 8,

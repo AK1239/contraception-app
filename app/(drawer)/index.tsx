@@ -4,6 +4,7 @@ import { Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import HomeSectionCard from "../../src/components/HomeSectionCard";
 import WelcomeCard from "../../src/components/WelcomeCard";
 import { useIsHealthcareProvider } from "../../src/hooks/useUserRole";
@@ -33,7 +34,7 @@ export default function HomePage() {
 
       {isHealthcareProvider && (
         <HomeSectionCard
-          leadingEmoji="🎯"
+          leadingImageSource={require("../../assets/who-logo.png")}
           title={t("home.chooseTitle")}
           description={t("home.chooseDescription")}
           ctaLabel={t("home.chooseCta")}
@@ -80,12 +81,23 @@ export default function HomePage() {
 
       {isHealthcareProvider && (
         <HomeSectionCard
-          leadingEmoji="✂️"
+          leadingIcon={<MaterialCommunityIcons name="leaf" size={32} color="#059669" />}
+          title={t("home.naturalMethodEligibilityTitle")}
+          description={t("home.naturalMethodEligibilityDescription")}
+          ctaLabel={t("home.naturalMethodEligibilityCta")}
+          onPress={() => router.push("/(drawer)/fab-eligibility")}
+          buttonColor="#059669"
+        />
+      )}
+
+      {isHealthcareProvider && (
+        <HomeSectionCard
+          leadingIcon={<MaterialCommunityIcons name="ribbon" size={32} color="#E53935" />}
           title={t("home.sterilizationTitle")}
           description={t("home.sterilizationDescription")}
           ctaLabel={t("home.sterilizationCta")}
           onPress={() => router.push("/(drawer)/sterilization-eligibility")}
-          buttonColor="#E53935"       
+          buttonColor="#E53935"
         />
       )}
 

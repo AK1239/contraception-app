@@ -62,6 +62,10 @@ const en = {
     naturalDescription:
       "Prefer non-modern methods? Try our Calendar Method Calculator or Standard Days Method Calculator to identify your fertile days and avoid unprotected intercourse during those times.",
     naturalCta: "Natural Method Calculators",
+    naturalMethodEligibilityTitle: "Natural Method Eligibility (FAB)",
+    naturalMethodEligibilityDescription:
+      "Assess eligibility for Fertility Awareness-Based methods (Calendar, Standard Days, etc.) using structured clinical criteria.",
+    naturalMethodEligibilityCta: "Natural Method Eligibility",
     sterilizationTitle: "Sterilization Eligibility",
     sterilizationDescription:
       "Check eligibility for permanent contraception. Assess female surgical sterilization or male sterilization (vasectomy) using WHO Medical Eligibility Criteria.",

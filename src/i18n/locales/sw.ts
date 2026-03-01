@@ -62,6 +62,10 @@ const sw = {
     naturalDescription:
       "Unapendelea njia zisizo za kisasa? Jaribu Kihesabu cha Njia ya Kalenda au Kihesabu cha Njia ya Siku za Kawaida kutambua siku zako za uzazi na kuepuka tendo la ndoa bila kinga wakati huo.",
     naturalCta: "Vihesabu vya Njia za Asili",
+    naturalMethodEligibilityTitle: "Ustahili wa Njia za Asili (FAB)",
+    naturalMethodEligibilityDescription:
+      "Tathmini ustahili wa njia za Uzazi Kulingana na Ufahamu (Kalenda, Siku za Kawaida, n.k.) kwa kutumia vigezo vya kliniki vilivyopangwa.",
+    naturalMethodEligibilityCta: "Ustahili wa Njia za Asili",
     sterilizationTitle: "Ustahili wa Kufungwa",
     sterilizationDescription:
       "Angalia ustahili wa uzazi wa mpango wa kudumu. Tathmini kufungwa kwa upasuaji kwa mwanamke au vasectomy kwa mwanaume kwa kutumia Vigezo vya WHO.",
