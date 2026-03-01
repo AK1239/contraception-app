@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from "react";
+import React, { useRef, useCallback, useState, useLayoutEffect } from "react";
 import { View, StyleSheet, ScrollView, type NativeSyntheticEvent, type NativeScrollEvent } from "react-native";
 import { Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
@@ -45,6 +45,7 @@ function buildRows(questions: SectionQuestion[]): QuestionRow[] {
 
 /** Section-like shape for questionnaire pages (supports both MEC and FAB sections) */
 export interface SectionPageSection {
+  key?: string;
   title: string;
   questions: SectionQuestion[];
 }
@@ -74,6 +75,14 @@ export function SectionPage({
   const scrollViewRef = useRef<ScrollView>(null);
   const questionViewRefs = useRef<Map<string, View>>(new Map());
   const [viewportInfo, setViewportInfo] = useState({ scrollY: 0, height: 0 });
+  const mountTimeRef = useRef<number>(Date.now());
+
+  // Ensure scroll starts at top when section mounts (prevents auto-scroll-to-bottom from CheckboxGroup init)
+  const sectionId = section.key ?? section.title;
+  useLayoutEffect(() => {
+    mountTimeRef.current = Date.now();
+    scrollViewRef.current?.scrollTo({ y: 0, animated: false });
+  }, [sectionId]);
 
   // Track scroll position and viewport height
   const handleScroll = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -86,6 +95,11 @@ export function SectionPage({
   const handleAnswerChange = useCallback(
     (questionId: string, value: AnswerValue) => {
       onAnswerChange(questionId, value);
+
+      // Skip auto-scroll during initial mount period (CheckboxGroup initializes unanswered questions
+      // on mount, which would trigger scroll-to-bottom for sections with grouped questions)
+      const timeSinceMount = Date.now() - mountTimeRef.current;
+      if (timeSinceMount < 400) return;
 
       // Find the current question index in the CURRENT visible questions
       const currentIndex = visibleQuestions.findIndex((q) => q.id === questionId);
