@@ -10,7 +10,6 @@ interface SearchResultsViewProps {
   specificMethods: SpecificMethod[];
   showGrouping: boolean;
   searchQuery: string;
-  noResultsText?: string;
   categoryCardType?: 'modern' | 'temporary' | 'default';
 }
 
@@ -19,43 +18,45 @@ export default function SearchResultsView({
   specificMethods,
   showGrouping,
   searchQuery,
-  noResultsText = "Try different search terms",
   categoryCardType = 'default',
 }: SearchResultsViewProps) {
   const renderCategoryCard = (category: MethodCategory) => {
-    const commonProps = {
-      key: category.id,
-      title: category.title,
-      description: category.description,
-      backgroundColor: category.backgroundColor,
-      buttonColor: category.buttonColor,
-    };
+    const title = category.title;
+    const description = category.description;
+    const backgroundColor = category.backgroundColor;
+    const buttonColor = category.buttonColor;
 
     if (categoryCardType === 'modern') {
-      // ModernMethodCard only accepts string icons
       const iconString = typeof category.icon === 'string' ? category.icon : '📋';
       return (
         <ModernMethodCard
-          {...commonProps}
+          title={title}
+          description={description}
+          backgroundColor={backgroundColor}
+          buttonColor={buttonColor}
           icon={iconString}
           onSeeOptionsPress={category.onPress}
         />
       );
     } else if (categoryCardType === 'temporary') {
-      // TemporaryMethodCard accepts string or ReactNode
       return (
         <TemporaryMethodCard
-          {...commonProps}
+          title={title}
+          description={description}
+          backgroundColor={backgroundColor}
+          buttonColor={buttonColor}
           icon={category.icon}
           onExplorePress={category.onPress}
         />
       );
     } else {
-      // NaturalMethodCard only accepts string icons
       const iconString = typeof category.icon === 'string' ? category.icon : '📋';
       return (
         <NaturalMethodCard
-          {...commonProps}
+          title={title}
+          description={description}
+          backgroundColor={backgroundColor}
+          buttonColor={buttonColor}
           icon={iconString}
           onKnowMorePress={category.onPress}
         />
@@ -73,7 +74,11 @@ export default function SearchResultsView({
               Categories ({categories.length})
             </Text>
           )}
-          {categories.map(renderCategoryCard)}
+          {categories.map((category) => (
+            <React.Fragment key={category.id}>
+              {renderCategoryCard(category)}
+            </React.Fragment>
+          ))}
         </View>
       )}
 
@@ -108,7 +113,6 @@ export default function SearchResultsView({
         specificMethods.length === 0 && (
           <View style={styles.noResultsContainer}>
             <Text style={styles.noResultsText}>No methods found</Text>
-            <Text style={styles.noResultsSubtext}>{noResultsText}</Text>
           </View>
         )}
     </View>
@@ -145,11 +149,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#6B7280',
-    marginBottom: 8,
-  },
-  noResultsSubtext: {
-    fontSize: 14,
-    color: '#9CA3AF',
-    textAlign: 'center',
   },
 });

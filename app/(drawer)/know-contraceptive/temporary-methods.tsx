@@ -16,7 +16,7 @@ const TShapeIcon = () => (
 
 export default function TemporaryMethodsScreen() {
   const insets = useSafeAreaInsets();
-  const { getTemporaryMethodsData, searchTemporaryPlaceholder, noResultsTemporary } = useTranslatedMethodsData();
+  const { getTemporaryMethodsData, searchTemporaryPlaceholder } = useTranslatedMethodsData();
   const { categories, specificMethods } = getTemporaryMethodsData(<TShapeIcon />);
   
   const {
@@ -50,7 +50,6 @@ export default function TemporaryMethodsScreen() {
         specificMethods={filteredSpecificMethods}
         showGrouping={showGrouping}
         searchQuery={searchQuery}
-        noResultsText={noResultsTemporary}
         categoryCardType="temporary"
       />
     </ScrollView>

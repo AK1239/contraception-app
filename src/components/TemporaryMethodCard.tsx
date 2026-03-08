@@ -27,8 +27,9 @@ export default function TemporaryMethodCard({
         pressed && styles.pressed
       ]}
     >
-      <Card style={[styles.card, { backgroundColor }]} mode="elevated">
-        <Card.Content style={styles.cardContent}>
+      <Card style={[styles.card, { backgroundColor, overflow: 'visible' }]} mode="elevated">
+        <View style={styles.cardContentWrapper}>
+          <Card.Content style={styles.cardContent}>
           {/* Icon Container */}
           <View style={styles.iconContainer}>
             {typeof icon === 'string' ? (
@@ -61,6 +62,7 @@ export default function TemporaryMethodCard({
             Explore
           </Button>
         </Card.Content>
+        </View>
       </Card>
     </Pressable>
   );
@@ -74,6 +76,10 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.95,
     transform: [{ scale: 0.98 }],
+  },
+  cardContentWrapper: {
+    overflow: 'hidden' as const,
+    borderRadius: 20,
   },
   card: {
     borderRadius: 20,

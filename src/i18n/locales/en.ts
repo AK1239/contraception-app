@@ -187,6 +187,7 @@ const en = {
   knowContraceptive: {
     searchPlaceholder: "Search contraceptive methods...",
     noResults: 'No methods found matching "{{query}}"',
+    noResultsHintAll: 'Try "tubal ligation", "condom", "levonorgestrel", "calendar", or "IUD"',
     naturalMethodsTitle: "Natural Methods",
     naturalMethodsDescription:
       "Explore natural family planning methods including Lactational Amenorrhea, Calendar Method, and Standard Days Method. These methods work with your body's natural fertility cycle.",

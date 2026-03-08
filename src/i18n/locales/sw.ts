@@ -189,6 +189,7 @@ const sw = {
   knowContraceptive: {
     searchPlaceholder: "Tafuta njia za uzazi wa mpango...",
     noResults: 'Hakuna njia zilizopatikana zinazolingana na "{{query}}"',
+    noResultsHintAll: 'Jaribu "tubal ligation", "kondomu", "levonorgestrel", "kalenda", au "IUD"',
     naturalMethodsTitle: "Njia za Asili",
     naturalMethodsDescription:
       "Chunguza njia za uzazi wa mpango za asili ikiwemo Uvumilivu wa Kunyonyesha, Njia ya Kalenda, na Njia ya Siku za Kawaida. Njia hizi zinafanya kazi na mzunguko wako wa uzazi wa asili.",

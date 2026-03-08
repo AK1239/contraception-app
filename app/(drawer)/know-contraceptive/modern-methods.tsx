@@ -44,7 +44,6 @@ export default function ModernMethodsScreen() {
         specificMethods={filteredSpecificMethods}
         showGrouping={showGrouping}
         searchQuery={searchQuery}
-        noResultsText={t("knowContraceptive.noMethodsHintModern")}
         categoryCardType="modern"
       />
     </ScrollView>
