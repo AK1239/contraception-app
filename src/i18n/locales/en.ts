@@ -24,6 +24,7 @@ const en = {
   // ─── Navigation / Drawer ─────────────────────────────────────────────────────
   nav: {
     home: "Home",
+    whoMecScreen: "WHO MEC Screen",
     knowYourContraceptive: "Know Your Contraceptive",
     naturalMethods: "Natural Methods",
     modernMethods: "Modern Methods",

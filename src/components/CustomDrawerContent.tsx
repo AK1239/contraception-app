@@ -31,6 +31,12 @@ const drawerSections: DrawerSection[] = [
     route: '/(drawer)',
   },
   {
+    id: 'choose-contraceptive',
+    labelKey: 'nav.whoMecScreen',
+    icon: 'checkmark-circle-outline',
+    route: '/(drawer)/choose-contraceptive',
+  },
+  {
     id: 'know-contraceptive',
     labelKey: 'nav.knowYourContraceptive',
     icon: 'information-circle-outline',
@@ -53,12 +59,6 @@ const drawerSections: DrawerSection[] = [
     labelKey: 'nav.personalizeYourContraceptive',
     icon: 'heart-outline',
     route: '/(drawer)/personalize',
-  },
-  {
-    id: 'choose-contraceptive',
-    labelKey: 'nav.chooseYourContraceptive',
-    icon: 'checkmark-circle-outline',
-    route: '/(drawer)/choose-contraceptive',
   },
   {
     id: 'compare-methods',

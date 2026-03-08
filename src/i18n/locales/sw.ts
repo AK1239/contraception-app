@@ -24,6 +24,7 @@ const sw = {
   // ─── Navigation / Drawer ─────────────────────────────────────────────────────
   nav: {
     home: "Nyumbani",
+    whoMecScreen: "Skrini ya WHO MEC",
     knowYourContraceptive: "Jua Uzazi wa Mpango Wako",
     naturalMethods: "Njia za Asili",
     modernMethods: "Njia za Kisasa",
