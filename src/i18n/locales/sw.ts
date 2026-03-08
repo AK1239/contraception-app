@@ -1,5 +1,6 @@
 import { questionnaireSw } from "./questionnaire-sw";
 import { fabSw } from "./fab-sw";
+import { ecpSw } from "./ecp-sw";
 import { methodsSw } from "./methods-sw";
 
 const sw = {
@@ -33,6 +34,7 @@ const sw = {
     standardDayCalculator: "Kihesabu cha Njia ya Siku za Kawaida",
     calendarMethodCalculator: "Kihesabu cha Njia ya Kalenda",
     naturalMethodEligibility: "Ustahili wa Njia za Asili (FAB)",
+    ecpSafety: "Usalama wa Uzazi wa Mpango wa Dharura",
     sterilizationEligibility: "Ustahili wa Kufungwa",
     femaleSterilization: "Ustahili wa Kufungwa kwa Mwanamke",
     maleSterilization: "Ustahili wa Kufungwa kwa Mwanaume",
@@ -66,6 +68,10 @@ const sw = {
     naturalMethodEligibilityDescription:
       "Tathmini ustahili wa njia za Uzazi Kulingana na Ufahamu (Kalenda, Siku za Kawaida, n.k.) kwa kutumia vigezo vya kliniki vilivyopangwa.",
     naturalMethodEligibilityCta: "Ustahili wa Njia za Asili",
+    ecpSafetyTitle: "Usalama wa Uzazi wa Mpango wa Dharura",
+    ecpSafetyDescription:
+      "Chuja ECP zisizo salama kulingana na WHO MEC 2025. Kiolesura kinachotumia checkboxes kwa LNG, UPA na COC Yuzpe na maonyo ya kliniki.",
+    ecpSafetyCta: "Tathmini Usalama wa ECP",
     sterilizationTitle: "Ustahili wa Kufungwa",
     sterilizationDescription:
       "Angalia ustahili wa uzazi wa mpango wa kudumu. Tathmini kufungwa kwa upasuaji kwa mwanamke au vasectomy kwa mwanaume kwa kutumia Vigezo vya WHO.",
@@ -463,6 +469,9 @@ const sw = {
 
   // ─── FAB Eligibility ────────────────────────────────────────────────────────────
   fab: fabSw,
+
+  // ─── Emergency Contraception Safety ────────────────────────────────────────────
+  ecp: ecpSw,
 
   // ─── Calendar Method Calculator ─────────────────────────────────────────────────
   calendar: {

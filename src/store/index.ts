@@ -9,6 +9,7 @@ import femaleSterilizationEligibilityReducer from "./slices/femaleSterilizationE
 import maleSterilizationEligibilityReducer from "./slices/maleSterilizationEligibility";
 import standardDayMethodReducer from "./slices/standardDayMethod";
 import calendarMethodReducer from "./slices/calendarMethod";
+import ecpSafetyReducer from "./slices/ecpSafety";
 import { questionnairePersistConfig, resultsPersistConfig, userRolePersistConfig, languagePersistConfig } from "./persistConfig";
 
 // Create persisted reducers with nested configuration for granular control
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   maleSterilizationEligibility: maleSterilizationEligibilityReducer,
   standardDayMethod: standardDayMethodReducer,
   calendarMethod: calendarMethodReducer,
+  ecpSafety: ecpSafetyReducer,
 });
 
 export const store = configureStore({

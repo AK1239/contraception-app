@@ -92,6 +92,17 @@ export default function HomePage() {
 
       {isHealthcareProvider && (
         <HomeSectionCard
+          leadingIcon={<MaterialCommunityIcons name="pill" size={32} color="#7C3AED" />}
+          title={t("home.ecpSafetyTitle")}
+          description={t("home.ecpSafetyDescription")}
+          ctaLabel={t("home.ecpSafetyCta")}
+          onPress={() => router.push("/(drawer)/ecp-safety")}
+          buttonColor="#7C3AED"
+        />
+      )}
+
+      {isHealthcareProvider && (
+        <HomeSectionCard
           leadingIcon={<MaterialCommunityIcons name="ribbon" size={32} color="#E53935" />}
           title={t("home.sterilizationTitle")}
           description={t("home.sterilizationDescription")}

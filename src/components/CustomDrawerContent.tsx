@@ -89,6 +89,12 @@ const drawerSections: DrawerSection[] = [
     route: '/(drawer)/fab-eligibility',
   },
   {
+    id: 'ecp-safety',
+    labelKey: 'nav.ecpSafety',
+    icon: 'medical-outline',
+    route: '/(drawer)/ecp-safety',
+  },
+  {
     id: 'sterilization-eligibility',
     labelKey: 'nav.sterilizationEligibility',
     icon: 'medical-outline',
@@ -112,6 +118,7 @@ const drawerSections: DrawerSection[] = [
 const GENERAL_PUBLIC_HIDDEN_IDS = [
   'choose-contraceptive',
   'natural-method-eligibility',
+  'ecp-safety',
   'sterilization-eligibility',
 ];
 

@@ -1,6 +1,7 @@
 import { questionnaireEn } from "./questionnaire-en";
 import { methodsEn } from "./methods-en";
 import { fabEn } from "./fab-en";
+import { ecpEn } from "./ecp-en";
 
 const en = {
   // ─── Common ──────────────────────────────────────────────────────────────────
@@ -33,6 +34,7 @@ const en = {
     standardDayCalculator: "Standard Day Method Calculator",
     calendarMethodCalculator: "Calendar Method Calculator",
     naturalMethodEligibility: "Natural Method Eligibility (FAB)",
+    ecpSafety: "Emergency Contraception Safety",
     sterilizationEligibility: "Sterilization Eligibility",
     femaleSterilization: "Female Sterilization Eligibility",
     maleSterilization: "Male Sterilization Eligibility",
@@ -66,6 +68,10 @@ const en = {
     naturalMethodEligibilityDescription:
       "Assess eligibility for Fertility Awareness-Based methods (Calendar, Standard Days, etc.) using structured clinical criteria.",
     naturalMethodEligibilityCta: "Natural Method Eligibility",
+    ecpSafetyTitle: "Emergency Contraception Safety",
+    ecpSafetyDescription:
+      "Filter unsafe ECPs based on WHO MEC 2025. Checkbox-driven interface for LNG, UPA, and COC Yuzpe with time window and clinical warnings.",
+    ecpSafetyCta: "ECP Safety Assessment",
     sterilizationTitle: "Sterilization Eligibility",
     sterilizationDescription:
       "Check eligibility for permanent contraception. Assess female surgical sterilization or male sterilization (vasectomy) using WHO Medical Eligibility Criteria.",
@@ -462,6 +468,9 @@ const en = {
 
   // ─── FAB Eligibility ────────────────────────────────────────────────────────────
   fab: fabEn,
+
+  // ─── Emergency Contraception Safety ────────────────────────────────────────────
+  ecp: ecpEn,
 
   // ─── Calendar Method Calculator ─────────────────────────────────────────────────
   calendar: {
