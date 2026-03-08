@@ -49,6 +49,7 @@ export const methodsSw = {
     barrier: "Kizuizi",
     permanent: "Kudumu",
     natural: "Asili",
+    emergency: "Dharura",
   },
 
   // MEC categories
@@ -533,6 +534,101 @@ export const methodsSw = {
         additionalMethods_2_description:
           "Hiari kwa usahihi bora. Vifaa hivi hutambua mwongozo wa hormoni ya luteinizing inayotokea kabla ya ovulation, ikitoa wakati sahihi zaidi wa kipindi chako cha uzazi.",
       },
+    },
+    "levonorgestrel-ec": {
+      name: "Kidonge cha Dharura cha Levonorgestrel",
+      shortName: "LNG EC",
+      description:
+        "Uzazi wa mpango wa dharura wa levonorgestrel una homoni ya progestin inayozuia mimba kwa kimsingi kwa kuahirisha au kuzuia ovulation. Haumalizi mimba iliyopo.",
+      efficacy: {
+        label: "Excellent",
+        typicalUse:
+          "Kiwango cha mimba takriban 1–2% inapochukuliwa ndani ya kipindi kinachopendekezwa. Kinafaa zaidi kinapochukuliwa haraka iwezekanavyo baada ya ngono.",
+        perfectUse:
+          "Kiwango cha mimba takriban 1–2% inapochukuliwa ndani ya masaa 72.",
+      },
+      advantages_0: "Inapatikana kwa urahisi",
+      advantages_1: "Rahisi kutumia",
+      advantages_2: "Vikwazo vichache",
+      advantages_3: "Hauathiri uzazi wa baadaye",
+      disadvantages_0: "Ufanisi unapungua kadri muda unavyopita",
+      disadvantages_1: "Si nzuri kama IUD ya shaba au ulipristal",
+      disadvantages_2: "Inaweza kuwa si nzuri kwa wanawake wenye uzani au BMI ya juu",
+      howToUse:
+        "Chaguzi mbili za dozi: Dozi moja: 1.5 mg levonorgestrel kinywani. AU Mfumo wa dozi mbili: 0.75 mg levonorgestrel kuchukuliwa mara mbili, masaa 12 kati.",
+      timeToWork:
+        "Inapaswa kuchukuliwa ndani ya masaa 72 (siku 3) baada ya ngono isiyo na kinga. Bado inaweza kutumika hadi masaa 120, lakini ufanisi unapungua kadri muda unavyopita.",
+      sideNotes:
+        "Jaribio la mimba la kawaida halihitajiki kabla ya matumizi. Uzazi wa mpango wa kawaida unaweza kuanza mara moja baada ya kuchukua levonorgestrel EC. Ikiwa kutapika kutokea ndani ya masaa 3, dozi inapaswa kurudiwa.",
+    },
+    "ulipristal-acetate": {
+      name: "Kidonge cha Dharura cha Ulipristal Acetate",
+      shortName: "UPA",
+      description:
+        "Ulipristal acetate ni modulator ya mpokeaji wa progesterone inayahirisha ovulation hata wakati ovulation iko karibu. Inafaa zaidi kuliko levonorgestrel, hasa mwishoni mwa dirisha la siku 5.",
+      efficacy: {
+        label: "Excellent",
+        typicalUse:
+          "Kiwango cha mimba takriban ~1.2%. Inadumisha ufanisi kote dirisha la masaa 120 baada ya ngono.",
+        perfectUse: "Kiwango cha mimba takriban ~1.2%.",
+      },
+      advantages_0: "Inafaa zaidi kuliko levonorgestrel",
+      advantages_1: "Inafaa hadi siku 5 (masaa 120)",
+      advantages_2: "Mfumo wa dozi moja",
+      disadvantages_0: "Inaweza kuhitaji dawa ya daktari katika nchi zingine",
+      disadvantages_1: "Uzazi wa mpango wa homoni lazima uahirishwe baada ya matumizi",
+      howToUse: "Dozi moja kinywani: 30 mg ulipristal acetate.",
+      timeToWork:
+        "Inafaa ikiwa inachukuliwa ndani ya masaa 120 (siku 5) baada ya ngono isiyo na kinga.",
+      sideNotes:
+        "Baada ya kuchukua ulipristal, uzazi wa mpango wa homoni haupaswi kuanza kwa siku 5 kwa sababu unaweza kupunguza ufanisi wa ulipristal. Tumia kondomu au epuka ngono wakati huu.",
+    },
+    "coc-yuzpe-ec": {
+      name: "Vidonge vya Mchanganyiko (Njia ya Yuzpe)",
+      shortName: "COC Yuzpe",
+      description:
+        "Njia ya Yuzpe inatumia dozi kubwa za vidonge vya kawaida vya uzazi wa mpango vyenye ethinyl estradiol na levonorgestrel.",
+      efficacy: {
+        label: "Good",
+        typicalUse:
+          "Si nzuri kama levonorgestrel au ulipristal. Kiwango cha juu cha athari kama kichefuchefu na kutapika.",
+        perfectUse: "Si nzuri kama vidonge maalum vya uzazi wa mpango wa dharura.",
+      },
+      advantages_0:
+        "Inaweza kutumika wakati vidonge maalum vya uzazi wa mpango wa dharura havipatikani",
+      disadvantages_0: "Matukio ya juu ya kichefuchefu na kutapika",
+      disadvantages_1:
+        "Ufanisi wa chini ikilinganishwa na njia zingine za uzazi wa mpango wa dharura",
+      howToUse:
+        "Dozi mbili zilizochukuliwa masaa 12 kati. Kila dozi ina: 100 µg ethinyl estradiol na 0.5 mg levonorgestrel.",
+      timeToWork:
+        "Inapaswa kuchukuliwa ndani ya masaa 72 baada ya ngono isiyo na kinga.",
+      sideNotes:
+        "Kiwango cha juu cha kichefuchefu na kutapika ikilinganishwa na levonorgestrel au ulipristal. Fikiria dawa ya kuzuia kutapika ikiwa inapatikana.",
+    },
+    "copper-iud-emergency": {
+      name: "Kifaa cha Ndani ya Uterasi cha Shaba (IUD ya Dharura)",
+      shortName: "IUD ya Shaba EC",
+      description:
+        "Kifaa cha ndani ya uterasi cha shaba (Cu-IUD) kinaweza kuingizwa ndani ya uterasi kuzuia mimba baada ya ngono isiyo na kinga. Shaba inaingilia uwezo wa mbegu na fertilization na inaweza pia kuzuia implantation.",
+      efficacy: {
+        label: "Perfect",
+        typicalUse:
+          "Njia ya uzazi wa mpango wa dharura yenye ufanisi zaidi. Kiwango cha mimba takriban 0.1%.",
+        perfectUse:
+          "Ufanisi zaidi ya 99%. Kiwango cha mimba takriban 0.1%.",
+      },
+      advantages_0: "Njia ya EC yenye ufanisi zaidi",
+      advantages_1: "Inatoa uzazi wa mpango wa muda mrefu (miaka 5–12)",
+      advantages_2: "Kurudi kwa uzazi mara moja baada ya kuondolewa",
+      disadvantages_0: "Inahitaji kuingizwa na mtoa huduma wa afya aliyejulishwa",
+      disadvantages_1: "Inaweza kuongeza uvujaji wa hedhi na maumivu",
+      disadvantages_2: "Haifai katika maambukizi fulani ya pelvis",
+      howToUse:
+        "Ingiza IUD ya shaba ndani ya siku 5 (masaa 120) ya ngono isiyo na kinga.",
+      timeToWork: "Inafanya kazi mara moja baada ya kuingizwa.",
+      sideNotes:
+        "Vigezo vya ustahili kwa matumizi ya dharura ya IUD ya shaba yanafuata Vigezo vya Ustahili wa Kimatibabu vya WHO (MEC). IUD ya shaba haipaswi kutumika ikiwa mimba tayari imethibitishwa au ikiwa kuna vikwazo kama: maambukizi ya sasa ya pelvis, uvujaji usioelezeka wa uke, kansa ya shingo ya tumbo au uterasi.",
     },
   },
 } as const;

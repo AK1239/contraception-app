@@ -46,6 +46,18 @@ export default function KnowContraceptiveLayout() {
         }}
       />
       <Stack.Screen
+        name="emergency-methods"
+        options={{
+          title: "Emergency Contraception",
+        }}
+      />
+      <Stack.Screen
+        name="emergency-overview"
+        options={{
+          title: "About Emergency Contraception",
+        }}
+      />
+      <Stack.Screen
         name="temporary-methods"
         options={{
           title: "Temporary Methods",
@@ -103,7 +115,7 @@ function SmartBackButton({
       return;
     }
 
-    if (route.name === 'natural-methods' || route.name === 'modern-methods') {
+    if (route.name === 'natural-methods' || route.name === 'modern-methods' || route.name === 'emergency-methods') {
       router.push('/(drawer)/know-contraceptive');
       return;
     }

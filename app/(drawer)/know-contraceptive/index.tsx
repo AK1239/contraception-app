@@ -20,6 +20,10 @@ export default function KnowContraceptiveIndexScreen() {
     router.push('/(drawer)/know-contraceptive/modern-methods');
   };
 
+  const handleEmergencyMethods = () => {
+    router.push('/(drawer)/know-contraceptive/emergency-methods');
+  };
+
   // Define all searchable items with their content
   const allItems = [
     {
@@ -43,6 +47,17 @@ export default function KnowContraceptiveIndexScreen() {
       backgroundColor: '#F0F9FF',
       buttonColor: '#0EA5E9',
       searchTerms: 'modern temporary permanent hormonal pill injection implant iud condom patch ring sterilization',
+    },
+    {
+      id: 'emergency-methods',
+      emoji: '⏱️',
+      title: t("knowContraceptive.emergencyMethodsTitle"),
+      description: t("knowContraceptive.emergencyMethodsDescription"),
+      ctaLabel: t("knowContraceptive.emergencyMethodsCta"),
+      onPress: handleEmergencyMethods,
+      backgroundColor: '#EDE9FE',
+      buttonColor: '#7C3AED',
+      searchTerms: 'emergency contraception pill levonorgestrel ulipristal yuzpe copper iud after unprotected',
     },
   ];
 

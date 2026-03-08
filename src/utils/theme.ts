@@ -30,6 +30,8 @@ export const getCategoryColor = (category: string): string => {
       return '#f3e5f5';
     case 'natural':
       return '#fce4ec';
+    case 'emergency':
+      return '#ede9fe';
     default:
       return '#f5f5f5';
   }
@@ -51,6 +53,8 @@ export const getCategoryIconBackground = (category: string): string => {
       return '#FEE2E2';
     case 'natural':
       return '#FEF3C7';
+    case 'emergency':
+      return '#DDD6FE';
     default:
       return '#E5E7EB';
   }
@@ -71,6 +75,8 @@ export const getCategoryIcon = (category: string): string => {
       return '🛡️';
     case 'natural':
       return '🌿';
+    case 'emergency':
+      return '⏱️';
     default:
       return '📋';
   }

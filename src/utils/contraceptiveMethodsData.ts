@@ -8,7 +8,7 @@ export interface ContraceptiveMethodData {
   id: string;
   name: string;
   shortName?: string;
-  category: 'hormonal' | 'non-hormonal' | 'barrier' | 'permanent' | 'natural';
+  category: 'hormonal' | 'non-hormonal' | 'barrier' | 'permanent' | 'natural' | 'emergency';
   icon: string;
   description: string;
   image?: any; // Image source from require() - React Native image resource
@@ -483,6 +483,108 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
         },
       ],
     },
+  },
+  // ─── Emergency Contraception ─────────────────────────────────────────────────
+  {
+    id: 'levonorgestrel-ec',
+    name: 'Levonorgestrel Emergency Pill',
+    shortName: 'LNG EC',
+    category: 'emergency',
+    icon: '💊',
+    description: 'Levonorgestrel emergency contraception contains a progestin hormone that prevents pregnancy mainly by delaying or inhibiting ovulation. It does not terminate an existing pregnancy.',
+    efficacy: {
+      label: 'Excellent',
+      typicalUse: 'Pregnancy rate approximately 1–2% when taken within the recommended time frame. More effective when taken as soon as possible after intercourse.',
+      perfectUse: 'Pregnancy rate approximately 1–2% when taken within 72 hours.',
+    },
+    advantages: [
+      'Widely available',
+      'Easy to use',
+      'Few contraindications',
+      'Does not affect future fertility',
+    ],
+    disadvantages: [
+      'Effectiveness decreases as time passes',
+      'Less effective than copper IUD or ulipristal',
+      'May be less effective in women with higher body weight or BMI',
+    ],
+    howToUse: 'Two dosing options: Single dose: 1.5 mg levonorgestrel orally. OR Two-dose regimen: 0.75 mg levonorgestrel taken twice, 12 hours apart.',
+    timeToWork: 'Should be taken within 72 hours (3 days) after unprotected intercourse. Can still be used up to 120 hours, but effectiveness decreases with time.',
+    sideNotes: 'Routine pregnancy testing is not required before use. Regular contraception can be started immediately after taking levonorgestrel EC. If vomiting occurs within 3 hours, the dose should be repeated.',
+  },
+  {
+    id: 'ulipristal-acetate',
+    name: 'Ulipristal Acetate Emergency Pill',
+    shortName: 'UPA',
+    category: 'emergency',
+    icon: '💊',
+    description: 'Ulipristal acetate is a selective progesterone receptor modulator that delays ovulation even when ovulation is imminent. It is more effective than levonorgestrel, especially later in the 5-day window.',
+    efficacy: {
+      label: 'Excellent',
+      typicalUse: 'Pregnancy rate approximately ~1.2%. Maintains effectiveness throughout the 120-hour window after intercourse.',
+      perfectUse: 'Pregnancy rate approximately ~1.2%.',
+    },
+    advantages: [
+      'More effective than levonorgestrel',
+      'Effective up to 5 days (120 hours)',
+      'Single-dose regimen',
+    ],
+    disadvantages: [
+      'May require prescription in some countries',
+      'Hormonal contraception must be delayed after use',
+    ],
+    howToUse: 'Single oral dose: 30 mg ulipristal acetate.',
+    timeToWork: 'Effective if taken within 120 hours (5 days) after unprotected intercourse.',
+    sideNotes: 'After taking ulipristal, hormonal contraception should not be started for 5 days because it may reduce the effectiveness of ulipristal. Use condoms or abstain from intercourse during this period.',
+  },
+  {
+    id: 'coc-yuzpe-ec',
+    name: 'Combined Oral Contraceptives (Yuzpe Method)',
+    shortName: 'COC Yuzpe',
+    category: 'emergency',
+    icon: '💊',
+    description: 'The Yuzpe method uses higher doses of regular combined oral contraceptive pills containing ethinyl estradiol and levonorgestrel.',
+    efficacy: {
+      label: 'Good',
+      typicalUse: 'Less effective than levonorgestrel or ulipristal. Higher rate of side effects such as nausea and vomiting.',
+      perfectUse: 'Less effective than dedicated emergency contraceptive pills.',
+    },
+    advantages: [
+      'Can be used when dedicated emergency contraceptive pills are unavailable',
+    ],
+    disadvantages: [
+      'Higher incidence of nausea and vomiting',
+      'Lower effectiveness compared with other emergency contraception methods',
+    ],
+    howToUse: 'Two doses taken 12 hours apart. Each dose contains: 100 µg ethinyl estradiol and 0.5 mg levonorgestrel.',
+    timeToWork: 'Should be taken within 72 hours after unprotected intercourse.',
+    sideNotes: 'Higher rate of nausea and vomiting compared to levonorgestrel or ulipristal. Consider antiemetic if available.',
+  },
+  {
+    id: 'copper-iud-emergency',
+    name: 'Copper Intrauterine Device (Emergency IUD)',
+    shortName: 'Copper IUD EC',
+    category: 'emergency',
+    icon: '🔧',
+    description: 'A copper intrauterine device (Cu-IUD) can be inserted into the uterus to prevent pregnancy after unprotected intercourse. Copper interferes with sperm motility and fertilization and may also prevent implantation.',
+    efficacy: {
+      label: 'Perfect',
+      typicalUse: 'Most effective emergency contraception method. Pregnancy rate approximately 0.1%.',
+      perfectUse: 'Over 99% effective. Pregnancy rate approximately 0.1%.',
+    },
+    advantages: [
+      'Most effective EC method',
+      'Provides long-term contraception (5–12 years)',
+      'Immediate return to fertility after removal',
+    ],
+    disadvantages: [
+      'Requires insertion by trained healthcare provider',
+      'May increase menstrual bleeding and cramps',
+      'Not suitable in certain pelvic infections',
+    ],
+    howToUse: 'Insert copper IUD within 5 days (120 hours) of unprotected intercourse.',
+    timeToWork: 'Works immediately after insertion.',
+    sideNotes: 'Eligibility criteria for copper IUD emergency use follow the WHO Medical Eligibility Criteria (MEC). Copper IUD should not be used if pregnancy is already established or if there are contraindications such as: current pelvic infection, unexplained vaginal bleeding, cervical or uterine cancer.',
   },
 ];
 

@@ -184,12 +184,18 @@ const en = {
     modernMethodsDescription:
       "Discover modern contraceptive options including temporary and permanent methods. These include hormonal and non-hormonal options with varying effectiveness and duration.",
     modernMethodsCta: "View Modern Methods",
+    emergencyMethodsTitle: "Emergency Contraception",
+    emergencyMethodsDescription:
+      "Methods used after unprotected intercourse or contraceptive failure. Includes levonorgestrel, ulipristal, COC Yuzpe, and copper IUD. Most effective when used as soon as possible.",
+    emergencyMethodsCta: "View Emergency Methods",
     searchNatural: "Search natural methods...",
     searchModern: "Search modern methods...",
+    searchEmergency: "Search emergency contraception...",
     noMethodsFound: "No methods found",
     noMethodsHint: 'Try searching for "lactational", "calendar", or "standard days"',
     knowMore: "Know More",
     noMethodsHintModern: 'Try searching for "temporary", "permanent", "condom", "pills", or "IUD"',
+    noMethodsHintEmergency: 'Try searching for "levonorgestrel", "ulipristal", "yuzpe", or "copper IUD"',
     lamTitle: "Lactational Amenorrhea",
     lamDescription:
       "A natural contraceptive method for breastfeeding women. When practiced correctly, exclusive breastfeeding can provide up to 98% protection against pregnancy for the first 6 months postpartum.",
@@ -471,6 +477,57 @@ const en = {
 
   // ─── Emergency Contraception Safety ────────────────────────────────────────────
   ecp: ecpEn,
+
+  // ─── Emergency Contraception Description (Know Your Contraceptive) ──────────────
+  ecDescription: {
+    overview: {
+      title: "What is Emergency Contraception?",
+      description:
+        "Emergency contraception (EC) refers to contraceptive methods used after unprotected sexual intercourse or contraceptive failure to prevent pregnancy. It works primarily by preventing or delaying ovulation or preventing fertilization and does not interrupt an established pregnancy.",
+      timeWindow:
+        "Emergency contraception should be used as soon as possible after unprotected intercourse, but some methods remain effective for up to 5 days (120 hours).",
+      cardTitle: "About Emergency Contraception",
+      cardDescription:
+        "Overview of EC, when to use it, counseling points, and summary of options.",
+    },
+    whenToUse: {
+      title: "When Emergency Contraception Should Be Used",
+      items_0: "Unprotected sexual intercourse",
+      items_1: "Condom breakage or slippage",
+      items_2: "Missed contraceptive pills",
+      items_3: "Sexual assault without contraception",
+      items_4: "Incorrect use of contraceptive methods",
+    },
+    counseling: {
+      title: "Important Counseling Points",
+      items_0: "Emergency contraception does not cause abortion",
+      items_1: "It does not harm an existing pregnancy if taken inadvertently",
+      items_2: "It does not affect future fertility",
+      items_3: "A pregnancy test should be performed if the next period is more than 7 days late",
+      items_4: "ECPs do not prevent STIs—recommend condom use",
+    },
+    summary: {
+      title: "Summary of Emergency Contraception Options",
+      method: "Method",
+      timeWindow: "Time window",
+      pregnancyRate: "Pregnancy rate",
+      copperIud: "Copper IUD",
+      ulipristal: "Ulipristal acetate",
+      levonorgestrel: "Levonorgestrel pill",
+      yuzpe: "Yuzpe method",
+      higherFailure: "Higher failure",
+    },
+    methods: {
+      levonorgestrel: "Levonorgestrel Emergency Pill",
+      levonorgestrelDesc: "Progestin pill. Most effective within 72 hours. Can be used up to 120 hours.",
+      ulipristal: "Ulipristal Acetate Emergency Pill",
+      ulipristalDesc: "More effective than levonorgestrel. Effective up to 5 days (120 hours). Single dose.",
+      yuzpe: "Combined Oral Contraceptives (Yuzpe Method)",
+      yuzpeDesc: "Higher doses of regular COC pills. Use when dedicated ECPs unavailable. Within 72 hours.",
+      copperIud: "Copper IUD (Emergency)",
+      copperIudDesc: "Most effective EC method. Insert within 5 days. Provides long-term contraception.",
+    },
+  },
 
   // ─── Calendar Method Calculator ─────────────────────────────────────────────────
   calendar: {

@@ -186,12 +186,18 @@ const sw = {
     modernMethodsDescription:
       "Gundua chaguzi za kisasa za uzazi wa mpango ikiwemo njia za muda na za kudumu. Hizi ni pamoja na chaguzi za homoni na zisizo za homoni zenye ufanisi na muda tofauti.",
     modernMethodsCta: "Tazama Njia za Kisasa",
+    emergencyMethodsTitle: "Uzazi wa Mpango wa Dharura",
+    emergencyMethodsDescription:
+      "Njia zinazotumika baada ya ngono isiyo na kinga au kushindwa kwa uzazi wa mpango. Zinajumuisha levonorgestrel, ulipristal, COC Yuzpe, na IUD ya shaba. Zinafanikiwa zaidi zinapotumika haraka iwezekanavyo.",
+    emergencyMethodsCta: "Tazama Njia za Dharura",
     searchNatural: "Tafuta njia za asili...",
     searchModern: "Tafuta njia za kisasa...",
+    searchEmergency: "Tafuta uzazi wa mpango wa dharura...",
     noMethodsFound: "Hakuna njia zilizopatikana",
     noMethodsHint: 'Jaribu kutafuta "kunyonyesha", "kalenda", au "siku za kawaida"',
     knowMore: "Jifunze Zaidi",
     noMethodsHintModern: 'Jaribu kutafuta "muda", "kudumu", "kondomu", "vidonge", au "IUD"',
+    noMethodsHintEmergency: 'Jaribu kutafuta "levonorgestrel", "ulipristal", "yuzpe", au "IUD ya shaba"',
     lamTitle: "Uvumilivu wa Kunyonyesha",
     lamDescription:
       "Njia ya asili ya uzazi wa mpango kwa wanawake wanaonyonyesha. Inapotumika vizuri, kunyonyesha peke yake kunaweza kutoa ulinzi wa asilimia 98 dhidi ya ujauzito kwa miezi 6 ya kwanza baada ya kuzaa.",
@@ -472,6 +478,57 @@ const sw = {
 
   // ─── Emergency Contraception Safety ────────────────────────────────────────────
   ecp: ecpSw,
+
+  // ─── Emergency Contraception Description (Know Your Contraceptive) ──────────────
+  ecDescription: {
+    overview: {
+      title: "Uzazi wa Mpango wa Dharura ni Nini?",
+      description:
+        "Uzazi wa mpango wa dharura (EC) unarejelea njia za uzazi wa mpango zinazotumika baada ya ngono isiyo na kinga au kushindwa kwa uzazi wa mpango kuzuia mimba. Kwa kimsingi inafanya kazi kwa kuzuia au kuahirisha ovulation au kuzuia fertilization na haukatiki mimba iliyothibitishwa.",
+      timeWindow:
+        "Uzazi wa mpango wa dharura unapaswa kutumika haraka iwezekanavyo baada ya ngono isiyo na kinga, lakini njia zingine zinaendelea kuwa na ufanisi hadi siku 5 (masaa 120).",
+      cardTitle: "Kuhusu Uzazi wa Mpango wa Dharura",
+      cardDescription:
+        "Muhtasari wa EC, lini kuitumia, mambo ya ushauri, na muhtasari wa chaguzi.",
+    },
+    whenToUse: {
+      title: "Lini Uzazi wa Mpango wa Dharura Unapaswa Kutumika",
+      items_0: "Ngono isiyo na kinga",
+      items_1: "Kuvunjika au kuteleza kwa kondomu",
+      items_2: "Kukosa vidonge vya uzazi wa mpango",
+      items_3: "Unyanyasaji wa kijinsia bila uzazi wa mpango",
+      items_4: "Matumizi yasiyo sahihi ya njia za uzazi wa mpango",
+    },
+    counseling: {
+      title: "Mambo Muhimu ya Ushauri",
+      items_0: "Uzazi wa mpango wa dharura hausababishi utoaji mimba",
+      items_1: "Hauharibu mimba iliyopo ikiwa unachukuliwa bila kukusudia",
+      items_2: "Hauathiri uzazi wa baadaye",
+      items_3: "Jaribio la mimba linapaswa kufanywa ikiwa hedhi inayofuata inachelewa zaidi ya siku 7",
+      items_4: "ECP hazizuii STI—pendekeza matumizi ya kondomu",
+    },
+    summary: {
+      title: "Muhtasari wa Chaguzi za Uzazi wa Mpango wa Dharura",
+      method: "Njia",
+      timeWindow: "Kipindi cha muda",
+      pregnancyRate: "Kiwango cha mimba",
+      copperIud: "IUD ya shaba",
+      ulipristal: "Ulipristal acetate",
+      levonorgestrel: "Kidonge cha levonorgestrel",
+      yuzpe: "Njia ya Yuzpe",
+      higherFailure: "Kushindwa zaidi",
+    },
+    methods: {
+      levonorgestrel: "Kidonge cha Dharura cha Levonorgestrel",
+      levonorgestrelDesc: "Kidonge cha progestin. Kinafaa zaidi ndani ya masaa 72. Kinaweza kutumika hadi masaa 120.",
+      ulipristal: "Kidonge cha Dharura cha Ulipristal Acetate",
+      ulipristalDesc: "Kinafaa zaidi kuliko levonorgestrel. Kinafaa hadi siku 5 (masaa 120). Dozi moja.",
+      yuzpe: "Vidonge vya Mchanganyiko (Njia ya Yuzpe)",
+      yuzpeDesc: "Dozi kubwa za vidonge vya kawaida vya COC. Tumia wakati ECP maalum hazipatikani. Ndani ya masaa 72.",
+      copperIud: "IUD ya Shaba (Dharura)",
+      copperIudDesc: "Njia ya EC yenye ufanisi zaidi. Ingiza ndani ya siku 5. Inatoa uzazi wa mpango wa muda mrefu.",
+    },
+  },
 
   // ─── Calendar Method Calculator ─────────────────────────────────────────────────
   calendar: {

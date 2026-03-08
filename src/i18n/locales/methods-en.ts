@@ -49,6 +49,7 @@ export const methodsEn = {
     barrier: "Barrier",
     permanent: "Permanent",
     natural: "Natural",
+    emergency: "Emergency",
   },
 
   // MEC categories (for results display)
@@ -536,6 +537,101 @@ export const methodsEn = {
         additionalMethods_2_description:
           "Optional for better accuracy. These kits detect the surge in luteinizing hormone that occurs before ovulation, providing more precise timing of your fertile period.",
       },
+    },
+    "levonorgestrel-ec": {
+      name: "Levonorgestrel Emergency Pill",
+      shortName: "LNG EC",
+      description:
+        "Levonorgestrel emergency contraception contains a progestin hormone that prevents pregnancy mainly by delaying or inhibiting ovulation. It does not terminate an existing pregnancy.",
+      efficacy: {
+        label: "Excellent",
+        typicalUse:
+          "Pregnancy rate approximately 1–2% when taken within the recommended time frame. More effective when taken as soon as possible after intercourse.",
+        perfectUse:
+          "Pregnancy rate approximately 1–2% when taken within 72 hours.",
+      },
+      advantages_0: "Widely available",
+      advantages_1: "Easy to use",
+      advantages_2: "Few contraindications",
+      advantages_3: "Does not affect future fertility",
+      disadvantages_0: "Effectiveness decreases as time passes",
+      disadvantages_1: "Less effective than copper IUD or ulipristal",
+      disadvantages_2: "May be less effective in women with higher body weight or BMI",
+      howToUse:
+        "Two dosing options: Single dose: 1.5 mg levonorgestrel orally. OR Two-dose regimen: 0.75 mg levonorgestrel taken twice, 12 hours apart.",
+      timeToWork:
+        "Should be taken within 72 hours (3 days) after unprotected intercourse. Can still be used up to 120 hours, but effectiveness decreases with time.",
+      sideNotes:
+        "Routine pregnancy testing is not required before use. Regular contraception can be started immediately after taking levonorgestrel EC. If vomiting occurs within 3 hours, the dose should be repeated.",
+    },
+    "ulipristal-acetate": {
+      name: "Ulipristal Acetate Emergency Pill",
+      shortName: "UPA",
+      description:
+        "Ulipristal acetate is a selective progesterone receptor modulator that delays ovulation even when ovulation is imminent. It is more effective than levonorgestrel, especially later in the 5-day window.",
+      efficacy: {
+        label: "Excellent",
+        typicalUse:
+          "Pregnancy rate approximately ~1.2%. Maintains effectiveness throughout the 120-hour window after intercourse.",
+        perfectUse: "Pregnancy rate approximately ~1.2%.",
+      },
+      advantages_0: "More effective than levonorgestrel",
+      advantages_1: "Effective up to 5 days (120 hours)",
+      advantages_2: "Single-dose regimen",
+      disadvantages_0: "May require prescription in some countries",
+      disadvantages_1: "Hormonal contraception must be delayed after use",
+      howToUse: "Single oral dose: 30 mg ulipristal acetate.",
+      timeToWork:
+        "Effective if taken within 120 hours (5 days) after unprotected intercourse.",
+      sideNotes:
+        "After taking ulipristal, hormonal contraception should not be started for 5 days because it may reduce the effectiveness of ulipristal. Use condoms or abstain from intercourse during this period.",
+    },
+    "coc-yuzpe-ec": {
+      name: "Combined Oral Contraceptives (Yuzpe Method)",
+      shortName: "COC Yuzpe",
+      description:
+        "The Yuzpe method uses higher doses of regular combined oral contraceptive pills containing ethinyl estradiol and levonorgestrel.",
+      efficacy: {
+        label: "Good",
+        typicalUse:
+          "Less effective than levonorgestrel or ulipristal. Higher rate of side effects such as nausea and vomiting.",
+        perfectUse: "Less effective than dedicated emergency contraceptive pills.",
+      },
+      advantages_0:
+        "Can be used when dedicated emergency contraceptive pills are unavailable",
+      disadvantages_0: "Higher incidence of nausea and vomiting",
+      disadvantages_1:
+        "Lower effectiveness compared with other emergency contraception methods",
+      howToUse:
+        "Two doses taken 12 hours apart. Each dose contains: 100 µg ethinyl estradiol and 0.5 mg levonorgestrel.",
+      timeToWork:
+        "Should be taken within 72 hours after unprotected intercourse.",
+      sideNotes:
+        "Higher rate of nausea and vomiting compared to levonorgestrel or ulipristal. Consider antiemetic if available.",
+    },
+    "copper-iud-emergency": {
+      name: "Copper Intrauterine Device (Emergency IUD)",
+      shortName: "Copper IUD EC",
+      description:
+        "A copper intrauterine device (Cu-IUD) can be inserted into the uterus to prevent pregnancy after unprotected intercourse. Copper interferes with sperm motility and fertilization and may also prevent implantation.",
+      efficacy: {
+        label: "Perfect",
+        typicalUse:
+          "Most effective emergency contraception method. Pregnancy rate approximately 0.1%.",
+        perfectUse:
+          "Over 99% effective. Pregnancy rate approximately 0.1%.",
+      },
+      advantages_0: "Most effective EC method",
+      advantages_1: "Provides long-term contraception (5–12 years)",
+      advantages_2: "Immediate return to fertility after removal",
+      disadvantages_0: "Requires insertion by trained healthcare provider",
+      disadvantages_1: "May increase menstrual bleeding and cramps",
+      disadvantages_2: "Not suitable in certain pelvic infections",
+      howToUse:
+        "Insert copper IUD within 5 days (120 hours) of unprotected intercourse.",
+      timeToWork: "Works immediately after insertion.",
+      sideNotes:
+        "Eligibility criteria for copper IUD emergency use follow the WHO Medical Eligibility Criteria (MEC). Copper IUD should not be used if pregnancy is already established or if there are contraindications such as: current pelvic infection, unexplained vaginal bleeding, cervical or uterine cancer.",
     },
   },
 } as const;
