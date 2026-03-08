@@ -19,6 +19,8 @@ interface DrawerSection {
   hasSubsections?: boolean;
   subsections?: DrawerSubsection[];
   route?: string;
+  /** For public users: show as single item linking here instead of subsections */
+  publicRoute?: string;
 }
 
 const drawerSections: DrawerSection[] = [
@@ -83,16 +85,29 @@ const drawerSections: DrawerSection[] = [
     ],
   },
   {
+    id: 'emergency-contraception',
+    labelKey: 'nav.emergencyContraception',
+    icon: 'medical-outline',
+    hasSubsections: true,
+    subsections: [
+      {
+        id: 'ec-description',
+        labelKey: 'nav.ecDescription',
+        route: '/(drawer)/know-contraceptive/emergency-methods',
+      },
+      {
+        id: 'ec-eligibility',
+        labelKey: 'nav.ecEligibility',
+        route: '/(drawer)/ecp-safety',
+      },
+    ],
+    publicRoute: '/(drawer)/know-contraceptive/emergency-methods',
+  },
+  {
     id: 'natural-method-eligibility',
     labelKey: 'nav.naturalMethodEligibility',
     icon: 'leaf-outline',
     route: '/(drawer)/fab-eligibility',
-  },
-  {
-    id: 'ecp-safety',
-    labelKey: 'nav.ecpSafety',
-    icon: 'medical-outline',
-    route: '/(drawer)/ecp-safety',
   },
   {
     id: 'sterilization-eligibility',
@@ -118,7 +133,6 @@ const drawerSections: DrawerSection[] = [
 const GENERAL_PUBLIC_HIDDEN_IDS = [
   'choose-contraceptive',
   'natural-method-eligibility',
-  'ecp-safety',
   'sterilization-eligibility',
 ];
 
@@ -150,13 +164,16 @@ export default function CustomDrawerContent(props: any) {
 
   const renderSection = (section: DrawerSection) => {
     const isExpanded = expandedSections.includes(section.id);
+    const isPublicSingleItem = !isHealthcareProvider && section.publicRoute;
 
     return (
       <View key={section.id} style={styles.sectionContainer}>
         <TouchableOpacity
           style={styles.sectionHeader}
           onPress={() => {
-            if (section.hasSubsections) {
+            if (isPublicSingleItem && section.publicRoute) {
+              handleNavigation(section.publicRoute);
+            } else if (section.hasSubsections) {
               toggleSection(section.id);
             } else if (section.route) {
               handleNavigation(section.route);
@@ -172,7 +189,7 @@ export default function CustomDrawerContent(props: any) {
             />
             <Text style={styles.sectionTitle}>{t(section.labelKey)}</Text>
           </View>
-          {section.hasSubsections && (
+          {section.hasSubsections && !isPublicSingleItem && (
             <Ionicons
               name={isExpanded ? 'chevron-down' : 'chevron-forward'}
               size={20}
@@ -181,7 +198,7 @@ export default function CustomDrawerContent(props: any) {
           )}
         </TouchableOpacity>
 
-        {section.hasSubsections && isExpanded && (
+        {section.hasSubsections && !isPublicSingleItem && isExpanded && (
           <View style={styles.subsectionsContainer}>
             {section.subsections?.map((subsection) => (
               <TouchableOpacity

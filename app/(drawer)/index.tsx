@@ -79,6 +79,37 @@ export default function HomePage() {
         buttonColor="#22C55E"
       />
 
+      {/* Emergency Contraception - 2 cards for healthcare, 1 for public */}
+      {isHealthcareProvider ? (
+        <>
+          <HomeSectionCard
+            leadingIcon={<MaterialCommunityIcons name="book-open-page-variant" size={32} color="#7C3AED" />}
+            title={t("home.ecDescriptionTitle")}
+            description={t("home.ecDescriptionDescription")}
+            ctaLabel={t("home.ecDescriptionCta")}
+            onPress={() => router.push("/(drawer)/know-contraceptive/emergency-methods")}
+            buttonColor="#7C3AED"
+          />
+          <HomeSectionCard
+            leadingIcon={<MaterialCommunityIcons name="pill" size={32} color="#6D28D9" />}
+            title={t("home.ecEligibilityTitle")}
+            description={t("home.ecEligibilityDescription")}
+            ctaLabel={t("home.ecEligibilityCta")}
+            onPress={() => router.push("/(drawer)/ecp-safety")}
+            buttonColor="#6D28D9"
+          />
+        </>
+      ) : (
+        <HomeSectionCard
+          leadingIcon={<MaterialCommunityIcons name="pill" size={32} color="#7C3AED" />}
+          title={t("home.emergencyContraceptionTitle")}
+          description={t("home.emergencyContraceptionDescription")}
+          ctaLabel={t("home.emergencyContraceptionCta")}
+          onPress={() => router.push("/(drawer)/know-contraceptive/emergency-methods")}
+          buttonColor="#7C3AED"
+        />
+      )}
+
       {isHealthcareProvider && (
         <HomeSectionCard
           leadingIcon={<MaterialCommunityIcons name="leaf" size={32} color="#059669" />}
@@ -87,17 +118,6 @@ export default function HomePage() {
           ctaLabel={t("home.naturalMethodEligibilityCta")}
           onPress={() => router.push("/(drawer)/fab-eligibility")}
           buttonColor="#059669"
-        />
-      )}
-
-      {isHealthcareProvider && (
-        <HomeSectionCard
-          leadingIcon={<MaterialCommunityIcons name="pill" size={32} color="#7C3AED" />}
-          title={t("home.ecpSafetyTitle")}
-          description={t("home.ecpSafetyDescription")}
-          ctaLabel={t("home.ecpSafetyCta")}
-          onPress={() => router.push("/(drawer)/ecp-safety")}
-          buttonColor="#7C3AED"
         />
       )}
 

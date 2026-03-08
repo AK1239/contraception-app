@@ -33,8 +33,10 @@ const sw = {
     naturalMethodCalculators: "Vihesabu vya Njia za Asili",
     standardDayCalculator: "Kihesabu cha Njia ya Siku za Kawaida",
     calendarMethodCalculator: "Kihesabu cha Njia ya Kalenda",
+    emergencyContraception: "Uzazi wa Mpango wa Dharura",
+    ecDescription: "Maelezo ya Uzazi wa Mpango wa Dharura",
+    ecEligibility: "Ustahili wa Uzazi wa Mpango wa Dharura",
     naturalMethodEligibility: "Ustahili wa Njia za Asili (FAB)",
-    ecpSafety: "Usalama wa Uzazi wa Mpango wa Dharura",
     sterilizationEligibility: "Ustahili wa Kufungwa",
     femaleSterilization: "Ustahili wa Kufungwa kwa Mwanamke",
     maleSterilization: "Ustahili wa Kufungwa kwa Mwanaume",
@@ -68,10 +70,18 @@ const sw = {
     naturalMethodEligibilityDescription:
       "Tathmini ustahili wa njia za Uzazi Kulingana na Ufahamu (Kalenda, Siku za Kawaida, n.k.) kwa kutumia vigezo vya kliniki vilivyopangwa.",
     naturalMethodEligibilityCta: "Ustahili wa Njia za Asili",
-    ecpSafetyTitle: "Usalama wa Uzazi wa Mpango wa Dharura",
-    ecpSafetyDescription:
+    ecDescriptionTitle: "Maelezo ya Uzazi wa Mpango wa Dharura",
+    ecDescriptionDescription:
+      "Jifunze kuhusu njia za uzazi wa mpango wa dharura: levonorgestrel, ulipristal, COC Yuzpe, na IUD ya shaba. Ufanisi, faida, hasara, na jinsi ya kutumia.",
+    ecDescriptionCta: "Tazama Maelezo ya EC",
+    ecEligibilityTitle: "Ustahili wa Uzazi wa Mpango wa Dharura",
+    ecEligibilityDescription:
       "Chuja ECP zisizo salama kulingana na WHO MEC 2025. Kiolesura kinachotumia checkboxes kwa LNG, UPA na COC Yuzpe na maonyo ya kliniki.",
-    ecpSafetyCta: "Tathmini Usalama wa ECP",
+    ecEligibilityCta: "Tathmini Ustahili wa EC",
+    emergencyContraceptionTitle: "Uzazi wa Mpango wa Dharura",
+    emergencyContraceptionDescription:
+      "Jifunze kuhusu njia za uzazi wa mpango wa dharura zinazotumika baada ya ngono isiyo na kinga. Levonorgestrel, ulipristal, COC Yuzpe, na IUD ya shaba.",
+    emergencyContraceptionCta: "Tazama Uzazi wa Mpango wa Dharura",
     sterilizationTitle: "Ustahili wa Kufungwa",
     sterilizationDescription:
       "Angalia ustahili wa uzazi wa mpango wa kudumu. Tathmini kufungwa kwa upasuaji kwa mwanamke au vasectomy kwa mwanaume kwa kutumia Vigezo vya WHO.",

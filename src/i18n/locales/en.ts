@@ -33,8 +33,10 @@ const en = {
     naturalMethodCalculators: "Natural Method Calculators",
     standardDayCalculator: "Standard Day Method Calculator",
     calendarMethodCalculator: "Calendar Method Calculator",
+    emergencyContraception: "Emergency Contraception",
+    ecDescription: "Emergency Contraception Description",
+    ecEligibility: "Emergency Contraception Eligibility",
     naturalMethodEligibility: "Natural Method Eligibility (FAB)",
-    ecpSafety: "Emergency Contraception Safety",
     sterilizationEligibility: "Sterilization Eligibility",
     femaleSterilization: "Female Sterilization Eligibility",
     maleSterilization: "Male Sterilization Eligibility",
@@ -68,10 +70,18 @@ const en = {
     naturalMethodEligibilityDescription:
       "Assess eligibility for Fertility Awareness-Based methods (Calendar, Standard Days, etc.) using structured clinical criteria.",
     naturalMethodEligibilityCta: "Natural Method Eligibility",
-    ecpSafetyTitle: "Emergency Contraception Safety",
-    ecpSafetyDescription:
+    ecDescriptionTitle: "Emergency Contraception Description",
+    ecDescriptionDescription:
+      "Learn about emergency contraception methods: levonorgestrel, ulipristal, COC Yuzpe, and copper IUD. Efficacy, advantages, disadvantages, and how to use.",
+    ecDescriptionCta: "View EC Description",
+    ecEligibilityTitle: "Emergency Contraception Eligibility",
+    ecEligibilityDescription:
       "Filter unsafe ECPs based on WHO MEC 2025. Checkbox-driven interface for LNG, UPA, and COC Yuzpe with time window and clinical warnings.",
-    ecpSafetyCta: "ECP Safety Assessment",
+    ecEligibilityCta: "EC Eligibility Assessment",
+    emergencyContraceptionTitle: "Emergency Contraception",
+    emergencyContraceptionDescription:
+      "Learn about emergency contraception methods used after unprotected intercourse. Levonorgestrel, ulipristal, COC Yuzpe, and copper IUD.",
+    emergencyContraceptionCta: "View Emergency Contraception",
     sterilizationTitle: "Sterilization Eligibility",
     sterilizationDescription:
       "Check eligibility for permanent contraception. Assess female surgical sterilization or male sterilization (vasectomy) using WHO Medical Eligibility Criteria.",
