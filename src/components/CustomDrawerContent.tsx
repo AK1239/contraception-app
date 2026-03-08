@@ -52,6 +52,11 @@ const drawerSections: DrawerSection[] = [
         labelKey: 'nav.modernMethods',
         route: '/(drawer)/know-contraceptive/modern-methods',
       },
+      {
+        id: 'emergency-methods',
+        labelKey: 'nav.emergencyContraception',
+        route: '/(drawer)/know-contraceptive/emergency-methods',
+      },
     ],
   },
   {
