@@ -151,10 +151,9 @@ export const methodsEn = {
       advantages_0: "Does not deteriorate with oil-based lubricants",
       advantages_1:
         "Provides some protection to the labia and the base of the penis during intercourse",
-      disadvantages_0: "Difficult placement",
+      disadvantages_0: "Difficult placement initially",
       disadvantages_1: "Inner ring can cause discomfort",
-      disadvantages_2:
-        "If placed for a long duration it can result in a urinary tract infection (UTI)",
+      disadvantages_2: "Higher cost than male condoms",
       howToUse:
         "First check the expiry date and package, then carefully open it. Squeeze the inner ring at the closed end, insert it into the vagina like a tampon, and push it up until the ring rests behind the pubic bone while the outer ring stays outside covering the vulva. Guide the penis into the condom during sex to prevent it slipping to the side. After intercourse, twist the outer ring to keep semen inside and gently pull it out before standing up. Dispose of it in the trash—never flush or reuse. Female condoms can be inserted just before or even several hours before sex.",
       timeToWork: "Immediate",
@@ -237,7 +236,7 @@ export const methodsEn = {
       advantages_2: "Can be inserted immediately after delivery",
       disadvantages_0: "Risk of injuring uterus at time of insertion",
       disadvantages_1:
-        "If a pregnancy does occur it is more likely to be ectopic (the fetus grows in a place apart from the uterus)",
+        "IUD users have a very low overall risk of ectopic pregnancy, but if pregnancy occurs with an IUD in place, it is more likely to be ectopic compared with pregnancies without an IUD",
       disadvantages_2:
         "Periods may become heavier, longer, and more crampy",
       disadvantages_3: "Cannot be used in people allergic to copper",
@@ -301,6 +300,7 @@ export const methodsEn = {
       disadvantages_2: "Requires visits to the hospital every 3mo for injection",
       disadvantages_3:
         "Delayed return to fertility (it will take an average of 10 months after the last injection to become fertile again)",
+      disadvantages_4: "Weight gain",
       howToUse:
         "A healthcare provider will inject the hormone into your upper arm or buttock. Since the effect of the injection lasts 3 months, you need to come back to your healthcare provider for the injection again after 3 months.",
       timeToWork:
@@ -325,6 +325,7 @@ export const methodsEn = {
       disadvantages_0:
         "Estrogen related side effects (nausea, headache, breast tenderness) and complications (breast cancer, gallstones, clot formation in blood vessels)",
       disadvantages_1: "Need to remember to change",
+      disadvantages_2: "Patch may be less effective in women >90 kg",
       howToUse:
         "Stick the patch into the outer upper arm/stomach and leave it in place for the first 3 weeks, then remove the patch for 1 week. New patch applied in week 5.",
       timeToWork:
@@ -350,7 +351,7 @@ export const methodsEn = {
         "Prompt return to the previous state of fertility occurs upon removal",
       disadvantages_0: "Menstrual irregularities",
       disadvantages_1:
-        "Progesterone related side effects (mood changes, acne, irregular menstrual bleeding) and complications (bone weakness)",
+        "Progesterone related side effects (mood changes, acne, irregular menstrual bleeding)",
       disadvantages_2: "Minor procedure is necessary for removal",
       howToUse:
         "After the implant being placed by a healthcare provider. You don't have to do anything, just record the date of insertion. The implant will last for around 3 to 5 years. Your healthcare provider will tell you when to come back for removal.",
@@ -379,7 +380,7 @@ export const methodsEn = {
         "Quick return to fertility after removal (usually the next cycle)",
       disadvantages_0: "Risk of injuring uterus at time of insertion",
       disadvantages_1:
-        "If a pregnancy does occur it is more likely to be ectopic (the fetus grows in a place apart from the uterus)",
+        "IUD users have a very low overall risk of ectopic pregnancy, but if pregnancy occurs with an IUD in place, it is more likely to be ectopic compared with pregnancies without an IUD",
       howToUse:
         "A healthcare provider will insert this small device into the uterus through the vagina.",
       timeToWork:
@@ -426,7 +427,8 @@ export const methodsEn = {
       disadvantages_1: "Medical risks of surgery",
       disadvantages_2:
         "Alternative contraception is required until the ejaculate is confirmed to have no sperm (usually takes around 15-20 ejaculations)",
-      howToUse: "A doctor will perform a minor procedure.",
+      howToUse:
+        "A doctor will perform a minor procedure. One semen analysis at 8–12 weeks confirming absence of sperm is usually sufficient.",
       timeToWork:
         "As there is some remnant sperm remaining, the man is not considered sterile until he has produced sperm-free ejaculates which requires around 15-20 ejaculations which can take around 8-16 weeks. Until it is confirmed that the semen has no sperm, alternative forms of contraception should be used to prevent pregnancy.",
       sideNotes:
@@ -448,11 +450,13 @@ export const methodsEn = {
       advantages_1: "Periods are absent during the course of breastfeeding",
       advantages_2:
         "The process of returning to the normal stage after pregnancy is quicker",
-      disadvantages_0: "May be inconvenient",
-      disadvantages_1:
+      disadvantages_0: "Effectiveness declines once supplementation begins",
+      disadvantages_1: "Requires frequent breastfeeding",
+      disadvantages_2: "Only effective for first 6 months postpartum",
+      disadvantages_3:
         "It is difficult to predict when your fertility will return. Usually after 6 months, but can also occur before this time",
       howToUse:
-        "A minimum exclusive breastfeeding frequency of every 4 hours during the day and every 6 hours at night.",
+        "Breastfeed on demand, typically at least every 4 hours during the day and every 6 hours at night.",
       timeToWork: "Effective immediately after birth.",
       conditionsRequired_0:
         "Breastfeeding every 4 hours during the day and every 6 hours at night",

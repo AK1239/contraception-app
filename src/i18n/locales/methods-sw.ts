@@ -150,10 +150,9 @@ export const methodsSw = {
       advantages_0: "Haichakuki na mafuta ya mafuta",
       advantages_1:
         "Inatoa ulinzi fulani kwa labia na msingi wa mboo wakati wa ngono",
-      disadvantages_0: "Kuwekwa ni ngumu",
+      disadvantages_0: "Kuwekwa ni ngumu mwanzoni",
       disadvantages_1: "Pete ya ndani inaweza kusababisha usumbufu",
-      disadvantages_2:
-        "Ikiwa itawekwa kwa muda mrefu inaweza kusababisha maambukizo ya mfumo wa mkojo (UTI)",
+      disadvantages_2: "Gharama za juu kuliko kondomu za mwanaume",
       howToUse:
         "Kwanza angalia tarehe ya kumaliza na pakiti, kisha fungua kwa uangalifu. Bonyeza pete ya ndani kwenye mwisho uliofungwa, ingiza ukeni kama tampon, na usukume juu hadi pete ikae nyuma ya mfupa wa pubic huku pete ya nje ikibaki nje ikifunika vulva. Onyesha mboo kwenye kondomu wakati wa ngono kuzuia kuteleza kwa upande. Baada ya ngono, pinda pete ya nje kushika manii ndani na uivute polepole kabla ya kusimama. Itupa kwenye taka—kamwe usisukume chooni au usitumie tena. Kondomu za mwanamke zinaweza kuingizwa kabla tu ya ngono au hata masaa kadhaa kabla.",
       timeToWork: "Mara moja",
@@ -236,7 +235,7 @@ export const methodsSw = {
       advantages_2: "Inaweza kuingizwa mara moja baada ya kuzaa",
       disadvantages_0: "Hatari ya kuumiza tumbo wakati wa kuingiza",
       disadvantages_1:
-        "Ikiwa mimba itatokea uwezekano mkubwa ni ectopic (mtoto anakua mahali pengine badala ya tumbo)",
+        "Watumiaji wa IUD wana hatari ndogo ya jumla ya mimba ya ectopic, lakini ikiwa mimba itatokea na IUD ikiwa mahali, uwezekano mkubwa ni ectopic ikilinganishwa na mimba bila IUD",
       disadvantages_2: "Hedhi zinaweza kuwa nzito zaidi, ndefu zaidi, na zenye maumivu zaidi",
       disadvantages_3: "Haiwezi kutumika kwa watu wenye mzio wa shaba",
       howToUse:
@@ -299,6 +298,7 @@ export const methodsSw = {
       disadvantages_2: "Inahitaji ziara hospitalini kila miezi 3 kwa sindano",
       disadvantages_3:
         "Uzazi unarudi baadaye (itachukua wastani wa miezi 10 baada ya sindano ya mwisho kuwa na uzazi tena)",
+      disadvantages_4: "Kuongezeka kwa uzani",
       howToUse:
         "Mtoa huduma wa afya atachoma hormoni kwenye mkono wako wa juu au matako. Kwa sababu athari ya sindano inadumu miezi 3, unahitaji kurudi kwa mtoa huduma wako wa afya kwa sindano tena baada ya miezi 3.",
       timeToWork:
@@ -323,6 +323,7 @@ export const methodsSw = {
       disadvantages_0:
         "Athari za estrogen (kichefuchefu, kichwa, matiti yanayosikia) na matatizo (kansa ya matiti, mawe ya chole, mkusanyiko wa damu)",
       disadvantages_1: "Inahitaji kukumbuka kubadilisha",
+      disadvantages_2: "Kiraka kinaweza kuwa si nzuri kwa wanawake wenye uzani zaidi ya kg 90",
       howToUse:
         "Weka kiraka kwenye mkono wa juu wa nje/tumbo na uiacha mahali kwa wiki 3 za kwanza, kisha ondoa kiraka kwa wiki 1. Kiraka mpya kinawekwa wiki 5.",
       timeToWork:
@@ -348,7 +349,7 @@ export const methodsSw = {
         "Uzazi unarudi haraka kwa hali ya awali baada ya kuondolewa",
       disadvantages_0: "Hedhi zisizo za kawaida",
       disadvantages_1:
-        "Athari za progesterone (mabadiliko ya mhemko, chunusi, damu isiyo ya kawaida ya hedhi) na matatizo (udhaifu wa mifupa)",
+        "Athari za progesterone (mabadiliko ya mhemko, chunusi, damu isiyo ya kawaida ya hedhi)",
       disadvantages_2: "Utaratibu mdogo unahitajika kwa kuondolewa",
       howToUse:
         "Baada ya kibano kuwekwa na mtoa huduma wa afya. Huna haja ya kufanya chochote, rekodi tu tarehe ya kuingiza. Kibano kitadumu kwa karibu miaka 3 hadi 5. Mtoa huduma wako wa afya atakuambia lini kurudi kwa kuondolewa.",
@@ -377,7 +378,7 @@ export const methodsSw = {
         "Uzazi unarudi haraka baada ya kuondolewa (kwa kawaida mzunguko unaofuata)",
       disadvantages_0: "Hatari ya kuumiza tumbo wakati wa kuingiza",
       disadvantages_1:
-        "Ikiwa mimba itatokea uwezekano mkubwa ni ectopic (mtoto anakua mahali pengine badala ya tumbo)",
+        "Watumiaji wa IUD wana hatari ndogo ya jumla ya mimba ya ectopic, lakini ikiwa mimba itatokea na IUD ikiwa mahali, uwezekano mkubwa ni ectopic ikilinganishwa na mimba bila IUD",
       howToUse:
         "Mtoa huduma wa afya ataingiza kifaa hiki kidogo ndani ya tumbo kupitia uke.",
       timeToWork:
@@ -424,7 +425,8 @@ export const methodsSw = {
       disadvantages_1: "Hatari za matibabu za upasuaji",
       disadvantages_2:
         "Njia ya ziada ya uzazi wa mpango inahitajika hadi manii yathibitishwe kuwa haina manii (kwa kawaida inachukua karibu 15-20 kumwaga manii)",
-      howToUse: "Daktari atafanya utaratibu mdogo.",
+      howToUse:
+        "Daktari atafanya utaratibu mdogo. Uchambuzi mmoja wa manii kwa wiki 8–12 unathibitisha kutokuwepo kwa manii kwa kawaida unatosha.",
       timeToWork:
         "Kwa sababu kuna manii yaliyobaki, mwanaume haachwa kuwa sterile hadi atakapozalisha manii bila manii ambayo inahitaji karibu 15-20 kumwaga manii ambayo inaweza kuchukua karibu wiki 8-16. Hadi manii ithibitishwe kuwa haina manii, njia mbadala za uzazi wa mpango zinapaswa kutumika kuzuia mimba.",
       sideNotes:
@@ -446,11 +448,13 @@ export const methodsSw = {
       advantages_1: "Hedhi hazipo wakati wa kunyonyesha",
       advantages_2:
         "Mchakato wa kurudi kwa hali ya kawaida baada ya mimba ni wa haraka zaidi",
-      disadvantages_0: "Inaweza kuwa isiyofaa",
-      disadvantages_1:
+      disadvantages_0: "Ufanisi unapungua mara ziada ya chakula ianze",
+      disadvantages_1: "Inahitaji kunyonyesha mara kwa mara",
+      disadvantages_2: "Inafaa tu kwa miezi 6 ya kwanza baada ya kuzaa",
+      disadvantages_3:
         "Ni ngumu kutabiri lini uzazi wako utarudi. Kwa kawaida baada ya miezi 6, lakini pia unaweza kutokea kabla ya wakati huu",
       howToUse:
-        "Kiwango cha chini cha kunyonyesha peke yake kila saa 4 mchana na kila saa 6 usiku.",
+        "Nyonyesha kwa mahitaji, kwa kawaida angalau kila saa 4 mchana na kila saa 6 usiku.",
       timeToWork: "Inafanya kazi mara moja baada ya kuzaa.",
       conditionsRequired_0:
         "Kunyonyesha kila saa 4 mchana na kila saa 6 usiku",

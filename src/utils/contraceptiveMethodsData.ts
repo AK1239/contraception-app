@@ -89,9 +89,9 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
       'Provides some protection to the labia and the base of the penis during intercourse',
     ],
     disadvantages: [
-      'Difficult placement',
+      'Difficult placement initially',
       'Inner ring can cause discomfort',
-      'If placed for a long duration it can result in a urinary tract infection (UTI)',
+      'Higher cost than male condoms',
     ],
     howToUse: 'First check the expiry date and package, then carefully open it. Squeeze the inner ring at the closed end, insert it into the vagina like a tampon, and push it up until the ring rests behind the pubic bone while the outer ring stays outside covering the vulva. Guide the penis into the condom during sex to prevent it slipping to the side. After intercourse, twist the outer ring to keep semen inside and gently pull it out before standing up. Dispose of it in the trash—never flush or reuse. Female condoms can be inserted just before or even several hours before sex.',
     timeToWork: 'Immediate',
@@ -172,7 +172,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     ],
     disadvantages: [
       'Risk of injuring uterus at time of insertion',
-      'If a pregnancy does occur it is more likely to be ectopic (the fetus grows in a place apart from the uterus)',
+      'IUD users have a very low overall risk of ectopic pregnancy, but if pregnancy occurs with an IUD in place, it is more likely to be ectopic compared with pregnancies without an IUD',
       'Periods may become heavier, longer, and more crampy',
       'Cannot be used in people allergic to copper',
     ],
@@ -232,6 +232,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
       'Irregular periods',
       'Requires visits to the hospital every 3mo for injection',
       'Delayed return to fertility (it will take an average of 10 months after the last injection to become fertile again)',
+      'Weight gain',
     ],
     howToUse: 'A healthcare provider will inject the hormone into your upper arm or buttock. Since the effect of the injection lasts 3 months, you need to come back to your healthcare provider for the injection again after 3 months.',
     timeToWork: 'The contraceptive injection starts working right away if given within the first 7 days of a woman\'s period, but if given later in the cycle, an extra method (like condoms or abstinence) is needed for 7 days. After childbirth, breastfeeding women should start injections only after 6 weeks, at which point protection begins immediately. For non-breastfeeding women, if the injection is given within 21 days of delivery it works immediately, but if started after 21 days, 7 days of backup contraception are needed before full protection is established.',
@@ -257,6 +258,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     disadvantages: [
       'Estrogen related side effects (nausea, headache, breast tenderness) and complications (breast cancer, gallstones, clot formation in blood vessels)',
       'Need to remember to change',
+      'Patch may be less effective in women >90 kg',
     ],
     howToUse: 'Stick the patch into the outer upper arm/stomach and leave it in place for the first 3 weeks, then remove the patch for 1 week. New patch applied in week 5.',
     timeToWork: 'If started within first 5 days of menstrual cycle (bleeding days) then the patch will start working immediately. If started after the first five days of menstrual cycle, then use backup contraception e.g. condom or abstain from sex for 7 days whilst you\'re continuing to use the patch.',
@@ -281,7 +283,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     ],
     disadvantages: [
       'Menstrual irregularities',
-      'Progesterone related side effects (mood changes, acne, irregular menstrual bleeding) and complications (bone weakness)',
+      'Progesterone related side effects (mood changes, acne, irregular menstrual bleeding)',
       'Minor procedure is necessary for removal',
     ],
     howToUse: 'After the implant being placed by a healthcare provider. You don\'t have to do anything, just record the date of insertion. The implant will last for around 3 to 5 years. Your healthcare provider will tell you when to come back for removal.',
@@ -309,7 +311,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
     ],
     disadvantages: [
       'Risk of injuring uterus at time of insertion',
-      'If a pregnancy does occur it is more likely to be ectopic (the fetus grows in a place apart from the uterus)',
+      'IUD users have a very low overall risk of ectopic pregnancy, but if pregnancy occurs with an IUD in place, it is more likely to be ectopic compared with pregnancies without an IUD',
     ],
     howToUse: 'A healthcare provider will insert this small device into the uterus through the vagina.',
     timeToWork: 'Works immediately if inserted within 5 days of the start of your menstrual period. If inserted at other times in the cycle, backup contraception (e.g., condoms) is recommended for 7 days.',
@@ -360,7 +362,7 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
       'Medical risks of surgery',
       'Alternative contraception is required until the ejaculate is confirmed to have no sperm (usually takes around 15-20 ejaculations)',
     ],
-    howToUse: 'A doctor will perform a minor procedure.',
+    howToUse: 'A doctor will perform a minor procedure. One semen analysis at 8–12 weeks confirming absence of sperm is usually sufficient.',
     timeToWork: 'As there is some remnant sperm remaining, the man is not considered sterile until he has produced sperm-free ejaculates which requires around 15-20 ejaculations which can take around 8-16 weeks. Until it is confirmed that the semen has no sperm, alternative forms of contraception should be used to prevent pregnancy.',
     sideNotes: 'A semen analysis is done after 8 to 16 weeks to confirm that the semen has no sperm. Confirmation is achieved once 2 semen samples are negative for sperm.',
   },
@@ -383,10 +385,12 @@ export const CONTRACEPTIVE_METHODS_DATA: ContraceptiveMethodData[] = [
       'The process of returning to the normal stage after pregnancy is quicker',
     ],
     disadvantages: [
-      'May be inconvenient',
+      'Effectiveness declines once supplementation begins',
+      'Requires frequent breastfeeding',
+      'Only effective for first 6 months postpartum',
       'It is difficult to predict when your fertility will return. Usually after 6 months, but can also occur before this time',
     ],
-    howToUse: 'A minimum exclusive breastfeeding frequency of every 4 hours during the day and every 6 hours at night.',
+    howToUse: 'Breastfeed on demand, typically at least every 4 hours during the day and every 6 hours at night.',
     timeToWork: 'Effective immediately after birth.',
     conditionsRequired: [
       'Breastfeeding every 4 hours during the day and every 6 hours at night',
