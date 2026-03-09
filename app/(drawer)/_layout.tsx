@@ -92,6 +92,15 @@ export default function DrawerLayout() {
           headerShown: false, // Stack will handle headers
         }}
       />
+
+      {/* Emergency Contraception - Stack Navigator */}
+      <Drawer.Screen
+        name="emergency-contraception"
+        options={{
+          drawerItemStyle: { display: 'none' }, // Hide from drawer, accessed via CustomDrawerContent
+          headerShown: false, // Stack will handle headers
+        }}
+      />
       
       {/* WHO MEC Questionnaire - Choose Your Contraceptive */}
       <Drawer.Screen

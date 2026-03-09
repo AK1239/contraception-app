@@ -106,7 +106,7 @@ const drawerSections: DrawerSection[] = [
         route: '/(drawer)/ecp-safety',
       },
     ],
-    publicRoute: '/(drawer)/know-contraceptive/emergency-methods',
+    publicRoute: '/(drawer)/emergency-contraception',
   },
   {
     id: 'natural-method-eligibility',
