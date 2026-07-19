@@ -122,6 +122,7 @@ const sw = {
     skip: "Ruka",
     getStarted: "Anza",
     tapToGetStarted: "Gusa kuanza",
+    selectRoleHint: "Sogeza hadi slaidi ya mwisho na chagua jukumu lako ili kuendelea",
     next: "Endelea",
     slide1Title: "Karibu\nContraSafe",
     slide1Subtitle: "Mwongozo Wako wa Uzazi wa Mpango Salama",

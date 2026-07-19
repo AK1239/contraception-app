@@ -1,9 +1,17 @@
 import React from "react";
-import { View, StyleSheet, useWindowDimensions, StatusBar, ActivityIndicator } from "react-native";
+import {
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  StatusBar,
+  ActivityIndicator,
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import Animated, { useSharedValue, useAnimatedScrollHandler } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -24,7 +32,6 @@ export default function OnboardingScreen() {
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  const scrollX = useSharedValue(0);
   const [isChecking, setIsChecking] = React.useState(true);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
   const [selectedRole, setSelectedRole] = React.useState<UserRole | null>(null);
@@ -62,7 +69,38 @@ export default function OnboardingScreen() {
 
   const slides = [...infoSlides, { type: "role-selection" as const }];
 
+  const flatListRef = React.useRef<FlatList<(typeof slides)[number]>>(null);
   const [index, setIndex] = React.useState(0);
+
+  const goToSlide = React.useCallback(
+    (slideIndex: number) => {
+      setIndex(slideIndex);
+      flatListRef.current?.scrollToOffset({
+        offset: slideIndex * width,
+        animated: true,
+      });
+    },
+    [width]
+  );
+
+  const getItemLayout = React.useCallback(
+    (_: unknown, slideIndex: number) => ({
+      length: width,
+      offset: width * slideIndex,
+      index: slideIndex,
+    }),
+    [width]
+  );
+
+  const handleScrollEnd = React.useCallback(
+    (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+      const newIndex = Math.round(event.nativeEvent.contentOffset.x / width);
+      if (newIndex !== index) {
+        setIndex(newIndex);
+      }
+    },
+    [index, width]
+  );
 
   // Check if onboarding has been completed on mount
   React.useEffect(() => {
@@ -89,19 +127,9 @@ export default function OnboardingScreen() {
     checkOnboardingStatus();
   }, [router]);
 
-  const onScroll = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      scrollX.value = event.contentOffset.x;
-    },
-  });
-
-  const flatListRef = React.useRef<Animated.FlatList<any>>(null);
-
   const handleNext = () => {
     if (index < slides.length - 1) {
-      const nextIndex = index + 1;
-      setIndex(nextIndex);
-      flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+      goToSlide(index + 1);
     }
   };
 
@@ -152,9 +180,10 @@ export default function OnboardingScreen() {
       <LinearGradient
         colors={['#ffffff', '#f8fafc']}
         style={styles.backgroundGradient}
+        pointerEvents="none"
       />
       
-      <Animated.FlatList
+      <FlatList
         ref={flatListRef}
         data={slides}
         keyExtractor={(_, i) => String(i)}
@@ -187,13 +216,17 @@ export default function OnboardingScreen() {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={onScroll}
-        onMomentumScrollEnd={(e) => {
-          const newIndex = Math.round(e.nativeEvent.contentOffset.x / width);
-          if (newIndex !== index) setIndex(newIndex);
+        getItemLayout={getItemLayout}
+        onMomentumScrollEnd={handleScrollEnd}
+        onScrollToIndexFailed={(info) => {
+          flatListRef.current?.scrollToOffset({
+            offset: info.index * width,
+            animated: true,
+          });
         }}
         scrollEventThrottle={16}
         style={styles.flatList}
+        bounces={false}
       />
 
       <View style={styles.footer}>
@@ -234,6 +267,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
+    zIndex: 2,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

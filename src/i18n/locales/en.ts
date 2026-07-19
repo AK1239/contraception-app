@@ -120,6 +120,7 @@ const en = {
     skip: "Skip",
     getStarted: "Get Started",
     tapToGetStarted: "Tap to get started",
+    selectRoleHint: "Swipe to the last slide and choose your role to continue",
     next: "Next",
     slide1Title: "Welcome to\nContraSafe",
     slide1Subtitle: "Your Personalized Guide to Safer Family Planning",

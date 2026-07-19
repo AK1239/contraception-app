@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { Button } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 
 type OnboardingControlsProps = {
@@ -12,14 +12,20 @@ type OnboardingControlsProps = {
 
 export default function OnboardingControls({ isLast, onNext, onDone, isDoneDisabled }: OnboardingControlsProps) {
   const { t } = useTranslation();
+  const isDisabled = isLast && isDoneDisabled;
+
   return (
     <View style={styles.container}>
+      {isDisabled && (
+        <Text style={styles.helperText}>{t("onboarding.selectRoleHint")}</Text>
+      )}
       <Button
         mode="contained"
         onPress={isLast ? onDone : onNext}
-        disabled={isLast && isDoneDisabled}
-        style={styles.primaryButton}
+        disabled={isDisabled}
+        style={[styles.primaryButton, isDisabled && styles.primaryButtonDisabled]}
         contentStyle={styles.buttonContent}
+        labelStyle={isDisabled ? styles.buttonLabelDisabled : undefined}
       >
         {isLast ? t("onboarding.tapToGetStarted") : t("onboarding.next")}
       </Button>
@@ -31,6 +37,12 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 0,
     paddingVertical: 0,
+    gap: 8,
+  },
+  helperText: {
+    textAlign: "center",
+    color: "#64748B",
+    fontSize: 13,
   },
   primaryButton: {
     backgroundColor: "#3B82F6",
@@ -43,6 +55,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 6,
+  },
+  primaryButtonDisabled: {
+    backgroundColor: "#CBD5E1",
+    shadowOpacity: 0,
+  },
+  buttonLabelDisabled: {
+    color: "#64748B",
   },
   buttonContent: {
     paddingVertical: 12,
