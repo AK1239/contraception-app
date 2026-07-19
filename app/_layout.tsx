@@ -2,6 +2,7 @@ import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, TextInput } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MD3LightTheme, Provider as PaperProvider } from "react-native-paper";
 import { Provider as ReduxProvider } from "react-redux";
 import { I18nextProvider } from "react-i18next";
@@ -85,12 +86,14 @@ export default function RootLayout() {
         <I18nextProvider i18n={i18n}>
           <LanguageSyncProvider />
           <PaperProvider theme={theme}>
-            <GestureHandlerRootView style={styles.container}>
-              <StatusBar style="auto" />
-              <ErrorBoundary>
-                <Slot />
-              </ErrorBoundary>
-            </GestureHandlerRootView>
+            <SafeAreaProvider>
+              <GestureHandlerRootView style={styles.container}>
+                <StatusBar style="auto" />
+                <ErrorBoundary>
+                  <Slot />
+                </ErrorBoundary>
+              </GestureHandlerRootView>
+            </SafeAreaProvider>
           </PaperProvider>
         </I18nextProvider>
       </ReduxProvider>

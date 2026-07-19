@@ -7,4 +7,5 @@ export { LoadingSpinner } from './LoadingSpinner';
 export { LoadingOverlay } from './LoadingOverlay';
 export { SkeletonScreen } from './SkeletonScreen';
 export { LoadingCard } from './LoadingCard';
+export { HeaderBackButton } from './HeaderBackButton';
 

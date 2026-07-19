@@ -1,6 +1,6 @@
 import { Stack, useRouter } from 'expo-router';
-import { TouchableOpacity, useColorScheme } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { useColorScheme } from 'react-native';
+import { HeaderBackButton } from '../../../src/components/shared/HeaderBackButton';
 
 export default function KnowContraceptiveLayout() {
   const colorScheme = useColorScheme();
@@ -101,11 +101,10 @@ export default function KnowContraceptiveLayout() {
 function SmartBackButton({ 
   navigation, 
   route,
-  colorScheme 
 }: { 
   navigation: any;
   route: any;
-  colorScheme: 'light' | 'dark' | null | undefined;
+  colorScheme?: 'light' | 'dark' | null | undefined;
 }) {
   const router = useRouter();
 
@@ -128,16 +127,7 @@ function SmartBackButton({
   };
 
   return (
-    <TouchableOpacity
-      onPress={handlePress}
-      style={{ marginRight: 10, flexDirection: 'row', alignItems: 'center' }}
-    >
-      <Ionicons 
-        name="arrow-back" 
-        size={24} 
-        color={colorScheme === "dark" ? "#fff" : "#fff"} 
-      />
-    </TouchableOpacity>
+    <HeaderBackButton onPress={handlePress} />
   );
 }
 
