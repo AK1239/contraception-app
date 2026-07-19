@@ -26,8 +26,16 @@
       "package": "com.contrasafe.app"
     },
     "web": {
+      "bundler": "metro",
+      "output": "single",
       "favicon": "./assets/logo.png",
-      "bundler": "metro"
+      "name": "ContraSafe",
+      "shortName": "ContraSafe",
+      "themeColor": "#4C1D95",
+      "backgroundColor": "#ffffff",
+      "display": "standalone",
+      "orientation": "portrait",
+      "lang": "en"
     },
     "plugins": [
       "expo-router"

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Platform, TextInput as RNTextInput, Text as RNText } from "react-native";
-import { TextInput, RadioButton, Text, Button } from "react-native-paper";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import React from "react";
+import { View, StyleSheet, TextInput as RNTextInput, Text as RNText } from "react-native";
+import { TextInput, RadioButton, Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
+import { DateQuestionInput } from "./questionnaire/DateQuestionInput";
 import { Question, AnswerValue } from "../types";
 import type { PersonalizationQuestion } from "../constants";
 
@@ -20,7 +20,6 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   error,
 }) => {
   const { t } = useTranslation();
-  const [datePickerOpen, setDatePickerOpen] = useState(false);
 
   const renderInput = () => {
     switch (question.type) {
@@ -358,42 +357,24 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
           </View>
         );
 
-      case "date":
-        const dateValue = value ? new Date(value as any) : new Date();
-        const maxDate = "maxDate" in question ? question.maxDate : new Date();
-        const minDate = "minDate" in question ? question.minDate : new Date("1900-01-01");
+      case "date": {
+        const maxDate: Date =
+          "maxDate" in question && question.maxDate ? question.maxDate : new Date();
+        const minDate: Date =
+          "minDate" in question && question.minDate
+            ? question.minDate
+            : new Date("1900-01-01");
+        const selectedDate = value ? new Date(value as string | number | Date) : undefined;
 
         return (
-          <View style={styles.dateContainer}>
-            <Button
-              mode="outlined"
-              onPress={() => setDatePickerOpen(true)}
-              style={styles.dateButton}
-              contentStyle={styles.dateButtonContent}
-            >
-              {value ? new Date(value as any).toLocaleDateString() : "Select Date"}
-            </Button>
-
-            {datePickerOpen && (
-              <DateTimePicker
-                value={dateValue}
-                mode="date"
-                display={Platform.OS === "ios" ? "inline" : "calendar"}
-                maximumDate={maxDate}
-                minimumDate={minDate}
-                themeVariant="light"
-                accentColor="#6D28D9"
-                textColor="#1F2937"
-                onChange={(_event, selectedDate) => {
-                  setDatePickerOpen(false);
-                  if (selectedDate) {
-                    onValueChange(selectedDate);
-                  }
-                }}
-              />
-            )}
-          </View>
+          <DateQuestionInput
+            value={selectedDate}
+            onValueChange={onValueChange}
+            minDate={minDate}
+            maxDate={maxDate}
+          />
         );
+      }
 
       default:
         return (
@@ -838,17 +819,6 @@ const styles = StyleSheet.create({
   },
   lipidInput: {
     marginBottom: 6,
-  },
-  dateContainer: {
-    marginVertical: 4,
-  },
-  dateButton: {
-    marginVertical: 4,
-    borderRadius: 10,
-  },
-  dateButtonContent: {
-    paddingVertical: 10,
-    justifyContent: "flex-start",
   },
   errorText: {
     color: "#EF4444",
