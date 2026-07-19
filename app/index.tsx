@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { LinearGradient } from "expo-linear-gradient";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useBottomSpacing } from "../src/hooks/useBottomSpacing";
 import OnboardingSlide from "../src/components/OnboardingSlide";
 import OnboardingDots from "../src/components/OnboardingDots";
 import OnboardingControls from "../src/components/OnboardingControls";
@@ -31,7 +31,7 @@ export default function OnboardingScreen() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
-  const insets = useSafeAreaInsets();
+  const bottomSpacing = useBottomSpacing(12);
   const [isChecking, setIsChecking] = React.useState(true);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
   const [selectedRole, setSelectedRole] = React.useState<UserRole | null>(null);
@@ -229,8 +229,8 @@ export default function OnboardingScreen() {
         bounces={false}
       />
 
-      <View style={styles.footer}>
-        <View style={[styles.footerContent, { paddingBottom: Math.max(32, insets.bottom + 20) }]}>
+      <View style={[styles.footer, { paddingBottom: bottomSpacing }]}>
+        <View style={styles.footerContent}>
           <OnboardingDots count={slides.length} activeIndex={index} />
           <OnboardingControls
             isLast={index === slides.length - 1}
