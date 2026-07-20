@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, Image } from "react-native";
+import { View, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
 import { Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -24,7 +24,12 @@ export default function OnboardingSlide({ title, subtitle, body, icon, logo, col
         end={{ x: 1, y: 1 }}
       />
       
-      <View style={styles.contentContainer}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
         {/* Logo/Icon Section */}
         {(logo || icon) && (
           <View style={styles.iconSection}>
@@ -83,7 +88,7 @@ export default function OnboardingSlide({ title, subtitle, body, icon, logo, col
             </View>
           </View>
         )}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -93,6 +98,9 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
+  scrollView: {
+    flex: 1,
+  },
   gradientBackground: {
     position: 'absolute',
     top: 0,
@@ -101,10 +109,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   contentContainer: {
-    flex: 1,
+    flexGrow: 1,
     paddingHorizontal: 28,
     paddingTop: height * 0.06,
-    paddingBottom: 100,
+    paddingBottom: 24,
     justifyContent: 'space-between',
   },
   // Icon Section Styles

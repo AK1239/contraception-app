@@ -32,6 +32,7 @@ export default function OnboardingScreen() {
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
   const bottomSpacing = useBottomSpacing(12);
+  const [footerHeight, setFooterHeight] = React.useState(0);
   const [isChecking, setIsChecking] = React.useState(true);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
   const [selectedRole, setSelectedRole] = React.useState<UserRole | null>(null);
@@ -190,7 +191,7 @@ export default function OnboardingScreen() {
         renderItem={({ item }) => {
           if ("type" in item && item.type === "role-selection") {
             return (
-              <View style={{ width }}>
+              <View style={[styles.slidePage, { width }]}>
                 <RoleSelectionSlide
                   selectedRole={selectedRole}
                   onRoleSelect={setSelectedRole}
@@ -201,7 +202,7 @@ export default function OnboardingScreen() {
           }
           const slide = item as (typeof infoSlides)[number];
           return (
-            <View style={{ width }}>
+            <View style={[styles.slidePage, { width }]}>
               <OnboardingSlide
                 title={slide.title}
                 subtitle={slide.subtitle}
@@ -225,11 +226,19 @@ export default function OnboardingScreen() {
           });
         }}
         scrollEventThrottle={16}
-        style={styles.flatList}
+        style={[styles.flatList, footerHeight > 0 && { marginBottom: footerHeight }]}
         bounces={false}
       />
 
-      <View style={[styles.footer, { paddingBottom: bottomSpacing }]}>
+      <View
+        style={[styles.footer, { paddingBottom: bottomSpacing }]}
+        onLayout={(event) => {
+          const measuredHeight = event.nativeEvent.layout.height;
+          if (measuredHeight !== footerHeight) {
+            setFooterHeight(measuredHeight);
+          }
+        }}
+      >
         <View style={styles.footerContent}>
           <OnboardingDots count={slides.length} activeIndex={index} />
           <OnboardingControls
@@ -263,7 +272,14 @@ const styles = StyleSheet.create({
   flatList: {
     flex: 1,
   },
+  slidePage: {
+    flex: 1,
+  },
   footer: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,

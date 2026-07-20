@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Pressable, Dimensions } from "react-native";
+import { View, StyleSheet, Pressable, Dimensions, ScrollView } from "react-native";
 import { Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
@@ -33,7 +33,12 @@ export default function RoleSelectionSlide({
         end={{ x: 1, y: 1 }}
       />
 
-      <View style={styles.contentContainer}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.contentContainer}
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+      >
         <View style={styles.iconSection}>
           <LinearGradient
             colors={[color + "30", color + "15"]}
@@ -254,7 +259,7 @@ export default function RoleSelectionSlide({
             </View>
           </Pressable>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -264,6 +269,9 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "relative",
   },
+  scrollView: {
+    flex: 1,
+  },
   gradientBackground: {
     position: "absolute",
     top: 0,
@@ -272,10 +280,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   contentContainer: {
-    flex: 1,
+    flexGrow: 1,
     paddingHorizontal: 24,
     paddingTop: height * 0.05,
-    paddingBottom: 100,
+    paddingBottom: 24,
   },
   iconSection: {
     alignItems: "center",
