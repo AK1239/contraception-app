@@ -1,62 +1,20 @@
-import React from "react";
 import { Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IS_WEB } from "../utils/platform";
 
 /** Minimum bottom inset when the OS/browser reports none (common on mobile web/PWA). */
-const MIN_BOTTOM_INSET = IS_WEB ? 12 : 12;
-
-function readWebBrowserBottomOverlay(): number {
-  if (!IS_WEB || typeof window === "undefined") {
-    return 0;
-  }
-
-  const visualViewport = window.visualViewport;
-  if (!visualViewport) {
-    return 0;
-  }
-
-  return Math.max(0, window.innerHeight - visualViewport.height - visualViewport.offsetTop);
-}
+const MIN_BOTTOM_INSET = 12;
 
 /**
  * Returns reliable bottom spacing for footers and fixed controls.
- * Mobile browsers often report 0 safe-area inset even when a home bar overlaps content.
+ * Safe-area alone is often 0 in mobile browsers; keep a small minimum so
+ * controls aren't flush against the home indicator / screen edge.
+ *
+ * Viewport chrome (Safari toolbar) must be handled by sizing the app root to
+ * the visual viewport (see public/index.html) — do not try to pad it away here.
  */
 export function useBottomSpacing(extraPadding = 16): number {
   const insets = useSafeAreaInsets();
-  const [webBrowserOverlay, setWebBrowserOverlay] = React.useState(() =>
-    readWebBrowserBottomOverlay()
-  );
-
-  React.useEffect(() => {
-    if (!IS_WEB || typeof window === "undefined") {
-      return;
-    }
-
-    const visualViewport = window.visualViewport;
-    if (!visualViewport) {
-      return;
-    }
-
-    const updateOverlay = () => {
-      setWebBrowserOverlay(readWebBrowserBottomOverlay());
-    };
-
-    visualViewport.addEventListener("resize", updateOverlay);
-    visualViewport.addEventListener("scroll", updateOverlay);
-    window.addEventListener("resize", updateOverlay);
-    updateOverlay();
-
-    return () => {
-      visualViewport.removeEventListener("resize", updateOverlay);
-      visualViewport.removeEventListener("scroll", updateOverlay);
-      window.removeEventListener("resize", updateOverlay);
-    };
-  }, []);
-
-  const inset = Math.max(insets.bottom, webBrowserOverlay, MIN_BOTTOM_INSET);
-  return inset + extraPadding;
+  return Math.max(insets.bottom, MIN_BOTTOM_INSET) + extraPadding;
 }
 
 /**

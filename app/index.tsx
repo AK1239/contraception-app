@@ -31,8 +31,7 @@ export default function OnboardingScreen() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { width } = useWindowDimensions();
-  const bottomSpacing = useBottomSpacing(12);
-  const [footerHeight, setFooterHeight] = React.useState(0);
+  const bottomSpacing = useBottomSpacing(8);
   const [isChecking, setIsChecking] = React.useState(true);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
   const [selectedRole, setSelectedRole] = React.useState<UserRole | null>(null);
@@ -183,7 +182,11 @@ export default function OnboardingScreen() {
         style={styles.backgroundGradient}
         pointerEvents="none"
       />
-      
+
+      {/*
+        Flex column (not absolute footer): FlatList shrinks to remaining space,
+        footer always stays inside the visible viewport above browser chrome.
+      */}
       <FlatList
         ref={flatListRef}
         data={slides}
@@ -226,19 +229,11 @@ export default function OnboardingScreen() {
           });
         }}
         scrollEventThrottle={16}
-        style={[styles.flatList, footerHeight > 0 && { marginBottom: footerHeight }]}
+        style={styles.flatList}
         bounces={false}
       />
 
-      <View
-        style={[styles.footer, { paddingBottom: bottomSpacing }]}
-        onLayout={(event) => {
-          const measuredHeight = event.nativeEvent.layout.height;
-          if (measuredHeight !== footerHeight) {
-            setFooterHeight(measuredHeight);
-          }
-        }}
-      >
+      <View style={[styles.footer, { paddingBottom: bottomSpacing }]}>
         <View style={styles.footerContent}>
           <OnboardingDots count={slides.length} activeIndex={index} />
           <OnboardingControls
@@ -271,16 +266,15 @@ const styles = StyleSheet.create({
   },
   flatList: {
     flex: 1,
+    minHeight: 0,
   },
   slidePage: {
     flex: 1,
+    height: "100%",
   },
   footer: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    flexShrink: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     zIndex: 2,
@@ -294,10 +288,8 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   footerContent: {
-    paddingTop: 20,
+    paddingTop: 12,
     paddingHorizontal: 24,
-    gap: 20,
+    gap: 12,
   },
 });
-
-

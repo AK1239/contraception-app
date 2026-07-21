@@ -1,12 +1,10 @@
 import React from "react";
-import { View, StyleSheet, Pressable, Dimensions, ScrollView } from "react-native";
+import { View, StyleSheet, Pressable, ScrollView, useWindowDimensions } from "react-native";
 import { Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import type { UserRole } from "../../constants/userRole";
-
-const { height } = Dimensions.get("window");
 
 interface RoleSelectionSlideProps {
   selectedRole: UserRole | null;
@@ -20,6 +18,8 @@ export default function RoleSelectionSlide({
   color = "#6D28D9",
 }: RoleSelectionSlideProps) {
   const { t } = useTranslation();
+  const { height } = useWindowDimensions();
+  const compact = height < 720;
 
   const isHealthcareSelected = selectedRole === "healthcare-provider";
   const isPublicSelected = selectedRole === "general-public";
@@ -35,29 +35,41 @@ export default function RoleSelectionSlide({
 
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={[
+          styles.contentContainer,
+          {
+            paddingTop: compact ? 12 : height * 0.04,
+            paddingBottom: 16,
+          },
+        ]}
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        <View style={styles.iconSection}>
+        <View style={[styles.iconSection, compact && { marginBottom: 12 }]}>
           <LinearGradient
             colors={[color + "30", color + "15"]}
-            style={styles.iconCircleOuter}
+            style={[
+              styles.iconCircleOuter,
+              compact && { width: 72, height: 72, borderRadius: 36 },
+            ]}
           >
             <LinearGradient
               colors={[color + "50", color + "30"]}
-              style={styles.iconCircle}
+              style={[
+                styles.iconCircle,
+                compact && { width: 56, height: 56, borderRadius: 28 },
+              ]}
             >
-              <Ionicons name="people" size={36} color={color} />
+              <Ionicons name="people" size={compact ? 28 : 36} color={color} />
             </LinearGradient>
           </LinearGradient>
         </View>
 
-        <View style={styles.titleSection}>
-          <Text style={[styles.title, { color }]}>
+        <View style={[styles.titleSection, compact && { marginBottom: 20 }]}>
+          <Text style={[styles.title, { color }, compact && styles.titleCompact]}>
             {t("onboarding.roleSelectionTitle")}
           </Text>
-          <Text style={styles.subtitle}>
+          <Text style={[styles.subtitle, compact && styles.subtitleCompact]}>
             {t("onboarding.roleSelectionSubtitle")}
           </Text>
         </View>
@@ -268,6 +280,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: "relative",
+    minHeight: 0,
   },
   scrollView: {
     flex: 1,
@@ -282,8 +295,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: height * 0.05,
-    paddingBottom: 24,
   },
   iconSection: {
     alignItems: "center",
@@ -314,11 +325,18 @@ const styles = StyleSheet.create({
     lineHeight: 34,
     marginBottom: 8,
   },
+  titleCompact: {
+    fontSize: 22,
+    lineHeight: 28,
+  },
   subtitle: {
     textAlign: "center",
     color: "#64748b",
     fontWeight: "500",
     fontSize: 15,
+  },
+  subtitleCompact: {
+    fontSize: 14,
   },
   optionsContainer: {
     gap: 16,

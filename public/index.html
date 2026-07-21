@@ -23,28 +23,56 @@
 
     <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
     <style id="expo-reset">
-      /* Use dynamic viewport height so mobile browser chrome doesn't crop footers */
+      /*
+        Pin the app to the *visible* viewport.
+        On iOS Safari, height:100% resolves to the large layout viewport (behind
+        the browser chrome), which clips absolute/bottom footers. Prefer:
+        1) --app-height synced from visualViewport (JS below)
+        2) 100svh = height with browser chrome fully showing
+        3) 100dvh / 100% fallbacks
+      */
+      :root {
+        --app-height: 100svh;
+      }
+
       html,
       body {
-        height: 100%;
-        min-height: 100dvh;
-      }
-      /* These styles disable body scrolling if you are using <ScrollView> */
-      body {
+        height: var(--app-height, 100svh);
+        max-height: var(--app-height, 100svh);
+        margin: 0;
+        padding: 0;
         overflow: hidden;
-        padding-top: env(safe-area-inset-top, 0px);
-        padding-right: env(safe-area-inset-right, 0px);
-        padding-bottom: env(safe-area-inset-bottom, 0px);
-        padding-left: env(safe-area-inset-left, 0px);
       }
-      /* These styles make the root element full-height */
+
       #root {
         display: flex;
-        height: 100%;
-        min-height: 100dvh;
         flex: 1;
+        height: 100%;
+        max-height: 100%;
+        overflow: hidden;
       }
     </style>
+    <script>
+      (function () {
+        function syncAppHeight() {
+          var vv = window.visualViewport;
+          var height = vv ? vv.height : window.innerHeight;
+          if (!height || height < 1) return;
+          document.documentElement.style.setProperty(
+            "--app-height",
+            height + "px"
+          );
+        }
+
+        syncAppHeight();
+        window.addEventListener("resize", syncAppHeight);
+        window.addEventListener("orientationchange", syncAppHeight);
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener("resize", syncAppHeight);
+          window.visualViewport.addEventListener("scroll", syncAppHeight);
+        }
+      })();
+    </script>
   </head>
 
   <body>

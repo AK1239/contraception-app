@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Dimensions, Image, ScrollView } from "react-native";
+import { View, StyleSheet, Image, ScrollView, useWindowDimensions } from "react-native";
 import { Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -12,9 +12,13 @@ type OnboardingSlideProps = {
   color?: string;
 };
 
-const { height } = Dimensions.get('window');
-
 export default function OnboardingSlide({ title, subtitle, body, icon, logo, color = "#6366f1" }: OnboardingSlideProps) {
+  const { height } = useWindowDimensions();
+  const compact = height < 720;
+  const logoSize = compact ? 96 : 140;
+  const iconOuter = compact ? 88 : 120;
+  const iconInner = compact ? 72 : 100;
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -23,66 +27,112 @@ export default function OnboardingSlide({ title, subtitle, body, icon, logo, col
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
       />
-      
+
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={[
+          styles.contentContainer,
+          {
+            paddingTop: compact ? 12 : height * 0.04,
+            paddingBottom: 16,
+            justifyContent: compact ? "flex-start" : "space-between",
+            gap: compact ? 16 : 0,
+          },
+        ]}
         showsVerticalScrollIndicator={false}
         bounces={false}
       >
-        {/* Logo/Icon Section */}
         {(logo || icon) && (
-          <View style={styles.iconSection}>
+          <View style={[styles.iconSection, compact && { marginTop: 0 }]}>
             {logo ? (
               <View style={styles.logoContainer}>
-                <Image source={logo} style={styles.logo} resizeMode="contain" />
+                <Image
+                  source={logo}
+                  style={{ width: logoSize, height: logoSize, borderRadius: logoSize / 2 }}
+                  resizeMode="contain"
+                />
               </View>
             ) : (
               <>
-                <View style={[styles.iconCircleOuter, { backgroundColor: color + '15' }]}>
-                  <View style={[styles.iconCircle, { backgroundColor: color + '25' }]}>
+                <View
+                  style={[
+                    styles.iconCircleOuter,
+                    {
+                      backgroundColor: color + "15",
+                      width: iconOuter,
+                      height: iconOuter,
+                      borderRadius: iconOuter / 2,
+                    },
+                  ]}
+                >
+                  <View
+                    style={[
+                      styles.iconCircle,
+                      {
+                        backgroundColor: color + "25",
+                        width: iconInner,
+                        height: iconInner,
+                        borderRadius: iconInner / 2,
+                      },
+                    ]}
+                  >
                     <LinearGradient
-                      colors={[color + '40', color + '20']}
-                      style={styles.iconGradient}
+                      colors={[color + "40", color + "20"]}
+                      style={[
+                        styles.iconGradient,
+                        {
+                          width: iconInner,
+                          height: iconInner,
+                          borderRadius: iconInner / 2,
+                        },
+                      ]}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 1, y: 1 }}
                     >
-                      <Text style={styles.icon}>{icon}</Text>
+                      <Text style={[styles.icon, compact && { fontSize: 36 }]}>{icon}</Text>
                     </LinearGradient>
                   </View>
                 </View>
-                
-                {/* Decorative dots */}
-                <View style={styles.decorativeDots}>
-                  <View style={[styles.dot, { backgroundColor: color + '30' }]} />
-                  <View style={[styles.dot, { backgroundColor: color + '20' }]} />
-                  <View style={[styles.dot, { backgroundColor: color + '10' }]} />
-                </View>
+
+                {!compact && (
+                  <View style={styles.decorativeDots}>
+                    <View style={[styles.dot, { backgroundColor: color + "30" }]} />
+                    <View style={[styles.dot, { backgroundColor: color + "20" }]} />
+                    <View style={[styles.dot, { backgroundColor: color + "10" }]} />
+                  </View>
+                )}
               </>
             )}
           </View>
         )}
-        
-        {/* Title Section */}
+
         <View style={styles.titleSection}>
-          <Text variant="displaySmall" style={[styles.title, { color: color }]}>
+          <Text
+            variant="displaySmall"
+            style={[styles.title, { color }, compact && styles.titleCompact]}
+          >
             {title}
           </Text>
           {subtitle && (
             <View style={styles.subtitleContainer}>
-              <Text variant="titleMedium" style={styles.subtitle}>
+              <Text
+                variant="titleMedium"
+                style={[styles.subtitle, compact && styles.subtitleCompact]}
+              >
                 {subtitle}
               </Text>
             </View>
           )}
         </View>
-        
-        {/* Body Section */}
+
         {body && (
           <View style={styles.bodySection}>
-            <View style={styles.bodyCard}>
+            <View style={[styles.bodyCard, compact && styles.bodyCardCompact]}>
               <View style={[styles.bodyAccent, { backgroundColor: color }]} />
-              <Text variant="bodyLarge" style={styles.body}>
+              <Text
+                variant="bodyLarge"
+                style={[styles.body, compact && styles.bodyCompact]}
+              >
                 {body}
               </Text>
             </View>
@@ -96,13 +146,14 @@ export default function OnboardingSlide({ title, subtitle, body, icon, logo, col
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
+    position: "relative",
+    minHeight: 0,
   },
   scrollView: {
     flex: 1,
   },
   gradientBackground: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -111,39 +162,24 @@ const styles = StyleSheet.create({
   contentContainer: {
     flexGrow: 1,
     paddingHorizontal: 28,
-    paddingTop: height * 0.06,
-    paddingBottom: 24,
-    justifyContent: 'space-between',
   },
-  // Icon Section Styles
   iconSection: {
-    alignItems: 'center',
+    alignItems: "center",
     marginTop: 10,
-    position: 'relative',
+    position: "relative",
   },
   logoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconCircleOuter: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   iconCircle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 6,
@@ -153,17 +189,14 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   iconGradient: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   icon: {
     fontSize: 48,
   },
   decorativeDots: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 8,
     marginTop: 16,
   },
@@ -172,10 +205,9 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
   },
-  // Title Section Styles
   titleSection: {
-    alignItems: 'center',
-    gap: 16,
+    alignItems: "center",
+    gap: 12,
     paddingHorizontal: 8,
   },
   title: {
@@ -186,30 +218,38 @@ const styles = StyleSheet.create({
     fontSize: 32,
     paddingHorizontal: 8,
   },
+  titleCompact: {
+    fontSize: 26,
+    lineHeight: 32,
+    letterSpacing: -0.5,
+  },
   subtitleContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     gap: 12,
     marginTop: 4,
   },
- 
   subtitle: {
     textAlign: "center",
     color: "#64748b",
     fontWeight: "600",
     lineHeight: 28,
     letterSpacing: 0.1,
-    marginBottom:10,
+    marginBottom: 10,
     paddingHorizontal: 12,
   },
-  // Body Section Styles
+  subtitleCompact: {
+    lineHeight: 22,
+    marginBottom: 0,
+    fontSize: 15,
+  },
   bodySection: {
     marginBottom: 8,
   },
   bodyCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 28,
     padding: 32,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 12,
@@ -218,12 +258,18 @@ const styles = StyleSheet.create({
     shadowRadius: 24,
     elevation: 8,
     borderWidth: 1,
-    borderColor: 'rgba(148, 163, 184, 0.08)',
-    position: 'relative',
-    overflow: 'hidden',
+    borderColor: "rgba(148, 163, 184, 0.08)",
+    position: "relative",
+    overflow: "hidden",
+  },
+  bodyCardCompact: {
+    padding: 20,
+    borderRadius: 20,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 12,
   },
   bodyAccent: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
@@ -236,5 +282,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
     letterSpacing: 0.15,
+  },
+  bodyCompact: {
+    fontSize: 15,
+    lineHeight: 22,
   },
 });

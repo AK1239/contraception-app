@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
     color: "#64748B",
   },
   buttonContent: {
-    paddingVertical: 12,
+    paddingVertical: 10,
     paddingHorizontal: 24,
+    minHeight: 48,
   },
 });
 
