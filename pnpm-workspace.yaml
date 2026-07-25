@@ -1,0 +1,5 @@
+# Expo / Metro expect a hoisted node_modules layout (see expo.dev/guides/monorepos).
+nodeLinker: hoisted
+
+allowBuilds:
+  sharp: false

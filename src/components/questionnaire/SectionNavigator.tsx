@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import type { SectionKey } from "../../types/rules";
 import { SECTION_ORDER } from "../../utils/sectionNavigation";
 import { theme } from "../../utils/theme";
+import { useDesktopLayout } from "../../hooks/useDesktopLayout";
 
 interface SectionNavigatorProps {
   currentSection: SectionKey | null;
@@ -26,6 +27,7 @@ export function SectionNavigator({
   isSubmitting = false,
 }: SectionNavigatorProps) {
   const { t } = useTranslation();
+  const isDesktop = useDesktopLayout();
   const currentIndex = currentSection ? SECTION_ORDER.indexOf(currentSection) : 0;
   const progress = SECTION_ORDER.length > 0 ? (currentIndex + 1) / SECTION_ORDER.length : 0;
 
@@ -38,9 +40,10 @@ export function SectionNavigator({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isDesktop && styles.containerDesktop]}>
+      <View style={[styles.inner, isDesktop && styles.innerDesktop]}>
       <View style={styles.progressSection}>
-        <Text style={styles.progressText}>
+        <Text style={[styles.progressText, isDesktop && styles.progressTextDesktop]}>
           {t("mec.stepOf", { current: currentIndex + 1, total: SECTION_ORDER.length })}
         </Text>
         <ProgressBar
@@ -55,7 +58,7 @@ export function SectionNavigator({
           onPress={onPrevious}
           disabled={isFirstSection || isSubmitting}
           style={[styles.button, styles.buttonPrevious]}
-          labelStyle={styles.buttonLabel}
+          labelStyle={[styles.buttonLabel, isDesktop && styles.buttonLabelDesktop]}
         >
           {t("mec.previous")}
         </Button>
@@ -65,11 +68,12 @@ export function SectionNavigator({
           loading={isSubmitting}
           disabled={isSubmitting}
           style={[styles.button, styles.buttonNext]}
-          labelStyle={styles.buttonLabel}
+          labelStyle={[styles.buttonLabel, isDesktop && styles.buttonLabelDesktop]}
           buttonColor="#6D28D9"
         >
           {isLastSection ? t("mec.seeResults") : t("mec.next")}
         </Button>
+      </View>
       </View>
     </View>
   );
@@ -88,6 +92,16 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 4,
   },
+  containerDesktop: {
+    paddingHorizontal: 32,
+  },
+  inner: {
+    width: "100%",
+  },
+  innerDesktop: {
+    maxWidth: 840,
+    alignSelf: "center",
+  },
   progressSection: {
     marginBottom: 16,
   },
@@ -96,6 +110,9 @@ const styles = StyleSheet.create({
     color: "#6B7280",
     marginBottom: 8,
     fontWeight: "500",
+  },
+  progressTextDesktop: {
+    fontSize: 14,
   },
   progressBar: {
     height: 5,
@@ -120,5 +137,8 @@ const styles = StyleSheet.create({
   buttonLabel: {
     fontSize: 14,
     fontWeight: "600",
+  },
+  buttonLabelDesktop: {
+    fontSize: 16,
   },
 });

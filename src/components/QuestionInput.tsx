@@ -1,10 +1,18 @@
-import React from "react";
-import { View, StyleSheet, TextInput as RNTextInput, Text as RNText } from "react-native";
+import React, { useMemo } from "react";
+import {
+  View,
+  StyleSheet,
+  TextInput as RNTextInput,
+  Text as RNText,
+  Pressable,
+  Platform,
+} from "react-native";
 import { TextInput, RadioButton, Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { DateQuestionInput } from "./questionnaire/DateQuestionInput";
 import { Question, AnswerValue } from "../types";
 import type { PersonalizationQuestion } from "../constants";
+import { useDesktopLayout } from "../hooks/useDesktopLayout";
 
 interface QuestionInputProps {
   question: Question;
@@ -20,44 +28,70 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
   error,
 }) => {
   const { t } = useTranslation();
+  const isDesktop = useDesktopLayout();
+
+  const typeStyles = useMemo(
+    () => ({
+      questionText: {
+        fontSize: isDesktop ? 17 : 14,
+        lineHeight: isDesktop ? 26 : 20,
+      },
+      toggleText: {
+        fontSize: isDesktop ? 16 : 13,
+      },
+      selectOptionText: {
+        fontSize: isDesktop ? 16 : 13,
+      },
+      inputContent: isDesktop ? { fontSize: 16, minHeight: 24 } : undefined,
+    }),
+    [isDesktop]
+  );
 
   const renderInput = () => {
     switch (question.type) {
       case "yes-no":
         return (
-          <View style={styles.toggleContainer}>
-            <View
-              style={[
+          <View style={[styles.toggleContainer, isDesktop && styles.toggleContainerDesktop]}>
+            <Pressable
+              style={({ pressed }) => [
                 styles.toggleOption,
                 value === true && styles.toggleOptionActive,
+                pressed && styles.toggleOptionPressed,
               ]}
-              onTouchEnd={() => onValueChange(true)}
+              onPress={() => onValueChange(true)}
+              accessibilityRole="radio"
+              accessibilityState={{ selected: value === true }}
             >
               <Text
                 style={[
                   styles.toggleText,
+                  typeStyles.toggleText,
                   value === true && styles.toggleTextActive,
                 ]}
               >
                 {t("common.yes")}
               </Text>
-            </View>
-            <View
-              style={[
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => [
                 styles.toggleOption,
                 value === false && styles.toggleOptionActive,
+                pressed && styles.toggleOptionPressed,
               ]}
-              onTouchEnd={() => onValueChange(false)}
+              onPress={() => onValueChange(false)}
+              accessibilityRole="radio"
+              accessibilityState={{ selected: value === false }}
             >
               <Text
                 style={[
                   styles.toggleText,
+                  typeStyles.toggleText,
                   value === false && styles.toggleTextActive,
                 ]}
               >
                 {t("common.no")}
               </Text>
-            </View>
+            </Pressable>
           </View>
         );
 
@@ -156,6 +190,8 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
             }}
             keyboardType="numeric"
             error={!!error}
+            contentStyle={typeStyles.inputContent}
+            style={isDesktop ? styles.desktopTextInput : undefined}
           />
         );
 
@@ -171,21 +207,25 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               {question.options.map((option) => {
                 const isSelected = value === option.value;
                 return (
-                  <View
+                  <Pressable
                     key={option.value}
-                    style={[
+                    style={({ pressed }) => [
                       styles.selectOption,
                       isSelected && styles.selectOptionActive,
+                      pressed && styles.selectOptionPressed,
                     ]}
-                    onTouchEnd={() => {
+                    onPress={() => {
                       // Tapping selected option again clears selection (unselect)
                       onValueChange(isSelected ? (undefined as any) : option.value);
                     }}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: isSelected }}
                   >
                     <View style={styles.selectOptionContent}>
                       <Text
                         style={[
                           styles.selectOptionText,
+                          typeStyles.selectOptionText,
                           isSelected && styles.selectOptionTextActive,
                         ]}
                       >
@@ -197,7 +237,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                         </View>
                       )}
                     </View>
-                  </View>
+                  </Pressable>
                 );
               })}
               {value != null && (
@@ -222,13 +262,14 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
               {question.options.map((option) => {
                 const isSelected = selectedValues.includes(option.value);
                 return (
-                  <View
+                  <Pressable
                     key={option.value}
-                    style={[
+                    style={({ pressed }) => [
                       styles.selectOption,
                       isSelected && styles.selectOptionActive,
+                      pressed && styles.selectOptionPressed,
                     ]}
-                    onTouchEnd={() => {
+                    onPress={() => {
                       let newValues: string[];
                       if (option.value === "none") {
                         // Selecting "None of the above" clears all other selections
@@ -242,11 +283,14 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                       }
                       onValueChange(newValues);
                     }}
+                    accessibilityRole="checkbox"
+                    accessibilityState={{ checked: isSelected }}
                   >
                     <View style={styles.selectOptionContent}>
                       <Text
                         style={[
                           styles.selectOptionText,
+                          typeStyles.selectOptionText,
                           isSelected && styles.selectOptionTextActive,
                         ]}
                       >
@@ -258,7 +302,7 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
                         </View>
                       )}
                     </View>
-                  </View>
+                  </Pressable>
                 );
               })}
             </View>
@@ -395,8 +439,14 @@ export const QuestionInput: React.FC<QuestionInputProps> = ({
     (!question.options || question.options.length === 0);
 
   return (
-    <View style={styles.container}>
-      <Text variant="bodyLarge" style={isReadOnlyInfo ? styles.infoText : styles.questionText}>
+    <View style={[styles.container, isDesktop && styles.containerDesktop]}>
+      <Text
+        variant="bodyLarge"
+        style={[
+          isReadOnlyInfo ? styles.infoText : styles.questionText,
+          typeStyles.questionText,
+        ]}
+      >
         {question.text}
         {question.required && <Text style={styles.requiredAsterisk}> *</Text>}
       </Text>
@@ -603,12 +653,21 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   // Modern toggle for yes/no questions
+  containerDesktop: {
+    padding: 20,
+  },
+  desktopTextInput: {
+    backgroundColor: "#FFFFFF",
+  },
   toggleContainer: {
     flexDirection: "row",
     gap: 8,
     backgroundColor: "#F3F4F6",
     padding: 4,
     borderRadius: 10,
+  },
+  toggleContainerDesktop: {
+    maxWidth: 360,
   },
   toggleOption: {
     flex: 1,
@@ -617,6 +676,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "transparent",
     alignItems: "center",
+    ...(Platform.OS === "web" ? { cursor: "pointer" as const } : {}),
   },
   toggleOptionActive: {
     backgroundColor: "#6D28D9",
@@ -625,6 +685,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 2,
+  },
+  toggleOptionPressed: {
+    opacity: 0.85,
   },
   toggleText: {
     fontSize: 13,
@@ -646,10 +709,14 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 14,
     minHeight: 50,
+    ...(Platform.OS === "web" ? { cursor: "pointer" as const } : {}),
   },
   selectOptionActive: {
     backgroundColor: "#EDE9FE",
     borderColor: "#6D28D9",
+  },
+  selectOptionPressed: {
+    opacity: 0.9,
   },
   selectOptionContent: {
     flexDirection: "row",

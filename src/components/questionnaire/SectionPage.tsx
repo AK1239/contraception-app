@@ -9,6 +9,7 @@ import { getVisibleSectionQuestions } from "../../utils/sectionQuestionVisibilit
 import { SectionQuestionInput } from "./SectionQuestionInput";
 import { CheckboxGroup } from "./CheckboxGroup";
 import { theme } from "../../utils/theme";
+import { useDesktopLayout } from "../../hooks/useDesktopLayout";
 
 /**
  * Collapses a flat list of visible questions into renderable "rows":
@@ -71,6 +72,7 @@ export function SectionPage({
   topContent,
 }: SectionPageProps) {
   const { t } = useTranslation();
+  const isDesktop = useDesktopLayout();
   const visibleQuestions = getVisibleSectionQuestions(section.questions, answers);
   const scrollViewRef = useRef<ScrollView>(null);
   const questionViewRefs = useRef<Map<string, View>>(new Map());
@@ -160,7 +162,10 @@ export function SectionPage({
     <ScrollView
       ref={scrollViewRef}
       style={styles.container}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[
+        styles.content,
+        isDesktop && styles.contentDesktop,
+      ]}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       onScroll={handleScroll}
@@ -168,7 +173,10 @@ export function SectionPage({
     >
       {topContent}
       <View style={styles.header}>
-        <Text variant="titleLarge" style={styles.title}>
+        <Text
+          variant="titleLarge"
+          style={[styles.title, isDesktop && styles.titleDesktop]}
+        >
           {section.title}
         </Text>
         <View style={styles.questionCountBadge}>
@@ -244,6 +252,13 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: 120,
   },
+  contentDesktop: {
+    paddingHorizontal: 32,
+    paddingTop: 24,
+    maxWidth: 840,
+    width: "100%",
+    alignSelf: "center",
+  },
   header: {
     marginBottom: 20,
     flexDirection: "row",
@@ -257,6 +272,10 @@ const styles = StyleSheet.create({
     fontWeight: theme.typography.fontWeight.bold,
     fontSize: 18,
     flex: 1,
+  },
+  titleDesktop: {
+    fontSize: 24,
+    lineHeight: 32,
   },
   questionCountBadge: {
     backgroundColor: "#EDE9FE",

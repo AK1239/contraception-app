@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { View, StyleSheet, Pressable } from "react-native";
 import { Text } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import type { SectionQuestion } from "../../types/sections";
 import type { AnswerValue } from "../../types/questionnaire";
 import type { AnswerState } from "../../types/rules";
+import { useDesktopLayout } from "../../hooks/useDesktopLayout";
 
 interface CheckboxGroupProps {
   /** All questions belonging to this group (already filtered) */
@@ -27,6 +28,15 @@ export function CheckboxGroup({
   onAnswerChange,
   errors,
 }: CheckboxGroupProps) {
+  const isDesktop = useDesktopLayout();
+  const typeStyles = useMemo(
+    () => ({
+      groupTitle: { fontSize: isDesktop ? 18 : 15, lineHeight: isDesktop ? 26 : 22 },
+      itemLabel: { fontSize: isDesktop ? 17 : 15 },
+    }),
+    [isDesktop]
+  );
+
   // Initialise any unanswered group questions to false on first render
   useEffect(() => {
     for (const q of questions) {
@@ -44,7 +54,7 @@ export function CheckboxGroup({
 
   return (
     <View style={[styles.card, hasError && styles.cardError]}>
-      <Text style={styles.groupTitle}>{groupTitle}</Text>
+      <Text style={[styles.groupTitle, typeStyles.groupTitle]}>{groupTitle}</Text>
 
       <View style={styles.itemsContainer}>
         {questions.map((question, index) => {
@@ -76,6 +86,7 @@ export function CheckboxGroup({
                 <Text
                   style={[
                     styles.itemLabel,
+                    typeStyles.itemLabel,
                     isChecked && styles.itemLabelChecked,
                   ]}
                 >
